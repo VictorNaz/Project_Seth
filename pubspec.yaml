@@ -93,9 +93,9 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
 
 flutter_icons:
-  image_path: "assets/image/image_login.png"
+  image_path: "assets/image/logomarca.png"
   ios: true
   remove_alpha_ios: true
   android: "launcher_icon"
   adaptive_icon_backgroud: "#FFFFFF"
-  adaptive_icon_foreground: "assets/image/image_login.png"
+  adaptive_icon_foreground: "assets/image/logomarca.png"

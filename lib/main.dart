@@ -21,13 +21,7 @@ class _HomePageState extends State<HomePage> {
         decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage('assets/image/image_login.png'),
-                fit: BoxFit.cover)),
-        child: Column(children: [
-          Image(
-            image: AssetImage('assets/image/logomarca.png'),
-            fit: BoxFit.cover,
-          )
-        ]),
+                fit: BoxFit.fill)),
       ),
     );
   }
