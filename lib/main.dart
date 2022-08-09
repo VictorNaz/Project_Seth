@@ -1,6 +1,4 @@
-import 'dart:html';
-
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 void main(List<String> args) {
   runApp(const ProjectSeth());
@@ -21,4 +19,18 @@ class HomePage extends StatefulWidget {
 
   @override
   State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/image/image_login.png'),
+                fit: BoxFit.cover)),
+      ),
+    );
+  }
 }
