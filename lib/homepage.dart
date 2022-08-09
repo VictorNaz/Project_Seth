@@ -17,6 +17,9 @@ class _HomePageState extends State<HomePage> {
             image: DecorationImage(
                 image: AssetImage('assets/image/image_login.png'),
                 fit: BoxFit.fill)),
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [Image(image: AssetImage('assets/image/logomarca.png'))]),
       ),
     );
   }
