@@ -16,19 +16,23 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Image(image: AssetImage('assets/image/logomarca.png')),
+          const Image(
+            image: AssetImage(
+              'assets/image/logomarca.png',
+            ),
+          ),
           TextButton(
               onPressed: null,
               style: TextButton.styleFrom(
                 backgroundColor: Colors.red,
-                fixedSize: const Size(300, 40),
+                fixedSize: const Size(350, 50),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
               child: const Text(
                 "Login",
-                style: TextStyle(color: Colors.black, fontSize: 20),
+                style: TextStyle(color: Colors.white, fontSize: 20),
               )),
         ],
       ),
