@@ -17,25 +17,33 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Image(image: AssetImage('assets/image/logomarca.png')),
-          TextButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginPage()),
-                );
-              },
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.red,
-                fixedSize: const Size(300, 40),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+          const Padding(
+            padding: EdgeInsets.only(top: 250),
+            child: Image(
+              image: AssetImage('assets/image/logomarca.png'),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 300),
+            child: TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
+                  );
+                },
+                style: TextButton.styleFrom(
+                  backgroundColor: Color.fromARGB(255, 252, 72, 27),
+                  fixedSize: const Size(350, 55),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
-              ),
-              child: const Text(
-                "Login",
-                style: TextStyle(color: Colors.black, fontSize: 20),
-              )),
+                child: const Text(
+                  "Login",
+                  style: TextStyle(color: Colors.white, fontSize: 30),
+                )),
+          )
         ],
       ),
     );
