@@ -13,7 +13,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-          image: DecorationImage(image: AssetImage('assets/image/fundo.png'))),
+        image: DecorationImage(image: AssetImage('assets/image/fundo.png')),
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -34,14 +35,14 @@ class _HomePageState extends State<HomePage> {
                 },
                 style: TextButton.styleFrom(
                   backgroundColor: Color.fromARGB(255, 252, 72, 27),
-                  fixedSize: const Size(350, 55),
+                  fixedSize: const Size(350, 50),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
                 child: const Text(
                   "Login",
-                  style: TextStyle(color: Colors.white, fontSize: 30),
+                  style: TextStyle(color: Colors.white, fontSize: 27),
                 )),
           )
         ],
