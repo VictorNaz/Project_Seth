@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/homepage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -12,18 +11,17 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-      actions: [
-        IconButton(
-          icon: const Image(image: AssetImage('assets/image/setavolta.png')),
-          iconSize: 50,
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const HomePage()),
-            );
-          },
-        )
-      ],
-    ));
+          //Barra superior já com o icone de voltar
+          backgroundColor: const Color.fromARGB(255, 252, 72, 27),
+          actions: [],
+        ),
+        body: Center(
+          child: Column(
+            children: [
+              const Padding(padding: EdgeInsets.only(top: 100)),
+              Image.asset('assets/image/logomarca.png')
+            ],
+          ),
+        ));
   }
 }
