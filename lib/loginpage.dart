@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -19,7 +21,11 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             children: [
               const Padding(padding: EdgeInsets.only(top: 100)),
-              Image.asset('assets/image/logomarca.png')
+              Image.asset('assets/image/logomarca.png',
+              height: 200,
+              ),
+              const Text("Seja bem-vindo!", style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold)),
+              const Text("Coloque suas informações de login.", style: TextStyle(color: Colors.grey)),
             ],
           ),
         ));
