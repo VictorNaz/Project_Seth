@@ -1,4 +1,5 @@
 import 'dart:html';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
@@ -25,7 +26,20 @@ class _LoginPageState extends State<LoginPage> {
               height: 200,
               ),
               const Text("Seja bem-vindo!", style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold)),
-              const Text("Coloque suas informações de login.", style: TextStyle(color: Colors.grey)),
+              const Text("Coloque suas informações de login.", style: TextStyle(color: Colors.grey)), 
+
+              const TextField(
+                decoration: InputDecoration(
+                  
+                  icon: Icon(Icons.person_outline, color: Color.fromARGB(255, 252, 72, 27)),
+                  hintText: "E-mail",
+                  hintStyle: TextStyle(color: Colors.black),
+                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(255, 252, 72, 27))),
+                  ),
+                
+                ), 
+                
+            
             ],
           ),
         ));
