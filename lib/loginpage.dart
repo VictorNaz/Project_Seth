@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project_seth/cadAluno.dart';
+import 'package:flutter_project_seth/menuPrincipal.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -15,9 +17,12 @@ class _LoginPageState extends State<LoginPage> {
           backgroundColor: const Color.fromARGB(255, 252, 72, 27),
           actions: const [],
         ),
+
+        //Corpo já centralizado
         body: Center(
           child: Column(
             children: [
+              //Corpo superior, Icone e mensagem de bem vindo
               const Padding(padding: EdgeInsets.only(top: 50)),
               Image.asset(
                 'assets/image/logomarca.png',
@@ -30,9 +35,9 @@ class _LoginPageState extends State<LoginPage> {
               const Text("Coloque suas informações de login.",
                   style: TextStyle(color: Colors.grey)),
 
+              //Espaçamento entre o corpo superior e os inputs
               const Padding(padding: EdgeInsets.only(top: 70)),
 
-              //SizedBox() adicionado para dimencionar os campos input
               //Campo email
               const SizedBox(
                 width: 325,
@@ -48,7 +53,10 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
+
+              //Espaçamento entre inputs
               const Padding(padding: EdgeInsets.only(top: 15)),
+
               //Campo Senha
               const SizedBox(
                 width: 325,
@@ -64,11 +72,18 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              //espaçamento entre o canpo senha e o button entrar
+
+              //Espaçamento entre o campo senha e o button entrar
               const Padding(padding: EdgeInsets.only(top: 50)),
-              //button entrar
+
+              //Botão entrar
               TextButton(
-                  onPressed: null,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Menu()),
+                    );
+                  },
                   style: TextButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 252, 72, 27),
                     fixedSize: const Size(330, 50),
@@ -82,6 +97,8 @@ class _LoginPageState extends State<LoginPage> {
                   )),
               //espaçamento entre o button entrar em o Recuperar senha
               const Padding(padding: EdgeInsets.only(top: 40)),
+
+              //Campo Recuperar senha
               TextButton(
                   onPressed: null,
                   style: TextButton.styleFrom(
@@ -94,8 +111,15 @@ class _LoginPageState extends State<LoginPage> {
                     "Recuperar senha",
                     style: TextStyle(color: Colors.grey, fontSize: 18),
                   )),
+
+              //Campo cadastrar-se
               TextButton(
-                  onPressed: null,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const CadAluno()),
+                    );
+                  },
                   style: TextButton.styleFrom(
                     fixedSize: const Size(330, 40),
                     shape: RoundedRectangleBorder(

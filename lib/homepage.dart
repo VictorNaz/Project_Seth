@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'loginpage.dart';
+import 'loginPage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -16,6 +16,7 @@ class _HomePageState extends State<HomePage> {
         SystemUiMode.immersiveSticky); //código para desativar a barra de tarefa
 
     return Container(
+      
       //imagem de backgroud.
       decoration: const BoxDecoration(
         image: DecorationImage(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'projectseth.dart';
+import 'package:flutter_project_seth/homepage.dart';
 
 void main(List<String> args) {
-  runApp(const ProjectSeth());
+  debugShowCheckedModeBanner:
+  false;
+  runApp(const HomePage());
 }
