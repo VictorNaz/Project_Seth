@@ -12,14 +12,17 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          //Barra superior já com o icone de voltar
-          backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-          actions: const [],
-        ),
+      appBar: AppBar(
+        //Barra superior já com o icone de voltar
+        backgroundColor: const Color.fromARGB(255, 252, 72, 27),
+        actions: const [],
+      ),
 
-        //Corpo já centralizado
-        body: Center(
+      //Corpo já centralizado
+      body: Stack(alignment: Alignment.center, children: <Widget>[
+        Container(),
+        SingleChildScrollView(
+          //Subir o texto ao selecionar os inputs
           child: Column(
             children: [
               //Corpo superior, Icone e mensagem de bem vindo
@@ -32,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
               const Text("Seja bem-vindo!",
                   style: TextStyle(
                       color: Colors.grey, fontWeight: FontWeight.bold)),
-              const Text("Coloque suas informações de login.",
+              const Text("Insira as suas informações para entrar.",
                   style: TextStyle(color: Colors.grey)),
 
               //Espaçamento entre o corpo superior e os inputs
@@ -70,6 +73,8 @@ class _LoginPageState extends State<LoginPage> {
                         borderSide: BorderSide(
                             color: Color.fromARGB(255, 252, 72, 27))),
                   ),
+                  style: TextStyle(),
+                  obscureText: true,
                 ),
               ),
 
@@ -132,6 +137,8 @@ class _LoginPageState extends State<LoginPage> {
                   )),
             ],
           ),
-        ));
+        ),
+      ]),
+    );
   }
 }
