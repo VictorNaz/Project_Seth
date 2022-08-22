@@ -30,10 +30,7 @@ class _LoginPageState extends State<LoginPage> {
               const Text("Coloque suas informações de login.",
                   style: TextStyle(color: Colors.grey)),
 
-              //SizedBox vazia somente para dar espacamento entre texto de boas vindas e campos de input
-              const SizedBox(
-                height: 70,
-              ),
+              const Padding(padding: EdgeInsets.only(top: 70)),
 
               //SizedBox() adicionado para dimencionar os campos input
               //Campo email
@@ -88,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
               TextButton(
                   onPressed: null,
                   style: TextButton.styleFrom(
-                    fixedSize: const Size(330, 50),
+                    fixedSize: const Size(330, 20),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -100,7 +97,7 @@ class _LoginPageState extends State<LoginPage> {
               TextButton(
                   onPressed: null,
                   style: TextButton.styleFrom(
-                    fixedSize: const Size(330, 50),
+                    fixedSize: const Size(330, 40),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -114,18 +111,3 @@ class _LoginPageState extends State<LoginPage> {
         ));
   }
 }
-
-
-/*
-              const TextField(
-                decoration: InputDecoration(
-                  icon: Icon(Icons.person_outline, color: Color.fromARGB(255, 252, 72, 27)),
-                  hintText: "E-mail",
-                  hintStyle: TextStyle(color: Colors.black),
-                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(255, 252, 72, 27))),
-                  ),
-                
-                ), 
-                
-            */
-  
