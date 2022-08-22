@@ -12,6 +12,12 @@ class Menu extends StatefulWidget {
 class _MenuState extends State<Menu> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        //Barra superior já com o icone de voltar
+        backgroundColor: const Color.fromARGB(255, 252, 72, 27),
+        actions: const [],
+      ),
+    );
   }
 }
