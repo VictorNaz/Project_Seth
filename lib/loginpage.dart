@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -20,11 +18,12 @@ class _LoginPageState extends State<LoginPage> {
         body: Center(
           child: Column(
             children: [
-              const Padding(padding: EdgeInsets.only(top: 100)),
+              const Padding(padding: EdgeInsets.only(top: 50)),
               Image.asset(
                 'assets/image/logomarca.png',
                 height: 200,
               ),
+              const Padding(padding: EdgeInsets.only(top: 20)),
               const Text("Seja bem-vindo!",
                   style: TextStyle(
                       color: Colors.grey, fontWeight: FontWeight.bold)),
@@ -52,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-
+              const Padding(padding: EdgeInsets.only(top: 15)),
               //Campo Senha
               const SizedBox(
                 width: 325,
@@ -68,6 +67,48 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
+              //espaçamento entre o canpo senha e o button entrar
+              const Padding(padding: EdgeInsets.only(top: 50)),
+              //button entrar
+              TextButton(
+                  onPressed: null,
+                  style: TextButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 252, 72, 27),
+                    fixedSize: const Size(330, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ), //texto do button e estilo da escrita
+                  child: const Text(
+                    "Entrar",
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  )),
+              //espaçamento entre o button entrar em o Recuperar senha
+              const Padding(padding: EdgeInsets.only(top: 40)),
+              TextButton(
+                  onPressed: null,
+                  style: TextButton.styleFrom(
+                    fixedSize: const Size(330, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ), //texto do button e estilo da escrita
+                  child: const Text(
+                    "Recuperar senha",
+                    style: TextStyle(color: Colors.grey, fontSize: 18),
+                  )),
+              TextButton(
+                  onPressed: null,
+                  style: TextButton.styleFrom(
+                    fixedSize: const Size(330, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ), //texto do button e estilo da escrita
+                  child: const Text(
+                    "Cadastrar-se",
+                    style: TextStyle(color: Colors.grey, fontSize: 18),
+                  )),
             ],
           ),
         ));
