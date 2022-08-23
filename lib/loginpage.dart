@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/cadAluno.dart';
 import 'package:flutter_project_seth/menuPrincipal.dart';
+import 'package:flutter_project_seth/recSenha.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(
         //Barra superior já com o icone de voltar
         backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-        actions: const [],
+        actions: [],
       ),
 
       //Corpo já centralizado
@@ -68,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(
                 width: 325,
                 child: TextFormField(
-                   keyboardType: TextInputType.visiblePassword,
+                  keyboardType: TextInputType.visiblePassword,
                   decoration: const InputDecoration(
                     icon: Icon(
                       Icons.lock_outline,
@@ -112,7 +113,12 @@ class _LoginPageState extends State<LoginPage> {
 
               //Campo Recuperar senha
               TextButton(
-                  onPressed: null,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const RecSenha()),
+                    );
+                  },
                   style: TextButton.styleFrom(
                     fixedSize: const Size(330, 20),
                     shape: RoundedRectangleBorder(
