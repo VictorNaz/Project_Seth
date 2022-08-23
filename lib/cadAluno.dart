@@ -20,17 +20,20 @@ class _CadAlunoState extends State<CadAluno> {
           SingleChildScrollView(
             child: Column(
               children: [
-                const Padding(padding: EdgeInsets.only(top: 70)),
                 const Text("Insira os dados abaixo:",
                     style: TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
                         fontSize: 30)),
-                const Padding(padding: EdgeInsets.only(top: 40)),
+                const Padding(padding: EdgeInsets.only(top: 50)),
                 SizedBox(
                   width: 325,
                   child: TextFormField(
                     decoration: const InputDecoration(
+                      icon: Icon(
+                        Icons.person,
+                        color: Color.fromARGB(255, 252, 72, 27),
+                      ),
                       labelText: "Nome",
                       focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
@@ -42,6 +45,10 @@ class _CadAlunoState extends State<CadAluno> {
                   width: 325,
                   child: TextFormField(
                     decoration: const InputDecoration(
+                      icon: Icon(
+                        Icons.email,
+                        color: Color.fromARGB(255, 252, 72, 27),
+                      ),
                       labelText: "Email",
                       hintStyle: TextStyle(color: Colors.black),
                       focusedBorder: UnderlineInputBorder(
@@ -54,6 +61,10 @@ class _CadAlunoState extends State<CadAluno> {
                   width: 325,
                   child: TextFormField(
                     decoration: const InputDecoration(
+                      icon: Icon(
+                        Icons.document_scanner,
+                        color: Color.fromARGB(255, 252, 72, 27),
+                      ),
                       labelText: "CPF",
                       hintStyle: TextStyle(color: Colors.black),
                       focusedBorder: UnderlineInputBorder(
@@ -66,6 +77,10 @@ class _CadAlunoState extends State<CadAluno> {
                   width: 325,
                   child: TextFormField(
                     decoration: const InputDecoration(
+                      icon: Icon(
+                        Icons.password,
+                        color: Color.fromARGB(255, 252, 72, 27),
+                      ),
                       labelText: "Senha",
                       hintStyle: TextStyle(color: Colors.black),
                       focusedBorder: UnderlineInputBorder(
@@ -79,6 +94,10 @@ class _CadAlunoState extends State<CadAluno> {
                   width: 325,
                   child: TextFormField(
                     decoration: const InputDecoration(
+                      icon: Icon(
+                        Icons.password,
+                        color: Color.fromARGB(255, 252, 72, 27),
+                      ),
                       labelText: "Confirmar Senha",
                       hintStyle: TextStyle(color: Colors.black),
                       focusedBorder: UnderlineInputBorder(
@@ -88,7 +107,7 @@ class _CadAlunoState extends State<CadAluno> {
                     obscureText: true,
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: 100)),
+                const Padding(padding: EdgeInsets.only(top: 200)),
                 TextButton(
                     onPressed: null,
                     style: TextButton.styleFrom(

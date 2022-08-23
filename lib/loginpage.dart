@@ -26,20 +26,22 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             children: [
               //Corpo superior, Icone e mensagem de bem vindo
-              const Padding(padding: EdgeInsets.only(top: 50)),
+              const Padding(padding: EdgeInsets.only(top: 20)),
               Image.asset(
                 'assets/image/logomarca.png',
                 height: 200,
               ),
-              const Padding(padding: EdgeInsets.only(top: 20)),
+              const Padding(padding: EdgeInsets.only(top: 30)),
               const Text("Seja bem-vindo!",
                   style: TextStyle(
-                      color: Colors.grey, fontWeight: FontWeight.bold)),
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20)),
               const Text("Insira as suas informações para entrar.",
-                  style: TextStyle(color: Colors.grey)),
+                  style: TextStyle(color: Colors.grey, fontSize: 16)),
 
               //Espaçamento entre o corpo superior e os inputs
-              const Padding(padding: EdgeInsets.only(top: 70)),
+              const Padding(padding: EdgeInsets.only(top: 40)),
 
               //Campo email
               SizedBox(
@@ -47,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: TextFormField(
                   decoration: const InputDecoration(
                     icon: Icon(Icons.person_outline,
-                        color: Color.fromARGB(255, 252, 72, 27)),
+                        color: Color.fromARGB(255, 252, 72, 27), size: 35),
                     labelText: "Email",
                     hintStyle: TextStyle(color: Colors.black),
                     focusedBorder: UnderlineInputBorder(
@@ -65,8 +67,11 @@ class _LoginPageState extends State<LoginPage> {
                 width: 325,
                 child: TextFormField(
                   decoration: const InputDecoration(
-                    icon: Icon(Icons.lock_outline,
-                        color: Color.fromARGB(255, 252, 72, 27)),
+                    icon: Icon(
+                      Icons.lock_outline,
+                      color: Color.fromARGB(255, 252, 72, 27),
+                      size: 35,
+                    ),
                     labelText: "Senha",
                     hintStyle: TextStyle(color: Colors.black),
                     focusedBorder: UnderlineInputBorder(
@@ -78,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
 
               //Espaçamento entre o campo senha e o button entrar
-              const Padding(padding: EdgeInsets.only(top: 50)),
+              const Padding(padding: EdgeInsets.only(top: 100)),
 
               //Botão entrar
               TextButton(
@@ -100,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   )),
               //espaçamento entre o button entrar em o Recuperar senha
-              const Padding(padding: EdgeInsets.only(top: 40)),
+              const Padding(padding: EdgeInsets.only(top: 20)),
 
               //Campo Recuperar senha
               TextButton(
