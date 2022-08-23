@@ -68,7 +68,6 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(
                 width: 325,
                 child: TextFormField(
-                   keyboardType: TextInputType.visiblePassword,
                   decoration: const InputDecoration(
                     icon: Icon(
                       Icons.lock_outline,

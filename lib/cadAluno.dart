@@ -17,6 +17,7 @@ class _CadAlunoState extends State<CadAluno> {
         ),
         body: Stack(alignment: Alignment.center, children: <Widget>[
           Container(),
+          //Posicionamento do campo ao selecionar o campo
           SingleChildScrollView(
             child: Column(
               children: [
@@ -45,6 +46,7 @@ class _CadAlunoState extends State<CadAluno> {
                 SizedBox(
                   width: 325,
                   child: TextFormField(
+                    //Define o teclado para digitar e-mail(adiciona o @ no teclado)
                     keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
                       icon: Icon(
@@ -62,6 +64,7 @@ class _CadAlunoState extends State<CadAluno> {
                 SizedBox(
                   width: 325,
                   child: TextFormField(
+                    //Define o teclado para numérico
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
                       icon: Icon(
@@ -79,7 +82,6 @@ class _CadAlunoState extends State<CadAluno> {
                 SizedBox(
                   width: 325,
                   child: TextFormField(
-                    keyboardType: TextInputType.visiblePassword,
                     decoration: const InputDecoration(
                       icon: Icon(
                         Icons.password,
@@ -97,7 +99,6 @@ class _CadAlunoState extends State<CadAluno> {
                 SizedBox(
                   width: 325,
                   child: TextFormField(
-                    keyboardType: TextInputType.visiblePassword,
                     decoration: const InputDecoration(
                       icon: Icon(
                         Icons.password,
