@@ -47,6 +47,8 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(
                 width: 325,
                 child: TextFormField(
+                  //Define o teclado para digitar e-mail(adiciona o @ no teclado)
+                  keyboardType: TextInputType.emailAddress,
                   decoration: const InputDecoration(
                     icon: Icon(Icons.person_outline,
                         color: Color.fromARGB(255, 252, 72, 27), size: 35),
@@ -66,6 +68,7 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(
                 width: 325,
                 child: TextFormField(
+                   keyboardType: TextInputType.visiblePassword,
                   decoration: const InputDecoration(
                     icon: Icon(
                       Icons.lock_outline,

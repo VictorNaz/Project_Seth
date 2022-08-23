@@ -29,6 +29,7 @@ class _CadAlunoState extends State<CadAluno> {
                 SizedBox(
                   width: 325,
                   child: TextFormField(
+                    keyboardType: TextInputType.name,
                     decoration: const InputDecoration(
                       icon: Icon(
                         Icons.person,
@@ -44,6 +45,7 @@ class _CadAlunoState extends State<CadAluno> {
                 SizedBox(
                   width: 325,
                   child: TextFormField(
+                    keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
                       icon: Icon(
                         Icons.email,
@@ -60,6 +62,7 @@ class _CadAlunoState extends State<CadAluno> {
                 SizedBox(
                   width: 325,
                   child: TextFormField(
+                    keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
                       icon: Icon(
                         Icons.document_scanner,
@@ -76,6 +79,7 @@ class _CadAlunoState extends State<CadAluno> {
                 SizedBox(
                   width: 325,
                   child: TextFormField(
+                    keyboardType: TextInputType.visiblePassword,
                     decoration: const InputDecoration(
                       icon: Icon(
                         Icons.password,
@@ -93,6 +97,7 @@ class _CadAlunoState extends State<CadAluno> {
                 SizedBox(
                   width: 325,
                   child: TextFormField(
+                    keyboardType: TextInputType.visiblePassword,
                     decoration: const InputDecoration(
                       icon: Icon(
                         Icons.password,
