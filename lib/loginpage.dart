@@ -42,13 +42,13 @@ class _LoginPageState extends State<LoginPage> {
               const Padding(padding: EdgeInsets.only(top: 70)),
 
               //Campo email
-              const SizedBox(
+              SizedBox(
                 width: 325,
-                child: TextField(
-                  decoration: InputDecoration(
+                child: TextFormField(
+                  decoration: const InputDecoration(
                     icon: Icon(Icons.person_outline,
                         color: Color.fromARGB(255, 252, 72, 27)),
-                    hintText: "E-mail",
+                    labelText: "Email",
                     hintStyle: TextStyle(color: Colors.black),
                     focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
@@ -61,19 +61,18 @@ class _LoginPageState extends State<LoginPage> {
               const Padding(padding: EdgeInsets.only(top: 15)),
 
               //Campo Senha
-              const SizedBox(
+              SizedBox(
                 width: 325,
-                child: TextField(
-                  decoration: InputDecoration(
+                child: TextFormField(
+                  decoration: const InputDecoration(
                     icon: Icon(Icons.lock_outline,
                         color: Color.fromARGB(255, 252, 72, 27)),
-                    hintText: "Senha",
+                    labelText: "Senha",
                     hintStyle: TextStyle(color: Colors.black),
                     focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
                             color: Color.fromARGB(255, 252, 72, 27))),
                   ),
-                  style: TextStyle(),
                   obscureText: true,
                 ),
               ),

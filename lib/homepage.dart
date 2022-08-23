@@ -16,7 +16,6 @@ class _HomePageState extends State<HomePage> {
         SystemUiMode.immersiveSticky); //código para desativar a barra de tarefa
 
     return Container(
-      
       //imagem de backgroud.
       decoration: const BoxDecoration(
         image: DecorationImage(
@@ -27,15 +26,15 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Padding(
-            padding: EdgeInsets.only(top: 170, bottom: 100),
+            padding: EdgeInsets.only(top: 160, bottom: 110),
             child: Image(
-              image: AssetImage('assets/image/logomarca.png'),
-              height: 200,
+              image: AssetImage('assets/image/logomarca2.png'),
+              height: 300,
             ),
           ),
           //Paddin para mover as imagens na tela.
           Padding(
-            padding: const EdgeInsets.only(top: 200),
+            padding: const EdgeInsets.only(top: 100),
             //botão de login.
             child: TextButton(
                 onPressed: () {
