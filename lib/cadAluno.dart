@@ -7,6 +7,7 @@ class CadAluno extends StatefulWidget {
 }
 
 class _CadAlunoState extends State<CadAluno> {
+  bool isChecked = false;
   @override
   Widget build(BuildContext context) {
     //Detecta a ára fora dos campos
@@ -54,6 +55,10 @@ class _CadAlunoState extends State<CadAluno> {
                       ),
                     ),
                   ),
+
+                  //Espaçamento entre inputs
+                  const Padding(padding: EdgeInsets.only(top: 15)),
+
                   SizedBox(
                     width: 325,
                     child: TextFormField(
@@ -72,6 +77,10 @@ class _CadAlunoState extends State<CadAluno> {
                       ),
                     ),
                   ),
+
+                  //Espaçamento entre inputs
+                  const Padding(padding: EdgeInsets.only(top: 15)),
+
                   SizedBox(
                     width: 325,
                     child: TextFormField(
@@ -90,6 +99,10 @@ class _CadAlunoState extends State<CadAluno> {
                       ),
                     ),
                   ),
+
+                  //Espaçamento entre inputs
+                  const Padding(padding: EdgeInsets.only(top: 15)),
+
                   SizedBox(
                     width: 325,
                     child: TextFormField(
@@ -107,6 +120,10 @@ class _CadAlunoState extends State<CadAluno> {
                       obscureText: true,
                     ),
                   ),
+
+                  //Espaçamento entre inputs
+                  const Padding(padding: EdgeInsets.only(top: 15)),
+
                   SizedBox(
                     width: 325,
                     child: TextFormField(
@@ -124,7 +141,53 @@ class _CadAlunoState extends State<CadAluno> {
                       obscureText: true,
                     ),
                   ),
-                  const Padding(padding: EdgeInsets.only(top: 200)),
+
+                  const Padding(padding: EdgeInsets.only(top: 20)),
+
+                  //Row para checkbox e Termos de Uso
+                  Row(
+                    //Alinhamento dos itens da Row
+                    mainAxisAlignment: MainAxisAlignment.center,
+
+                    //CheckBox Termos de uso
+                    children: [
+                      Checkbox(
+                        checkColor: Colors.black,
+                        activeColor: const Color.fromARGB(255, 252, 72, 27),
+                        value: isChecked,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            isChecked = value!;
+                          });
+                        },
+                      ),
+
+                      //Botão para os termos de uso
+                      TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const CadAluno()),
+                            );
+                          },
+                          style: TextButton.styleFrom(
+                            fixedSize: const Size(300, 60),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ), //texto do button e estilo da escrita
+                          child: const Text(
+                            "li e estou de acordo com os Termos de Uso e Política de Privacidade.",
+                            style: TextStyle(color: Colors.grey, fontSize: 16),
+                          )),
+                    ],
+                  ),
+
+                  //Espaçamento entre os campos e o botão cadastrar
+                  const Padding(padding: EdgeInsets.only(top: 80)),
+
+                  //Botão cadastrar
                   TextButton(
                       onPressed: null,
                       style: TextButton.styleFrom(
