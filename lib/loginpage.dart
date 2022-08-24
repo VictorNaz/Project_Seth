@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/cadAluno.dart';
 import 'package:flutter_project_seth/menuPrincipal.dart';
+import 'package:flutter_project_seth/recSenha.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -125,7 +126,13 @@ class _LoginPageState extends State<LoginPage> {
 
                 //Campo Recuperar senha
                 TextButton(
-                    onPressed: null,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const RecSenha()),
+                      );
+                    },
                     style: TextButton.styleFrom(
                       fixedSize: const Size(330, 20),
                       shape: RoundedRectangleBorder(
