@@ -60,6 +60,7 @@ class _RecSenhaState extends State<RecSenha> {
                       icon: Icon(
                         Icons.email,
                         color: Color.fromARGB(255, 252, 72, 27),
+                        size: 35,
                       ),
                       labelText: "Email",
                       hintStyle: TextStyle(color: Colors.black),

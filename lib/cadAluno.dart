@@ -95,7 +95,7 @@ class _CadAlunoState extends State<CadAluno> {
                     child: TextFormField(
                       decoration: const InputDecoration(
                         icon: Icon(
-                          Icons.password,
+                          Icons.lock_outline,
                           color: Color.fromARGB(255, 252, 72, 27),
                         ),
                         labelText: "Senha",
@@ -112,7 +112,7 @@ class _CadAlunoState extends State<CadAluno> {
                     child: TextFormField(
                       decoration: const InputDecoration(
                         icon: Icon(
-                          Icons.password,
+                          Icons.lock_outline,
                           color: Color.fromARGB(255, 252, 72, 27),
                         ),
                         labelText: "Confirmar Senha",
