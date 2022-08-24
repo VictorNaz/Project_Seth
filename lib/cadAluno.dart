@@ -37,8 +37,10 @@ class _CadAlunoState extends State<CadAluno> {
                       style: TextStyle(
                           color: Colors.grey,
                           fontWeight: FontWeight.bold,
-                          fontSize: 30)),
-                  const Padding(padding: EdgeInsets.only(top: 50)),
+                          fontSize: 26)),
+
+                  const Padding(padding: EdgeInsets.only(top: 30)),
+
                   SizedBox(
                     width: 325,
                     child: TextFormField(
@@ -48,7 +50,26 @@ class _CadAlunoState extends State<CadAluno> {
                           Icons.person,
                           color: Color.fromARGB(255, 252, 72, 27),
                         ),
-                        labelText: "Nome",
+                        labelText: "Nome Completo",
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 252, 72, 27))),
+                      ),
+                    ),
+                  ),
+                  //Espaçamento entre inputs
+                  const Padding(padding: EdgeInsets.only(top: 15)),
+
+                  SizedBox(
+                    width: 325,
+                    child: TextFormField(
+                      keyboardType: TextInputType.name,
+                      decoration: const InputDecoration(
+                        icon: Icon(
+                          Icons.person,
+                          color: Color.fromARGB(255, 252, 72, 27),
+                        ),
+                        labelText: "Nome de Usuário",
                         focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                                 color: Color.fromARGB(255, 252, 72, 27))),
