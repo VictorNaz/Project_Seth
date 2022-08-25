@@ -27,6 +27,15 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  bloc_pattern: ^2.3.2
+  firebase_auth: ^0.14.0
+  cloud_firestore: ^0.12.9
+  firebase_storage: ^3.0.4
+  image_picker: ^0.6.1
+  image_cropper: ^1.0.2
+  flutter_speed_dial: ^1.2.1
+  rxdart: ^0.22.1
+  shimmer: ^1.0.0
   flutter:
     sdk: flutter
 
@@ -46,6 +55,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
   flutter_launcher_icons: "^0.9.1"
+  
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -57,6 +67,7 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  
 
   # To add assets to your application, add an assets section, like this:
   # assets:
