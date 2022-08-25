@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_seth/loginpage.dart';
-import 'package:flutter_project_seth/redifSenha.dart';
 
-class RecSenha extends StatefulWidget {
-  const RecSenha({Key? key}) : super(key: key);
+import 'loginPage.dart';
+
+class RedSenha extends StatefulWidget {
+  const RedSenha({Key? key}) : super(key: key);
   @override
-  State<RecSenha> createState() => _RecSenhaState();
+  State<RedSenha> createState() => _RedSenhaState();
 }
 
-class _RecSenhaState extends State<RecSenha> {
+class _RedSenhaState extends State<RedSenha> {
   @override
   Widget build(BuildContext context) {
     //Detecta a ára fora dos campos
@@ -23,26 +23,30 @@ class _RecSenhaState extends State<RecSenha> {
         }
       },
       child: Scaffold(
-        appBar: AppBar(
-          //Barra superior já com o icone de voltar
-          backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-          actions: [],
-        ),
-        body: Stack(alignment: Alignment.center, children: <Widget>[
-          SingleChildScrollView(
-            child: Column(
+          appBar: AppBar(
+            //Barra superior já com o icone de voltar
+            backgroundColor: const Color.fromARGB(255, 252, 72, 27),
+            actions: const [],
+          ),
+          //Corpo já centralizado
+          //Corpo já centralizado
+          body: Stack(alignment: Alignment.center, children: <Widget>[
+            Container(),
+            SingleChildScrollView(
+                //Subir o texto ao selecionar os inputs
+                child: Column(
               children: [
                 //Corpo superior, Icone e mensagem de bem vindo
-                const Padding(padding: EdgeInsets.only(top: 40)),
+                const Padding(padding: EdgeInsets.only(top: 20)),
                 Image.asset(
                   'assets/image/logomarca.png',
                   height: 200,
                 ),
 
-                const Padding(padding: EdgeInsets.only(top: 30)),
+                const Padding(padding: EdgeInsets.only(top: 20)),
 
                 const Text(
-                  "Digite seu e-mail para recuperar sua senha!",
+                  "Redenifição de Senha",
                   style: TextStyle(
                       color: Colors.grey,
                       fontWeight: FontWeight.bold,
@@ -50,20 +54,42 @@ class _RecSenhaState extends State<RecSenha> {
                   textAlign: TextAlign.center,
                 ),
 
-                const Padding(padding: EdgeInsets.only(top: 50)),
+                const Padding(padding: EdgeInsets.only(top: 40)),
 
                 SizedBox(
                   width: 325,
                   child: TextFormField(
+                    //foca no primeiro campo ao entrar na página
+                    autofocus: true,
+
                     //Define o teclado para digitar e-mail(adiciona o @ no teclado)
                     keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
-                      icon: Icon(
-                        Icons.email,
-                        color: Color.fromARGB(255, 252, 72, 27),
-                        size: 35,
-                      ),
-                      labelText: "Email",
+                      icon: Icon(Icons.lock_outline,
+                          color: Color.fromARGB(255, 252, 72, 27), size: 35),
+                      labelText: "Nova Senha",
+                      hintStyle: TextStyle(color: Colors.black),
+                      focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 252, 72, 27))),
+                    ),
+                  ),
+                ),
+
+                const Padding(padding: EdgeInsets.only(top: 15)),
+
+                SizedBox(
+                  width: 325,
+                  child: TextFormField(
+                    //foca no primeiro campo ao entrar na página
+                    autofocus: true,
+
+                    //Define o teclado para digitar e-mail(adiciona o @ no teclado)
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: const InputDecoration(
+                      icon: Icon(Icons.lock_outline,
+                          color: Color.fromARGB(255, 252, 72, 27), size: 35),
+                      labelText: "Corfirmar Senha",
                       hintStyle: TextStyle(color: Colors.black),
                       focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
@@ -80,7 +106,7 @@ class _RecSenhaState extends State<RecSenha> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const RedSenha()),
+                            builder: (context) => const LoginPage()),
                       );
                     },
                     style: TextButton.styleFrom(
@@ -94,12 +120,11 @@ class _RecSenhaState extends State<RecSenha> {
                       "Enviar",
                       style: TextStyle(color: Colors.white, fontSize: 20),
                     )),
-                const Padding(padding: EdgeInsets.only(bottom: 20)),
+
+                const Padding(padding: EdgeInsets.only(top: 50)),
               ],
-            ),
-          )
-        ]),
-      ),
+            ))
+          ])),
     );
   }
 }
