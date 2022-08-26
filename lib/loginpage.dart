@@ -81,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
 
                 //Espaçamento entre inputs
                 const Padding(padding: EdgeInsets.only(top: 15)),
-
+                
                 //Campo Senha
                 SizedBox(
                   width: 325,
