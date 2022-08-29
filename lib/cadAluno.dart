@@ -16,7 +16,7 @@ class _CadAlunoState extends State<CadAluno> {
         FocusScopeNode currentFocus = FocusScope.of(context);
 
         if (!currentFocus.hasPrimaryFocus) {
-          //Foco primario
+          //Foco no campo primario
           //Desfocar
           currentFocus.unfocus();
         }
