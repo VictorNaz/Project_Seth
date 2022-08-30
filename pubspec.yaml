@@ -27,8 +27,6 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  bloc_pattern: ^2.3.2
-  rxdart: ^0.22.1
   flutter:
     sdk: flutter
 
