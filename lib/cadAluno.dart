@@ -7,7 +7,11 @@ class CadAluno extends StatefulWidget {
 }
 
 class _CadAlunoState extends State<CadAluno> {
+  
   bool isChecked = false;
+  bool showPassword = false;
+  bool _showPassword = false;
+  
   @override
   Widget build(BuildContext context) {
     //Detecta a ára fora dos campos
@@ -16,7 +20,7 @@ class _CadAlunoState extends State<CadAluno> {
         FocusScopeNode currentFocus = FocusScope.of(context);
 
         if (!currentFocus.hasPrimaryFocus) {
-          //Foco primario
+          //Foco no campo primario
           //Desfocar
           currentFocus.unfocus();
         }
@@ -127,18 +131,26 @@ class _CadAlunoState extends State<CadAluno> {
                   SizedBox(
                     width: 325,
                     child: TextFormField(
-                      decoration: const InputDecoration(
-                        icon: Icon(
+                      decoration: InputDecoration(
+                        icon: const Icon(
                           Icons.lock_outline,
                           color: Color.fromARGB(255, 252, 72, 27),
                         ),
                         labelText: "Senha",
-                        hintStyle: TextStyle(color: Colors.black),
-                        focusedBorder: UnderlineInputBorder(
+                        hintStyle: const TextStyle(color: Colors.black),
+                        focusedBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(
                                 color: Color.fromARGB(255, 252, 72, 27))),
+                        suffixIcon: GestureDetector(
+                          child: Icon(showPassword == false ? Icons.visibility_off : Icons.visibility, color: Colors.black,),
+                          onTap: (){
+                            setState(() {
+                              showPassword =! showPassword;
+                            });
+                          },
+                        ),
                       ),
-                      obscureText: true,
+                      obscureText: showPassword == false ? true : false,
                     ),
                   ),
 
@@ -148,18 +160,26 @@ class _CadAlunoState extends State<CadAluno> {
                   SizedBox(
                     width: 325,
                     child: TextFormField(
-                      decoration: const InputDecoration(
-                        icon: Icon(
+                      decoration: InputDecoration(
+                        icon: const Icon(
                           Icons.lock_outline,
                           color: Color.fromARGB(255, 252, 72, 27),
                         ),
-                        labelText: "Confirmar Senha",
-                        hintStyle: TextStyle(color: Colors.black),
-                        focusedBorder: UnderlineInputBorder(
+                        labelText: "Confirmar senha",
+                        hintStyle: const TextStyle(color: Colors.black),
+                        focusedBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(
                                 color: Color.fromARGB(255, 252, 72, 27))),
+                        suffixIcon: GestureDetector(
+                          child: Icon(_showPassword == false ? Icons.visibility_off : Icons.visibility, color: Colors.black,),
+                          onTap: (){
+                            setState(() {
+                              _showPassword =! _showPassword;
+                            });
+                          },
+                        ),
                       ),
-                      obscureText: true,
+                      obscureText: _showPassword == false ? true : false,
                     ),
                   ),
 
