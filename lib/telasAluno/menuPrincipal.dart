@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
+import 'perfilAluno.dart';
 
 class Menu extends StatefulWidget {
   const Menu({Key? key}) : super(key: key);
@@ -123,11 +123,16 @@ class _MenuState extends State<Menu> {
       //botão flutuante sobre a barra inferior
 
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: const FloatingActionButton(
-        onPressed: null,
-        backgroundColor: Color.fromARGB(255, 252, 72, 27),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const Menu()),
+          );
+        },
+        backgroundColor: const Color.fromARGB(255, 252, 72, 27),
         elevation: 2.0,
-        child: Icon(
+        child: const Icon(
           Icons.home,
           color: Colors.black,
           size: 35,
@@ -141,16 +146,21 @@ class _MenuState extends State<Menu> {
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: const [
+          children: [
             IconButton(
-              onPressed: null,
-              icon: Icon(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const PerfilAluno()),
+                );
+              },
+              icon: const Icon(
                 Icons.person,
                 color: Color.fromARGB(255, 252, 72, 27),
                 size: 35,
               ),
             ),
-            IconButton(
+            const IconButton(
               onPressed: null,
               icon: Icon(
                 Icons.settings,

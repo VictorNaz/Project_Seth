@@ -7,11 +7,10 @@ class CadAluno extends StatefulWidget {
 }
 
 class _CadAlunoState extends State<CadAluno> {
-  
   bool isChecked = false;
   bool showPassword = false;
   bool _showPassword = false;
-  
+
   @override
   Widget build(BuildContext context) {
     //Detecta a ára fora dos campos
@@ -142,10 +141,15 @@ class _CadAlunoState extends State<CadAluno> {
                             borderSide: BorderSide(
                                 color: Color.fromARGB(255, 252, 72, 27))),
                         suffixIcon: GestureDetector(
-                          child: Icon(showPassword == false ? Icons.visibility_off : Icons.visibility, color: Colors.black,),
-                          onTap: (){
+                          child: Icon(
+                            showPassword == false
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: Colors.black,
+                          ),
+                          onTap: () {
                             setState(() {
-                              showPassword =! showPassword;
+                              showPassword = !showPassword;
                             });
                           },
                         ),
@@ -171,10 +175,15 @@ class _CadAlunoState extends State<CadAluno> {
                             borderSide: BorderSide(
                                 color: Color.fromARGB(255, 252, 72, 27))),
                         suffixIcon: GestureDetector(
-                          child: Icon(_showPassword == false ? Icons.visibility_off : Icons.visibility, color: Colors.black,),
-                          onTap: (){
+                          child: Icon(
+                            _showPassword == false
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: Colors.black,
+                          ),
+                          onTap: () {
                             setState(() {
-                              _showPassword =! _showPassword;
+                              _showPassword = !_showPassword;
                             });
                           },
                         ),

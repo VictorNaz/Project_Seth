@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project_seth/telasAluno/perfilAluno.dart';
 
 import '../telasProf/CadProfessor.dart';
 
@@ -20,18 +21,36 @@ class _PageTestState extends State<PageTest> {
       body: Stack(
         alignment: Alignment.center,
         children: <Widget>[
-          Container(),
-          TextButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const CadProfessor()),
-                );
-              },
-              child: const Text(
-                "CadProfessor",
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              )),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const CadProfessor()),
+                    );
+                  },
+                  child: const Text(
+                    "CadProfessor",
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  )),
+              const Padding(padding: EdgeInsets.only(top: 30)),
+              /*TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const PerfilAluno()),
+                    );
+                  },
+                  child: const Text(
+                    "PerfilAluno",
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  )),*/
+            ],
+          )
         ],
       ),
     );
