@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_seth/cadAluno.dart';
-import 'package:flutter_project_seth/menuPrincipal.dart';
-import 'package:flutter_project_seth/recSenha.dart';
+
+import '../telasAluno/cadAluno.dart';
+import '../telasAluno/menuPrincipal.dart';
+import 'recSenha.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -10,7 +11,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   bool showPassword = false;
 
   @override
@@ -81,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
 
                 //Espaçamento entre inputs
                 const Padding(padding: EdgeInsets.only(top: 15)),
-                
+
                 //Campo Senha
                 SizedBox(
                   width: 325,
@@ -98,19 +98,22 @@ class _LoginPageState extends State<LoginPage> {
                           borderSide: BorderSide(
                               color: Color.fromARGB(255, 252, 72, 27))),
                       suffixIcon: GestureDetector(
-                        child: Icon(showPassword == false ? Icons.visibility_off : Icons.visibility, color: Colors.black,),
-                        onTap: (){
+                        child: Icon(
+                          showPassword == false
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: Colors.black,
+                        ),
+                        onTap: () {
                           setState(() {
-                            showPassword =! showPassword;
+                            showPassword = !showPassword;
                           });
                         },
                       ),
                     ),
                     obscureText: showPassword == false ? true : false,
-                    ),
-    
+                  ),
                 ),
-                
 
                 //Espaçamento entre o campo senha e o button entrar
                 const Padding(padding: EdgeInsets.only(top: 100)),

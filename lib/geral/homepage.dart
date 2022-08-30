@@ -40,9 +40,17 @@ class _HomePageState extends State<HomePage> {
                   MaterialPageRoute(builder: (context) => const PageTest()),
                 );
               },
+              //configurações do button
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.black,
+                fixedSize: const Size(350, 50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
               child: const Text(
-                "Pagina teste",
-                style: TextStyle(color: Colors.pink, fontSize: 25),
+                "Páginas Professor",
+                style: TextStyle(color: Colors.white, fontSize: 25),
               )),
           //Paddin para mover as imagens na tela.
           Padding(

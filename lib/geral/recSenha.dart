@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_seth/loginpage.dart';
-import 'package:flutter_project_seth/redifSenha.dart';
+
+import 'redifSenha.dart';
 
 class RecSenha extends StatefulWidget {
   const RecSenha({Key? key}) : super(key: key);

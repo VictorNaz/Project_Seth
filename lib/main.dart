@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_seth/homepage.dart';
+
+import 'geral/homepage.dart';
 
 void main(List<String> args) {
   runApp(const ProjectSeth());

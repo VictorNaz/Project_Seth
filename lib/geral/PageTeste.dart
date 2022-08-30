@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'telasProf/CadProfessor.dart';
+import '../telasProf/CadProfessor.dart';
 
 class PageTest extends StatefulWidget {
   const PageTest({Key? key}) : super(key: key);

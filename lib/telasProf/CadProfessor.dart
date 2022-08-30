@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_seth/loginpage.dart';
+
+import '../geral/loginPage.dart';
 
 class CadProfessor extends StatefulWidget {
   const CadProfessor({Key? key}) : super(key: key);
