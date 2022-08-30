@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'PageTeste.dart';
 import 'loginPage.dart';
 
 class HomePage extends StatefulWidget {
@@ -32,30 +33,42 @@ class _HomePageState extends State<HomePage> {
               height: 300,
             ),
           ),
+          TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const PageTest()),
+                );
+              },
+              child: const Text(
+                "Pagina teste",
+                style: TextStyle(color: Colors.pink, fontSize: 25),
+              )),
           //Paddin para mover as imagens na tela.
           Padding(
             padding: const EdgeInsets.only(top: 100),
             //botão de login.
             child: TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const LoginPage()),
-                  );
-                },
-                //configurações do button
-                style: TextButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-                  fixedSize: const Size(350, 50),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
+                );
+              },
+              //configurações do button
+              style: TextButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 252, 72, 27),
+                fixedSize: const Size(350, 50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                //texto do button e estilo da escrita
-                child: const Text(
-                  "Entrar",
-                  style: TextStyle(color: Colors.white, fontSize: 25),
-                )),
+              ),
+              //texto do button e estilo da escrita
+              child: const Text(
+                "Entrar",
+                style: TextStyle(color: Colors.white, fontSize: 25),
+              ),
+            ),
           )
         ],
       ),

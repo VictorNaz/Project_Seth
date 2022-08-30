@@ -119,6 +119,9 @@ class _MenuState extends State<Menu> {
           ),
         ],
       ),
+
+      //botão flutuante sobre a barra inferior
+
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: const FloatingActionButton(
         onPressed: null,
@@ -130,6 +133,8 @@ class _MenuState extends State<Menu> {
           size: 35,
         ),
       ),
+
+      //barra infeirior
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         color: Colors.black,
