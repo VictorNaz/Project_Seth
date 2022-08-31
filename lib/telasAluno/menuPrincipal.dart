@@ -21,7 +21,14 @@ class _MenuState extends State<Menu> {
       body: Stack(
         alignment: Alignment.center,
         children: <Widget>[
-          Container(),
+          Container(
+            //imagem de backgroud.
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/image/fundo3.jpg'),
+                  fit: BoxFit.cover),
+            ),
+          ),
           //Posicionamento do campo ao selecionar o campo
           SingleChildScrollView(
             child: Column(
@@ -62,7 +69,7 @@ class _MenuState extends State<Menu> {
                           ),
                         ), //texto do button e estilo da escrita
                         child: const Text(
-                          "Registrar Desempenho",
+                          "Registro Desempenho",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 20,

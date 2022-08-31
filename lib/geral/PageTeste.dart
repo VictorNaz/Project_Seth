@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_seth/telasAluno/perfilAluno.dart';
-
 import '../telasProf/CadProfessor.dart';
+import '../telasProf/ValPresenca.dart';
 
 class PageTest extends StatefulWidget {
   const PageTest({Key? key}) : super(key: key);
@@ -37,18 +36,18 @@ class _PageTestState extends State<PageTest> {
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   )),
               const Padding(padding: EdgeInsets.only(top: 30)),
-              /*TextButton(
+              TextButton(
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const PerfilAluno()),
+                          builder: (context) => const ValPresenca()),
                     );
                   },
                   child: const Text(
-                    "PerfilAluno",
+                    "ValPresenca",
                     style: TextStyle(color: Colors.white, fontSize: 20),
-                  )),*/
+                  )),
             ],
           )
         ],
