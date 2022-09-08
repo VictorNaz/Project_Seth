@@ -233,7 +233,6 @@ class _CadAlunoState extends State<CadAluno> {
                           )),
                     ],
                   ),
-
                   //Espaçamento entre os campos e o botão cadastrar
                   const Padding(padding: EdgeInsets.only(top: 50)),
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project_seth/telasAluno/DesempAluno.dart';
 
 import 'perfilAluno.dart';
 
@@ -25,7 +26,7 @@ class _MenuState extends State<Menu> {
             //imagem de backgroud.
             decoration: const BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage('assets/image/fundo3.jpg'),
+                  image: AssetImage('assets/image/fundo5.jpg'),
                   fit: BoxFit.cover),
             ),
           ),
@@ -33,94 +34,130 @@ class _MenuState extends State<Menu> {
           SingleChildScrollView(
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    //Botão autoavaliação
-                    TextButton(
-                        onPressed: null,
-                        style: TextButton.styleFrom(
-                          backgroundColor:
-                              const Color.fromARGB(255, 252, 72, 27),
-                          fixedSize: const Size(160, 160),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ), //texto do button e estilo da escrita
-                        child: const Text(
-                          "Autoavaliação",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                          ),
-                          textAlign: TextAlign.center,
-                        )),
+                //botao autoavaliação
 
-                    const Padding(padding: EdgeInsets.only(left: 20)),
+                ElevatedButton(
+                  onPressed: null,
+                  style: TextButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 252, 72, 27),
+                    fixedSize: const Size(320, 80),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: Row(
+                    children: const [
+                      Icon(
+                        Icons.text_increase,
+                        size: 50,
+                        color: Colors.black,
+                      ),
+                      Padding(padding: EdgeInsets.only(right: 40)),
+                      Text(
+                        "Autoavaliação",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
+                        textAlign: TextAlign.center,
+                      )
+                    ],
+                  ),
+                ),
 
-                    TextButton(
-                        onPressed: null,
-                        style: TextButton.styleFrom(
-                          backgroundColor:
-                              const Color.fromARGB(255, 252, 72, 27),
-                          fixedSize: const Size(160, 160),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ), //texto do button e estilo da escrita
-                        child: const Text(
-                          "Registro Desempenho",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                          ),
-                          textAlign: TextAlign.center,
-                        )),
-                  ],
+                const Padding(padding: EdgeInsets.only(top: 40)),
+
+                ElevatedButton(
+                  onPressed: null,
+                  style: TextButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 252, 72, 27),
+                    fixedSize: const Size(320, 80),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: Row(
+                    children: const [
+                      Icon(
+                        Icons.add_chart_rounded,
+                        size: 50,
+                        color: Colors.black,
+                      ),
+                      Padding(padding: EdgeInsets.only(right: 40)),
+                      Text(
+                        "Meu Desempenho",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
+                        textAlign: TextAlign.center,
+                      )
+                    ],
+                  ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: 20)),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextButton(
-                        onPressed: null,
-                        style: TextButton.styleFrom(
-                          backgroundColor:
-                              const Color.fromARGB(255, 252, 72, 27),
-                          fixedSize: const Size(160, 160),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ), //texto do button e estilo da escrita
-                        child: const Text(
-                          "Quadro de Aulas",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                          ),
-                          textAlign: TextAlign.center,
-                        )),
-                    const Padding(padding: EdgeInsets.only(left: 20)),
-                    TextButton(
-                        onPressed: null,
-                        style: TextButton.styleFrom(
-                          backgroundColor:
-                              const Color.fromARGB(255, 252, 72, 27),
-                          fixedSize: const Size(160, 160),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ), //texto do button e estilo da escrita
-                        child: const Text(
-                          "Informações",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                          ),
-                          textAlign: TextAlign.center,
-                        )),
-                  ],
+
+                const Padding(padding: EdgeInsets.only(top: 40)),
+
+                ElevatedButton(
+                  onPressed: null,
+                  style: TextButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 252, 72, 27),
+                    fixedSize: const Size(320, 80),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: Row(
+                    children: const [
+                      Icon(
+                        Icons.calendar_month_outlined,
+                        size: 50,
+                        color: Colors.black,
+                      ),
+                      Padding(padding: EdgeInsets.only(right: 40)),
+                      Text(
+                        "Quadro de Aulas",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
+                        textAlign: TextAlign.center,
+                      )
+                    ],
+                  ),
                 ),
+                const Padding(padding: EdgeInsets.only(top: 40)),
+                ElevatedButton(
+                  onPressed: null,
+                  style: TextButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 252, 72, 27),
+                    fixedSize: const Size(320, 80),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: Row(
+                    children: const [
+                      Icon(
+                        Icons.info_outline_rounded,
+                        size: 50,
+                        color: Colors.black,
+                      ),
+                      Padding(padding: EdgeInsets.only(right: 40)),
+                      Text(
+                        "Quadro de Aulas",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
+                        textAlign: TextAlign.center,
+                      )
+                    ],
+                  ),
+                ),
+                const Padding(padding: EdgeInsets.only(top: 40)),
+
+                const Padding(padding: EdgeInsets.only(bottom: 100)),
               ],
             ),
           ),
