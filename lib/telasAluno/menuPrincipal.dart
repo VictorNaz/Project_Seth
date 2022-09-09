@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_seth/telasAluno/DesempAluno.dart';
 
+import '../geral/utilClass.dart';
 import 'perfilAluno.dart';
 
 class Menu extends StatefulWidget {
@@ -17,8 +17,47 @@ class _MenuState extends State<Menu> {
       appBar: AppBar(
         //Barra superior já com o icone de voltar
         backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-        actions: const [],
+        title: const Text("Menu"),
+
+        //Icone de voltar quando utilizado o drawer no appbar
+        automaticallyImplyLeading: true,
+        leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              size: 30,
+            ),
+            onPressed: () => Navigator.pop(context, false)),
+
+        //drawer para navegação no appbar
       ),
+
+      endDrawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration:
+                  const BoxDecoration(color: Color.fromARGB(255, 252, 72, 27)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Icon(Icons.settings),
+                  Padding(padding: EdgeInsets.only(right: 20)),
+                  Text(
+                    "Opções",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+
+      //corpo
       body: Stack(
         alignment: Alignment.center,
         children: <Widget>[
@@ -145,7 +184,7 @@ class _MenuState extends State<Menu> {
                       ),
                       Padding(padding: EdgeInsets.only(right: 40)),
                       Text(
-                        "Quadro de Aulas",
+                        "Informações",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
@@ -207,7 +246,7 @@ class _MenuState extends State<Menu> {
             const IconButton(
               onPressed: null,
               icon: Icon(
-                Icons.settings,
+                Icons.exit_to_app,
                 color: Color.fromARGB(255, 252, 72, 27),
                 size: 35,
               ),
