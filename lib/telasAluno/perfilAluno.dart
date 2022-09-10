@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/telasAluno/menuPrincipal.dart';
 
+import '../widgets/utilClass.dart';
 import 'cadAluno.dart';
 
 class PerfilAluno extends StatefulWidget {
@@ -31,7 +32,24 @@ class _PerfilAlunoState extends State<PerfilAluno> {
         appBar: AppBar(
           //Barra superior já com o icone de voltar
           backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-          actions: [],
+          title: const Text("Menu"),
+
+          //Icone de voltar quando utilizado o drawer no appbar
+          automaticallyImplyLeading: true,
+          leading: IconButton(
+              icon: const Icon(
+                Icons.arrow_back,
+                size: 30,
+              ),
+              onPressed: () => Navigator.pop(context, false)),
+        ),
+
+        //drawer para navegação no appbar
+        //A classe Drawer está sendo chamada de outro arquivo e está recebendo por parametro o texto desejado.
+        endDrawer: const Drawer(
+          child: DrawerTop(
+            texto: "Opções",
+          ),
         ),
         body: Stack(
           alignment: Alignment.center,

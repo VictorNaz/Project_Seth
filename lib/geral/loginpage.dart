@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../telasAluno/cadAluno.dart';
 import '../telasAluno/menuPrincipal.dart';
+import '../widgets/utilClass.dart';
 import 'recSenha.dart';
 
 class LoginPage extends StatefulWidget {
@@ -30,7 +31,24 @@ class _LoginPageState extends State<LoginPage> {
         appBar: AppBar(
           //Barra superior já com o icone de voltar
           backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-          actions: const [],
+          title: const Text("Menu"),
+
+          //Icone de voltar quando utilizado o drawer no appbar
+          automaticallyImplyLeading: true,
+          leading: IconButton(
+              icon: const Icon(
+                Icons.arrow_back,
+                size: 30,
+              ),
+              onPressed: () => Navigator.pop(context, false)),
+        ),
+
+        //drawer para navegação no appbar
+        //A classe Drawer está sendo chamada de outro arquivo e está recebendo por parametro o texto desejado.
+        endDrawer: const Drawer(
+          child: DrawerTop(
+            texto: "Opções",
+          ),
         ),
 
         //Corpo já centralizado

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project_seth/telasAluno/desempAluno.dart';
+import 'package:flutter_project_seth/widgets/utilClass.dart';
 
-import '../geral/utilClass.dart';
 import 'perfilAluno.dart';
 
 class Menu extends StatefulWidget {
@@ -27,36 +28,15 @@ class _MenuState extends State<Menu> {
               size: 30,
             ),
             onPressed: () => Navigator.pop(context, false)),
-
-        //drawer para navegação no appbar
       ),
 
-      endDrawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              decoration:
-                  const BoxDecoration(color: Color.fromARGB(255, 252, 72, 27)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Icon(Icons.settings),
-                  Padding(padding: EdgeInsets.only(right: 20)),
-                  Text(
-                    "Opções",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
-                  )
-                ],
-              ),
-            )
-          ],
+      //drawer para navegação no appbar
+      //A classe Drawer está sendo chamada de outro arquivo e está recebendo por parametro o texto desejado.
+      endDrawer: const Drawer(
+        child: DrawerTop(
+          texto: "Opções",
         ),
       ),
-
       //corpo
       body: Stack(
         alignment: Alignment.center,
@@ -107,7 +87,13 @@ class _MenuState extends State<Menu> {
                 const Padding(padding: EdgeInsets.only(top: 40)),
 
                 ElevatedButton(
-                  onPressed: null,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const DesempAluno()),
+                    );
+                  },
                   style: TextButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 252, 72, 27),
                     fixedSize: const Size(320, 80),
