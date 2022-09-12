@@ -112,7 +112,7 @@ class _ValPresencaState extends State<ValPresenca> {
                       ),
                     ), //texto do button e estilo da escrita
                     child: const Text(
-                      "Entrar",
+                      "Validar Presença",
                       style: TextStyle(color: Colors.white, fontSize: 20),
                     )),
 

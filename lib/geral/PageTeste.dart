@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import '../telasProf/CadProfessor.dart';
+import '../telasMestre/CadProfessor.dart';
+import '../telasMestre/MenuMestre.dart';
 import '../telasProf/ValPresenca.dart';
+import '../telasProf/MenuProfessor.dart';
+import '../widgets/utilClass.dart';
 
 class PageTest extends StatefulWidget {
   const PageTest({Key? key}) : super(key: key);
@@ -19,6 +22,28 @@ class _PageTestState extends State<PageTest> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        //Barra superior já com o icone de voltar
+        backgroundColor: const Color.fromARGB(255, 252, 72, 27),
+        title: const Text("Tela de teste"),
+
+        //Icone de voltar quando utilizado o drawer no appbar
+        automaticallyImplyLeading: true,
+        leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              size: 30,
+            ),
+            onPressed: () => Navigator.pop(context, false)),
+      ),
+
+      //drawer para navegação no appbar
+      //A classe Drawer está sendo chamada de outro arquivo e está recebendo por parametro o texto desejado.
+      endDrawer: const Drawer(
+        child: DrawerTop(
+          texto: "Opções",
+        ),
+      ),
       backgroundColor: Colors.black,
       body: Stack(
         alignment: Alignment.center,
@@ -44,11 +69,25 @@ class _PageTestState extends State<PageTest> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const ValPresenca()),
+                          builder: (context) => const MenuMestre()),
                     );
                   },
                   child: const Text(
-                    "ValPresenca",
+                    "MenuMestre",
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  )),
+              const Padding(padding: EdgeInsets.only(top: 30)),
+              TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const MenuProfessor(),
+                      ),
+                    );
+                  },
+                  child: const Text(
+                    "MenuProfessor",
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   )),
             ],
