@@ -8,6 +8,9 @@ class PageTest extends StatefulWidget {
   State<PageTest> createState() => _PageTestState();
 }
 
+/*ALERTAAAAAA*/
+//Essa tela é excluisivamente para testes e deve ser excluida ou desabilitada ao final do desenvolvimento
+
 class _PageTestState extends State<PageTest> {
   bool isChecked = false;
   bool showPassword = false;

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_seth/telasAluno/desempAluno.dart';
+import 'package:flutter_project_seth/telasAluno/DesempAluno.dart';
 import 'package:flutter_project_seth/widgets/utilClass.dart';
 
-import 'perfilAluno.dart';
+import 'PerfilAluno.dart';
 
 class Menu extends StatefulWidget {
   const Menu({Key? key}) : super(key: key);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../telasAluno/menuPrincipal.dart';
+import '../telasAluno/MenuPrincipal.dart';
 import '../widgets/utilClass.dart';
 
 class ValPresenca extends StatefulWidget {

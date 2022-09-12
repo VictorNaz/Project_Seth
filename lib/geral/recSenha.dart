@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../widgets/utilClass.dart';
-import 'redifSenha.dart';
+import 'RedifSenha.dart';
 
 class RecSenha extends StatefulWidget {
   const RecSenha({Key? key}) : super(key: key);

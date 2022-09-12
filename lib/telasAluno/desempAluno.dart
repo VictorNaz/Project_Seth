@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../widgets/utilClass.dart';
-import 'menuPrincipal.dart';
-import 'perfilAluno.dart';
+import 'MenuPrincipal.dart';
+import 'PerfilAluno.dart';
 
 class DesempAluno extends StatefulWidget {
   const DesempAluno({Key? key}) : super(key: key);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_seth/telasAluno/cadAluno.dart';
-import 'package:flutter_project_seth/telasAluno/menuPrincipal.dart';
-import 'package:flutter_project_seth/geral/recSenha.dart';
+import 'package:flutter_project_seth/telasAluno/CadAluno.dart';
+import 'package:flutter_project_seth/telasAluno/MenuPrincipal.dart';
+import 'package:flutter_project_seth/geral/RecSenha.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
