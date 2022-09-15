@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.flutter_project_seth">
+   <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="Seth"
         android:name="${applicationName}"

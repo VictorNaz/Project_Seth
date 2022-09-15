@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../telasAluno/CadAluno.dart';
-import '../telasAluno/MenuPrincipal.dart';
-import '../widgets/utilClass.dart';
-import 'RecSenha.dart';
+import 'package:flutter_project_seth/telasAluno/CadAluno.dart';
+import 'package:flutter_project_seth/telasAluno/MenuPrincipal.dart';
+import 'package:flutter_project_seth/geral/RecSenha.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -31,24 +29,7 @@ class _LoginPageState extends State<LoginPage> {
         appBar: AppBar(
           //Barra superior já com o icone de voltar
           backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-          title: const Text("Menu"),
-
-          //Icone de voltar quando utilizado o drawer no appbar
-          automaticallyImplyLeading: true,
-          leading: IconButton(
-              icon: const Icon(
-                Icons.arrow_back,
-                size: 30,
-              ),
-              onPressed: () => Navigator.pop(context, false)),
-        ),
-
-        //drawer para navegação no appbar
-        //A classe Drawer está sendo chamada de outro arquivo e está recebendo por parametro o texto desejado.
-        endDrawer: const Drawer(
-          child: DrawerTop(
-            texto: "Opções",
-          ),
+          actions: const [],
         ),
 
         //Corpo já centralizado
@@ -81,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
                   width: 325,
                   child: TextFormField(
                     //foca no primeiro campo ao entrar na página
-                    //autofocus: true,
+                    autofocus: true,
 
                     //Define o teclado para digitar e-mail(adiciona o @ no teclado)
                     keyboardType: TextInputType.emailAddress,

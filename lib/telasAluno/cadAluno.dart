@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
+import 'package:flutter_project_seth/geral/loginpage.dart';
 
 import '../widgets/utilClass.dart';
 
@@ -12,6 +14,30 @@ class _CadAlunoState extends State<CadAluno> {
   bool isChecked = false;
   bool showPassword = false;
   bool _showPassword = false;
+
+  TextEditingController txtNome = TextEditingController();
+  TextEditingController txtUsuario = TextEditingController();
+  TextEditingController txtSenha = TextEditingController();
+  TextEditingController txtEmail = TextEditingController();
+  TextEditingController txtcpf = TextEditingController();
+
+  void Salvar() {
+    String nome;
+    String usuario;
+    String senha;
+    String email;
+    String cpf;
+
+    setState(() {
+      nome = txtNome.text;
+      usuario = txtUsuario.text;
+      senha = txtSenha.text;
+      email = txtEmail.text;
+      cpf = txtcpf.text;
+
+      CtrlAluno(nome, usuario, senha, email, cpf);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +92,7 @@ class _CadAlunoState extends State<CadAluno> {
                   SizedBox(
                     width: 325,
                     child: TextFormField(
+                      controller: txtNome,
                       keyboardType: TextInputType.name,
                       decoration: const InputDecoration(
                         icon: Icon(
@@ -85,6 +112,7 @@ class _CadAlunoState extends State<CadAluno> {
                   SizedBox(
                     width: 325,
                     child: TextFormField(
+                      controller: txtUsuario,
                       keyboardType: TextInputType.name,
                       decoration: const InputDecoration(
                         icon: Icon(
@@ -105,6 +133,7 @@ class _CadAlunoState extends State<CadAluno> {
                   SizedBox(
                     width: 325,
                     child: TextFormField(
+                      controller: txtEmail,
                       //Define o teclado para digitar e-mail(adiciona o @ no teclado)
                       keyboardType: TextInputType.emailAddress,
                       decoration: const InputDecoration(
@@ -127,6 +156,7 @@ class _CadAlunoState extends State<CadAluno> {
                   SizedBox(
                     width: 325,
                     child: TextFormField(
+                      controller: txtcpf,
                       //Define o teclado para numérico
                       keyboardType: TextInputType.number,
                       decoration: const InputDecoration(
@@ -149,6 +179,7 @@ class _CadAlunoState extends State<CadAluno> {
                   SizedBox(
                     width: 325,
                     child: TextFormField(
+                      controller: txtSenha,
                       decoration: InputDecoration(
                         icon: const Icon(
                           Icons.lock_outline,
@@ -257,7 +288,15 @@ class _CadAlunoState extends State<CadAluno> {
 
                   //Botão cadastrar
                   TextButton(
-                      onPressed: null,
+                      onPressed: () {
+                        print("testeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+                        print(txtNome.text);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const LoginPage()),
+                        );
+                      },
                       style: TextButton.styleFrom(
                         backgroundColor: const Color.fromARGB(255, 252, 72, 27),
                         fixedSize: const Size(330, 50),
