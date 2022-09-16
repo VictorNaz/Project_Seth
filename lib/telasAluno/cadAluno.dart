@@ -10,6 +10,17 @@ class CadAluno extends StatefulWidget {
   State<CadAluno> createState() => _CadAlunoState();
 }
 
+String? _validarNome(String value) {
+  String patttern = r'(^[a-zA-Z ]*$)';
+  RegExp regExp = new RegExp(patttern);
+  if (value.isEmpty) {
+    return "Informe o nome";
+  } else if (!regExp.hasMatch(value)) {
+    return "O nome deve conter caracteres de a-z ou A-Z";
+  }
+  return null;
+}
+
 class _CadAlunoState extends State<CadAluno> {
   bool isChecked = false;
   bool showPassword = false;
@@ -20,24 +31,6 @@ class _CadAlunoState extends State<CadAluno> {
   TextEditingController txtSenha = TextEditingController();
   TextEditingController txtEmail = TextEditingController();
   TextEditingController txtcpf = TextEditingController();
-
-  void Salvar() {
-    String nome;
-    String usuario;
-    String senha;
-    String email;
-    String cpf;
-
-    setState(() {
-      nome = txtNome.text;
-      usuario = txtUsuario.text;
-      senha = txtSenha.text;
-      email = txtEmail.text;
-      cpf = txtcpf.text;
-
-      CtrlAluno(nome, usuario, senha, email, cpf);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,6 +97,15 @@ class _CadAlunoState extends State<CadAluno> {
                             borderSide: BorderSide(
                                 color: Color.fromARGB(255, 252, 72, 27))),
                       ),
+                      onFieldSubmitted: (value) {},
+                      obscureText: true,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          print("tesssssse");
+                          return 'Enter a valid password!';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                   //Espaçamento entre inputs
@@ -289,13 +291,15 @@ class _CadAlunoState extends State<CadAluno> {
                   //Botão cadastrar
                   TextButton(
                       onPressed: () {
-                        print("testeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-                        print(txtNome.text);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginPage()),
-                        );
+                        if (cadAluno(txtNome.text, txtUsuario.text,
+                                txtSenha.text, txtEmail.text, txtcpf.text) ==
+                            true) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginPage()),
+                          );
+                        }
                       },
                       style: TextButton.styleFrom(
                         backgroundColor: const Color.fromARGB(255, 252, 72, 27),

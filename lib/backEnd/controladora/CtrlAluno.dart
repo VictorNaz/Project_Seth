@@ -1,14 +1,23 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/backEnd/modelo/aluno.dart';
 
-class CtrlAluno {
-  String nome;
-  String usuario;
-  String senha;
-  String email;
-  String cpf;
+String? cadAluno(String txtNome, String txtUsuario, String txtSenha,
+    String txtEmail, String txtCpf) {
+  var aluno = Aluno();
 
-  CtrlAluno(this.nome, this.usuario, this.senha, this.email, this.cpf);
+  aluno.setNome = txtNome;
+  aluno.setUsuario = txtUsuario;
+  aluno.setSenha = txtSenha;
+  aluno.setEmail = txtEmail;
+  aluno.setCpf = txtCpf;
+}
+
+String? _validarNome(String value) {
+  String patttern = r'(^[a-zA-Z ]*$)';
+  RegExp regExp = new RegExp(patttern);
+  if (value.isEmpty) {
+    return "Informe o nome";
+  } else if (!regExp.hasMatch(value)) {
+    return "O nome deve conter caracteres de a-z ou A-Z";
+  }
+  return null;
 }
