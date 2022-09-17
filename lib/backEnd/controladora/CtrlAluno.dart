@@ -11,13 +11,49 @@ String? cadAluno(String txtNome, String txtUsuario, String txtSenha,
   aluno.setCpf = txtCpf;
 }
 
-String? _validarNome(String value) {
+String? validarNome(String value) {
   String patttern = r'(^[a-zA-Z ]*$)';
   RegExp regExp = new RegExp(patttern);
-  if (value.isEmpty) {
+  if (value.isEmpty || value == null) {
     return "Informe o nome";
   } else if (!regExp.hasMatch(value)) {
     return "O nome deve conter caracteres de a-z ou A-Z";
+  }
+  return null;
+}
+
+String? validarEmail(String value) {
+  String patttern = r'(^[A-zÀ-ü]{1,}[@]{1}[A-z]{2,}([.]{1}[A-z]{1,})+$)';
+  RegExp regExp = new RegExp(patttern);
+  if (value.isEmpty || value == null) {
+    return "Informe o Email";
+  } else if (!regExp.hasMatch(value)) {
+    return "O Email digitado não é válido";
+  }
+  return null;
+}
+
+String? validarSenha(String value) {
+  if (value.isEmpty || value.length < 6) {
+    return "Informe uma senha com no mínimo 6 caracteres";
+  }
+  return null;
+}
+
+String? validaCpf(String value) {
+  String patttern = r'(^[0-9]{11}$)';
+  RegExp regExp = new RegExp(patttern);
+  if (value.isEmpty || value == null) {
+    return "Informe o CPF";
+  } else if (!regExp.hasMatch(value)) {
+    return "O CPF digitado não é válido";
+  }
+  return null;
+}
+
+String? validaUsuario(String value) {
+  if (value.isEmpty) {
+    return "Informe o usuário";
   }
   return null;
 }

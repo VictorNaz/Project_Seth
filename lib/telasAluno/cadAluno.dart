@@ -10,17 +10,6 @@ class CadAluno extends StatefulWidget {
   State<CadAluno> createState() => _CadAlunoState();
 }
 
-String? _validarNome(String value) {
-  String patttern = r'(^[a-zA-Z ]*$)';
-  RegExp regExp = new RegExp(patttern);
-  if (value.isEmpty) {
-    return "Informe o nome";
-  } else if (!regExp.hasMatch(value)) {
-    return "O nome deve conter caracteres de a-z ou A-Z";
-  }
-  return null;
-}
-
 class _CadAlunoState extends State<CadAluno> {
   bool isChecked = false;
   bool showPassword = false;
@@ -31,6 +20,8 @@ class _CadAlunoState extends State<CadAluno> {
   TextEditingController txtSenha = TextEditingController();
   TextEditingController txtEmail = TextEditingController();
   TextEditingController txtcpf = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -82,167 +73,181 @@ class _CadAlunoState extends State<CadAluno> {
 
                   const Padding(padding: EdgeInsets.only(top: 30)),
 
-                  SizedBox(
-                    width: 325,
-                    child: TextFormField(
-                      controller: txtNome,
-                      keyboardType: TextInputType.name,
-                      decoration: const InputDecoration(
-                        icon: Icon(
-                          Icons.person,
-                          color: Color.fromARGB(255, 252, 72, 27),
-                        ),
-                        labelText: "Nome Completo",
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Color.fromARGB(255, 252, 72, 27))),
-                      ),
-                      onFieldSubmitted: (value) {},
-                      obscureText: true,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          print("tesssssse");
-                          return 'Enter a valid password!';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  //Espaçamento entre inputs
-                  const Padding(padding: EdgeInsets.only(top: 15)),
-
-                  SizedBox(
-                    width: 325,
-                    child: TextFormField(
-                      controller: txtUsuario,
-                      keyboardType: TextInputType.name,
-                      decoration: const InputDecoration(
-                        icon: Icon(
-                          Icons.person,
-                          color: Color.fromARGB(255, 252, 72, 27),
-                        ),
-                        labelText: "Nome de Usuário",
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Color.fromARGB(255, 252, 72, 27))),
-                      ),
-                    ),
-                  ),
-
-                  //Espaçamento entre inputs
-                  const Padding(padding: EdgeInsets.only(top: 15)),
-
-                  SizedBox(
-                    width: 325,
-                    child: TextFormField(
-                      controller: txtEmail,
-                      //Define o teclado para digitar e-mail(adiciona o @ no teclado)
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: const InputDecoration(
-                        icon: Icon(
-                          Icons.email,
-                          color: Color.fromARGB(255, 252, 72, 27),
-                        ),
-                        labelText: "Email",
-                        hintStyle: TextStyle(color: Colors.black),
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Color.fromARGB(255, 252, 72, 27))),
-                      ),
-                    ),
-                  ),
-
-                  //Espaçamento entre inputs
-                  const Padding(padding: EdgeInsets.only(top: 15)),
-
-                  SizedBox(
-                    width: 325,
-                    child: TextFormField(
-                      controller: txtcpf,
-                      //Define o teclado para numérico
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        icon: Icon(
-                          Icons.document_scanner,
-                          color: Color.fromARGB(255, 252, 72, 27),
-                        ),
-                        labelText: "CPF",
-                        hintStyle: TextStyle(color: Colors.black),
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Color.fromARGB(255, 252, 72, 27))),
-                      ),
-                    ),
-                  ),
-
-                  //Espaçamento entre inputs
-                  const Padding(padding: EdgeInsets.only(top: 15)),
-
-                  SizedBox(
-                    width: 325,
-                    child: TextFormField(
-                      controller: txtSenha,
-                      decoration: InputDecoration(
-                        icon: const Icon(
-                          Icons.lock_outline,
-                          color: Color.fromARGB(255, 252, 72, 27),
-                        ),
-                        labelText: "Senha",
-                        hintStyle: const TextStyle(color: Colors.black),
-                        focusedBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Color.fromARGB(255, 252, 72, 27))),
-                        suffixIcon: GestureDetector(
-                          child: Icon(
-                            showPassword == false
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                            color: Colors.black,
+                  Form(
+                      key: _formKey,
+                      child: Column(children: [
+                        SizedBox(
+                          width: 325,
+                          child: TextFormField(
+                            controller: txtNome,
+                            keyboardType: TextInputType.name,
+                            decoration: const InputDecoration(
+                              icon: Icon(
+                                Icons.person,
+                                color: Color.fromARGB(255, 252, 72, 27),
+                              ),
+                              labelText: "Nome Completo",
+                              focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color.fromARGB(255, 252, 72, 27))),
+                            ),
+                            validator: (value) {
+                              return validarNome(txtNome.text);
+                            },
                           ),
-                          onTap: () {
-                            setState(() {
-                              showPassword = !showPassword;
-                            });
-                          },
                         ),
-                      ),
-                      obscureText: showPassword == false ? true : false,
-                    ),
-                  ),
 
-                  //Espaçamento entre inputs
-                  const Padding(padding: EdgeInsets.only(top: 15)),
+                        //Espaçamento entre inputs
+                        const Padding(padding: EdgeInsets.only(top: 15)),
 
-                  SizedBox(
-                    width: 325,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        icon: const Icon(
-                          Icons.lock_outline,
-                          color: Color.fromARGB(255, 252, 72, 27),
-                        ),
-                        labelText: "Confirmar senha",
-                        hintStyle: const TextStyle(color: Colors.black),
-                        focusedBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Color.fromARGB(255, 252, 72, 27))),
-                        suffixIcon: GestureDetector(
-                          child: Icon(
-                            _showPassword == false
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                            color: Colors.black,
+                        SizedBox(
+                          width: 325,
+                          child: TextFormField(
+                            controller: txtUsuario,
+                            keyboardType: TextInputType.name,
+                            decoration: const InputDecoration(
+                              icon: Icon(
+                                Icons.person,
+                                color: Color.fromARGB(255, 252, 72, 27),
+                              ),
+                              labelText: "Nome de Usuário",
+                              focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color.fromARGB(255, 252, 72, 27))),
+                            ),
+                            validator: (value) {
+                              return validaUsuario(txtUsuario.text);
+                            },
                           ),
-                          onTap: () {
-                            setState(() {
-                              _showPassword = !_showPassword;
-                            });
-                          },
                         ),
-                      ),
-                      obscureText: _showPassword == false ? true : false,
-                    ),
-                  ),
+
+                        //Espaçamento entre inputs
+                        const Padding(padding: EdgeInsets.only(top: 15)),
+
+                        SizedBox(
+                          width: 325,
+                          child: TextFormField(
+                            controller: txtEmail,
+                            //Define o teclado para digitar e-mail(adiciona o @ no teclado)
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: const InputDecoration(
+                              icon: Icon(
+                                Icons.email,
+                                color: Color.fromARGB(255, 252, 72, 27),
+                              ),
+                              labelText: "Email",
+                              hintStyle: TextStyle(color: Colors.black),
+                              focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color.fromARGB(255, 252, 72, 27))),
+                            ),
+                            validator: (value) {
+                              return validarEmail(txtEmail.text);
+                            },
+                          ),
+                        ),
+
+                        //Espaçamento entre inputs
+                        const Padding(padding: EdgeInsets.only(top: 15)),
+
+                        SizedBox(
+                          width: 325,
+                          child: TextFormField(
+                            controller: txtcpf,
+                            //Define o teclado para numérico
+                            keyboardType: TextInputType.number,
+                            decoration: const InputDecoration(
+                              icon: Icon(
+                                Icons.document_scanner,
+                                color: Color.fromARGB(255, 252, 72, 27),
+                              ),
+                              labelText: "CPF",
+                              hintStyle: TextStyle(color: Colors.black),
+                              focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color.fromARGB(255, 252, 72, 27))),
+                            ),
+                            validator: (value) {
+                              return validaCpf(txtcpf.text);
+                            },
+                          ),
+                        ),
+
+                        //Espaçamento entre inputs
+                        const Padding(padding: EdgeInsets.only(top: 15)),
+
+                        SizedBox(
+                          width: 325,
+                          child: TextFormField(
+                            controller: txtSenha,
+                            decoration: InputDecoration(
+                              icon: const Icon(
+                                Icons.lock_outline,
+                                color: Color.fromARGB(255, 252, 72, 27),
+                              ),
+                              labelText: "Senha",
+                              hintStyle: const TextStyle(color: Colors.black),
+                              focusedBorder: const UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color.fromARGB(255, 252, 72, 27))),
+                              suffixIcon: GestureDetector(
+                                child: Icon(
+                                  showPassword == false
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                  color: Colors.black,
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    showPassword = !showPassword;
+                                  });
+                                },
+                              ),
+                            ),
+                            validator: (value) {
+                              return validarSenha(txtSenha.text);
+                            },
+                            obscureText: showPassword == false ? true : false,
+                          ),
+                        ),
+
+                        //Espaçamento entre inputs
+                        const Padding(padding: EdgeInsets.only(top: 15)),
+
+                        SizedBox(
+                          width: 325,
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              icon: const Icon(
+                                Icons.lock_outline,
+                                color: Color.fromARGB(255, 252, 72, 27),
+                              ),
+                              labelText: "Confirmar senha",
+                              hintStyle: const TextStyle(color: Colors.black),
+                              focusedBorder: const UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color.fromARGB(255, 252, 72, 27))),
+                              suffixIcon: GestureDetector(
+                                child: Icon(
+                                  _showPassword == false
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                  color: Colors.black,
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    _showPassword = !_showPassword;
+                                  });
+                                },
+                              ),
+                            ),
+                            validator: (value) {
+                              return validarSenha(txtSenha.text);
+                            },
+                            obscureText: _showPassword == false ? true : false,
+                          ),
+                        ),
+                      ])),
 
                   const Padding(padding: EdgeInsets.only(top: 20)),
 
@@ -291,13 +296,19 @@ class _CadAlunoState extends State<CadAluno> {
                   //Botão cadastrar
                   TextButton(
                       onPressed: () {
-                        if (cadAluno(txtNome.text, txtUsuario.text,
-                                txtSenha.text, txtEmail.text, txtcpf.text) ==
-                            true) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const LoginPage()),
+                        if (_formKey.currentState!.validate()) {
+                          if (cadAluno(txtNome.text, txtUsuario.text,
+                                  txtSenha.text, txtEmail.text, txtcpf.text) ==
+                              true) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const LoginPage()),
+                            );
+                          }
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text('Casdastrado com sucesso')),
                           );
                         }
                       },
