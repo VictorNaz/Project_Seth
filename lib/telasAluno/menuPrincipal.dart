@@ -54,6 +54,14 @@ class _MenuState extends State<Menu> {
             child: Column(
               children: [
                 //botao autoavaliação
+                const BotaoMenu(
+                  texto: "Auto Avaliação",
+                  icone: Icon(
+                    Icons.text_increase,
+                    size: 50,
+                    color: Colors.black,
+                  ),
+                ),
 
                 ElevatedButton(
                   onPressed: null,
@@ -73,7 +81,7 @@ class _MenuState extends State<Menu> {
                       ),
                       Padding(padding: EdgeInsets.only(right: 40)),
                       Text(
-                        "Autoavaliação",
+                        "Auto Avaliação",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,

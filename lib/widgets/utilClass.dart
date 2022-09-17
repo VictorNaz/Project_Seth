@@ -32,3 +32,39 @@ class DrawerTop extends StatelessWidget {
     );
   }
 }
+
+class BotaoMenu extends StatelessWidget {
+  const BotaoMenu({Key? key, required this.texto, required this.icone})
+      : super(key: key);
+
+  final String texto;
+  final Icon icone;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: null,
+      style: TextButton.styleFrom(
+        backgroundColor: const Color.fromARGB(255, 252, 72, 27),
+        fixedSize: const Size(320, 80),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+      child: Row(
+        children: [
+          icone,
+          const Padding(padding: EdgeInsets.only(right: 40)),
+          Text(
+            texto,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+            ),
+            textAlign: TextAlign.center,
+          )
+        ],
+      ),
+    );
+  }
+}
