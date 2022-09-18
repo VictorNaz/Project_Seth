@@ -173,7 +173,7 @@ class _DesempAlunoState extends State<DesempAluno> {
                           childrenPadding: EdgeInsets.all(16),
                           //titulo do botão
                           title: Text(
-                            "Alto Avaliação",
+                            "Auto Avaliação",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 25,
