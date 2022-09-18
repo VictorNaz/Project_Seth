@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_seth/telasAluno/DesempAluno.dart';
+import 'package:flutter_project_seth/telasAluno/desempAluno.dart';
 import 'package:flutter_project_seth/widgets/utilClass.dart';
 
 import 'PerfilAluno.dart';
@@ -52,145 +52,55 @@ class _MenuState extends State<Menu> {
           //Posicionamento do campo ao selecionar o campo
           SingleChildScrollView(
             child: Column(
-              children: [
-                //botao autoavaliação
-                const BotaoMenu(
+              children: const [
+                //A classe BotaoMenu é uma classe auxiliar que recebe o texto e o icone para retornar o botao completo
+                BotaoMenu(
                   texto: "Auto Avaliação",
                   icone: Icon(
                     Icons.text_increase,
                     size: 50,
                     color: Colors.black,
                   ),
+                  tela: Menu(),
                 ),
 
-                ElevatedButton(
-                  onPressed: null,
-                  style: TextButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-                    fixedSize: const Size(320, 80),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+                Padding(padding: EdgeInsets.only(top: 40)),
+
+                BotaoMenu(
+                  texto: "Meu Desempenho",
+                  icone: Icon(
+                    Icons.add_chart_rounded,
+                    size: 50,
+                    color: Colors.black,
                   ),
-                  child: Row(
-                    children: const [
-                      Icon(
-                        Icons.text_increase,
-                        size: 50,
-                        color: Colors.black,
-                      ),
-                      Padding(padding: EdgeInsets.only(right: 40)),
-                      Text(
-                        "Auto Avaliação",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                        ),
-                        textAlign: TextAlign.center,
-                      )
-                    ],
-                  ),
+                  tela: DesempAluno(),
                 ),
 
-                const Padding(padding: EdgeInsets.only(top: 40)),
+                Padding(padding: EdgeInsets.only(top: 40)),
 
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const DesempAluno()),
-                    );
-                  },
-                  style: TextButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-                    fixedSize: const Size(320, 80),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+                BotaoMenu(
+                  texto: "Quadro de Aulas",
+                  icone: Icon(
+                    Icons.calendar_month_outlined,
+                    size: 50,
+                    color: Colors.black,
                   ),
-                  child: Row(
-                    children: const [
-                      Icon(
-                        Icons.add_chart_rounded,
-                        size: 50,
-                        color: Colors.black,
-                      ),
-                      Padding(padding: EdgeInsets.only(right: 40)),
-                      Text(
-                        "Meu Desempenho",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                        ),
-                        textAlign: TextAlign.center,
-                      )
-                    ],
-                  ),
+                  tela: Menu(),
                 ),
 
-                const Padding(padding: EdgeInsets.only(top: 40)),
+                Padding(padding: EdgeInsets.only(top: 40)),
 
-                ElevatedButton(
-                  onPressed: null,
-                  style: TextButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-                    fixedSize: const Size(320, 80),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+                BotaoMenu(
+                  texto: "Informações",
+                  icone: Icon(
+                    Icons.info_outline_rounded,
+                    size: 50,
+                    color: Colors.black,
                   ),
-                  child: Row(
-                    children: const [
-                      Icon(
-                        Icons.calendar_month_outlined,
-                        size: 50,
-                        color: Colors.black,
-                      ),
-                      Padding(padding: EdgeInsets.only(right: 40)),
-                      Text(
-                        "Quadro de Aulas",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                        ),
-                        textAlign: TextAlign.center,
-                      )
-                    ],
-                  ),
+                  tela: Menu(),
                 ),
-                const Padding(padding: EdgeInsets.only(top: 40)),
-                ElevatedButton(
-                  onPressed: null,
-                  style: TextButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-                    fixedSize: const Size(320, 80),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  child: Row(
-                    children: const [
-                      Icon(
-                        Icons.info_outline_rounded,
-                        size: 50,
-                        color: Colors.black,
-                      ),
-                      Padding(padding: EdgeInsets.only(right: 40)),
-                      Text(
-                        "Informações",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                        ),
-                        textAlign: TextAlign.center,
-                      )
-                    ],
-                  ),
-                ),
-                const Padding(padding: EdgeInsets.only(top: 40)),
 
-                const Padding(padding: EdgeInsets.only(bottom: 100)),
+                Padding(padding: EdgeInsets.only(bottom: 100)),
               ],
             ),
           ),
