@@ -34,23 +34,34 @@ class DrawerTop extends StatelessWidget {
 }
 
 class BotaoMenu extends StatelessWidget {
+<<<<<<< HEAD
   const BotaoMenu(
       {Key? key, required this.texto, required this.icone, required this.tela})
+=======
+  const BotaoMenu({Key? key, required this.texto, required this.icone})
+>>>>>>> 59f180a8e1cd1e7192fad02a2e3ff134f283aaf0
       : super(key: key);
 
   final String texto;
   final Icon icone;
+<<<<<<< HEAD
   final Widget tela;
+=======
+>>>>>>> 59f180a8e1cd1e7192fad02a2e3ff134f283aaf0
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+<<<<<<< HEAD
       onPressed: () {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => tela),
         );
       },
+=======
+      onPressed: null,
+>>>>>>> 59f180a8e1cd1e7192fad02a2e3ff134f283aaf0
       style: TextButton.styleFrom(
         backgroundColor: const Color.fromARGB(255, 252, 72, 27),
         fixedSize: const Size(320, 80),

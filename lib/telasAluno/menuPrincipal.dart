@@ -52,14 +52,52 @@ class _MenuState extends State<Menu> {
           //Posicionamento do campo ao selecionar o campo
           SingleChildScrollView(
             child: Column(
+<<<<<<< HEAD
               children: const [
                 //A classe BotaoMenu é uma classe auxiliar que recebe o texto e o icone para retornar o botao completo
                 BotaoMenu(
+=======
+              children: [
+                //botao autoavaliação
+                const BotaoMenu(
+>>>>>>> 59f180a8e1cd1e7192fad02a2e3ff134f283aaf0
                   texto: "Auto Avaliação",
                   icone: Icon(
                     Icons.text_increase,
                     size: 50,
                     color: Colors.black,
+<<<<<<< HEAD
+=======
+                  ),
+                ),
+
+                ElevatedButton(
+                  onPressed: null,
+                  style: TextButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 252, 72, 27),
+                    fixedSize: const Size(320, 80),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: Row(
+                    children: const [
+                      Icon(
+                        Icons.text_increase,
+                        size: 50,
+                        color: Colors.black,
+                      ),
+                      Padding(padding: EdgeInsets.only(right: 40)),
+                      Text(
+                        "Auto Avaliação",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
+                        textAlign: TextAlign.center,
+                      )
+                    ],
+>>>>>>> 59f180a8e1cd1e7192fad02a2e3ff134f283aaf0
                   ),
                   tela: Menu(),
                 ),
