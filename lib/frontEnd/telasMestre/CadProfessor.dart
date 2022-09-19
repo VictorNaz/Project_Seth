@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/backEnd/controladora/CtrlProfessor.dart';
 
 import '../geral/loginPage.dart';
-import '../widgets/utilClass.dart';
 
 class CadProfessor extends StatefulWidget {
   const CadProfessor({Key? key}) : super(key: key);

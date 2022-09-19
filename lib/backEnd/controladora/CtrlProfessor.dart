@@ -14,7 +14,7 @@ String? cadProfessor(String txtNome, String txtUsuario, String txtTelefone,
 
 String? validarNome(String value) {
   String patttern = r'(^[a-zA-Z ]*$)';
-  RegExp regExp = new RegExp(patttern);
+  RegExp regExp = RegExp(patttern);
   if (value.isEmpty || value == null) {
     return "Informe o nome";
   } else if (!regExp.hasMatch(value)) {
@@ -25,7 +25,7 @@ String? validarNome(String value) {
 
 String? validarEmail(String value) {
   String patttern = r'(^[A-zÀ-ü]{1,}[@]{1}[A-z]{2,}([.]{1}[A-z]{1,})+$)';
-  RegExp regExp = new RegExp(patttern);
+  RegExp regExp = RegExp(patttern);
   if (value.isEmpty || value == null) {
     return "Informe o Email";
   } else if (!regExp.hasMatch(value)) {
@@ -36,7 +36,7 @@ String? validarEmail(String value) {
 
 String? validarTelefone(String value) {
   String patttern = r'(^[0-9]{11}$)';
-  RegExp regExp = new RegExp(patttern);
+  RegExp regExp = RegExp(patttern);
   if (value.isEmpty || value == null) {
     return "Informe o Telefone";
   } else if (!regExp.hasMatch(value)) {
@@ -65,7 +65,7 @@ String? validarConfSenha(String txtSenha, String txtConfSenha) {
 
 String? validarCpf(String value) {
   String patttern = r'(^[0-9]{11}$)';
-  RegExp regExp = new RegExp(patttern);
+  RegExp regExp = RegExp(patttern);
   if (value.isEmpty || value == null) {
     return "Informe o CPF";
   } else if (!regExp.hasMatch(value)) {
