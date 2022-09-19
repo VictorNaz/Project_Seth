@@ -13,7 +13,6 @@ class PerfilAluno extends StatefulWidget {
 class _PerfilAlunoState extends State<PerfilAluno> {
   bool isChecked = false;
   bool showPassword = false;
-  bool _showPassword = false;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +28,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
         }
       },
       child: Scaffold(
+        extendBody: true,
         appBar: AppBar(
           //Barra superior já com o icone de voltar
           backgroundColor: const Color.fromARGB(255, 252, 72, 27),

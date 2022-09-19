@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project_seth/frontEnd/telasAluno/info.dart';
 import '../telasAluno/desempAluno.dart';
 import '../widgets/utilClass.dart';
 import 'ValPresenca.dart';
@@ -79,7 +80,7 @@ class _MenuProfessorState extends State<MenuProfessor> {
                       size: 50,
                       color: Colors.black,
                     ),
-                    tela: MenuProfessor()),
+                    tela: Info()),
                 Padding(padding: EdgeInsets.only(bottom: 140)),
               ],
             ),
