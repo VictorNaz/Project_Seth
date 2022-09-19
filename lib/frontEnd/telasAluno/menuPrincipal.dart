@@ -52,7 +52,8 @@ class _MenuState extends State<Menu> {
           SingleChildScrollView(
             child: Column(
               children: const [
-                //A classe BotaoMenu é uma classe auxiliar que recebe o texto e o icone para retornar o botao completo
+                //A classe BotaoMenu é uma classe auxiliar que recebe o texto e o icone para
+                //retornar o botao completo
                 BotaoMenu(
                   texto: "Auto Avaliação",
                   icone: Icon(

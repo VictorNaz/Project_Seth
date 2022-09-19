@@ -51,114 +51,36 @@ class _MenuProfessorState extends State<MenuProfessor> {
           //Posicionamento do campo ao selecionar o campo
           SingleChildScrollView(
             child: Column(
-              children: [
-                //botao autoavaliação
-
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ValPresenca()),
-                    );
-                  },
-                  style: TextButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-                    fixedSize: const Size(320, 80),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+              children: const [
+                //A classe BotaoMenu é uma classe auxiliar que recebe o texto e o icone para retornar
+                //o botao completo
+                BotaoMenu(
+                    texto: "Validar Presença",
+                    icone: Icon(
+                      Icons.fact_check_outlined,
+                      size: 50,
+                      color: Colors.black,
                     ),
-                  ),
-                  child: Row(
-                    children: const [
-                      Icon(
-                        Icons.fact_check_outlined,
-                        size: 50,
-                        color: Colors.black,
-                      ),
-                      Padding(padding: EdgeInsets.only(right: 60)),
-                      Text(
-                        "Presença",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                        ),
-                        textAlign: TextAlign.center,
-                      )
-                    ],
-                  ),
-                ),
-
-                const Padding(padding: EdgeInsets.only(top: 40)),
-
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const DesempAluno()),
-                    );
-                  },
-                  style: TextButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-                    fixedSize: const Size(320, 80),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                    tela: ValPresenca()),
+                Padding(padding: EdgeInsets.only(top: 40)),
+                BotaoMenu(
+                    texto: "Desempenho dos \n Alunos",
+                    icone: Icon(
+                      Icons.add_chart_rounded,
+                      size: 50,
+                      color: Colors.black,
                     ),
-                  ),
-                  child: Row(
-                    children: const [
-                      Icon(
-                        Icons.add_chart_rounded,
-                        size: 50,
-                        color: Colors.black,
-                      ),
-                      Padding(padding: EdgeInsets.only(right: 25)),
-                      Text(
-                        "Desempenho dos \n Alunos",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                        ),
-                        textAlign: TextAlign.center,
-                      )
-                    ],
-                  ),
-                ),
-
-                const Padding(padding: EdgeInsets.only(top: 40)),
-
-                ElevatedButton(
-                  onPressed: null,
-                  style: TextButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-                    fixedSize: const Size(320, 80),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                    tela: DesempAluno()),
+                Padding(padding: EdgeInsets.only(top: 40)),
+                BotaoMenu(
+                    texto: "Informações",
+                    icone: Icon(
+                      Icons.info_outline_rounded,
+                      size: 50,
+                      color: Colors.black,
                     ),
-                  ),
-                  child: Row(
-                    children: const [
-                      Icon(
-                        Icons.info_outline_rounded,
-                        size: 50,
-                        color: Colors.black,
-                      ),
-                      Padding(padding: EdgeInsets.only(right: 50)),
-                      Text(
-                        "Informações",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                        ),
-                        textAlign: TextAlign.center,
-                      )
-                    ],
-                  ),
-                ),
-                const Padding(padding: EdgeInsets.only(top: 40)),
-
-                const Padding(padding: EdgeInsets.only(bottom: 100)),
+                    tela: MenuProfessor()),
+                Padding(padding: EdgeInsets.only(bottom: 140)),
               ],
             ),
           ),

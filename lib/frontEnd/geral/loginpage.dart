@@ -30,7 +30,16 @@ class _LoginPageState extends State<LoginPage> {
         appBar: AppBar(
           //Barra superior já com o icone de voltar
           backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-          actions: const [],
+          title: const Text("Página de Login"),
+
+          //Icone de voltar quando utilizado o drawer no appbar
+          automaticallyImplyLeading: true,
+          leading: IconButton(
+              icon: const Icon(
+                Icons.arrow_back,
+                size: 30,
+              ),
+              onPressed: () => Navigator.pop(context, false)),
         ),
 
         //Corpo já centralizado

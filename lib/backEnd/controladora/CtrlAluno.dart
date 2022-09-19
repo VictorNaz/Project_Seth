@@ -15,7 +15,7 @@ String? validarNome(String value) {
   String patttern = r'(^[a-zA-Z ]*$)';
   RegExp regExp = new RegExp(patttern);
   if (value.isEmpty || value == null) {
-    return "Informe o nome";
+    return "Informe o Nome";
   } else if (!regExp.hasMatch(value)) {
     return "O nome deve conter caracteres de a-z ou A-Z";
   }
