@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project_seth/frontEnd/telasAluno/AutoAvaliacao.dart';
+import 'package:flutter_project_seth/frontEnd/telasAluno/info.dart';
 
 import '../widgets/utilClass.dart';
 import 'desempAluno.dart';
@@ -14,6 +16,7 @@ class _MenuState extends State<Menu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       appBar: AppBar(
         //Barra superior já com o icone de voltar
         backgroundColor: const Color.fromARGB(255, 252, 72, 27),
@@ -61,7 +64,7 @@ class _MenuState extends State<Menu> {
                     size: 50,
                     color: Colors.black,
                   ),
-                  tela: Menu(),
+                  tela: AutoAvaliacao(),
                 ),
 
                 Padding(padding: EdgeInsets.only(top: 40)),
@@ -97,7 +100,7 @@ class _MenuState extends State<Menu> {
                     size: 50,
                     color: Colors.black,
                   ),
-                  tela: Menu(),
+                  tela: Info(),
                 ),
 
                 Padding(padding: EdgeInsets.only(bottom: 100)),
