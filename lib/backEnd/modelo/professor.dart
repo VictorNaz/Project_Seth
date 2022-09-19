@@ -1,22 +1,13 @@
 class Professor {
-  Professor(
-      {required this.id,
-      required this.nome,
-      required this.usuario,
-      required this.telefone,
-      required this.senha,
-      required this.email,
-      required this.cpf});
+  int? id;
+  String? nome;
+  String? usuario;
+  String? telefone;
+  String? senha;
+  String? email;
+  String? cpf;
 
-  int id;
-  String nome;
-  String usuario;
-  int telefone;
-  int senha;
-  String email;
-  int cpf;
-
-  int get getId {
+  int? get getId {
     return id;
   }
 
@@ -24,7 +15,7 @@ class Professor {
     this.id = id;
   }
 
-  String get getNome {
+  String? get getNome {
     return nome;
   }
 
@@ -32,7 +23,7 @@ class Professor {
     this.nome = nome;
   }
 
-  String get getUsuario {
+  String? get getUsuario {
     return usuario;
   }
 
@@ -40,23 +31,23 @@ class Professor {
     this.usuario = usuario;
   }
 
-  int get getTelefone {
+  String? get getTelefone {
     return telefone;
   }
 
-  set setTelefone(int telefone) {
+  set setTelefone(String telefone) {
     this.telefone = telefone;
   }
 
-  int get getSenha {
+  String? get getSenha {
     return senha;
   }
 
-  set setSenha(int senha) {
+  set setSenha(String senha) {
     this.senha = senha;
   }
 
-  String get getEmail {
+  String? get getEmail {
     return email;
   }
 
@@ -64,11 +55,11 @@ class Professor {
     this.email = email;
   }
 
-  int get getCpf {
+  String? get getCpf {
     return cpf;
   }
 
-  set setCpf(int cpf) {
+  set setCpf(String cpf) {
     this.cpf = cpf;
   }
 }

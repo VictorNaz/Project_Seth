@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_seth/telasAluno/MenuPrincipal.dart';
 
 import '../widgets/utilClass.dart';
 import 'CadAluno.dart';
+import 'MenuPrincipal.dart';
 
 class PerfilAluno extends StatefulWidget {
   const PerfilAluno({Key? key}) : super(key: key);

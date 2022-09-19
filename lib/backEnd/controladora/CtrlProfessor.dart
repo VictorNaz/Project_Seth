@@ -1,14 +1,15 @@
-import 'package:flutter_project_seth/backEnd/modelo/aluno.dart';
+import '../modelo/professor.dart';
 
-String? cadAluno(String txtNome, String txtUsuario, String txtSenha,
-    String txtEmail, String txtCpf) {
-  var aluno = Aluno();
+String? cadProfessor(String txtNome, String txtUsuario, String txtTelefone,
+    String txtSenha, String txtEmail, String txtCpf) {
+  var professor = Professor();
 
-  aluno.setNome = txtNome;
-  aluno.setUsuario = txtUsuario;
-  aluno.setSenha = txtSenha;
-  aluno.setEmail = txtEmail;
-  aluno.setCpf = txtCpf;
+  professor.nome = txtNome;
+  professor.usuario = txtUsuario;
+  professor.telefone = txtTelefone;
+  professor.senha = txtSenha;
+  professor.email = txtEmail;
+  professor.cpf = txtCpf;
 }
 
 String? validarNome(String value) {
@@ -33,6 +34,17 @@ String? validarEmail(String value) {
   return null;
 }
 
+String? validarTelefone(String value) {
+  String patttern = r'(^[0-9]{11}$)';
+  RegExp regExp = new RegExp(patttern);
+  if (value.isEmpty || value == null) {
+    return "Informe o Telefone";
+  } else if (!regExp.hasMatch(value)) {
+    return "O Telefone digitado não é válido";
+  }
+  return null;
+}
+
 String? validarSenha(String value) {
   if (value.isEmpty || value.length < 6) {
     return "Informe uma senha com no mínimo 6 caracteres";
@@ -51,7 +63,7 @@ String? validarConfSenha(String txtSenha, String txtConfSenha) {
   return null;
 }
 
-String? validaCpf(String value) {
+String? validarCpf(String value) {
   String patttern = r'(^[0-9]{11}$)';
   RegExp regExp = new RegExp(patttern);
   if (value.isEmpty || value == null) {
@@ -64,6 +76,13 @@ String? validaCpf(String value) {
 
 String? validaUsuario(String value) {
   if (value.isEmpty) {
+    return "Informe o usuário";
+  }
+  return null;
+}
+
+String? ValidarTermos(String value) {
+  if (value == true) {
     return "Informe o usuário";
   }
   return null;
