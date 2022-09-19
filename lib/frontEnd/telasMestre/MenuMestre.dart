@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_seth/telasAluno/DesempAluno.dart';
-import 'package:flutter_project_seth/telasProf/ValPresenca.dart';
-import 'package:flutter_project_seth/widgets/utilClass.dart';
+import '../telasAluno/desempAluno.dart';
+import '../telasProf/ValPresenca.dart';
+import '../widgets/utilClass.dart';
+import 'CadProfessor.dart';
 
-class MenuProfessor extends StatefulWidget {
-  const MenuProfessor({Key? key}) : super(key: key);
+class MenuMestre extends StatefulWidget {
+  const MenuMestre({Key? key}) : super(key: key);
 
   @override
-  State<MenuProfessor> createState() => _MenuProfessorState();
+  State<MenuMestre> createState() => _MenuMestreState();
 }
 
-class _MenuProfessorState extends State<MenuProfessor> {
+class _MenuMestreState extends State<MenuMestre> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         //Barra superior já com o icone de voltar
         backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-        title: const Text("Menu Professor"),
+        title: const Text("Menu Mestre"),
 
         //Icone de voltar quando utilizado o drawer no appbar
         automaticallyImplyLeading: true,
@@ -52,7 +53,42 @@ class _MenuProfessorState extends State<MenuProfessor> {
           SingleChildScrollView(
             child: Column(
               children: [
-                //botao autoavaliação
+                //botão cadastrar Professor
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const CadProfessor()),
+                    );
+                  },
+                  style: TextButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 252, 72, 27),
+                    fixedSize: const Size(320, 80),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: Row(
+                    children: const [
+                      Icon(
+                        Icons.group_add_outlined,
+                        size: 50,
+                        color: Colors.black,
+                      ),
+                      Padding(padding: EdgeInsets.only(right: 60)),
+                      Text(
+                        "Cadastrar \n Professor",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
+                        textAlign: TextAlign.center,
+                      )
+                    ],
+                  ),
+                ),
+                const Padding(padding: EdgeInsets.only(top: 40)),
 
                 ElevatedButton(
                   onPressed: () {
@@ -88,9 +124,7 @@ class _MenuProfessorState extends State<MenuProfessor> {
                     ],
                   ),
                 ),
-
                 const Padding(padding: EdgeInsets.only(top: 40)),
-
                 ElevatedButton(
                   onPressed: () {
                     Navigator.push(
@@ -125,7 +159,41 @@ class _MenuProfessorState extends State<MenuProfessor> {
                     ],
                   ),
                 ),
-
+                const Padding(padding: EdgeInsets.only(top: 40)),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ValPresenca()),
+                    );
+                  },
+                  style: TextButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 252, 72, 27),
+                    fixedSize: const Size(320, 80),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: Row(
+                    children: const [
+                      Icon(
+                        Icons.grading_sharp,
+                        size: 50,
+                        color: Colors.black,
+                      ),
+                      Padding(padding: EdgeInsets.only(right: 60)),
+                      Text(
+                        "Relatórios",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
+                        textAlign: TextAlign.center,
+                      )
+                    ],
+                  ),
+                ),
                 const Padding(padding: EdgeInsets.only(top: 40)),
 
                 ElevatedButton(
@@ -156,9 +224,7 @@ class _MenuProfessorState extends State<MenuProfessor> {
                     ],
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: 40)),
-
-                const Padding(padding: EdgeInsets.only(bottom: 100)),
+                const Padding(padding: EdgeInsets.only(bottom: 80)),
               ],
             ),
           ),
@@ -172,7 +238,7 @@ class _MenuProfessorState extends State<MenuProfessor> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const MenuProfessor()),
+            MaterialPageRoute(builder: (context) => const MenuMestre()),
           );
         },
         backgroundColor: const Color.fromARGB(255, 252, 72, 27),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
-import 'package:flutter_project_seth/geral/loginpage.dart';
 
+import '../geral/loginPage.dart';
 import '../widgets/utilClass.dart';
 
 class CadAluno extends StatefulWidget {
@@ -18,6 +18,7 @@ class _CadAlunoState extends State<CadAluno> {
   TextEditingController txtNome = TextEditingController();
   TextEditingController txtUsuario = TextEditingController();
   TextEditingController txtSenha = TextEditingController();
+  TextEditingController txtConfSenha = TextEditingController();
   TextEditingController txtEmail = TextEditingController();
   TextEditingController txtcpf = TextEditingController();
 
@@ -40,7 +41,7 @@ class _CadAlunoState extends State<CadAluno> {
           appBar: AppBar(
             //Barra superior já com o icone de voltar
             backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-            title: const Text("Menu"),
+            title: const Text("Cadastro Aluno"),
 
             //Icone de voltar quando utilizado o drawer no appbar
             automaticallyImplyLeading: true,
@@ -217,6 +218,7 @@ class _CadAlunoState extends State<CadAluno> {
                         SizedBox(
                           width: 325,
                           child: TextFormField(
+                            controller: txtConfSenha,
                             decoration: InputDecoration(
                               icon: const Icon(
                                 Icons.lock_outline,
@@ -242,7 +244,8 @@ class _CadAlunoState extends State<CadAluno> {
                               ),
                             ),
                             validator: (value) {
-                              return validarSenha(txtSenha.text);
+                              return validarConfSenha(
+                                  txtSenha.text, txtConfSenha.text);
                             },
                             obscureText: _showPassword == false ? true : false,
                           ),
@@ -297,19 +300,19 @@ class _CadAlunoState extends State<CadAluno> {
                   TextButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          if (cadAluno(txtNome.text, txtUsuario.text,
-                                  txtSenha.text, txtEmail.text, txtcpf.text) ==
-                              true) {
+                          if (isChecked == true) {
+                            cadAluno(txtNome.text, txtUsuario.text,
+                                txtSenha.text, txtEmail.text, txtcpf.text);
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => const LoginPage()),
                             );
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text('Casdastrado com sucesso')),
+                            );
                           }
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content: Text('Casdastrado com sucesso')),
-                          );
                         }
                       },
                       style: TextButton.styleFrom(

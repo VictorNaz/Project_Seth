@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_seth/telasAluno/desempAluno.dart';
-import 'package:flutter_project_seth/widgets/utilClass.dart';
 
-import 'PerfilAluno.dart';
+import '../widgets/utilClass.dart';
+import 'desempAluno.dart';
 
 class Menu extends StatefulWidget {
   const Menu({Key? key}) : super(key: key);
@@ -127,37 +126,7 @@ class _MenuState extends State<Menu> {
       ),
 
       //barra infeirior
-      bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
-        color: Colors.black,
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            IconButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const PerfilAluno()),
-                );
-              },
-              icon: const Icon(
-                Icons.person,
-                color: Color.fromARGB(255, 252, 72, 27),
-                size: 35,
-              ),
-            ),
-            const IconButton(
-              onPressed: null,
-              icon: Icon(
-                Icons.exit_to_app,
-                color: Color.fromARGB(255, 252, 72, 27),
-                size: 35,
-              ),
-            ),
-          ],
-        ),
-      ),
+      bottomNavigationBar: const BotaoInferior(),
     );
   }
 }
