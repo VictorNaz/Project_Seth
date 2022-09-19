@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import '../telasAluno/PerfilAluno.dart';
@@ -106,8 +108,10 @@ class BotaoInferior extends StatelessWidget {
               size: 35,
             ),
           ),
-          const IconButton(
-            onPressed: null,
+          IconButton(
+            onPressed: () {
+              exit(0);
+            },
             icon: Icon(
               Icons.exit_to_app,
               color: Color.fromARGB(255, 252, 72, 27),
