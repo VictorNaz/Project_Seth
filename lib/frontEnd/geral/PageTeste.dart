@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../telasMestre/CadProfessor.dart';
 import '../telasMestre/MenuMestre.dart';
+import '../telasMestre/DesempenhoAluno.dart';
 import '../telasProf/ValPresenca.dart';
 import '../telasProf/MenuProfessor.dart';
 import '../widgets/utilClass.dart';
@@ -88,6 +89,21 @@ class _PageTestState extends State<PageTest> {
                   },
                   child: const Text(
                     "MenuProfessor",
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  )),
+                  
+              const Padding(padding: EdgeInsets.only(top: 30)),
+              TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const DesempenhoAluno(),
+                      ),
+                    );
+                  },
+                  child: const Text(
+                    "DesempenhoAluno",
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   )),
             ],
