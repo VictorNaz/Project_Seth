@@ -77,9 +77,6 @@ class _RedSenhaState extends State<RedSenha> {
                 SizedBox(
                   width: 325,
                   child: TextFormField(
-                    //foca no primeiro campo ao entrar na página
-                    autofocus: true,
-
                     //Define o teclado para digitar e-mail(adiciona o @ no teclado)
                     keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
