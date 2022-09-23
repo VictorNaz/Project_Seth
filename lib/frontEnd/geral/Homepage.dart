@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_project_seth/backEnd/server/teste.dart';
 import 'PageTeste.dart';
 import 'loginPage.dart';
 
@@ -57,7 +58,8 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.only(top: 100),
             //botão de login.
             child: TextButton(
-              onPressed: () {
+              onPressed: () async {
+                print(await Teste.test());
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const LoginPage()),
