@@ -1,4 +1,5 @@
 import 'package:flutter_project_seth/backEnd/modelo/aluno.dart';
+import 'package:flutter_project_seth/backEnd/server/server.dart';
 
 String? cadAluno(String txtNome, String txtUsuario, String txtSenha,
     String txtEmail, String txtCpf) {
@@ -9,6 +10,8 @@ String? cadAluno(String txtNome, String txtUsuario, String txtSenha,
   aluno.setSenha = txtSenha;
   aluno.setEmail = txtEmail;
   aluno.setCpf = txtCpf;
+
+  Teste.cadastrarAluno(aluno);
 }
 
 String? validarNome(String value) {
