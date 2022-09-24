@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shelf/shelf.dart';
-import 'package:shelf/shelf_io.dart' as shelf_io;
-
 import 'frontEnd/geral/Homepage.dart';
 
-void main(List<String> args) async {
-  final server = await shelf_io.serve(
-      (request) => Response(200, body: "ok"), 'localhost', 8080);
-  print("object server = http://localhost:8080");
+void main(List<String> args) {
   runApp(const ProjectSeth());
 }
 
