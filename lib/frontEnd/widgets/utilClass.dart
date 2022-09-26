@@ -112,7 +112,7 @@ class BotaoInferior extends StatelessWidget {
             onPressed: () {
               exit(0);
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.exit_to_app,
               color: Color.fromARGB(255, 252, 72, 27),
               size: 35,
