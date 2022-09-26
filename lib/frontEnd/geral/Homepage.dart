@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_project_seth/backEnd/server/server.dart';
+import 'package:flutter_project_seth/backEnd/server/serverAluno.dart';
 import 'PageTeste.dart';
 import 'loginPage.dart';
 

@@ -1,3 +1,5 @@
+import 'package:flutter_project_seth/backEnd/server/serverProfessor.dart';
+
 import '../modelo/professor.dart';
 
 String? cadProfessor(String txtNome, String txtUsuario, String txtTelefone,
@@ -10,6 +12,8 @@ String? cadProfessor(String txtNome, String txtUsuario, String txtTelefone,
   professor.senha = txtSenha;
   professor.email = txtEmail;
   professor.cpf = txtCpf;
+
+  ServerProfessor.cadastrarProfessor(professor);
 }
 
 String? validarNome(String value) {
