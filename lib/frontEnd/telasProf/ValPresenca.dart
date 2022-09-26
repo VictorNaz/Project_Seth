@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../backEnd/controladora/CtrlAluno.dart';
 import '../telasAluno/MenuPrincipal.dart';
 import '../widgets/utilClass.dart';
 
@@ -11,6 +12,8 @@ class ValPresenca extends StatefulWidget {
 
 class _ValPresencaState extends State<ValPresenca> {
   bool showPassword = false;
+
+  TextEditingController txtUsuario = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +79,8 @@ class _ValPresencaState extends State<ValPresenca> {
                 SizedBox(
                   width: 325,
                   child: TextFormField(
+                    controller: txtUsuario,
+
                     //foca no primeiro campo ao entrar na página
                     autofocus: true,
 
@@ -84,7 +89,7 @@ class _ValPresencaState extends State<ValPresenca> {
                     decoration: const InputDecoration(
                       icon: Icon(Icons.person_outline,
                           color: Color.fromARGB(255, 252, 72, 27), size: 35),
-                      labelText: "Usúario",
+                      labelText: "Usuário",
                       hintStyle: TextStyle(color: Colors.black),
                       focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
@@ -99,6 +104,7 @@ class _ValPresencaState extends State<ValPresenca> {
                 //Botão entrar
                 TextButton(
                     onPressed: () {
+                      validaAluno(txtUsuario.text);
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => const Menu()),
