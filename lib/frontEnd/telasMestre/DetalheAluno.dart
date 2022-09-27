@@ -12,7 +12,7 @@ class DetalheAluno extends StatelessWidget{
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-        title: Text('Pagina de detalhes do aluno'),
+        title: Text('Detalhes do aluno'),
 
         automaticallyImplyLeading: true,
         leading: IconButton(
