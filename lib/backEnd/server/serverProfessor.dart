@@ -10,8 +10,8 @@ class ServerProfessor {
     var request = http.Request(
         'POST', Uri.parse('https://apiseth.cyclic.app/cadastrarProfessor'));
     request.body = json.encode({
-      "user": professor.usuario,
-      "password": professor.senha,
+      "usuario": professor.usuario,
+      "senha": professor.senha,
       "nome": professor.nome,
       "email": professor.email,
       "telefone": professor.telefone,

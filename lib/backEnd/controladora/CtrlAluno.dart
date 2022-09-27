@@ -1,6 +1,5 @@
 import 'package:flutter_project_seth/backEnd/modelo/aluno.dart';
 import 'package:flutter_project_seth/backEnd/server/serverAluno.dart';
-import 'package:flutter_project_seth/backEnd/server/serverAluno.dart';
 
 String? cadAluno(String txtNome, String txtUsuario, String txtSenha,
     String txtEmail, String txtCpf) {
