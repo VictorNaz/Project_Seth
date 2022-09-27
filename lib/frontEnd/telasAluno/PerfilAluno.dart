@@ -32,7 +32,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
         appBar: AppBar(
           //Barra superior já com o icone de voltar
           backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-          title: const Text("Menu"),
+          title: const Text("Perfil de usuário"),
 
           //Icone de voltar quando utilizado o drawer no appbar
           automaticallyImplyLeading: true,
@@ -59,10 +59,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
             SingleChildScrollView(
               child: Column(
                 children: [
-                  Image.asset(
-                    'assets/image/logomarca.png',
-                    height: 200,
-                  ),
+                  //adioconar foto de perfi do usuario
                   const Padding(padding: EdgeInsets.only(top: 30)),
 
                   const Text("Informações do Usuário",
