@@ -32,7 +32,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
         appBar: AppBar(
           //Barra superior já com o icone de voltar
           backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-          title: const Text("Perfil de usuário"),
+          title: const Text("Menu"),
 
           //Icone de voltar quando utilizado o drawer no appbar
           automaticallyImplyLeading: true,
@@ -58,17 +58,16 @@ class _PerfilAlunoState extends State<PerfilAluno> {
             //Posicionamento do campo ao selecionar o campo
             SingleChildScrollView(
               child: Column(
-                children: [
-                  //adioconar foto de perfi do usuario
-                  const Padding(padding: EdgeInsets.only(top: 30)),
+                //Lugar onde deve adicionar a foto de perfil do usuario.
+                children: <Widget>[
+                  const CircleAvatar(
+                    radius: 100,
+                    backgroundImage: AssetImage('assets/image/marciano.jpg'),
+                  ),
+                  
 
-                  const Text("Informações do Usuário",
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 26)),
-
-                  const Padding(padding: EdgeInsets.only(top: 30)),
+                  //Espaçamento entre foto de perfil e campos de input
+                  const Padding(padding: EdgeInsets.only(top: 80)),
 
                   SizedBox(
                     width: 325,

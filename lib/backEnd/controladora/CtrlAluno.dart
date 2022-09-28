@@ -12,8 +12,8 @@ String? cadAluno(String txtNome, String txtUsuario, String txtSenha,
   aluno.setCpf = txtCpf;
 
   ServerAluno.cadastrarAluno(aluno);
-  aluno.id = ServerAluno.buscaAlunoId(aluno);
-  ServerAluno.iniciaProgresso(aluno.id);
+ // aluno.id = ServerAluno.buscaAlunoId(aluno)
+  //ServerAluno.iniciaProgresso(aluno.id);
 }
 
 String? validaAluno(String txtUsuario) {
