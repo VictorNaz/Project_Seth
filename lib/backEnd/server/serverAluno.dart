@@ -3,6 +3,9 @@ import 'dart:convert';
 import 'package:flutter_project_seth/backEnd/modelo/aluno.dart';
 import 'package:http/http.dart' as http;
 
+//Pendencias
+//Validação de campos para dados repetidos
+//Criptografia de senha
 class ServerAluno {
   static Future<void> cadastrarAluno(Aluno aluno) async {
     var headers = {'Content-Type': 'application/json'};
@@ -61,7 +64,7 @@ class ServerAluno {
     String id = await response.stream.bytesToString();
 
     if (response.statusCode == 200) {
-      print("Conexão Completa");
+      print("Conexão estabelecida! valor retornado: $id ");
     } else {
       print(response.reasonPhrase);
     }
