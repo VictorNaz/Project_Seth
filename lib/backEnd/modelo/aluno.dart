@@ -1,16 +1,16 @@
 class Aluno {
-  int? id;
+  String? id;
   String? nome;
   String? usuario;
   String? senha;
   String? email;
   String? cpf;
 
-  int? get getId {
+  String? get getId {
     return id;
   }
 
-  set setId(int id) {
+  set setId(String id) {
     this.id = id;
   }
 

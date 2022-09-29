@@ -1,8 +1,8 @@
 import 'package:flutter_project_seth/backEnd/modelo/aluno.dart';
 import 'package:flutter_project_seth/backEnd/server/serverAluno.dart';
 
-String? cadAluno(String txtNome, String txtUsuario, String txtSenha,
-    String txtEmail, String txtCpf) {
+Future<String?> cadAluno(String txtNome, String txtUsuario, String txtSenha,
+    String txtEmail, String txtCpf) async {
   var aluno = Aluno();
 
   aluno.setNome = txtNome;
@@ -12,8 +12,8 @@ String? cadAluno(String txtNome, String txtUsuario, String txtSenha,
   aluno.setCpf = txtCpf;
 
   ServerAluno.cadastrarAluno(aluno);
- // aluno.id = ServerAluno.buscaAlunoId(aluno)
-  //ServerAluno.iniciaProgresso(aluno.id);
+  aluno.id = await ServerAluno.buscaAlunoId(aluno);
+  ServerAluno.iniciaProgresso(aluno);
 }
 
 String? validaAluno(String txtUsuario) {

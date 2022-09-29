@@ -50,29 +50,30 @@ class ServerAluno {
     }
   }
 
-  static Future<int> buscaAlunoId(Aluno aluno)  async {
+  static Future<String> buscaAlunoId(Aluno aluno) async {
     var headers = {'Content-Type': 'application/json'};
     var request = http.Request(
-        'GET', Uri.parse('https://apiseth.cyclic.app/buscaAlunoId'));
-    request.body = json.encode({"user": aluno.usuario});
+        'POST', Uri.parse('https://apiseth.cyclic.app/buscaAlunoId'));
+    request.body = json.encode({"usuario": aluno.usuario});
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
     String id = await response.stream.bytesToString();
-    int idAluno = int.parse(id);
+
     if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
+      print("Conexão Completa");
     } else {
       print(response.reasonPhrase);
     }
-    return idAluno;
+
+    return id;
   }
 
-  static Future<void> iniciaProgresso(int? id) async {
+  static Future<void> iniciaProgresso(Aluno aluno) async {
     var headers = {'Content-Type': 'application/json'};
     var request = http.Request(
-        'GET', Uri.parse('https://apiseth.cyclic.app/iniciaProgresso'));
-    request.body = json.encode({"id": "$id"});
+        'POST', Uri.parse('https://apiseth.cyclic.app/iniciaProgresso'));
+    request.body = json.encode({"id": aluno.id});
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
