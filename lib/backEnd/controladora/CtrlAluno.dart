@@ -11,9 +11,9 @@ Future<String?> cadAluno(String txtNome, String txtUsuario, String txtSenha,
   aluno.setEmail = txtEmail;
   aluno.setCpf = txtCpf;
 
-  ServerAluno.cadastrarAluno(aluno);
+  await ServerAluno.cadastrarAluno(aluno);
   aluno.id = await ServerAluno.buscaAlunoId(aluno);
-  ServerAluno.iniciaProgresso(aluno);
+  await ServerAluno.iniciaProgresso(aluno);
 }
 
 String? validaAluno(String txtUsuario) {

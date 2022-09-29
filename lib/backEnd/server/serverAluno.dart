@@ -54,7 +54,7 @@ class ServerAluno {
     var headers = {'Content-Type': 'application/json'};
     var request = http.Request(
         'POST', Uri.parse('https://apiseth.cyclic.app/buscaAlunoId'));
-    request.body = json.encode({"usuario": aluno.usuario});
+    request.body = await json.encode({"usuario": aluno.usuario});
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
@@ -80,6 +80,7 @@ class ServerAluno {
 
     if (response.statusCode == 200) {
       print(await response.stream.bytesToString());
+      print("Cadastro Concluido");
     } else {
       print(response.reasonPhrase);
     }
