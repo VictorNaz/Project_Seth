@@ -30,14 +30,16 @@ class ServerAluno {
     }
   }
 
-  static Future<void> validaAluno(Aluno aluno) async {
+  static Future<void> valPresenAluno(Aluno aluno) async {
     try {
       var headers = {'Content-Type': 'application/json'};
-      String url_Api = 'https://apiseth.cyclic.app/validarAluno';
+      String url_Api = 'https://apiseth.cyclic.app/validaPresenca';
       var request = http.Request('POST', Uri.parse(url_Api));
       request.body = json.encode({
-        "usuario": aluno.usuario,
+        "id": aluno.id,
       });
+
+      print(aluno.id);
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();

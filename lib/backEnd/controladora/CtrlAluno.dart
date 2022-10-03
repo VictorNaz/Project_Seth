@@ -1,6 +1,8 @@
 import 'package:flutter_project_seth/backEnd/modelo/aluno.dart';
 import 'package:flutter_project_seth/backEnd/server/serverAluno.dart';
 
+/********************** CLASSES DE CONTROLE  **************************/
+
 Future<String?> cadAluno(String txtNome, String txtUsuario, String txtSenha,
     String txtEmail, String txtCpf) async {
   var aluno = Aluno();
@@ -16,13 +18,16 @@ Future<String?> cadAluno(String txtNome, String txtUsuario, String txtSenha,
   await ServerAluno.iniciaProgresso(aluno);
 }
 
-String? validaAluno(String txtUsuario) {
+Future<String?> validaPresAluno(String txtUsuario) async {
   var aluno = Aluno();
 
   aluno.setUsuario = txtUsuario;
 
-  ServerAluno.validaAluno(aluno);
+  aluno.id = await ServerAluno.buscaAlunoId(aluno);
+  ServerAluno.valPresenAluno(aluno);
 }
+
+/*************************** VALIDAÇÕES DE CAMPO *******************************/
 
 String? validarNome(String value) {
   String patttern = r'(^[a-zA-Z ]*$)';

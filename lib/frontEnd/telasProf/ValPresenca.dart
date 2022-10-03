@@ -104,7 +104,7 @@ class _ValPresencaState extends State<ValPresenca> {
                 //Botão entrar
                 TextButton(
                     onPressed: () {
-                      validaAluno(txtUsuario.text);
+                      validaPresAluno(txtUsuario.text);
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => const Menu()),
