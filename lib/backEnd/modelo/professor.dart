@@ -2,7 +2,6 @@ class Professor {
   int? id;
   String? nome;
   String? usuario;
-  String? telefone;
   String? senha;
   String? email;
   String? cpf;
@@ -29,14 +28,6 @@ class Professor {
 
   set setUsuario(String usuario) {
     this.usuario = usuario;
-  }
-
-  String? get getTelefone {
-    return telefone;
-  }
-
-  set setTelefone(String telefone) {
-    this.telefone = telefone;
   }
 
   String? get getSenha {

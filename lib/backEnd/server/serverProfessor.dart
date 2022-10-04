@@ -15,7 +15,6 @@ class ServerProfessor {
         "senha": professor.senha,
         "nome": professor.nome,
         "email": professor.email,
-        "telefone": professor.telefone,
         "cpf": professor.cpf,
       });
       request.headers.addAll(headers);

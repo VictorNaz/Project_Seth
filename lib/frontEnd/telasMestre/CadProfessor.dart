@@ -18,7 +18,6 @@ class _CadProfessorState extends State<CadProfessor> {
   TextEditingController txtUsuario = TextEditingController();
   TextEditingController txtSenha = TextEditingController();
   TextEditingController txtConfSenha = TextEditingController();
-  TextEditingController txtTelefone = TextEditingController();
   TextEditingController txtEmail = TextEditingController();
   TextEditingController txtcpf = TextEditingController();
 
@@ -172,32 +171,6 @@ class _CadProfessorState extends State<CadProfessor> {
                       SizedBox(
                         width: 325,
                         child: TextFormField(
-                          //Define o teclado para numérico
-                          controller: txtTelefone,
-                          keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            icon: Icon(
-                              Icons.phone,
-                              color: Color.fromARGB(255, 252, 72, 27),
-                            ),
-                            labelText: "Telefone",
-                            hintStyle: TextStyle(color: Colors.black),
-                            focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Color.fromARGB(255, 252, 72, 27))),
-                          ),
-                          validator: (value) {
-                            return validarTelefone(txtTelefone.text);
-                          },
-                        ),
-                      ),
-
-                      //Espaçamento entre inputs
-                      const Padding(padding: EdgeInsets.only(top: 15)),
-
-                      SizedBox(
-                        width: 325,
-                        child: TextFormField(
                           controller: txtSenha,
                           decoration: InputDecoration(
                             icon: const Icon(
@@ -315,13 +288,8 @@ class _CadProfessorState extends State<CadProfessor> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           if (isChecked == true) {
-                            cadProfessor(
-                                txtNome.text,
-                                txtUsuario.text,
-                                txtTelefone.text,
-                                txtSenha.text,
-                                txtEmail.text,
-                                txtcpf.text);
+                            cadProfessor(txtNome.text, txtUsuario.text,
+                                txtSenha.text, txtEmail.text, txtcpf.text);
                             Navigator.push(
                               context,
                               MaterialPageRoute(

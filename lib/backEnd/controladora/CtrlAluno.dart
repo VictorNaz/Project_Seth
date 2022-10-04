@@ -20,11 +20,10 @@ Future<String?> cadAluno(String txtNome, String txtUsuario, String txtSenha,
 
 Future<String?> validaPresAluno(String txtUsuario) async {
   var aluno = Aluno();
-
   aluno.setUsuario = txtUsuario;
 
   aluno.id = await ServerAluno.buscaAlunoId(aluno);
-  ServerAluno.valPresenAluno(aluno);
+  await ServerAluno.valPresenAluno(aluno);
 }
 
 /*************************** VALIDAÇÕES DE CAMPO *******************************/

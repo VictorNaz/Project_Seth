@@ -14,6 +14,7 @@ class _ValPresencaState extends State<ValPresenca> {
   bool showPassword = false;
 
   TextEditingController txtUsuario = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -75,28 +76,36 @@ class _ValPresencaState extends State<ValPresenca> {
                 //Espaçamento entre o corpo superior e os inputs
                 const Padding(padding: EdgeInsets.only(top: 40)),
 
-                //Campo email
-                SizedBox(
-                  width: 325,
-                  child: TextFormField(
-                    controller: txtUsuario,
+                Form(
+                    key: _formKey,
+                    child: Column(children: [
+                      //Campo email
+                      SizedBox(
+                        width: 325,
+                        child: TextFormField(
+                          controller: txtUsuario,
 
-                    //foca no primeiro campo ao entrar na página
-                    autofocus: true,
+                          //foca no primeiro campo ao entrar na página
+                          autofocus: true,
 
-                    //Define o teclado para digitar e-mail(adiciona o @ no teclado)
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(
-                      icon: Icon(Icons.person_outline,
-                          color: Color.fromARGB(255, 252, 72, 27), size: 35),
-                      labelText: "Usuário",
-                      hintStyle: TextStyle(color: Colors.black),
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Color.fromARGB(255, 252, 72, 27))),
-                    ),
-                  ),
-                ),
+                          //Define o teclado para digitar e-mail(adiciona o @ no teclado)
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: const InputDecoration(
+                            icon: Icon(Icons.person_outline,
+                                color: Color.fromARGB(255, 252, 72, 27),
+                                size: 35),
+                            labelText: "Usuário",
+                            hintStyle: TextStyle(color: Colors.black),
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color.fromARGB(255, 252, 72, 27))),
+                          ),
+                          validator: (value) {
+                            return null;
+                          },
+                        ),
+                      ),
+                    ])),
 
                 //espaçamento entre imput e button
                 const Padding(padding: EdgeInsets.only(top: 150)),
@@ -104,11 +113,16 @@ class _ValPresencaState extends State<ValPresenca> {
                 //Botão entrar
                 TextButton(
                     onPressed: () {
-                      validaPresAluno(txtUsuario.text);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const Menu()),
-                      );
+                      if (_formKey.currentState!.validate()) {
+                        validaPresAluno(txtUsuario.text);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const Menu()),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Presença Validada')),
+                        );
+                      }
                     },
                     style: TextButton.styleFrom(
                       backgroundColor: const Color.fromARGB(255, 252, 72, 27),
