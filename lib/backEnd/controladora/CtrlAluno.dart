@@ -26,6 +26,15 @@ Future<String?> validaPresAluno(String txtUsuario) async {
   await ServerAluno.valPresenAluno(aluno);
 }
 
+Future<String?> loginUsuario(String txtUsuario, String txtSenha) async {
+  var aluno = Aluno();
+  aluno.setUsuario = txtUsuario;
+  aluno.setSenha = txtSenha;
+
+  aluno.nivel_acess = await ServerAluno.logaUsuario(aluno);
+  return aluno.nivel_acess;
+}
+
 /*************************** VALIDAÇÕES DE CAMPO *******************************/
 
 String? validarNome(String value) {
@@ -81,7 +90,14 @@ String? validaCpf(String value) {
 
 String? validaUsuario(String value) {
   if (value.isEmpty) {
-    return "Informe o usuário";
+    return "Informe o usuário!";
+  }
+  return null;
+}
+
+String? validaSenhaLogin(String value) {
+  if (value.isEmpty) {
+    return "Informe a senha!";
   }
   return null;
 }

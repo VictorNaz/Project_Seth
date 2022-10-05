@@ -5,6 +5,7 @@ class Aluno {
   String? senha;
   String? email;
   String? cpf;
+  String? nivel_acess;
 
   String? get getId {
     return id;
@@ -52,5 +53,13 @@ class Aluno {
 
   set setCpf(String cpf) {
     this.cpf = cpf;
+  }
+
+  String? get getNivel_acess {
+    return nivel_acess;
+  }
+
+  set setNivel_acess(String nivel_acess) {
+    this.nivel_acess = nivel_acess;
   }
 }

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
+import 'package:flutter_project_seth/backEnd/server/serverAluno.dart';
+import 'package:flutter_project_seth/frontEnd/telasMestre/MenuMestre.dart';
 
 import '../telasAluno/CadAluno.dart';
 import '../telasAluno/MenuPrincipal.dart';
+import '../telasProf/MenuProfessor.dart';
 import 'RecSenha.dart';
 
 class LoginPage extends StatefulWidget {
@@ -12,6 +16,13 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool showPassword = false;
+  bool isChecked = false;
+  String nivel_acess = "";
+
+  TextEditingController txtUsuario = TextEditingController();
+  TextEditingController txtSenha = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -67,70 +78,106 @@ class _LoginPageState extends State<LoginPage> {
                 //Espaçamento entre o corpo superior e os inputs
                 const Padding(padding: EdgeInsets.only(top: 40)),
 
-                //Campo email
-                SizedBox(
-                  width: 325,
-                  child: TextFormField(
-                    //Define o teclado para digitar e-mail(adiciona o @ no teclado)
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(
-                      icon: Icon(Icons.person_outline,
-                          color: Color.fromARGB(255, 252, 72, 27), size: 35),
-                      labelText: "Email",
-                      hintStyle: TextStyle(color: Colors.black),
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Color.fromARGB(255, 252, 72, 27))),
-                    ),
-                  ),
-                ),
-
-                //Espaçamento entre inputs
-                const Padding(padding: EdgeInsets.only(top: 15)),
-
-                //Campo Senha
-                SizedBox(
-                  width: 325,
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      icon: const Icon(
-                        Icons.lock_outline,
-                        color: Color.fromARGB(255, 252, 72, 27),
-                        size: 35,
-                      ),
-                      labelText: "Senha",
-                      hintStyle: const TextStyle(color: Colors.black),
-                      focusedBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Color.fromARGB(255, 252, 72, 27))),
-                      suffixIcon: GestureDetector(
-                        child: Icon(
-                          showPassword == false
-                              ? Icons.visibility_off
-                              : Icons.visibility,
-                          color: Colors.black,
+                Form(
+                    key: _formKey,
+                    child: Column(children: [
+                      //Campo email
+                      SizedBox(
+                        width: 325,
+                        child: TextFormField(
+                          controller: txtUsuario,
+                          decoration: const InputDecoration(
+                            icon: Icon(Icons.person_outline,
+                                color: Color.fromARGB(255, 252, 72, 27),
+                                size: 35),
+                            labelText: "Usuario",
+                            hintStyle: TextStyle(color: Colors.black),
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color.fromARGB(255, 252, 72, 27))),
+                          ),
+                          validator: (value) {
+                            return validaUsuario(txtUsuario.text);
+                          },
                         ),
-                        onTap: () {
-                          setState(() {
-                            showPassword = !showPassword;
-                          });
-                        },
                       ),
-                    ),
-                    obscureText: showPassword == false ? true : false,
-                  ),
-                ),
+
+                      //Espaçamento entre inputs
+                      const Padding(padding: EdgeInsets.only(top: 15)),
+
+                      //Campo Senha
+                      SizedBox(
+                        width: 325,
+                        child: TextFormField(
+                          controller: txtSenha,
+                          decoration: InputDecoration(
+                            icon: const Icon(
+                              Icons.lock_outline,
+                              color: Color.fromARGB(255, 252, 72, 27),
+                              size: 35,
+                            ),
+                            labelText: "Senha",
+                            hintStyle: const TextStyle(color: Colors.black),
+                            focusedBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color.fromARGB(255, 252, 72, 27))),
+                            suffixIcon: GestureDetector(
+                              child: Icon(
+                                showPassword == false
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: Colors.black,
+                              ),
+                              onTap: () {
+                                setState(() {
+                                  showPassword = !showPassword;
+                                });
+                              },
+                            ),
+                          ),
+                          validator: (value) {
+                            return validaSenhaLogin(txtSenha.text);
+                          },
+                          obscureText: showPassword == false ? true : false,
+                        ),
+                      ),
+                    ])),
 
                 //Espaçamento entre o campo senha e o button entrar
                 const Padding(padding: EdgeInsets.only(top: 100)),
 
                 //Botão entrar
                 TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const Menu()),
-                      );
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        nivel_acess = (await loginUsuario(
+                            txtUsuario.text, txtSenha.text))!;
+                        print(nivel_acess);
+                        if (nivel_acess == "1") {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Menu()),
+                          );
+                        } else if (nivel_acess == "2") {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const MenuProfessor()),
+                          );
+                        } else if (nivel_acess == "3") {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const MenuMestre()),
+                          );
+                        } else if (nivel_acess == "") {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text('Usuário ou senha incorretos!')),
+                          );
+                        }
+                      }
                     },
                     style: TextButton.styleFrom(
                       backgroundColor: const Color.fromARGB(255, 252, 72, 27),

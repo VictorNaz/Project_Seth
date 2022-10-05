@@ -112,4 +112,24 @@ class ServerAluno {
       return false;
     }
   }
+
+  static Future<String> logaUsuario(Aluno aluno) async {
+    var headers = {'Content-Type': 'application/json'};
+    var request = http.Request(
+        'POST', Uri.parse('https://apiseth.cyclic.app/loginUsuario'));
+    request.body =
+        json.encode({"usuario": aluno.usuario, "senha": aluno.senha});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+    String nivelAcess = await response.stream.bytesToString();
+
+    if (response.statusCode == 200) {
+      print("Usuario encontrado!");
+    } else {
+      print(response.reasonPhrase);
+    }
+
+    return nivelAcess;
+  }
 }
