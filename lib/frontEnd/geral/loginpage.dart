@@ -152,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
                       if (_formKey.currentState!.validate()) {
                         nivel_acess = (await loginUsuario(
                             txtUsuario.text, txtSenha.text))!;
-                        print(nivel_acess);
+
                         if (nivel_acess == "1") {
                           Navigator.push(
                             context,
