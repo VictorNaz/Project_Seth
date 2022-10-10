@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 //Validação de campos para dados repetidos
 //Criptografia de senha
 
+//Escopo padrão com Auth nos paramêtros
 var headers = {
   'Content-Type': 'application/json',
   'Authorization': 'Basic YWRtaW46QWxlc2V0aCFAIw=='

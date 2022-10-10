@@ -3,10 +3,15 @@ import 'package:http/http.dart' as http;
 
 import '../modelo/professor.dart';
 
+//Escopo padrão com Auth nos paramêtros
+var headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Basic YWRtaW46QWxlc2V0aCFAIw=='
+};
+
 class ServerProfessor {
   static Future<void> cadastrarProfessor(Professor professor) async {
     try {
-      var headers = {'Content-Type': 'application/json'};
       print(professor.usuario);
       var request = http.Request(
           'POST', Uri.parse('https://apiseth.cyclic.app/cadastrarProfessor'));
