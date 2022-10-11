@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kg_charts/kg_charts.dart';
 
 import 'package:percent_indicator/percent_indicator.dart';
 import '../widgets/utilClass.dart';
@@ -225,11 +226,91 @@ class _DesempAlunoState extends State<DesempAluno> {
                 const Padding(padding: EdgeInsets.only(bottom: 40)),
 
                 // Esta classe retorna um card com um expansionTile dentro, recebendo o titulo e a descrição do mesmo.
-                const CardDropButton(
-                    titulo: "Auto Avaliação",
-                    descricao:
-                        "No momento não tenho nenhum texto para apresentar para você, dito isso não sei por que continua lendo isso... Respiração Automática desligada!!!"),
+                Card(
 
+                    //Determinamos o raio das bordas do card
+                    shape: (RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    )),
+
+                    //determinamos a cor do card
+                    //color: const Color.fromARGB(255, 252, 72, 27),
+
+                    //ClopRRect serve para que o texto não ultrapasse os raios do card
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+
+                      //SingleChildScrollView serve para o texto quando expandido não ultrapasse o tamanho da tela
+                      child: SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+
+                        //ExpansionTile é um botão que se expande mostrando informações adicionais
+                        child: ExpansionTile(
+                          //determinamos as cores do botão quando aberto e fechado
+                          textColor: const Color.fromARGB(255, 252, 72, 27),
+                          collapsedBackgroundColor:
+                              const Color.fromARGB(255, 252, 72, 27),
+                          collapsedTextColor: Colors.white,
+                          backgroundColor: Colors.white,
+                          childrenPadding: const EdgeInsets.all(16),
+                          //titulo do botão
+                          title: const Text(
+                            "Aulas Fundamentais",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 25,
+                            ),
+                          ),
+
+                          //texto quando expandido
+                          children: [
+                            RadarWidget(
+                              radarMap: RadarMapModel(
+                                legend: [
+                                  LegendModel('Desempenho 75%',
+                                      const Color.fromARGB(255, 252, 72, 27)),
+                                ],
+                                indicator: [
+                                  IndicatorModel("Alimentação", 10),
+                                  IndicatorModel("Prevenção", 10),
+                                  IndicatorModel("Atividade \n Fisica", 10),
+                                  IndicatorModel("Comportamento", 10),
+                                  IndicatorModel("Relacionamento", 10),
+                                  IndicatorModel("Espiritual", 10),
+                                  IndicatorModel("Defesa \n Pessoal", 10),
+                                ],
+                                data: [
+                                  MapDataModel([5, 10, 10, 10, 6, 9, 10]),
+                                ],
+                                radius: 100,
+                                duration: 2000,
+                                shape: Shape.square,
+                                maxWidth: 90,
+                                line: LineModel(5),
+                              ),
+                              textStyle: const TextStyle(
+                                  color: Colors.black, fontSize: 12),
+                              isNeedDrawLegend: true,
+                              lineText: (p, length) => "${(p + 1 ~/ length)}",
+                              dilogText: (IndicatorModel indicatorModel,
+                                  List<LegendModel> legendModels,
+                                  List<double> mapDataModels) {
+                                StringBuffer text = StringBuffer("");
+                                for (int i = 0; i < mapDataModels.length; i++) {
+                                  text.write(
+                                      "${legendModels[i].name} : ${mapDataModels[i].toString()}");
+                                  if (i != mapDataModels.length - 1) {
+                                    text.write("\n");
+                                  }
+                                }
+                                return text.toString();
+                              },
+                              //outLineText: (data, max) => "${data}",
+                            ),
+                          ],
+                        ),
+                      ),
+                    )),
                 //Espaçamento entre botão e o final da tela
                 const Padding(padding: EdgeInsets.only(bottom: 100)),
               ],

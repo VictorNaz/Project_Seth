@@ -43,30 +43,60 @@ class _AutoAvaliacaoState extends State<AutoAvaliacao> {
       body: Center(
         child: Column(
           children: [
+            //espaçamento entre campos
+            const Padding(padding: EdgeInsets.only(top: 20)),
+
+            //texto de titulo
+            Card(
+              child: const SizedBox(
+                child: Center(
+                  child: Text(
+                    "Última avaliação",
+                    style: TextStyle(
+                      color: Color.fromRGBO(252, 250, 250, 1),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                width: 250,
+                height: 32,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              color: const Color.fromARGB(255, 252, 72, 27),
+            ),
+
+            //espaçamento entre campos
+            const Padding(padding: EdgeInsets.only(top: 30)),
+
+            //gráfico de radar com os dados da auto avaliação
             RadarWidget(
               radarMap: RadarMapModel(
                 legend: [
-                  LegendModel('Desempenho 10/10', const Color(0XFF0EBD8D)),
+                  LegendModel(
+                      'Desempenho 75%', const Color.fromARGB(255, 252, 72, 27)),
                 ],
                 indicator: [
                   IndicatorModel("Alimentação", 10),
                   IndicatorModel("Prevenção", 10),
-                  IndicatorModel("Atividade Fisica", 10),
+                  IndicatorModel("Atividade \n Fisica", 10),
                   IndicatorModel("Comportamento", 10),
                   IndicatorModel("Relacionamento", 10),
                   IndicatorModel("Espiritual", 10),
-                  IndicatorModel("Defesa Pessoal", 10),
+                  IndicatorModel("Defesa \n Pessoal", 10),
                 ],
                 data: [
-                  MapDataModel([10, 7, 8, 10, 6, 9, 10]),
+                  MapDataModel([5, 10, 10, 10, 6, 9, 10]),
                 ],
                 radius: 100,
                 duration: 2000,
                 shape: Shape.square,
-                maxWidth: 70,
-                line: LineModel(10),
+                maxWidth: 90,
+                line: LineModel(5),
               ),
-              textStyle: const TextStyle(color: Colors.black, fontSize: 14),
+              textStyle: const TextStyle(color: Colors.black, fontSize: 12),
               isNeedDrawLegend: true,
               lineText: (p, length) => "${(p + 1 ~/ length)}",
               dilogText: (IndicatorModel indicatorModel,
@@ -81,7 +111,37 @@ class _AutoAvaliacaoState extends State<AutoAvaliacao> {
                 }
                 return text.toString();
               },
-              outLineText: (data, max) => "${data = data}",
+              //outLineText: (data, max) => "${data}",
+            ),
+            const Padding(padding: EdgeInsets.only(top: 10)),
+
+            //texto de titulo
+            Card(
+              child: const SizedBox(
+                child: Center(
+                  child: Text(
+                    "Fazer avaliação",
+                    style: TextStyle(
+                      color: Color.fromRGBO(252, 250, 250, 1),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                width: 250,
+                height: 32,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              color: const Color.fromARGB(255, 252, 72, 27),
+            ),
+            Card(
+              child: Row(
+                children: [
+                  const Text("Alimentação: "),
+                ],
+              ),
             ),
           ],
         ),
