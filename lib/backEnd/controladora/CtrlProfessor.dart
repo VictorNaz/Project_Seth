@@ -1,3 +1,4 @@
+import 'package:flutter_project_seth/backEnd/security/dataCrypt.dart';
 import 'package:flutter_project_seth/backEnd/server/serverProfessor.dart';
 
 import '../modelo/professor.dart';
@@ -8,7 +9,8 @@ String? cadProfessor(String txtNome, String txtUsuario, String txtSenha,
 
   professor.nome = txtNome;
   professor.usuario = txtUsuario;
-  professor.senha = txtSenha;
+  var novaSenha = dataCrypt(txtSenha);
+  professor.senha = novaSenha;
   professor.email = txtEmail;
   professor.cpf = txtCpf;
 

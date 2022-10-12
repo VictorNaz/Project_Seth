@@ -1,4 +1,7 @@
+import 'dart:convert';
+import 'package:crypto/crypto.dart';
 import 'package:flutter_project_seth/backEnd/modelo/aluno.dart';
+import 'package:flutter_project_seth/backEnd/security/dataCrypt.dart';
 import 'package:flutter_project_seth/backEnd/server/serverAluno.dart';
 
 /********************** CLASSES DE CONTROLE  **************************/
@@ -9,7 +12,8 @@ Future<String?> cadAluno(String txtNome, String txtUsuario, String txtSenha,
 
   aluno.setNome = txtNome;
   aluno.setUsuario = txtUsuario;
-  aluno.setSenha = txtSenha;
+  var novaSenha = dataCrypt(txtSenha);
+  aluno.setSenha = novaSenha;
   aluno.setEmail = txtEmail;
   aluno.setCpf = txtCpf;
 
@@ -28,8 +32,9 @@ Future<String?> validaPresAluno(String txtUsuario) async {
 
 Future<String?> loginUsuario(String txtUsuario, String txtSenha) async {
   var aluno = Aluno();
+  var novaSenha = dataCrypt(txtSenha);
   aluno.setUsuario = txtUsuario;
-  aluno.setSenha = txtSenha;
+  aluno.setSenha = novaSenha;
 
   aluno.nivel_acess = await ServerAluno.logaUsuario(aluno);
   return aluno.nivel_acess;
