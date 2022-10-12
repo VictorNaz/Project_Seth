@@ -18,7 +18,7 @@ class _RelatorioState extends State<Relatorio> {
       appBar: AppBar(
         //Barra superior já com o icone de voltar
         backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-        title: const Text("Auto Avaliação"),
+        title: const Text("Relatório"),
 
         //Icone de voltar quando utilizado o drawer no appbar
         automaticallyImplyLeading: true,
