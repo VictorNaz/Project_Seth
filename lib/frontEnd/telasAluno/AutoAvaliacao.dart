@@ -13,6 +13,11 @@ class AutoAvaliacao extends StatefulWidget {
 }
 
 class _AutoAvaliacaoState extends State<AutoAvaliacao> {
+  int dropdownvalue = 1;
+  List<int> items = [1, 2, 3, 4, 5];
+  double _currentSliderValue = 1;
+  String? value;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -138,8 +143,44 @@ class _AutoAvaliacaoState extends State<AutoAvaliacao> {
             ),
             Card(
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("Alimentação: "),
+                  const Text(
+                    "Alimentação: ",
+                  ),
+                  DropdownButton(
+                    value: dropdownvalue,
+                    icon: const Icon(Icons.keyboard_arrow_down),
+                    items: items.map((int items) {
+                      return DropdownMenuItem(
+                        value: items,
+                        child: Text("$items"),
+                      );
+                    }).toList(),
+                    onChanged: (int? newValue) {
+                      setState(() {
+                        dropdownvalue = newValue!;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ),
+            Card(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Slider(
+                    value: _currentSliderValue,
+                    max: 6,
+                    divisions: 5,
+                    label: _currentSliderValue.round().toString(),
+                    onChanged: (double value) {
+                      setState(() {
+                        _currentSliderValue = value;
+                      });
+                    },
+                  )
                 ],
               ),
             ),
