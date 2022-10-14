@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
-import 'package:flutter_project_seth/backEnd/server/serverAluno.dart';
 import 'package:flutter_project_seth/frontEnd/telasMestre/MenuMestre.dart';
 
 import '../telasAluno/CadAluno.dart';

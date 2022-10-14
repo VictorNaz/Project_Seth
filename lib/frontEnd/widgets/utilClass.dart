@@ -124,95 +124,37 @@ class BotaoInferior extends StatelessWidget {
   }
 }
 
-class CardDropButton extends StatelessWidget {
-  const CardDropButton(
-      {super.key, required this.titulo, required this.descricao});
+class selectNota extends StatelessWidget {
+  const selectNota({super.key, required this.texto, this.onChanged});
 
-  final String titulo;
-  final String descricao;
+  final String texto;
+  final dynamic onChanged;
 
   @override
   Widget build(BuildContext context) {
-    //A classe card cria um espaço editavel que irá conter o ExpasionTile
+    int dropdownvalue = 1;
+    List<int> items = [1, 2, 3, 4, 5];
 
     return Card(
-
-        //Determinamos o raio das bordas do card
-        shape: (RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        )),
-
-        //determinamos a cor do card
-        //color: const Color.fromARGB(255, 252, 72, 27),
-
-        //ClopRRect serve para que o texto não ultrapasse os raios do card
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-
-          //SingleChildScrollView serve para o texto quando expandido não ultrapasse o tamanho da tela
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-
-            //ExpansionTile é um botão que se expande mostrando informações adicionais
-            child: ExpansionTile(
-              //determinamos as cores do botão quando aberto e fechado
-              textColor: const Color.fromARGB(255, 252, 72, 27),
-              collapsedBackgroundColor: const Color.fromARGB(255, 252, 72, 27),
-              collapsedTextColor: Colors.white,
-              backgroundColor: Colors.white,
-              childrenPadding: const EdgeInsets.all(16),
-              //titulo do botão
-              title: Text(
-                titulo,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 25,
-                ),
-              ),
-
-              //texto quando expandido
-              children: [
-                Text(descricao),
-              ],
-            ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(texto),
+          DropdownButton(
+            value: dropdownvalue,
+            icon: const Icon(Icons.keyboard_arrow_down),
+            items: items.map((int items) {
+              return DropdownMenuItem(
+                value: items,
+                child: Text("$items"),
+              );
+            }).toList(),
+            onChanged: (int? newValue) {
+              dropdownvalue = newValue!;
+            },
           ),
-        ));
-      
-  }
-}
-
-
-/*
-class PerfilConfig extends StatelessWidget {
-
-  final String imagePath;
-  final VoidCallback onClicked;
-
-  const PerfilConfig({
-    Key? key,
-    required this.imagePath,
-    required this.onClicked,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final color = Theme.of(context).colorScheme.primary;
-
-    return Center(
-      child: buildImage(),
+        ],
+      ),
     );
   }
-
-  Widget buildImage() {
-    final image = NetworkImage(imagePath);
-
-    return Ink.image(
-      image: image,
-      fit: BoxFit.cover,
-      width: 128,
-      height: 128,
-    );
-  }
-
 }
-*/
