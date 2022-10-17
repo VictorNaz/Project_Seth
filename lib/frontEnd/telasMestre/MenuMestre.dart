@@ -21,7 +21,9 @@ class _MenuMestreState extends State<MenuMestre> {
       appBar: AppBar(
         //Barra superior já com o icone de voltar
         backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-        title: const Text("Menu Mestre"),
+        title: const Center(
+          child: Text("Menu Mestre"),
+        ),
 
         //Icone de voltar quando utilizado o drawer no appbar
         /*automaticallyImplyLeading: true,
@@ -110,7 +112,7 @@ class _MenuMestreState extends State<MenuMestre> {
                       color: Color.fromARGB(255, 252, 72, 27),
                     ),
                     tela: Info()),
-                Padding(padding: EdgeInsets.only(bottom: 80)),
+                const Padding(padding: EdgeInsets.only(bottom: 80)),
               ],
             ),
           ),
