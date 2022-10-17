@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project_seth/frontEnd/widgets/splashScreen.dart';
 import 'frontEnd/geral/Homepage.dart';
 
 void main(List<String> args) {
@@ -10,9 +11,8 @@ class ProjectSeth extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     //após fechar o app, verificar se o isAuth tem valor
     return const MaterialApp(
-        debugShowCheckedModeBanner: false, home: HomePage());
+        debugShowCheckedModeBanner: false, home: SplashScreen());
   }
 }
