@@ -10,6 +10,8 @@ class ProjectSeth extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    //após fechar o app, verificar se o isAuth tem valor
     return const MaterialApp(
         debugShowCheckedModeBanner: false, home: HomePage());
   }

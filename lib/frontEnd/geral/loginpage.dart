@@ -153,23 +153,22 @@ class _LoginPageState extends State<LoginPage> {
                             txtUsuario.text, txtSenha.text))!;
 
                         if (nivel_acess == "1") {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Menu()),
-                          );
+                          //Remove as abas acessadas anteriormente, limpa a memória
+                          //Impedindo que o usuário volte para a tela de login
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) => const Menu()),
+                              (Route<dynamic> route) => false);
                         } else if (nivel_acess == "2") {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const MenuProfessor()),
-                          );
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) => const MenuProfessor()),
+                              (Route<dynamic> route) => false);
                         } else if (nivel_acess == "3") {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const MenuMestre()),
-                          );
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) => const MenuMestre()),
+                              (Route<dynamic> route) => false);
                         } else if (nivel_acess == "") {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
