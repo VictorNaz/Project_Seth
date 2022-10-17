@@ -24,6 +24,7 @@ class _CadAlunoState extends State<CadAluno> {
 
   final _formKey = GlobalKey<FormState>();
 
+
   @override
   Widget build(BuildContext context) {
     //Detecta a ára fora dos campos
@@ -273,6 +274,7 @@ class _CadAlunoState extends State<CadAluno> {
                       ),
 
                       //Botão para os termos de uso
+                      /*
                       TextButton(
                           onPressed: () {
                             Navigator.push(
@@ -280,6 +282,14 @@ class _CadAlunoState extends State<CadAluno> {
                               MaterialPageRoute(
                                   builder: (context) => const CadAluno()),
                             );
+                      */
+                      TextButton(
+                          onPressed: () {
+                              showModalBottomSheet(
+                                  builder: (context) => optionModal(), context: context,
+                            );
+                          
+
                           },
                           style: TextButton.styleFrom(
                             fixedSize: const Size(300, 60),
@@ -332,4 +342,16 @@ class _CadAlunoState extends State<CadAluno> {
           ])),
     );
   }
+
+  Widget optionModal() =>  ElevatedButton(
+    style: ElevatedButton.styleFrom(
+      minimumSize: const Size(200, 1050),
+      maximumSize: const Size(200, 1050),
+     // padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+    ),
+    onPressed: null,
+    child: Container(),
+  
+    
+  );
 }
