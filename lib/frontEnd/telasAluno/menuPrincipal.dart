@@ -20,16 +20,21 @@ class _MenuState extends State<Menu> {
       appBar: AppBar(
         //Barra superior já com o icone de voltar
         backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-        title: const Text("Menu"),
+        title: const Center(
+          child: Text(
+            "Menu",
+            style: TextStyle(fontSize: 25),
+          ),
+        ),
 
         //Icone de voltar quando utilizado o drawer no appbar
-        automaticallyImplyLeading: true,
+        /*automaticallyImplyLeading: true,
         leading: IconButton(
             icon: const Icon(
               Icons.arrow_back,
               size: 30,
             ),
-            onPressed: () => Navigator.pop(context, false)),
+            onPressed: () => Navigator.pop(context, false)),*/
       ),
 
       //drawer para navegação no appbar
@@ -54,56 +59,61 @@ class _MenuState extends State<Menu> {
           //Posicionamento do campo ao selecionar o campo
           SingleChildScrollView(
             child: Column(
-              children: const [
-                //A classe BotaoMenu é uma classe auxiliar que recebe o texto e o icone para
-                //retornar o botao completo
-                BotaoMenu(
-                  texto: "Auto Avaliação",
-                  icone: Icon(
-                    Icons.text_increase,
-                    size: 50,
-                    color: Colors.black,
-                  ),
-                  tela: AutoAvaliacao(),
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    //A classe BotaoMenu é uma classe auxiliar que recebe o texto e o icone para
+                    //retornar o botao completo
+                    BotaoMenu(
+                      texto: "Auto Avaliação",
+                      icone: Icon(
+                        Icons.text_increase,
+                        size: 80,
+                        color: Color.fromARGB(255, 252, 72, 27),
+                      ),
+                      tela: AutoAvaliacao(),
+                    ),
+
+                    Padding(padding: EdgeInsets.only(right: 30)),
+
+                    BotaoMenu(
+                      texto: "Meu Desempenho",
+                      icone: Icon(
+                        Icons.add_chart_rounded,
+                        size: 80,
+                        color: Color.fromARGB(255, 252, 72, 27),
+                      ),
+                      tela: DesempAluno(),
+                    ),
+                  ],
                 ),
-
-                Padding(padding: EdgeInsets.only(top: 40)),
-
-                BotaoMenu(
-                  texto: "Meu Desempenho",
-                  icone: Icon(
-                    Icons.add_chart_rounded,
-                    size: 50,
-                    color: Colors.black,
-                  ),
-                  tela: DesempAluno(),
+                const Padding(padding: EdgeInsets.only(top: 30)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    BotaoMenu(
+                      texto: "Quadro de Aulas",
+                      icone: Icon(
+                        Icons.calendar_month_outlined,
+                        size: 80,
+                        color: Color.fromARGB(255, 252, 72, 27),
+                      ),
+                      tela: Menu(),
+                    ),
+                    Padding(padding: EdgeInsets.only(right: 30)),
+                    BotaoMenu(
+                      texto: "Informações",
+                      icone: Icon(
+                        Icons.info_outline_rounded,
+                        size: 80,
+                        color: Color.fromARGB(255, 252, 72, 27),
+                      ),
+                      tela: Info(),
+                    ),
+                  ],
                 ),
-
-                Padding(padding: EdgeInsets.only(top: 40)),
-
-                BotaoMenu(
-                  texto: "Quadro de Aulas",
-                  icone: Icon(
-                    Icons.calendar_month_outlined,
-                    size: 50,
-                    color: Colors.black,
-                  ),
-                  tela: Menu(),
-                ),
-
-                Padding(padding: EdgeInsets.only(top: 40)),
-
-                BotaoMenu(
-                  texto: "Informações",
-                  icone: Icon(
-                    Icons.info_outline_rounded,
-                    size: 50,
-                    color: Colors.black,
-                  ),
-                  tela: Info(),
-                ),
-
-                Padding(padding: EdgeInsets.only(bottom: 100)),
+                const Padding(padding: EdgeInsets.only(top: 300)),
               ],
             ),
           ),

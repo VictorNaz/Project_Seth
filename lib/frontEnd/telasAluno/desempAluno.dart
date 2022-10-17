@@ -255,7 +255,7 @@ class _DesempAlunoState extends State<DesempAluno> {
                           childrenPadding: const EdgeInsets.all(16),
                           //titulo do botão
                           title: const Text(
-                            "Aulas Fundamentais",
+                            "Auto Avaliação",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 25,

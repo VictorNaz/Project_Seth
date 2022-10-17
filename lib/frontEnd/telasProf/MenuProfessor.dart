@@ -19,16 +19,18 @@ class _MenuProfessorState extends State<MenuProfessor> {
       appBar: AppBar(
         //Barra superior já com o icone de voltar
         backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-        title: const Text("Menu Professor"),
+        title: const Center(
+          child: Text("Menu Professor"),
+        ),
 
         //Icone de voltar quando utilizado o drawer no appbar
-        automaticallyImplyLeading: true,
+        /*automaticallyImplyLeading: true,
         leading: IconButton(
             icon: const Icon(
               Icons.arrow_back,
               size: 30,
             ),
-            onPressed: () => Navigator.pop(context, false)),
+            onPressed: () => Navigator.pop(context, false)),*/
       ),
 
       //drawer para navegação no appbar
@@ -53,36 +55,43 @@ class _MenuProfessorState extends State<MenuProfessor> {
           //Posicionamento do campo ao selecionar o campo
           SingleChildScrollView(
             child: Column(
-              children: const [
+              children: [
                 //A classe BotaoMenu é uma classe auxiliar que recebe o texto e o icone para retornar
                 //o botao completo
-                BotaoMenu(
-                    texto: "Validar Presença",
-                    icone: Icon(
-                      Icons.fact_check_outlined,
-                      size: 50,
-                      color: Colors.black,
-                    ),
-                    tela: ValPresenca()),
-                Padding(padding: EdgeInsets.only(top: 40)),
-                BotaoMenu(
-                    texto: "Desempenho dos \n Alunos",
-                    icone: Icon(
-                      Icons.add_chart_rounded,
-                      size: 50,
-                      color: Colors.black,
-                    ),
-                    tela: DesempAluno()),
-                Padding(padding: EdgeInsets.only(top: 40)),
-                BotaoMenu(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    BotaoMenu(
+                        texto: "Validar Presença",
+                        icone: Icon(
+                          Icons.fact_check_outlined,
+                          size: 80,
+                          color: Color.fromARGB(255, 252, 72, 27),
+                        ),
+                        tela: ValPresenca()),
+                    Padding(padding: EdgeInsets.only(right: 30)),
+                    BotaoMenu(
+                        texto: "Desempenho \n Alunos",
+                        icone: Icon(
+                          Icons.add_chart_rounded,
+                          size: 80,
+                          color: Color.fromARGB(255, 252, 72, 27),
+                        ),
+                        tela: DesempAluno()),
+                  ],
+                ),
+
+                const Padding(padding: EdgeInsets.only(top: 30)),
+
+                const BotaoMenu(
                     texto: "Informações",
                     icone: Icon(
                       Icons.info_outline_rounded,
-                      size: 50,
-                      color: Colors.black,
+                      size: 80,
+                      color: Color.fromARGB(255, 252, 72, 27),
                     ),
                     tela: Info()),
-                Padding(padding: EdgeInsets.only(bottom: 140)),
+                const Padding(padding: EdgeInsets.only(bottom: 140)),
               ],
             ),
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project_seth/frontEnd/telasAluno/menuPrincipal.dart';
 import '../telasMestre/CadProfessor.dart';
 import '../telasMestre/MenuMestre.dart';
 import '../telasMestre/DesempenhoAluno.dart';
@@ -52,29 +53,16 @@ class _PageTestState extends State<PageTest> {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const CadProfessor()),
-                    );
-                  },
-                  child: const Text(
-                    "CadProfessor",
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                  )),
               const Padding(padding: EdgeInsets.only(top: 30)),
               TextButton(
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => const MenuMestre()),
+                      MaterialPageRoute(builder: (context) => const Menu()),
                     );
                   },
                   child: const Text(
-                    "MenuMestre",
+                    "Menu Aluno",
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   )),
               const Padding(padding: EdgeInsets.only(top: 30)),
@@ -91,19 +79,18 @@ class _PageTestState extends State<PageTest> {
                     "MenuProfessor",
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   )),
-                  
               const Padding(padding: EdgeInsets.only(top: 30)),
               TextButton(
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const DesempenhoAluno(),
+                        builder: (context) => const MenuMestre(),
                       ),
                     );
                   },
                   child: const Text(
-                    "DesempenhoAluno",
+                    "MenuMestre",
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   )),
             ],

@@ -24,13 +24,13 @@ class _MenuMestreState extends State<MenuMestre> {
         title: const Text("Menu Mestre"),
 
         //Icone de voltar quando utilizado o drawer no appbar
-        automaticallyImplyLeading: true,
+        /*automaticallyImplyLeading: true,
         leading: IconButton(
             icon: const Icon(
               Icons.arrow_back,
               size: 30,
             ),
-            onPressed: () => Navigator.pop(context, false)),
+            onPressed: () => Navigator.pop(context, false)),*/
       ),
 
       //drawer para navegação no appbar
@@ -55,49 +55,59 @@ class _MenuMestreState extends State<MenuMestre> {
           //Posicionamento do campo ao selecionar o campo
           SingleChildScrollView(
             child: Column(
-              children: const [
-                BotaoMenu(
-                    texto: "Cadastrar Professor",
-                    icone: Icon(
-                      Icons.group_add_outlined,
-                      size: 50,
-                      color: Colors.black,
-                    ),
-                    tela: CadProfessor()),
-                Padding(padding: EdgeInsets.only(top: 40)),
-                BotaoMenu(
-                    texto: "Validar Presença",
-                    icone: Icon(
-                      Icons.fact_check_outlined,
-                      size: 50,
-                      color: Colors.black,
-                    ),
-                    tela: ValPresenca()),
-                Padding(padding: EdgeInsets.only(top: 40)),
-                BotaoMenu(
-                    texto: "Desempenho dos \n Alunos",
-                    icone: Icon(
-                      Icons.add_chart_rounded,
-                      size: 50,
-                      color: Colors.black,
-                    ),
-                    tela: DesempAluno()),
-                Padding(padding: EdgeInsets.only(top: 40)),
-                BotaoMenu(
-                    texto: "Relatórios",
-                    icone: Icon(
-                      Icons.grading_sharp,
-                      size: 50,
-                      color: Colors.black,
-                    ),
-                    tela: Relatorio()),
-                Padding(padding: EdgeInsets.only(top: 40)),
-                BotaoMenu(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    BotaoMenu(
+                        texto: "Cadastrar Professor",
+                        icone: Icon(
+                          Icons.group_add_outlined,
+                          size: 80,
+                          color: Color.fromARGB(255, 252, 72, 27),
+                        ),
+                        tela: CadProfessor()),
+                    Padding(padding: EdgeInsets.only(right: 30)),
+                    BotaoMenu(
+                        texto: "Validar Presença",
+                        icone: Icon(
+                          Icons.fact_check_outlined,
+                          size: 80,
+                          color: Color.fromARGB(255, 252, 72, 27),
+                        ),
+                        tela: ValPresenca()),
+                  ],
+                ),
+                const Padding(padding: EdgeInsets.only(top: 30)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    BotaoMenu(
+                        texto: "Desempenho \n Alunos",
+                        icone: Icon(
+                          Icons.add_chart_rounded,
+                          size: 80,
+                          color: Color.fromARGB(255, 252, 72, 27),
+                        ),
+                        tela: DesempAluno()),
+                    Padding(padding: EdgeInsets.only(right: 30)),
+                    BotaoMenu(
+                        texto: "Relatórios",
+                        icone: Icon(
+                          Icons.grading_sharp,
+                          size: 80,
+                          color: Color.fromARGB(255, 252, 72, 27),
+                        ),
+                        tela: Relatorio()),
+                  ],
+                ),
+                const Padding(padding: EdgeInsets.only(top: 30)),
+                const BotaoMenu(
                     texto: "Informações",
                     icone: Icon(
                       Icons.info_outline_rounded,
-                      size: 50,
-                      color: Colors.black,
+                      size: 80,
+                      color: Color.fromARGB(255, 252, 72, 27),
                     ),
                     tela: Info()),
                 Padding(padding: EdgeInsets.only(bottom: 80)),

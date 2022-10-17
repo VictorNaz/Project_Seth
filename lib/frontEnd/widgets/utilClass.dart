@@ -59,24 +59,27 @@ class BotaoMenu extends StatelessWidget {
         );
       },
       style: TextButton.styleFrom(
-        backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-        fixedSize: const Size(320, 80),
+        backgroundColor: const Color.fromARGB(255, 248, 248, 248),
+        fixedSize: const Size(150, 150),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
+        elevation: 15,
+        shadowColor: Color.fromARGB(255, 252, 72, 27),
       ),
-      child: Row(
+      child: Column(
         children: [
+          const Padding(padding: EdgeInsets.only(top: 8)),
           icone,
-          const Padding(padding: EdgeInsets.only(right: 40)),
+          const Padding(padding: EdgeInsets.only(bottom: 4)),
           Text(
             texto,
             style: const TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontSize: 20,
             ),
             textAlign: TextAlign.center,
-          )
+          ),
         ],
       ),
     );
@@ -104,7 +107,7 @@ class BotaoInferior extends StatelessWidget {
             },
             icon: const Icon(
               Icons.person,
-              color: Color.fromARGB(255, 252, 72, 27),
+              color: Color.fromARGB(255, 255, 255, 255),
               size: 35,
             ),
           ),
@@ -114,7 +117,7 @@ class BotaoInferior extends StatelessWidget {
             },
             icon: const Icon(
               Icons.exit_to_app,
-              color: Color.fromARGB(255, 252, 72, 27),
+              color: Color.fromARGB(255, 255, 255, 255),
               size: 35,
             ),
           ),

@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
               height: 300,
             ),
           ),
-          /*TextButton(
+          TextButton(
               onPressed: () {
                 Navigator.push(
                   context,
@@ -49,9 +49,9 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               child: const Text(
-                "Páginas Professor",
+                "Páginas teste",
                 style: TextStyle(color: Colors.white, fontSize: 25),
-              )),*/
+              )),
           //Paddin para mover as imagens na tela.
           Padding(
             padding: const EdgeInsets.only(top: 100),
