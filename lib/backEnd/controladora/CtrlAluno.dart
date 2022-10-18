@@ -6,6 +6,7 @@ import 'package:flutter_project_seth/backEnd/server/serverAluno.dart';
 
 /********************** CLASSES DE CONTROLE  **************************/
 
+//Cadastra aluno
 Future<String?> cadAluno(String txtNome, String txtUsuario, String txtSenha,
     String txtEmail, String txtCpf) async {
   var aluno = Aluno();
@@ -22,6 +23,7 @@ Future<String?> cadAluno(String txtNome, String txtUsuario, String txtSenha,
   await ServerAluno.iniciaProgresso(aluno);
 }
 
+//Valida Presença do aluno
 Future<String?> validaPresAluno(String txtUsuario) async {
   var aluno = Aluno();
   aluno.setUsuario = txtUsuario;
@@ -30,6 +32,7 @@ Future<String?> validaPresAluno(String txtUsuario) async {
   await ServerAluno.valPresenAluno(aluno);
 }
 
+//Login de Usuario
 Future<String?> loginUsuario(String txtUsuario, String txtSenha) async {
   var aluno = Aluno();
   var novaSenha = dataCrypt(txtSenha);
@@ -38,6 +41,28 @@ Future<String?> loginUsuario(String txtUsuario, String txtSenha) async {
 
   aluno.nivel_acess = await ServerAluno.logaUsuario(aluno);
   return aluno.nivel_acess;
+}
+
+Future<String?> cadAvaliacao(
+    double valAlimentacao,
+    double valPrevencao,
+    double valAtivFisica,
+    double valComportamento,
+    double valRelacionamento,
+    double valEspiritual,
+    double valDefPessoal) async {
+  List avaliacao = [
+    valAlimentacao,
+    valPrevencao,
+    valAtivFisica,
+    valComportamento,
+    valRelacionamento,
+    valEspiritual,
+    valDefPessoal
+  ];
+  var aluno = Aluno();
+  aluno.usuario = await ServerAluno.buscaAlunoId(aluno);
+  //await ServerAluno.cadAvaliacao(aluno.id, avaliacao);
 }
 
 /*************************** VALIDAÇÕES DE CAMPO *******************************/

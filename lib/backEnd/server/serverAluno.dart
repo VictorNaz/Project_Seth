@@ -116,7 +116,6 @@ class ServerAluno {
   }
 
   static Future<String> logaUsuario(Aluno aluno) async {
-    print(aluno.senha);
     var request = http.Request(
         'POST', Uri.parse('https://apiseth.cyclic.app/loginUsuario'));
     request.body =
