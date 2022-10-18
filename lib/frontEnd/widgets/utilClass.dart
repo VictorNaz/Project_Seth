@@ -15,24 +15,137 @@ class DrawerTop extends StatelessWidget {
     return ListView(
       padding: EdgeInsets.zero,
       children: [
-        DrawerHeader(
-          decoration:
-              const BoxDecoration(color: Color.fromARGB(255, 252, 72, 27)),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(Icons.settings),
-              const Padding(padding: EdgeInsets.only(right: 20)),
-              Text(
-                texto,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                ),
-              )
-            ],
+        SizedBox(
+          height: 80,
+          child: DrawerHeader(
+            padding: const EdgeInsets.only(right: 30),
+            decoration: const BoxDecoration(
+              color: Color.fromARGB(255, 252, 72, 27),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.settings, size: 40),
+                const Padding(padding: EdgeInsets.only(right: 10)),
+                Text(
+                  texto,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 25,
+                  ),
+                )
+              ],
+            ),
           ),
-        )
+        ),
+        ListTile(
+          title: Container(
+              padding: EdgeInsets.only(top: 5),
+              color: const Color.fromARGB(255, 228, 227, 227),
+              height: 50,
+              child: Row(
+                children: const [
+                  Padding(padding: EdgeInsets.only(left: 20)),
+                  Icon(
+                    Icons.notifications,
+                    color: Colors.black,
+                    size: 32,
+                  ),
+                  Padding(padding: EdgeInsets.only(right: 30)),
+                  Text(
+                    'Notificações',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ],
+              )),
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
+        ListTile(
+          title: Container(
+              padding: EdgeInsets.only(top: 5),
+              color: const Color.fromARGB(255, 228, 227, 227),
+              height: 50,
+              child: Row(
+                children: const [
+                  Padding(padding: EdgeInsets.only(left: 20)),
+                  Icon(
+                    Icons.list,
+                    color: Colors.black,
+                    size: 32,
+                  ),
+                  Padding(padding: EdgeInsets.only(right: 27)),
+                  Text(
+                    'Termos de uso',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ],
+              )),
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
+        ListTile(
+          title: Container(
+              padding: EdgeInsets.only(top: 5),
+              color: const Color.fromARGB(255, 228, 227, 227),
+              height: 50,
+              child: Row(
+                children: const [
+                  Padding(padding: EdgeInsets.only(left: 20)),
+                  Icon(
+                    Icons.list,
+                    color: Colors.black,
+                    size: 32,
+                  ),
+                  Padding(padding: EdgeInsets.only(right: 12)),
+                  Text(
+                    'Regras do Tatame',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ],
+              )),
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
+        ListTile(
+          title: Container(
+              padding: EdgeInsets.only(top: 5),
+              color: const Color.fromARGB(255, 228, 227, 227),
+              height: 50,
+              child: Row(
+                children: const [
+                  Padding(padding: EdgeInsets.only(left: 20)),
+                  Icon(
+                    Icons.info,
+                    color: Colors.black,
+                    size: 32,
+                  ),
+                  Padding(padding: EdgeInsets.only(right: 62)),
+                  Text(
+                    'Sobre',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ],
+              )),
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
       ],
     );
   }
@@ -60,12 +173,12 @@ class BotaoMenu extends StatelessWidget {
       },
       style: TextButton.styleFrom(
         backgroundColor: const Color.fromARGB(255, 248, 248, 248),
-        fixedSize: const Size(150, 150),
+        fixedSize: const Size(165, 150),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
         elevation: 15,
-        shadowColor: Color.fromARGB(255, 252, 72, 27),
+        shadowColor: const Color.fromARGB(255, 252, 72, 27),
       ),
       child: Column(
         children: [
