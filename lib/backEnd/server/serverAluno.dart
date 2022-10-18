@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter_project_seth/backEnd/modelo/aluno.dart';
+import 'package:flutter_project_seth/backEnd/security/sessionService.dart';
 import 'package:http/http.dart' as http;
 
 //Pendencias
@@ -127,7 +128,7 @@ class ServerAluno {
 
     if (response.statusCode == 200) {
       print("Usuario encontrado!");
-      //
+      PrefsService.save(aluno.usuario!);
     } else {
       print(response.reasonPhrase);
     }

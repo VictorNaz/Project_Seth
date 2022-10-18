@@ -12,7 +12,10 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
   @override
+  //metodo inicia primeiro
+  //abre a tela em laranja e o icone da seth branco
   void initState() {
     Future.delayed(Duration(seconds: 2)).then((value) => Navigator.of(context)
         .pushAndRemoveUntil(
