@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/frontEnd/widgets/splashScreen.dart';
-import 'frontEnd/geral/Homepage.dart';
+
 
 void main(List<String> args) {
   runApp(const ProjectSeth());
