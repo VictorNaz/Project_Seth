@@ -56,9 +56,96 @@ class _AutoAvaliacaoState extends State<AutoAvaliacao> {
 
           //Comando para colocar o conteúdo em coluna
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              // Esta classe retorna um card com um expansionTile dentro, recebendo o titulo e a descrição do mesmo.
+              Card(
+                //Determinamos o raio das bordas do card
+                shape: (RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                )),
+
+                //ClopRRect serve para que o texto não ultrapasse os raios do card
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+
+                  //SingleChildScrollView serve para o texto quando expandido não ultrapasse o tamanho da tela
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: ExpansionTile(
+                      //determinamos as cores do botão quando aberto e fechado
+                      textColor: const Color.fromARGB(255, 0, 0, 0),
+                      collapsedBackgroundColor:
+                          const Color.fromARGB(255, 252, 72, 27),
+                      collapsedTextColor: Colors.white,
+                      backgroundColor: Colors.white,
+                      childrenPadding: const EdgeInsets.all(16),
+                      //titulo do botão
+                      title: const Text(
+                        "Última Avaliação",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            RadarWidget(
+                              radarMap: RadarMapModel(
+                                legend: [
+                                  LegendModel('Desempenho 75%',
+                                      const Color.fromARGB(255, 252, 72, 27)),
+                                ],
+                                indicator: [
+                                  IndicatorModel("Alimentação", 10),
+                                  IndicatorModel("Prevenção", 10),
+                                  IndicatorModel("Atividade \n Fisica", 10),
+                                  IndicatorModel("Comportamento", 10),
+                                  IndicatorModel("Relacionamento", 10),
+                                  IndicatorModel("Espiritual", 10),
+                                  IndicatorModel("Defesa \n Pessoal", 10),
+                                ],
+                                data: [
+                                  MapDataModel([5, 10, 10, 10, 6, 9, 10]),
+                                ],
+                                radius: 100,
+                                duration: 2000,
+                                shape: Shape.square,
+                                maxWidth: 90,
+                                line: LineModel(10),
+                              ),
+                              textStyle: const TextStyle(
+                                  color: Colors.black, fontSize: 12),
+                              isNeedDrawLegend: true,
+                              lineText: (p, length) => "${(p + 1 ~/ length)}",
+                              dilogText: (IndicatorModel indicatorModel,
+                                  List<LegendModel> legendModels,
+                                  List<double> mapDataModels) {
+                                StringBuffer text = StringBuffer("");
+                                for (int i = 0; i < mapDataModels.length; i++) {
+                                  text.write(
+                                      "${legendModels[i].name} : ${mapDataModels[i].toString()}");
+                                  if (i != mapDataModels.length - 1) {
+                                    text.write("\n");
+                                  }
+                                }
+                                return text.toString();
+                              },
+                              //outLineText: (data, max) => "${data}",
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+
               //espaçamento entre campos
-              const Padding(padding: EdgeInsets.only(top: 20)),
+              const Padding(padding: EdgeInsets.only(top: 10)),
 
               //texto de titulo
               Card(
@@ -81,6 +168,7 @@ class _AutoAvaliacaoState extends State<AutoAvaliacao> {
                 ),
                 color: const Color.fromARGB(255, 252, 72, 27),
               ),
+              const Padding(padding: EdgeInsets.only(top: 20)),
 
               //Cards contendo os selects de avaliação
               Card(
@@ -231,11 +319,13 @@ class _AutoAvaliacaoState extends State<AutoAvaliacao> {
                 ),
               ),
               const Padding(padding: EdgeInsets.only(top: 20)),
+
               Card(
-                child: const SizedBox(
-                  child: Center(
+                child: SizedBox(
+                  child: const TextButton(
+                    onPressed: null,
                     child: Text(
-                      "Última avaliação",
+                      "Enviar Avaliação",
                       style: TextStyle(
                         color: Color.fromRGBO(252, 250, 250, 1),
                         fontWeight: FontWeight.bold,
@@ -250,53 +340,6 @@ class _AutoAvaliacaoState extends State<AutoAvaliacao> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 color: const Color.fromARGB(255, 252, 72, 27),
-              ),
-
-              //espaçamento entre campos
-              const Padding(padding: EdgeInsets.only(top: 30)),
-
-              //gráfico de radar com os dados da auto avaliação
-              RadarWidget(
-                radarMap: RadarMapModel(
-                  legend: [
-                    LegendModel('Desempenho 75%',
-                        const Color.fromARGB(255, 252, 72, 27)),
-                  ],
-                  indicator: [
-                    IndicatorModel("Alimentação", 10),
-                    IndicatorModel("Prevenção", 10),
-                    IndicatorModel("Atividade \n Fisica", 10),
-                    IndicatorModel("Comportamento", 10),
-                    IndicatorModel("Relacionamento", 10),
-                    IndicatorModel("Espiritual", 10),
-                    IndicatorModel("Defesa \n Pessoal", 10),
-                  ],
-                  data: [
-                    MapDataModel([5, 10, 10, 10, 6, 9, 10]),
-                  ],
-                  radius: 100,
-                  duration: 2000,
-                  shape: Shape.square,
-                  maxWidth: 90,
-                  line: LineModel(10),
-                ),
-                textStyle: const TextStyle(color: Colors.black, fontSize: 12),
-                isNeedDrawLegend: true,
-                lineText: (p, length) => "${(p + 1 ~/ length)}",
-                dilogText: (IndicatorModel indicatorModel,
-                    List<LegendModel> legendModels,
-                    List<double> mapDataModels) {
-                  StringBuffer text = StringBuffer("");
-                  for (int i = 0; i < mapDataModels.length; i++) {
-                    text.write(
-                        "${legendModels[i].name} : ${mapDataModels[i].toString()}");
-                    if (i != mapDataModels.length - 1) {
-                      text.write("\n");
-                    }
-                  }
-                  return text.toString();
-                },
-                //outLineText: (data, max) => "${data}",
               ),
             ],
           ),

@@ -61,8 +61,10 @@ Future<String?> cadAvaliacao(
     valDefPessoal
   ];
   var aluno = Aluno();
+
+  print(avaliacao);
   aluno.usuario = await ServerAluno.buscaAlunoId(aluno);
-  //await ServerAluno.cadAvaliacao(aluno.id, avaliacao);
+  await ServerAluno.cadAvaliacao(aluno, avaliacao);
 }
 
 /*************************** VALIDAÇÕES DE CAMPO *******************************/
