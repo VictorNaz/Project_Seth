@@ -17,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
   //metodo inicia primeiro
   //abre a tela em laranja e o icone da seth branco
   void initState() {
-    Future.delayed(Duration(seconds: 2)).then((value) => Navigator.of(context)
+    Future.delayed(Duration(seconds: 3)).then((value) => Navigator.of(context)
         .pushAndRemoveUntil(
             MaterialPageRoute(builder: (context) => const HomePage()),
             (Route<dynamic> route) => false));

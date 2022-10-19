@@ -117,7 +117,6 @@ class ServerAluno {
   }
 
   static Future<String> logaUsuario(Aluno aluno) async {
-    
     var request = http.Request(
         'POST', Uri.parse('https://apiseth.cyclic.app/loginUsuario'));
     request.body =
@@ -130,6 +129,7 @@ class ServerAluno {
     if (response.statusCode == 200) {
       print("Usuario encontrado!");
       PrefsService.save(aluno.usuario!);
+      var teste = await PrefsService.returnUser();
     } else {
       print(response.reasonPhrase);
     }

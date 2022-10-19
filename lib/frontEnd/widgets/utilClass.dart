@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_project_seth/backEnd/security/sessionService.dart';
 
 import '../telasAluno/PerfilAluno.dart';
 
@@ -226,6 +227,8 @@ class BotaoInferior extends StatelessWidget {
           ),
           IconButton(
             onPressed: () {
+              //Encerra a sessão
+              PrefsService.logout;
               exit(0);
             },
             icon: const Icon(
