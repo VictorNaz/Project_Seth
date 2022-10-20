@@ -287,6 +287,7 @@ class _CadAlunoState extends State<CadAluno> {
                             showModalBottomSheet(
                               builder: (context) => optionModal(),
                               context: context,
+                              isScrollControlled: true,
                             );
                           },
                           style: TextButton.styleFrom(
@@ -347,6 +348,6 @@ class _CadAlunoState extends State<CadAluno> {
           // padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
         ),
         onPressed: null,
-        child: Container(),
+        child: const Text("Termos de uso"),
       );
 }
