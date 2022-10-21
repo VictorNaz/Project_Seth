@@ -300,6 +300,26 @@ class _CadAlunoState extends State<CadAluno> {
                             "li e estou de acordo com os Termos de Uso e Política de Privacidade.",
                             style: TextStyle(color: Colors.grey, fontSize: 16),
                           )),
+
+
+                        TextButton(
+                          onPressed: () {
+                            showModalBottomSheet(
+                              builder: (context) => optionModalSeth(),
+                              context: context,
+                              isScrollControlled: true,
+                            );
+                          },
+                          style: TextButton.styleFrom(
+                            fixedSize: const Size(300, 60),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ), //texto do button e estilo da escrita
+                          child: const Text(
+                            "Regras do tatame.",
+                            style: TextStyle(color: Colors.grey, fontSize: 16),
+                          )),
                     ],
                   ),
                   //Espaçamento entre os campos e o botão cadastrar
@@ -342,6 +362,8 @@ class _CadAlunoState extends State<CadAluno> {
     );
   }
 
+  //Modal do termos de uso do aplicativo
+
   Widget optionModal() => ElevatedButton(
         style: ElevatedButton.styleFrom(
           fixedSize: const Size(165, 1000),
@@ -349,5 +371,16 @@ class _CadAlunoState extends State<CadAluno> {
         ),
         onPressed: null,
         child: const Text("Termos de uso"),
+      );
+
+  //Modal dos termos de uso da academia
+
+  Widget optionModalSeth() => ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          fixedSize: const Size(165, 1000),
+          // padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+        ),
+        onPressed: null,
+        child: const Text("Termos de uso do tatame"),
       );
 }
