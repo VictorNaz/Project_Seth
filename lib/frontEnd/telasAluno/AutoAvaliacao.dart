@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
 import 'package:flutter_project_seth/frontEnd/telasAluno/menuPrincipal.dart';
 import 'package:kg_charts/kg_charts.dart';
 
@@ -15,7 +16,7 @@ class _AutoAvaliacaoState extends State<AutoAvaliacao> {
   double valAlimentacao = 1;
   double valPrevencao = 1;
   double valAtivFisica = 1;
-  double valComportamento = 1;
+  double valAutoControle = 1;
   double valRelacionamento = 1;
   double valEspiritual = 1;
   double valDefPessoal = 1;
@@ -29,8 +30,9 @@ class _AutoAvaliacaoState extends State<AutoAvaliacao> {
       appBar: AppBar(
         //Barra superior já com o icone de voltar
         backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-        title: const Text("Auto Avaliação"),
-
+        title: const Center(
+          child: Text("Auto Avaliação"),
+        ),
         //Icone de voltar quando utilizado o drawer no appbar
         automaticallyImplyLeading: true,
         leading: IconButton(
@@ -76,19 +78,20 @@ class _AutoAvaliacaoState extends State<AutoAvaliacao> {
                       //determinamos as cores do botão quando aberto e fechado
                       textColor: const Color.fromARGB(255, 0, 0, 0),
                       collapsedBackgroundColor:
-                          const Color.fromARGB(255, 252, 72, 27),
+                          const Color.fromARGB(255, 73, 72, 72),
                       collapsedTextColor: Colors.white,
                       backgroundColor: Colors.white,
                       childrenPadding: const EdgeInsets.all(16),
                       //titulo do botão
                       title: const Text(
-                        "Última Avaliação",
+                        "       Última Avaliação",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
                         ),
                       ),
+
                       children: [
                         Column(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -145,7 +148,7 @@ class _AutoAvaliacaoState extends State<AutoAvaliacao> {
               ),
 
               //espaçamento entre campos
-              const Padding(padding: EdgeInsets.only(top: 10)),
+              const Padding(padding: EdgeInsets.only(top: 20)),
 
               //texto de titulo
               Card(
@@ -166,12 +169,13 @@ class _AutoAvaliacaoState extends State<AutoAvaliacao> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                color: const Color.fromARGB(255, 252, 72, 27),
+                color: const Color.fromARGB(255, 73, 72, 72),
               ),
               const Padding(padding: EdgeInsets.only(top: 20)),
 
               //Cards contendo os selects de avaliação
               Card(
+                color: const Color.fromARGB(255, 226, 226, 226),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -214,6 +218,7 @@ class _AutoAvaliacaoState extends State<AutoAvaliacao> {
                 ),
               ),
               Card(
+                color: const Color.fromARGB(255, 226, 226, 226),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -239,16 +244,16 @@ class _AutoAvaliacaoState extends State<AutoAvaliacao> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      "Comportamento: ",
+                      "Auto_controle: ",
                     ),
                     Slider(
-                      value: valComportamento,
+                      value: valAutoControle,
                       max: 10,
                       divisions: 10,
-                      label: valComportamento.round().toString(),
+                      label: valAutoControle.round().toString(),
                       onChanged: (double value) {
                         setState(() {
-                          valComportamento = value;
+                          valAutoControle = value;
                         });
                       },
                     )
@@ -256,6 +261,7 @@ class _AutoAvaliacaoState extends State<AutoAvaliacao> {
                 ),
               ),
               Card(
+                color: const Color.fromARGB(255, 226, 226, 226),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -298,6 +304,7 @@ class _AutoAvaliacaoState extends State<AutoAvaliacao> {
                 ),
               ),
               Card(
+                color: const Color.fromARGB(255, 226, 226, 226),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -322,25 +329,35 @@ class _AutoAvaliacaoState extends State<AutoAvaliacao> {
 
               Card(
                 child: SizedBox(
-                  child: const TextButton(
-                    onPressed: null,
-                    child: Text(
+                  child: TextButton(
+                    onPressed: () {
+                      cadAvaliacao(
+                          valAlimentacao,
+                          valPrevencao,
+                          valAtivFisica,
+                          valAutoControle,
+                          valRelacionamento,
+                          valEspiritual,
+                          valDefPessoal);
+                    },
+                    child: const Text(
                       "Enviar Avaliação",
                       style: TextStyle(
                         color: Color.fromRGBO(252, 250, 250, 1),
                         fontWeight: FontWeight.bold,
-                        fontSize: 18,
+                        fontSize: 20,
                       ),
                     ),
                   ),
                   width: 250,
-                  height: 32,
+                  height: 40,
                 ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
                 color: const Color.fromARGB(255, 252, 72, 27),
               ),
+              const Padding(padding: EdgeInsets.only(bottom: 120))
             ],
           ),
         ),

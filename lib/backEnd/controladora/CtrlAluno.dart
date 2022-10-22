@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:flutter_project_seth/backEnd/modelo/aluno.dart';
 import 'package:flutter_project_seth/backEnd/security/dataCrypt.dart';
+import 'package:flutter_project_seth/backEnd/security/sessionService.dart';
 import 'package:flutter_project_seth/backEnd/server/serverAluno.dart';
 
 /********************** CLASSES DE CONTROLE  **************************/
@@ -47,7 +48,7 @@ Future<String?> cadAvaliacao(
     double valAlimentacao,
     double valPrevencao,
     double valAtivFisica,
-    double valComportamento,
+    double valAutoControle,
     double valRelacionamento,
     double valEspiritual,
     double valDefPessoal) async {
@@ -55,15 +56,15 @@ Future<String?> cadAvaliacao(
     valAlimentacao,
     valPrevencao,
     valAtivFisica,
-    valComportamento,
+    valAutoControle,
     valRelacionamento,
     valEspiritual,
     valDefPessoal
   ];
   var aluno = Aluno();
 
-  print(avaliacao);
-  aluno.usuario = await ServerAluno.buscaAlunoId(aluno);
+  aluno.usuario = await PrefsService.returnUser();
+  aluno.id = await ServerAluno.buscaAlunoId(aluno);
   await ServerAluno.cadAvaliacao(aluno, avaliacao);
 }
 

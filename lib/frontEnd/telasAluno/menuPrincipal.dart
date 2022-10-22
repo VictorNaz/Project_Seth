@@ -22,7 +22,7 @@ class _MenuState extends State<Menu> {
         backgroundColor: const Color.fromARGB(255, 252, 72, 27),
         title: const Center(
           child: Text(
-            "Menu",
+            "      Menu",
             style: TextStyle(fontSize: 25),
           ),
         ),

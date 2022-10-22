@@ -138,19 +138,29 @@ class ServerAluno {
   }
 
   static Future<void> cadAvaliacao(Aluno aluno, List avaliacao) async {
-    var headers = {'Content-Type': 'application/json'};
+    print(avaliacao[0]);
     var request = http.Request(
-        'POST', Uri.parse('https://apiseth.cyclic.app/loginUsuario'));
-    request.body =
-        json.encode({"usuario": aluno.usuario, "avaliacao": "avaliacao"});
+        'POST', Uri.parse('https://apiseth.cyclic.app/cadAvaliacao'));
+    request.body = json.encode({
+      "aluno_id": aluno.id,
+      "alimentacao": avaliacao[0],
+      "prevencao": avaliacao[1],
+      "atividade_fisica": avaliacao[2],
+      "auto_controle": avaliacao[3],
+      "relacionamento": avaliacao[4],
+      "espiritual": avaliacao[5],
+      "defesa_pessoal": avaliacao[6],
+    });
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
       print(await response.stream.bytesToString());
+      print("Avaliação cadastrada com sucesso");
     } else {
       print(response.reasonPhrase);
+      print("Erro ao cadastrar a avaliação");
     }
   }
 }
