@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'package:crypto/crypto.dart';
 import 'package:flutter_project_seth/backEnd/modelo/aluno.dart';
 import 'package:flutter_project_seth/backEnd/security/dataCrypt.dart';
 import 'package:flutter_project_seth/backEnd/security/sessionService.dart';

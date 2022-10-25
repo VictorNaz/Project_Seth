@@ -138,7 +138,6 @@ class ServerAluno {
   }
 
   static Future<void> cadAvaliacao(Aluno aluno, List avaliacao) async {
-    print(avaliacao[0]);
     var request = http.Request(
         'POST', Uri.parse('https://apiseth.cyclic.app/cadAvaliacao'));
     request.body = json.encode({
