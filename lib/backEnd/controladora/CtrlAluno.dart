@@ -3,6 +3,8 @@ import 'package:flutter_project_seth/backEnd/security/dataCrypt.dart';
 import 'package:flutter_project_seth/backEnd/security/sessionService.dart';
 import 'package:flutter_project_seth/backEnd/server/serverAluno.dart';
 
+import '../modelo/autoAvaliacao.dart';
+
 /********************** CLASSES DE CONTROLE  **************************/
 
 //Cadastra aluno
@@ -64,6 +66,33 @@ Future<String?> cadAvaliacao(
   aluno.usuario = await PrefsService.returnUser();
   aluno.id = await ServerAluno.buscaAlunoId(aluno);
   await ServerAluno.cadAvaliacao(aluno, avaliacao);
+}
+
+Future<List<double>> buscaAvaliacao() async {
+  var aluno = Aluno();
+  var avaliacao = AutoAvaliacao();
+  aluno.usuario = await PrefsService.returnUser();
+  aluno.id = await ServerAluno.buscaAlunoId(aluno);
+  avaliacao = await ServerAluno.buscaAvaliacao(aluno);
+
+  double alimentacao = avaliacao.alimentacao!.toDouble();
+  double prevencao = avaliacao.prevencao!.toDouble();
+  double atividadeFisica = avaliacao.atividade_fisica!.toDouble();
+  double autoControle = avaliacao.auto_controle!.toDouble();
+  double relacionamento = avaliacao.relacionamento!.toDouble();
+  double espiritual = avaliacao.espiritual!.toDouble();
+  double defesaPessoal = avaliacao.defesa_pessoal!.toDouble();
+
+  List<double> lista = [
+    alimentacao,
+    prevencao,
+    atividadeFisica,
+    autoControle,
+    relacionamento,
+    espiritual,
+    defesaPessoal
+  ];
+  return lista;
 }
 
 /*************************** VALIDAÇÕES DE CAMPO *******************************/

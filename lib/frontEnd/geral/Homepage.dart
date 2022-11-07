@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               child: const Text(
-                "Páginas teste",
+                "Páginas test",
                 style: TextStyle(color: Colors.white, fontSize: 25),
               )),
           //Paddin para mover as imagens na tela.

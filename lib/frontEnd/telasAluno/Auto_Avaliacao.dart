@@ -5,14 +5,14 @@ import 'package:kg_charts/kg_charts.dart';
 
 import '../widgets/utilClass.dart';
 
-class AutoAvaliacao extends StatefulWidget {
-  const AutoAvaliacao({Key? key}) : super(key: key);
+class Auto_Avaliacao extends StatefulWidget {
+  const Auto_Avaliacao({Key? key}) : super(key: key);
 
   @override
-  State<AutoAvaliacao> createState() => _AutoAvaliacaoState();
+  State<Auto_Avaliacao> createState() => _Auto_AvaliacaoState();
 }
 
-class _AutoAvaliacaoState extends State<AutoAvaliacao> {
+class _Auto_AvaliacaoState extends State<Auto_Avaliacao> {
   double valAlimentacao = 1;
   double valPrevencao = 1;
   double valAtivFisica = 1;
@@ -21,9 +21,26 @@ class _AutoAvaliacaoState extends State<AutoAvaliacao> {
   double valEspiritual = 1;
   double valDefPessoal = 1;
 
-  String? value;
+  List<double> lista = [];
+
+  getList<List>() async {
+    await buscaAvaliacao().then((value) {
+      if (value != null) {
+        setState(() {
+          lista = value;
+          print(lista);
+        });
+      }
+    });
+  }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    getList();
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
@@ -99,7 +116,7 @@ class _AutoAvaliacaoState extends State<AutoAvaliacao> {
                             RadarWidget(
                               radarMap: RadarMapModel(
                                 legend: [
-                                  LegendModel('Desempenho 75%',
+                                  LegendModel('Desempenho',
                                       const Color.fromARGB(255, 252, 72, 27)),
                                 ],
                                 indicator: [
@@ -112,7 +129,7 @@ class _AutoAvaliacaoState extends State<AutoAvaliacao> {
                                   IndicatorModel("Defesa \n Pessoal", 10),
                                 ],
                                 data: [
-                                  MapDataModel([5, 10, 10, 10, 6, 9, 10]),
+                                  MapDataModel(lista),
                                 ],
                                 radius: 100,
                                 duration: 2000,
@@ -330,7 +347,16 @@ class _AutoAvaliacaoState extends State<AutoAvaliacao> {
               Card(
                 child: SizedBox(
                   child: TextButton(
+                    child: const Text(
+                      "Enviar Avaliação",
+                      style: TextStyle(
+                        color: Color.fromRGBO(252, 250, 250, 1),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
                     onPressed: () {
+                      buscaAvaliacao();
                       cadAvaliacao(
                           valAlimentacao,
                           valPrevencao,
@@ -340,14 +366,6 @@ class _AutoAvaliacaoState extends State<AutoAvaliacao> {
                           valEspiritual,
                           valDefPessoal);
                     },
-                    child: const Text(
-                      "Enviar Avaliação",
-                      style: TextStyle(
-                        color: Color.fromRGBO(252, 250, 250, 1),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
-                    ),
                   ),
                   width: 250,
                   height: 40,

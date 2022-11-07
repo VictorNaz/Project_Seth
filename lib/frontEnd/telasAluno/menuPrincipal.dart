@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_seth/frontEnd/telasAluno/AutoAvaliacao.dart';
+import 'package:flutter_project_seth/frontEnd/telasAluno/Auto_Avaliacao.dart';
 import 'package:flutter_project_seth/frontEnd/telasAluno/info.dart';
 
 import '../widgets/utilClass.dart';
@@ -72,7 +72,7 @@ class _MenuState extends State<Menu> {
                         size: 80,
                         color: Color.fromARGB(255, 252, 72, 27),
                       ),
-                      tela: AutoAvaliacao(),
+                      tela: Auto_Avaliacao(),
                     ),
 
                     Padding(padding: EdgeInsets.only(right: 30)),

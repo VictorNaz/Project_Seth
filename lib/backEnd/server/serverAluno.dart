@@ -4,6 +4,8 @@ import 'package:flutter_project_seth/backEnd/modelo/aluno.dart';
 import 'package:flutter_project_seth/backEnd/security/sessionService.dart';
 import 'package:http/http.dart' as http;
 
+import '../modelo/autoAvaliacao.dart';
+
 //Pendencias
 //Validação de campos para dados repetidos
 //Criptografia de senha
@@ -77,6 +79,35 @@ class ServerAluno {
     }
 
     return id;
+  }
+
+  static Future<AutoAvaliacao> buscaAvaliacao(Aluno aluno) async {
+    var request = http.Request(
+        'POST', Uri.parse('https://apiseth.cyclic.app/buscarAvaliacao'));
+    request.body = json.encode({"aluno_id": aluno.id});
+    request.headers.addAll(headers);
+
+    var avaliacao = AutoAvaliacao();
+
+    http.StreamedResponse response = await request.send();
+    String jsonString = await response.stream.bytesToString();
+    var result = json.decode(jsonString);
+    avaliacao.alimentacao = result["alimentacao"];
+    avaliacao.atividade_fisica = result["atividade_fisica"];
+    avaliacao.auto_controle = result["auto_controle"];
+    avaliacao.defesa_pessoal = result["defesa_pessoal"];
+    avaliacao.relacionamento = result["relacionamento"];
+    avaliacao.espiritual = result["espiritual"];
+    avaliacao.prevencao = result["prevencao"];
+
+    if (response.statusCode == 200) {
+      print("Avaliação encontrada com sucesso!");
+    } else {
+      print(response.reasonPhrase);
+      print("Erro ao encontrar a avaliação!");
+    }
+
+    return avaliacao;
   }
 
   static Future<void> iniciaProgresso(Aluno aluno) async {
