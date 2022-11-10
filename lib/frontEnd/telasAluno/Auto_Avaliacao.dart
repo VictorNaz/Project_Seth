@@ -23,18 +23,21 @@ class _Auto_AvaliacaoState extends State<Auto_Avaliacao> {
 
   List<double> lista = [];
 
+  //O comando getList serve para podermos mudar o tipo do retorno da buscaAvaliacao
+  //de Future<list<double>> para list<double>, alem de setar o valor em uma variavel global
   getList<List>() async {
     await buscaAvaliacao().then((value) {
       if (value != null) {
         setState(() {
           lista = value;
-          print(lista);
         });
       }
     });
   }
 
   @override
+
+  //O comando abaixo define a inicialização do getList antes do carregamento da pagina
   void initState() {
     // TODO: implement initState
     getList();
@@ -365,6 +368,11 @@ class _Auto_AvaliacaoState extends State<Auto_Avaliacao> {
                           valRelacionamento,
                           valEspiritual,
                           valDefPessoal);
+                      Navigator.pop(context, false);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text('Avaliação casdastrada com sucesso')),
+                      );
                     },
                   ),
                   width: 250,
@@ -385,10 +393,7 @@ class _Auto_AvaliacaoState extends State<Auto_Avaliacao> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const Menu()),
-          );
+          Navigator.pop(context, false);
         },
         backgroundColor: const Color.fromARGB(255, 252, 72, 27),
         elevation: 2.0,

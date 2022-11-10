@@ -32,7 +32,9 @@ class _PerfilAlunoState extends State<PerfilAluno> {
         appBar: AppBar(
           //Barra superior já com o icone de voltar
           backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-          title: const Text("Menu"),
+          title: const Center(
+            child: Text("Perfil"),
+          ),
 
           //Icone de voltar quando utilizado o drawer no appbar
           automaticallyImplyLeading: true,
@@ -64,7 +66,6 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                     radius: 100,
                     backgroundImage: AssetImage('assets/image/marciano.jpg'),
                   ),
-                  
 
                   //Espaçamento entre foto de perfil e campos de input
                   const Padding(padding: EdgeInsets.only(top: 80)),
@@ -159,10 +160,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const Menu()),
-            );
+            Navigator.pop(context, false);
           },
           backgroundColor: const Color.fromARGB(255, 252, 72, 27),
           elevation: 2.0,
@@ -191,7 +189,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                 },
                 icon: const Icon(
                   Icons.person,
-                  color: Color.fromARGB(255, 252, 72, 27),
+                  color: Colors.white,
                   size: 35,
                 ),
               ),
@@ -199,7 +197,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                 onPressed: null,
                 icon: Icon(
                   Icons.exit_to_app,
-                  color: Color.fromARGB(255, 252, 72, 27),
+                  color: Colors.white,
                   size: 35,
                 ),
               ),

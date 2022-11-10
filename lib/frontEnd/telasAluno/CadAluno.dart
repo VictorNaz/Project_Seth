@@ -11,7 +11,8 @@ class CadAluno extends StatefulWidget {
 }
 
 class _CadAlunoState extends State<CadAluno> {
-  bool isChecked = false;
+  bool checkTermos = false;
+  bool checkRegras = false;
   bool showPassword = false;
   bool _showPassword = false;
 
@@ -72,7 +73,7 @@ class _CadAlunoState extends State<CadAluno> {
                           fontWeight: FontWeight.bold,
                           fontSize: 26)),
 
-                  const Padding(padding: EdgeInsets.only(top: 30)),
+                  const Padding(padding: EdgeInsets.only(top: 10)),
 
                   Form(
                       key: _formKey,
@@ -264,24 +265,13 @@ class _CadAlunoState extends State<CadAluno> {
                       Checkbox(
                         checkColor: Colors.black,
                         activeColor: const Color.fromARGB(255, 252, 72, 27),
-                        value: isChecked,
+                        value: checkTermos,
                         onChanged: (bool? value) {
                           setState(() {
-                            isChecked = value!;
+                            checkTermos = value!;
                           });
                         },
                       ),
-
-                      //Botão para os termos de uso
-                      /*
-                      TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const CadAluno()),
-                            );
-                      */
                       TextButton(
                           onPressed: () {
                             showModalBottomSheet(
@@ -300,9 +290,26 @@ class _CadAlunoState extends State<CadAluno> {
                             "li e estou de acordo com os Termos de Uso e Política de Privacidade.",
                             style: TextStyle(color: Colors.grey, fontSize: 16),
                           )),
+                    ],
+                  ),
+                  //Row para as regras do tatame
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      //checkbox para as regras do tatame
+                      Checkbox(
+                        checkColor: Colors.black,
+                        activeColor: const Color.fromARGB(255, 252, 72, 27),
+                        value: checkRegras,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            checkRegras = value!;
+                          });
+                        },
+                      ),
 
-
-                        TextButton(
+                      //textbutton da regras do tatame
+                      TextButton(
                           onPressed: () {
                             showModalBottomSheet(
                               builder: (context) => optionModalSeth(),
@@ -317,19 +324,19 @@ class _CadAlunoState extends State<CadAluno> {
                             ),
                           ), //texto do button e estilo da escrita
                           child: const Text(
-                            "Regras do tatame.",
+                            "li e estou de acordo com as regras do tatame",
                             style: TextStyle(color: Colors.grey, fontSize: 16),
                           )),
                     ],
                   ),
                   //Espaçamento entre os campos e o botão cadastrar
-                  const Padding(padding: EdgeInsets.only(top: 50)),
+                  const Padding(padding: EdgeInsets.only(top: 30)),
 
                   //Botão cadastrar
                   TextButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          if (isChecked == true) {
+                          if (checkRegras == true && checkTermos == true) {
                             cadAluno(txtNome.text, txtUsuario.text,
                                 txtSenha.text, txtEmail.text, txtcpf.text);
                             Navigator.push(
