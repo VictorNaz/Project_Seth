@@ -1,4 +1,5 @@
 import 'package:flutter_project_seth/backEnd/modelo/aluno.dart';
+import 'package:flutter_project_seth/backEnd/modelo/faixa.dart';
 import 'package:flutter_project_seth/backEnd/security/dataCrypt.dart';
 import 'package:flutter_project_seth/backEnd/security/sessionService.dart';
 import 'package:flutter_project_seth/backEnd/server/serverAluno.dart';
@@ -68,6 +69,7 @@ Future<String?> cadAvaliacao(
   await ServerAluno.cadAvaliacao(aluno, avaliacao);
 }
 
+//busca a auto-avaliação do aluno
 Future<List<double>> buscaAvaliacao() async {
   var aluno = Aluno();
   var avaliacao = AutoAvaliacao();
@@ -93,6 +95,17 @@ Future<List<double>> buscaAvaliacao() async {
     defesaPessoal
   ];
   return lista;
+}
+
+//Busca a quantidade de aulas frequentadas
+Future<int?> buscaAulas() async {
+  var aluno = Aluno();
+  var aulas = Faixa();
+  aluno.usuario = await PrefsService.returnUser();
+  aluno.id = await ServerAluno.buscaAlunoId(aluno);
+  aulas.quantAulas = await ServerAluno.buscaAulas(aluno);
+
+  return aulas.quantAulas;
 }
 
 /*************************** VALIDAÇÕES DE CAMPO *******************************/

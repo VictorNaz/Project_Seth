@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
-import 'package:flutter_project_seth/frontEnd/telasAluno/menuPrincipal.dart';
 import 'package:kg_charts/kg_charts.dart';
 
 import '../widgets/utilClass.dart';

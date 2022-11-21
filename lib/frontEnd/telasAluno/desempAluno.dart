@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kg_charts/kg_charts.dart';
+import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
 
 import 'package:percent_indicator/percent_indicator.dart';
 import '../widgets/utilClass.dart';
-import 'MenuPrincipal.dart';
 
 class DesempAluno extends StatefulWidget {
   const DesempAluno({Key? key}) : super(key: key);
@@ -13,6 +13,44 @@ class DesempAluno extends StatefulWidget {
 }
 
 class _DesempAlunoState extends State<DesempAluno> {
+  List<double> lista = [];
+  int quantAulas = 0;
+  double percAulas = 0;
+
+  //O comando getList serve para podermos mudar o tipo do retorno da buscaAvaliacao
+  //de Future<list<double>> para list<double>, alem de setar o valor em uma variavel global
+  getList<List>() async {
+    await buscaAvaliacao().then((value) {
+      if (value != null) {
+        setState(() {
+          lista = value;
+        });
+      }
+    });
+  }
+
+  getAulas<int>() async {
+    await buscaAulas().then((value) {
+      if (value != null) {
+        setState(() {
+          print(value);
+          quantAulas = value;
+          percAulas = (quantAulas / 250) * 100;
+        });
+      }
+    });
+  }
+
+  @override
+
+  //O comando abaixo define a inicialização do getList antes do carregamento da pagina
+  void initState() {
+    // TODO: implement initState
+    getList();
+    getAulas();
+    super.initState();
+  }
+
   bool isChecked = false;
   @override
   Widget build(BuildContext context) {
@@ -21,7 +59,9 @@ class _DesempAlunoState extends State<DesempAluno> {
       appBar: AppBar(
         //Barra superior já com o icone de voltar
         backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-        title: const Text("Meu Desempenho"),
+        title: const Center(
+          child: Text("Meu Desempenho"),
+        ),
 
         //Icone de voltar quando utilizado o drawer no appbar
         automaticallyImplyLeading: true,
@@ -75,6 +115,8 @@ class _DesempAlunoState extends State<DesempAluno> {
 
                         //ExpansionTile é um botão que se expande mostrando informações adicionais
                         child: ExpansionTile(
+                          //mantem a caixa de texto aberta quando carregada a página
+                          initiallyExpanded: true,
                           //determinamos as cores do botão quando aberto e fechado
                           textColor: const Color.fromARGB(255, 252, 72, 27),
                           collapsedBackgroundColor:
@@ -109,7 +151,7 @@ class _DesempAlunoState extends State<DesempAluno> {
                                     animation: true,
                                     lineHeight: 25.0,
                                     animationDuration: 2000,
-                                    percent: 0.5,
+                                    percent: quantAulas / 250,
                                     center: const Text(
                                       "Branca",
                                       style: TextStyle(fontSize: 16),
@@ -123,12 +165,13 @@ class _DesempAlunoState extends State<DesempAluno> {
                                 const Padding(
                                     padding: EdgeInsets.only(bottom: 10)),
                                 Row(
-                                  children: const [
-                                    Padding(padding: EdgeInsets.only(left: 10)),
-                                    Text("100/250 Aulas"),
-                                    Padding(
-                                        padding: EdgeInsets.only(right: 150)),
-                                    Text("50% Concluído")
+                                  children: [
+                                    const Padding(
+                                        padding: EdgeInsets.only(left: 10)),
+                                    Text("$quantAulas/250 Aulas"),
+                                    const Padding(
+                                        padding: EdgeInsets.only(right: 125)),
+                                    Text("$percAulas% Concluído"),
                                   ],
                                 )
                               ],
@@ -160,6 +203,8 @@ class _DesempAlunoState extends State<DesempAluno> {
 
                         //ExpansionTile é um botão que se expande mostrando informações adicionais
                         child: ExpansionTile(
+                          //mantem a caixa de texto aberta quando carregada a página
+                          initiallyExpanded: true,
                           //determinamos as cores do botão quando aberto e fechado
                           textColor: const Color.fromARGB(255, 252, 72, 27),
                           collapsedBackgroundColor:
@@ -280,7 +325,7 @@ class _DesempAlunoState extends State<DesempAluno> {
                                   IndicatorModel("Defesa \n Pessoal", 10),
                                 ],
                                 data: [
-                                  MapDataModel([5, 10, 10, 10, 6, 9, 10]),
+                                  MapDataModel(lista),
                                 ],
                                 radius: 100,
                                 duration: 2000,
@@ -312,7 +357,7 @@ class _DesempAlunoState extends State<DesempAluno> {
                       ),
                     )),
                 //Espaçamento entre botão e o final da tela
-                const Padding(padding: EdgeInsets.only(bottom: 100)),
+                const Padding(padding: EdgeInsets.only(bottom: 170)),
               ],
             ),
           ),

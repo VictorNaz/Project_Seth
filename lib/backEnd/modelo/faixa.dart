@@ -1,16 +1,10 @@
 class Faixa {
-  Faixa(
-      {required this.id,
-      required this.faixa,
-      required this.grau,
-      required this.quantAulas});
+  int? id;
+  int? faixa;
+  int? grau;
+  int? quantAulas;
 
-  int id;
-  int faixa;
-  int grau;
-  int quantAulas;
-
-  int get getId {
+  int? get getId {
     return id;
   }
 
@@ -18,7 +12,7 @@ class Faixa {
     this.id = id;
   }
 
-  int get getFaixa {
+  int? get getFaixa {
     return faixa;
   }
 
@@ -26,7 +20,7 @@ class Faixa {
     this.faixa = faixa;
   }
 
-  int get getGrau {
+  int? get getGrau {
     return grau;
   }
 
@@ -34,7 +28,7 @@ class Faixa {
     this.grau = grau;
   }
 
-  int get getQuantAulas {
+  int? get getQuantAulas {
     return quantAulas;
   }
 

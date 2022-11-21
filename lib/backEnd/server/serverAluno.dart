@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter_project_seth/backEnd/modelo/aluno.dart';
+import 'package:flutter_project_seth/backEnd/modelo/faixa.dart';
 import 'package:flutter_project_seth/backEnd/security/sessionService.dart';
 import 'package:http/http.dart' as http;
 
@@ -16,6 +17,7 @@ var headers = {
   'Authorization': 'Basic YWRtaW46QWxlc2V0aCFAIw=='
 };
 
+//cadastra o aluno no banco de dados
 class ServerAluno {
   static Future<void> cadastrarAluno(Aluno aluno) async {
     var request = http.Request(
@@ -39,6 +41,8 @@ class ServerAluno {
     }
   }
 
+  //valida a presença do aluno no banco
+
   static Future<void> valPresenAluno(Aluno aluno) async {
     try {
       String url_Api = 'https://apiseth.cyclic.app/validaPresenca';
@@ -46,8 +50,6 @@ class ServerAluno {
       request.body = json.encode({
         "id": aluno.id,
       });
-
-      print(aluno.id);
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
@@ -62,6 +64,8 @@ class ServerAluno {
           'Conexão não estabelecida! Não foi possivel se conectar ao endereço $url_Api.\n Erro $e');
     }
   }
+
+  //busca o id do aluno recebendo o usuario dele
 
   static Future<String> buscaAlunoId(Aluno aluno) async {
     var request = http.Request(
@@ -80,6 +84,33 @@ class ServerAluno {
 
     return id;
   }
+
+  //busca a quantidade de aulas que o aluno já frequentou
+
+  static Future<int?> buscaAulas(Aluno aluno) async {
+    var request = http.Request(
+        'POST', Uri.parse('https://apiseth.cyclic.app/buscaAulas'));
+    request.body = await json.encode({"aluno_id": aluno.id});
+    request.headers.addAll(headers);
+
+    var aulas = Faixa();
+
+    http.StreamedResponse response = await request.send();
+    String jsonString = await response.stream.bytesToString();
+    var result = json.decode(jsonString);
+    aulas.quantAulas = result["quant_aula"];
+
+    if (response.statusCode == 200) {
+      print("Quantidade de aulas encontrada!");
+    } else {
+      print("Erro ao procurar a quantidade de aulas");
+      print(response.reasonPhrase);
+    }
+
+    return aulas.quantAulas;
+  }
+
+  //busca a auto-avaliação do aluno
 
   static Future<AutoAvaliacao> buscaAvaliacao(Aluno aluno) async {
     var request = http.Request(
@@ -110,6 +141,7 @@ class ServerAluno {
     return avaliacao;
   }
 
+  //inicia o progresso do aluno quando ele é cadastrado
   static Future<void> iniciaProgresso(Aluno aluno) async {
     var request = http.Request(
         'POST', Uri.parse('https://apiseth.cyclic.app/iniciaProgresso'));
@@ -126,12 +158,12 @@ class ServerAluno {
     }
   }
 
+  //verifica se o usuario já existe no banco
   static Future<bool> verificaUsuario(Aluno aluno) async {
     var request = http.Request(
         'POST', Uri.parse('https://apiseth.cyclic.app/buscaUsuarioAluno'));
     request.body = json.encode({"usuario": aluno.usuario});
 
-    print(aluno.usuario);
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
@@ -146,6 +178,8 @@ class ServerAluno {
       return false;
     }
   }
+
+  //procura o usuario e senha digitados no banco e loga o usuario
 
   static Future<String> logaUsuario(Aluno aluno) async {
     var request = http.Request(
@@ -167,6 +201,8 @@ class ServerAluno {
 
     return nivelAcess;
   }
+
+  //cadastra a auto-avaliação do aluno
 
   static Future<void> cadAvaliacao(Aluno aluno, List avaliacao) async {
     var request = http.Request(
