@@ -115,10 +115,7 @@ class _ValPresencaState extends State<ValPresenca> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         validaPresAluno(txtUsuario.text);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const Menu()),
-                        );
+                        Navigator.pop(context, false);
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('Presença Validada')),
                         );

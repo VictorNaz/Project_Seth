@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kg_charts/kg_charts.dart';
 import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
-
+import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import '../widgets/utilClass.dart';
 
@@ -17,6 +17,8 @@ class _DesempAlunoState extends State<DesempAluno> {
   int quantAulas = 0;
   double percAulas = 0;
 
+  NumberFormat formatter = NumberFormat("00.0");
+
   //O comando getList serve para podermos mudar o tipo do retorno da buscaAvaliacao
   //de Future<list<double>> para list<double>, alem de setar o valor em uma variavel global
   getList<List>() async {
@@ -29,6 +31,8 @@ class _DesempAlunoState extends State<DesempAluno> {
     });
   }
 
+  //O comando getaulas serve para pegar o valor do backend da quantidade de aulas frequentadas quando a página é carregada
+  //alem de setar o valor após a coleta dos dados.
   getAulas<int>() async {
     await buscaAulas().then((value) {
       if (value != null) {
@@ -171,7 +175,8 @@ class _DesempAlunoState extends State<DesempAluno> {
                                     Text("$quantAulas/250 Aulas"),
                                     const Padding(
                                         padding: EdgeInsets.only(right: 125)),
-                                    Text("$percAulas% Concluído"),
+                                    Text(formatter.format(percAulas) +
+                                        "% Concluído"),
                                   ],
                                 )
                               ],
