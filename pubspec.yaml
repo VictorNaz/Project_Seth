@@ -41,7 +41,10 @@ dependencies:
   http: ^0.13.5
   crypto: ^3.0.2
   shared_preferences: ^2.0.15
+<<<<<<< HEAD
   image_picker: ^0.8.6
+=======
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:
