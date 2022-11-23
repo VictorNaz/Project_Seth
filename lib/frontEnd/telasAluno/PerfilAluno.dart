@@ -57,6 +57,8 @@ class _PerfilAlunoState extends State<PerfilAluno> {
           alignment: Alignment.center,
           children: <Widget>[
             Container(),
+            const Padding(padding: EdgeInsets.only(top: 30)),
+
             //Posicionamento do campo ao selecionar o campo
             SingleChildScrollView(
               child: Column(
@@ -68,7 +70,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                   ),
 
                   //Espaçamento entre foto de perfil e campos de input
-                  const Padding(padding: EdgeInsets.only(top: 80)),
+                  const Padding(padding: EdgeInsets.only(top: 20)),
 
                   SizedBox(
                     width: 325,
@@ -86,26 +88,6 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                       ),
                     ),
                   ),
-                  //Espaçamento entre inputs
-                  const Padding(padding: EdgeInsets.only(top: 15)),
-
-                  SizedBox(
-                    width: 325,
-                    child: TextFormField(
-                      keyboardType: TextInputType.name,
-                      decoration: const InputDecoration(
-                        icon: Icon(
-                          Icons.person,
-                          color: Color.fromARGB(255, 252, 72, 27),
-                        ),
-                        labelText: "Usuário",
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Color.fromARGB(255, 252, 72, 27))),
-                      ),
-                    ),
-                  ),
-
                   //Espaçamento entre inputs
                   const Padding(padding: EdgeInsets.only(top: 15)),
 
@@ -150,7 +132,61 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                     ),
                   ),
 
-                  const Padding(padding: EdgeInsets.only(bottom: 100)),
+                  const Padding(padding: EdgeInsets.only(bottom: 15)),
+
+                  SizedBox(
+                    width: 325,
+                    child: TextFormField(
+                      keyboardType: TextInputType.name,
+                      decoration: const InputDecoration(
+                        icon: Icon(
+                          Icons.password,
+                          color: Color.fromARGB(255, 252, 72, 27),
+                        ),
+                        labelText: "Nova Senha",
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 252, 72, 27))),
+                      ),
+                    ),
+                  ),
+
+                  const Padding(padding: EdgeInsets.only(bottom: 15)),
+
+                  SizedBox(
+                    width: 325,
+                    child: TextFormField(
+                      keyboardType: TextInputType.name,
+                      decoration: const InputDecoration(
+                        icon: Icon(
+                          Icons.password,
+                          color: Color.fromARGB(255, 252, 72, 27),
+                        ),
+                        labelText: "Confirmar Nova Senha",
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 252, 72, 27))),
+                      ),
+                    ),
+                  ),
+
+                  const Padding(padding: EdgeInsets.only(bottom: 30)),
+
+                  TextButton(
+                      onPressed: (null), //Adicionar uma modal confirmando
+                      style: TextButton.styleFrom(
+                        backgroundColor: const Color.fromARGB(255, 252, 72, 27),
+                        fixedSize: const Size(330, 50),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ), //texto do button e estilo da escrita
+                      child: const Text(
+                        "Confirmar Alterações",
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      )),
+
+                  const Padding(padding: EdgeInsets.only(bottom: 70)),
                 ],
               ),
             )
@@ -172,7 +208,8 @@ class _PerfilAlunoState extends State<PerfilAluno> {
         ),
 
         //barra infeirior
-        bottomNavigationBar: BottomAppBar(
+        bottomNavigationBar: const BotaoInferior(),
+        /*bottomNavigationBar: BottomAppBar(
           shape: const CircularNotchedRectangle(),
           color: Colors.black,
           child: Row(
@@ -203,7 +240,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
               ),
             ],
           ),
-        ),
+        ),*/
       ),
     );
   }

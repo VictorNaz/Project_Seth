@@ -17,24 +17,34 @@ class DrawerTop extends StatelessWidget {
       padding: EdgeInsets.zero,
       children: [
         SizedBox(
-          height: 80,
+          height: 64,
           child: DrawerHeader(
             padding: const EdgeInsets.only(right: 30),
             decoration: const BoxDecoration(
               color: Color.fromARGB(255, 252, 72, 27),
             ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              //  mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.settings, size: 40),
+                IconButton(
+                  // alignment: Alignment.bottomRight,
+                  onPressed: () {
+                    Navigator.pop(context, false);
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: Color.fromARGB(255, 255, 255, 255),
+                    size: 30,
+                  ),
+                ),
                 const Padding(padding: EdgeInsets.only(right: 10)),
                 Text(
                   texto,
                   style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 25,
+                    fontSize: 20,
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -102,7 +112,7 @@ class DrawerTop extends StatelessWidget {
                 children: const [
                   Padding(padding: EdgeInsets.only(left: 20)),
                   Icon(
-                    Icons.list,
+                    Icons.checklist_rtl,
                     color: Colors.black,
                     size: 32,
                   ),
@@ -153,7 +163,6 @@ class DrawerTop extends StatelessWidget {
 }
 
 //classe que retorna o botão configurado
-
 class BotaoMenu extends StatelessWidget {
   const BotaoMenu(
       {Key? key, required this.texto, required this.icone, required this.tela})
@@ -200,6 +209,7 @@ class BotaoMenu extends StatelessWidget {
   }
 }
 
+//Configuração do botão inferior, appbar
 class BotaoInferior extends StatelessWidget {
   const BotaoInferior({super.key});
 
@@ -227,9 +237,31 @@ class BotaoInferior extends StatelessWidget {
           ),
           IconButton(
             onPressed: () {
+              //As instruções abaixo criam a caixa de diálogo
+              showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  title: const Text('Deseja Realmente Sair?'),
+                  content: const Text('O aplicativo será encerrado'),
+                  actions: <Widget>[
+                    TextButton(
+                      //Se for selecionado Não
+                      onPressed: () => Navigator.pop(context, 'Não'),
+                      child: const Text('Não'),
+                    ),
+                    TextButton(
+                      //Se for selecionado sim
+                      onPressed: () {
+                        PrefsService.logout;
+                        exit(0);
+                      },
+                      child: const Text('Sim'),
+                    ),
+                  ],
+                ),
+              );
+
               //Encerra a sessão
-              PrefsService.logout;
-              exit(0);
             },
             icon: const Icon(
               Icons.exit_to_app,
@@ -243,6 +275,7 @@ class BotaoInferior extends StatelessWidget {
   }
 }
 
+//Seleção das notas da auto-avaliação
 class selectNota extends StatelessWidget {
   const selectNota({super.key, required this.texto, this.onChanged});
 
