@@ -49,6 +49,26 @@ class DrawerTop extends StatelessWidget {
             ),
           ),
         ),
+
+        //Parte do Drawer que vai conter as informações do usuário
+        const UserAccountsDrawerHeader(
+          currentAccountPictureSize: Size.square(70.0),
+          decoration: BoxDecoration(
+            border: Border(
+                bottom: BorderSide(
+                    width: 12.0, color: Color.fromARGB(255, 252, 72, 27))),
+            color: Color.fromARGB(0, 255, 255, 255),
+          ),
+          accountName:
+              Text("Teste Usuário", style: TextStyle(color: Colors.black)),
+          accountEmail: Text("teste@gmail.com",
+              style: TextStyle(
+                color: Colors.black,
+              )),
+          currentAccountPicture: CircleAvatar(
+            backgroundImage: AssetImage('assets/image/marciano.jpg'),
+          ),
+        ),
         ListTile(
           title: Container(
               padding: const EdgeInsets.only(top: 5),
@@ -91,7 +111,7 @@ class DrawerTop extends StatelessWidget {
                   ),
                   Padding(padding: EdgeInsets.only(right: 27)),
                   Text(
-                    'Termos de uso',
+                    'Termos de Uso',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 20,
@@ -155,6 +175,53 @@ class DrawerTop extends StatelessWidget {
               )),
           onTap: () {
             Navigator.pop(context);
+          },
+        ),
+        ListTile(
+          title: Container(
+              padding: const EdgeInsets.only(top: 5),
+              color: const Color.fromARGB(255, 228, 227, 227),
+              height: 50,
+              child: Row(
+                children: const [
+                  Padding(padding: EdgeInsets.only(left: 20)),
+                  Icon(
+                    Icons.close,
+                    color: Colors.black,
+                    size: 32,
+                  ),
+                  Padding(padding: EdgeInsets.only(right: 12)),
+                  Text(
+                    'Encerrar Sessão',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ],
+              )),
+          onTap: () {
+            showDialog<String>(
+              context: context,
+              builder: (BuildContext context) => AlertDialog(
+                title: const Text('Deseja Sair da Sessão?'),
+                content: const Text('Esta sessão será encerrada'),
+                actions: <Widget>[
+                  TextButton(
+                    //Se for selecionado Não
+                    onPressed: () => Navigator.pop(context, 'Não'),
+                    child: const Text('Não'),
+                  ),
+                  TextButton(
+                    //Se for selecionado sim
+                    onPressed: () {
+                      PrefsService.logout;
+                    },
+                    child: const Text('Sim'),
+                  ),
+                ],
+              ),
+            );
           },
         ),
       ],

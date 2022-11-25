@@ -18,7 +18,6 @@ class PrefsService {
     var jsonResult = prefs.getString(_key);
     if (jsonResult != null) {
       var mapUser = jsonDecode(jsonResult);
-      print("here");
       print(mapUser);
       print(jsonResult);
       return mapUser['isAuth'];
@@ -38,7 +37,7 @@ class PrefsService {
     var jsonResult = prefs.getString(_key);
     if (jsonResult != null) {
       var mapUser = jsonDecode(jsonResult);
-      return mapUser['usuario'];//Retorna o valor de 'usuario' do Json
+      return mapUser['usuario']; //Retorna o valor de 'usuario' do Json
     }
     return "Não encontrado";
   }

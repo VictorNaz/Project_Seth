@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project_seth/frontEnd/telasAluno/menuPrincipal.dart';
 
 import '../widgets/utilClass.dart';
 import 'CadAluno.dart';
@@ -67,6 +68,14 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                   const CircleAvatar(
                     radius: 100,
                     backgroundImage: AssetImage('assets/image/marciano.jpg'),
+                    child: IconButton(
+                        onPressed: null,// Adicionar aqui a chamada da seleção da foto do device
+                        icon: Icon(
+                          Icons.edit,
+                          color: Colors.white,
+                          size: 35.0,
+                        ),
+                        hoverColor: Color.fromARGB(106, 8, 8, 8)),
                   ),
 
                   //Espaçamento entre foto de perfil e campos de input
@@ -209,38 +218,6 @@ class _PerfilAlunoState extends State<PerfilAluno> {
 
         //barra infeirior
         bottomNavigationBar: const BotaoInferior(),
-        /*bottomNavigationBar: BottomAppBar(
-          shape: const CircularNotchedRectangle(),
-          color: Colors.black,
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const PerfilAluno()),
-                  );
-                },
-                icon: const Icon(
-                  Icons.person,
-                  color: Colors.white,
-                  size: 35,
-                ),
-              ),
-              const IconButton(
-                onPressed: null,
-                icon: Icon(
-                  Icons.exit_to_app,
-                  color: Colors.white,
-                  size: 35,
-                ),
-              ),
-            ],
-          ),
-        ),*/
       ),
     );
   }
