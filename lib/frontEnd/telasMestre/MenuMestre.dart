@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/frontEnd/telasAluno/info.dart';
+import 'package:flutter_project_seth/frontEnd/telasMestre/ListaAluno.dart';
 import 'package:flutter_project_seth/frontEnd/telasMestre/Relatorio.dart';
 import '../telasAluno/desempAluno.dart';
 import '../telasProf/ValPresenca.dart';
@@ -91,7 +92,7 @@ class _MenuMestreState extends State<MenuMestre> {
                           size: 80,
                           color: Color.fromARGB(255, 252, 72, 27),
                         ),
-                        tela: DesempAluno()),
+                        tela: ListaAluno()),
                     Padding(padding: EdgeInsets.only(right: 30)),
                     BotaoMenu(
                         texto: "Relatórios",
