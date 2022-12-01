@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
 import 'package:flutter_project_seth/frontEnd/telasMestre/MenuMestre.dart';
+import 'package:flutter_project_seth/frontEnd/widgets/splashScreen.dart';
 
 import '../telasAluno/CadAluno.dart';
 import '../telasAluno/MenuPrincipal.dart';
@@ -148,6 +149,7 @@ class _LoginPageState extends State<LoginPage> {
                 //Botão entrar
                 TextButton(
                     onPressed: () async {
+                      carregando();
                       if (_formKey.currentState!.validate()) {
                         nivel_acess = (await loginUsuario(
                             txtUsuario.text, txtSenha.text))!;
@@ -155,21 +157,25 @@ class _LoginPageState extends State<LoginPage> {
                         if (nivel_acess == "1") {
                           //Remove as abas acessadas anteriormente, limpa a memória
                           //Impedindo que o usuário volte para a tela de login
+                          fechaCarregando();
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
                                   builder: (context) => const Menu()),
                               (Route<dynamic> route) => false);
                         } else if (nivel_acess == "2") {
+                          fechaCarregando();
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
                                   builder: (context) => const MenuProfessor()),
                               (Route<dynamic> route) => false);
                         } else if (nivel_acess == "3") {
+                          fechaCarregando();
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
                                   builder: (context) => const MenuMestre()),
                               (Route<dynamic> route) => false);
                         } else if (nivel_acess == "") {
+                          fechaCarregando();
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                                 content: Text('Usuário ou senha incorretos!')),
@@ -236,5 +242,31 @@ class _LoginPageState extends State<LoginPage> {
         ]),
       ),
     );
+  }
+
+//Tela de carregamento pré-login
+  carregando() {
+    showDialog(
+        builder: (context) => Container(
+              color: const Color.fromARGB(255, 252, 72, 27),
+              child: Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      margin: const EdgeInsets.only(bottom: 80),
+                      child: const CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+        context: context);
+  }
+//Fecha a tela de carregamento
+  fechaCarregando() {
+    Navigator.pop(context);
   }
 }

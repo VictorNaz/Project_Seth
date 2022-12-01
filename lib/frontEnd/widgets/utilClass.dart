@@ -1,7 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
 import 'package:flutter_project_seth/backEnd/security/sessionService.dart';
+import 'package:flutter_project_seth/frontEnd/geral/Homepage.dart';
+import 'package:flutter_project_seth/frontEnd/geral/loginpage.dart';
 
 import '../telasAluno/PerfilAluno.dart';
 
@@ -216,6 +219,10 @@ class DrawerTop extends StatelessWidget {
                     //Se for selecionado sim
                     onPressed: () {
                       PrefsService.logout;
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                              builder: (context) => const HomePage()),
+                          (Route<dynamic> route) => false);
                     },
                     child: const Text('Sim'),
                   ),
