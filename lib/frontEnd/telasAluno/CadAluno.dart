@@ -337,17 +337,16 @@ class _CadAlunoState extends State<CadAluno> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           if (checkRegras == true && checkTermos == true) {
+                            loading();
                             cadAluno(txtNome.text, txtUsuario.text,
                                 txtSenha.text, txtEmail.text, txtcpf.text);
+                            closeLoading();
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => const LoginPage()),
                             );
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text('Casdastrado com sucesso')),
-                            );
+                            alertUser();
                           }
                         }
                       },
@@ -390,4 +389,47 @@ class _CadAlunoState extends State<CadAluno> {
         onPressed: null,
         child: const Text("Termos de uso do tatame"),
       );
+  loading() {
+    showDialog(
+        builder: (context) => Container(
+              color: const Color.fromARGB(255, 252, 72, 27),
+              child: Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      margin: const EdgeInsets.only(bottom: 80),
+                      child: const CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+        context: context);
+  }
+
+//Fecha a tela de carregamento
+  closeLoading() {
+    Navigator.pop(context);
+  }
+
+  alertUser() {
+    String name = txtNome.text;
+    showDialog<String>(
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Usuário cadastrado com sucesso!'),
+        content: Text('Seja bem vindo ao time $name!'),
+        actions: <Widget>[
+          TextButton(
+            //Se for selecionado Não
+            onPressed: () => Navigator.pop(context, 'Ok'),
+            child: const Text('Ok'),
+          ),
+        ],
+      ),
+      context: context,
+    );
+  }
 }

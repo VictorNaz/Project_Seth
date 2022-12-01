@@ -1,15 +1,6 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-
 import 'package:flutter_project_seth/frontEnd/geral/Homepage.dart';
-import 'package:flutter_project_seth/frontEnd/telasProf/MenuProfessor.dart';
-import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
-
-import '../../backEnd/modelo/aluno.dart';
-import '../telasAluno/MenuPrincipal.dart';
-import '../telasMestre/MenuMestre.dart';
 
 //Splash Screen ao entrar no app, esta classe retorna a classe abaixo
 class SplashScreen extends StatefulWidget {
