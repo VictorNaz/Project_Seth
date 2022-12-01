@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/frontEnd/telasAluno/menuPrincipal.dart';
 import '../telasMestre/CadProfessor.dart';
 import '../telasMestre/MenuMestre.dart';
-import '../telasMestre/DesempenhoAluno.dart';
+import '../telasMestre/ListaAluno.dart';
 import '../telasProf/ValPresenca.dart';
 import '../telasProf/MenuProfessor.dart';
 import '../widgets/utilClass.dart';
