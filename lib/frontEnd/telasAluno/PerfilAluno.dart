@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/frontEnd/telasAluno/menuPrincipal.dart';
 
+import '../../backEnd/controladora/CtrlAluno.dart';
 import '../widgets/utilClass.dart';
 import 'CadAluno.dart';
 import 'MenuPrincipal.dart';
@@ -14,7 +15,13 @@ class PerfilAluno extends StatefulWidget {
 class _PerfilAlunoState extends State<PerfilAluno> {
   bool isChecked = false;
   bool showPassword = false;
+  TextEditingController txtNome = TextEditingController();
+  TextEditingController txtSenha = TextEditingController();
+  TextEditingController txtConfSenha = TextEditingController();
+  TextEditingController txtEmail = TextEditingController();
+  TextEditingController txtcpf = TextEditingController();
 
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     //Detecta a ára fora dos campos
@@ -69,7 +76,8 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                     radius: 100,
                     backgroundImage: AssetImage('assets/image/marciano.jpg'),
                     child: IconButton(
-                        onPressed: null,// Adicionar aqui a chamada da seleção da foto do device
+                        onPressed:
+                            null, // Adicionar aqui a chamada da seleção da foto do device
                         icon: Icon(
                           Icons.edit,
                           color: Colors.white,
@@ -84,18 +92,21 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                   SizedBox(
                     width: 325,
                     child: TextFormField(
-                      keyboardType: TextInputType.name,
-                      decoration: const InputDecoration(
-                        icon: Icon(
-                          Icons.person,
-                          color: Color.fromARGB(255, 252, 72, 27),
+                        controller: txtNome,
+                        keyboardType: TextInputType.name,
+                        decoration: const InputDecoration(
+                          icon: Icon(
+                            Icons.person,
+                            color: Color.fromARGB(255, 252, 72, 27),
+                          ),
+                          labelText: "Nome Completo",
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 252, 72, 27))),
                         ),
-                        labelText: "Nome Completo",
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Color.fromARGB(255, 252, 72, 27))),
-                      ),
-                    ),
+                        validator: (value) {
+                          return validarNome(txtNome.text);
+                        }),
                   ),
                   //Espaçamento entre inputs
                   const Padding(padding: EdgeInsets.only(top: 15)),
@@ -103,20 +114,23 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                   SizedBox(
                     width: 325,
                     child: TextFormField(
-                      //Define o teclado para digitar e-mail(adiciona o @ no teclado)
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: const InputDecoration(
-                        icon: Icon(
-                          Icons.email,
-                          color: Color.fromARGB(255, 252, 72, 27),
+                        controller: txtEmail,
+                        //Define o teclado para digitar e-mail(adiciona o @ no teclado)
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: const InputDecoration(
+                          icon: Icon(
+                            Icons.email,
+                            color: Color.fromARGB(255, 252, 72, 27),
+                          ),
+                          labelText: "Email",
+                          hintStyle: TextStyle(color: Colors.black),
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 252, 72, 27))),
                         ),
-                        labelText: "Email",
-                        hintStyle: TextStyle(color: Colors.black),
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Color.fromARGB(255, 252, 72, 27))),
-                      ),
-                    ),
+                        validator: (value) {
+                          return validarEmail(txtEmail.text);
+                        }),
                   ),
 
                   //Espaçamento entre inputs
@@ -125,6 +139,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                   SizedBox(
                     width: 325,
                     child: TextFormField(
+                      controller: txtcpf,
                       //Define o teclado para numérico
                       keyboardType: TextInputType.number,
                       decoration: const InputDecoration(
@@ -138,6 +153,9 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                             borderSide: BorderSide(
                                 color: Color.fromARGB(255, 252, 72, 27))),
                       ),
+                      validator: (value) {
+                        return validaCpf(txtcpf.text);
+                      },
                     ),
                   ),
 
@@ -146,6 +164,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                   SizedBox(
                     width: 325,
                     child: TextFormField(
+                      controller: txtSenha,
                       keyboardType: TextInputType.name,
                       decoration: const InputDecoration(
                         icon: Icon(
@@ -157,6 +176,9 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                             borderSide: BorderSide(
                                 color: Color.fromARGB(255, 252, 72, 27))),
                       ),
+                      validator: (value) {
+                        return validarSenha(txtSenha.text);
+                      },
                     ),
                   ),
 
@@ -165,18 +187,22 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                   SizedBox(
                     width: 325,
                     child: TextFormField(
-                      keyboardType: TextInputType.name,
-                      decoration: const InputDecoration(
-                        icon: Icon(
-                          Icons.password,
-                          color: Color.fromARGB(255, 252, 72, 27),
+                        controller: txtConfSenha,
+                        keyboardType: TextInputType.name,
+                        decoration: const InputDecoration(
+                          icon: Icon(
+                            Icons.password,
+                            color: Color.fromARGB(255, 252, 72, 27),
+                          ),
+                          labelText: "Confirmar Nova Senha",
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 252, 72, 27))),
                         ),
-                        labelText: "Confirmar Nova Senha",
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Color.fromARGB(255, 252, 72, 27))),
-                      ),
-                    ),
+                        validator: (value) {
+                          return validarConfSenha(
+                              txtSenha.text, txtConfSenha.text);
+                        }),
                   ),
 
                   const Padding(padding: EdgeInsets.only(bottom: 30)),

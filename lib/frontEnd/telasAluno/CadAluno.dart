@@ -287,7 +287,7 @@ class _CadAlunoState extends State<CadAluno> {
                             ),
                           ), //texto do button e estilo da escrita
                           child: const Text(
-                            "li e estou de acordo com os Termos de Uso e Política de Privacidade.",
+                            "Li e estou de acordo com os Termos de Uso e Política de Privacidade.",
                             style: TextStyle(color: Colors.grey, fontSize: 16),
                           )),
                     ],
@@ -324,7 +324,7 @@ class _CadAlunoState extends State<CadAluno> {
                             ),
                           ), //texto do button e estilo da escrita
                           child: const Text(
-                            "li e estou de acordo com as regras do tatame",
+                            "Li e estou de acordo com as regras do tatame",
                             style: TextStyle(color: Colors.grey, fontSize: 16),
                           )),
                     ],
