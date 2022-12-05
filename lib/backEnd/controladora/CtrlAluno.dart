@@ -108,6 +108,12 @@ Future<int?> buscaAulas() async {
   return aulas.quantAulas;
 }
 
+Future<List> buscaAlunos() async {
+  var alunos = await ServerAluno.buscaAlunos();
+
+  return alunos;
+}
+
 /*************************** VALIDAÇÕES DE CAMPO *******************************/
 
 String? validarNome(String value) {

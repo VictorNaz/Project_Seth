@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/frontEnd/telasAluno/info.dart';
 import 'package:flutter_project_seth/frontEnd/telasMestre/ListaAluno.dart';
 import 'package:flutter_project_seth/frontEnd/telasMestre/Relatorio.dart';
-import '../telasAluno/desempAluno.dart';
 import '../telasProf/ValPresenca.dart';
 import '../widgets/utilClass.dart';
 import 'CadProfessor.dart';
@@ -23,7 +22,7 @@ class _MenuMestreState extends State<MenuMestre> {
         //Barra superior já com o icone de voltar
         backgroundColor: const Color.fromARGB(255, 252, 72, 27),
         title: const Center(
-          child: Text("Menu Mestre"),
+          child: Text("       Menu Mestre"),
         ),
 
         //Icone de voltar quando utilizado o drawer no appbar
@@ -125,10 +124,10 @@ class _MenuMestreState extends State<MenuMestre> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
+          /*Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const MenuMestre()),
-          );
+          );*/
         },
         backgroundColor: const Color.fromARGB(255, 252, 72, 27),
         elevation: 2.0,

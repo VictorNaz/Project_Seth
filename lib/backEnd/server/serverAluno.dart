@@ -97,7 +97,7 @@ class ServerAluno {
 
     http.StreamedResponse response = await request.send();
     String jsonString = await response.stream.bytesToString();
-    var result = json.decode(jsonString);
+    var result = await json.decode(jsonString);
     aulas.quantAulas = result["quant_aula"];
 
     if (response.statusCode == 200) {
@@ -108,6 +108,32 @@ class ServerAluno {
     }
 
     return aulas.quantAulas;
+  }
+
+  //busca todos os alunos no banco de dados
+
+  static Future<List> buscaAlunos() async {
+    var request = http.Request(
+        'POST', Uri.parse('https://apiseth.cyclic.app/buscaAlunos'));
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+    var lista = [];
+
+    if (response.statusCode == 200) {
+      String jsonString = await response.stream.bytesToString();
+      var result = await json.decode(jsonString);
+
+      for (var list in result) {
+        lista.add(list["usuario"]);
+      }
+
+      print("Alunos encontrados!");
+      return lista;
+    } else {
+      print("Erro ao procurar os alunos");
+      print(response.reasonPhrase);
+      return lista;
+    }
   }
 
   //busca a auto-avaliação do aluno
@@ -121,24 +147,24 @@ class ServerAluno {
     var avaliacao = AutoAvaliacao();
 
     http.StreamedResponse response = await request.send();
-    String jsonString = await response.stream.bytesToString();
-    var result = json.decode(jsonString);
-    avaliacao.alimentacao = result["alimentacao"];
-    avaliacao.atividade_fisica = result["atividade_fisica"];
-    avaliacao.auto_controle = result["auto_controle"];
-    avaliacao.defesa_pessoal = result["defesa_pessoal"];
-    avaliacao.relacionamento = result["relacionamento"];
-    avaliacao.espiritual = result["espiritual"];
-    avaliacao.prevencao = result["prevencao"];
 
     if (response.statusCode == 200) {
+      String jsonString = await response.stream.bytesToString();
+      var result = await json.decode(jsonString);
+      avaliacao.alimentacao = result["alimentacao"];
+      avaliacao.atividade_fisica = result["atividade_fisica"];
+      avaliacao.auto_controle = result["auto_controle"];
+      avaliacao.defesa_pessoal = result["defesa_pessoal"];
+      avaliacao.relacionamento = result["relacionamento"];
+      avaliacao.espiritual = result["espiritual"];
+      avaliacao.prevencao = result["prevencao"];
       print("Avaliação encontrada com sucesso!");
+      return avaliacao;
     } else {
       print(response.reasonPhrase);
       print("Erro ao encontrar a avaliação!");
+      return avaliacao;
     }
-
-    return avaliacao;
   }
 
   //inicia o progresso do aluno quando ele é cadastrado
