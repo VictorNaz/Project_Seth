@@ -149,37 +149,39 @@ class _LoginPageState extends State<LoginPage> {
                 //Botão entrar
                 TextButton(
                     onPressed: () async {
-                      carregando();
+                      //Abre a splashscreen
+
                       if (_formKey.currentState!.validate()) {
                         nivel_acess = (await loginUsuario(
                             txtUsuario.text, txtSenha.text))!;
-
+                        loading();
                         if (nivel_acess == "1") {
                           //Remove as abas acessadas anteriormente, limpa a memória
                           //Impedindo que o usuário volte para a tela de login
-                          fechaCarregando();
+                          closeLoading();
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
                                   builder: (context) => const Menu()),
                               (Route<dynamic> route) => false);
                         } else if (nivel_acess == "2") {
-                          fechaCarregando();
+                          closeLoading();
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
                                   builder: (context) => const MenuProfessor()),
                               (Route<dynamic> route) => false);
                         } else if (nivel_acess == "3") {
-                          fechaCarregando();
+                          closeLoading();
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
                                   builder: (context) => const MenuMestre()),
                               (Route<dynamic> route) => false);
-                        } else if (nivel_acess == "") {
-                          fechaCarregando();
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content: Text('Usuário ou senha incorretos!')),
-                          );
+                        } else {
+                          closeLoading();
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) => const LoginPage()),
+                              (Route<dynamic> route) => false);
+                          alertUser();
                         }
                       }
                     },
@@ -245,7 +247,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
 //Tela de carregamento pré-login
-  carregando() {
+  loading() {
     showDialog(
         builder: (context) => Container(
               color: const Color.fromARGB(255, 252, 72, 27),
@@ -265,8 +267,27 @@ class _LoginPageState extends State<LoginPage> {
             ),
         context: context);
   }
+
 //Fecha a tela de carregamento
-  fechaCarregando() {
+  closeLoading() {
     Navigator.pop(context);
+  }
+
+  //Informa erro de usuário e senha
+  alertUser() {
+    showDialog<String>(
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Falha ao realizar login'),
+        content: const Text('Usuário ou senha inválidos'),
+        actions: <Widget>[
+          TextButton(
+            //Se for selecionado Não
+            onPressed: () => Navigator.pop(context, 'Ok'),
+            child: const Text('Ok'),
+          ),
+        ],
+      ),
+      context: context,
+    );
   }
 }
