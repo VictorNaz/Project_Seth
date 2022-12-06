@@ -30,7 +30,9 @@ class _ValPresencaState extends State<ValPresenca> {
         appBar: AppBar(
           //Barra superior já com o icone de voltar
           backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-          title: const Text("Menu"),
+          title: const Center(
+            child: Text("Validar Presença "),
+          ),
 
           //Icone de voltar quando utilizado o drawer no appbar
           automaticallyImplyLeading: true,

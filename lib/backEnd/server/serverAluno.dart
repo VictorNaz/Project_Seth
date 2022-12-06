@@ -117,12 +117,15 @@ class ServerAluno {
         'POST', Uri.parse('https://apiseth.cyclic.app/buscaAlunos'));
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
+
     var lista = [];
 
     if (response.statusCode == 200) {
+      //converte os dados do banco em String
       String jsonString = await response.stream.bytesToString();
+      //converto os dados obtidos em um objeto JSON
       var result = await json.decode(jsonString);
-
+      //for in para adicionar os resultados em um array
       for (var list in result) {
         lista.add(list["usuario"]);
       }

@@ -42,10 +42,7 @@ class _RelatorioState extends State<Relatorio> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const Menu()),
-          );
+          Navigator.pop(context, false);
         },
         backgroundColor: const Color.fromARGB(255, 252, 72, 27),
         elevation: 2.0,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
-import 'package:flutter_project_seth/frontEnd/telasAluno/desempAluno.dart';
+import 'package:flutter_project_seth/frontEnd/telasMestre/DetalheAluno.dart';
 
 import '../widgets/utilClass.dart';
 
@@ -17,17 +17,14 @@ class _ListaAlunoState extends State<ListaAluno> {
 
   getList<List>() async {
     await buscaAlunos().then((value) {
-      if (value != null) {
-        setState(() {
-          listaAlunos = value;
-          print(listaAlunos[0]);
-        });
-      }
+      setState(() {
+        listaAlunos = value;
+      });
     });
   }
 
+  @override
   void initState() {
-    // TODO: implement initState
     getList();
     super.initState();
   }
@@ -40,7 +37,9 @@ class _ListaAlunoState extends State<ListaAluno> {
       appBar: AppBar(
         //Barra superior já com o icone de voltar
         backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-        title: const Text("Desempenho do Aluno"),
+        title: const Center(
+          child: Text("Desempenho do Aluno"),
+        ),
 
         //Icone de voltar quando utilizado o drawer no appbar
         automaticallyImplyLeading: true,
@@ -57,25 +56,50 @@ class _ListaAlunoState extends State<ListaAluno> {
         ),
       ),
       //body: _buildListView(context),
-      body: ListView.builder(
-        itemCount: listaAlunos.length,
-        itemBuilder: (_, index) {
-          return ListTile(
-            title: Text('${listaAlunos[index]}'),
-            subtitle: Text('Faixa'),
-            leading: const Icon(Icons.person),
-            trailing: IconButton(
-              icon: const Icon(Icons.arrow_forward),
-              onPressed: () {
-                Navigator.push(
+      body: ListView.separated(
+          itemBuilder: (_, index) {
+            return SizedBox(
+                child: ListTile(
+              tileColor: Colors.indigo[50],
+              horizontalTitleGap: 20,
+              title: Text('${listaAlunos[index]}'),
+              //subtitle: const Text('Faixa'),
+              leading: const Icon(Icons.person),
+              trailing: IconButton(
+                icon: const Icon(Icons.arrow_forward),
+                onPressed: () {
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const DesempAluno()));
-              },
-            ),
-          );
+                        builder: (context) =>
+                            DetalheAluno(aluno: listaAlunos[index])),
+                  );
+                  print(listaAlunos[index]);
+                },
+              ),
+            ));
+          },
+          padding: EdgeInsets.all(10),
+          separatorBuilder: (context, index) => Divider(),
+          itemCount: listaAlunos.length),
+
+      //botão flutuante sobre a barra inferior
+
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pop(context, false);
         },
+        backgroundColor: const Color.fromARGB(255, 252, 72, 27),
+        elevation: 2.0,
+        child: const Icon(
+          Icons.home,
+          color: Colors.black,
+          size: 35,
+        ),
       ),
+      //barra infeirior
+      bottomNavigationBar: const BotaoInferior(),
     );
   }
 }
