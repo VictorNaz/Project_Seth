@@ -168,7 +168,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                       keyboardType: TextInputType.name,
                       decoration: const InputDecoration(
                         icon: Icon(
-                          Icons.password,
+                          Icons.lock_outline,
                           color: Color.fromARGB(255, 252, 72, 27),
                         ),
                         labelText: "Nova Senha",
@@ -191,7 +191,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                         keyboardType: TextInputType.name,
                         decoration: const InputDecoration(
                           icon: Icon(
-                            Icons.password,
+                            Icons.lock_outline,
                             color: Color.fromARGB(255, 252, 72, 27),
                           ),
                           labelText: "Confirmar Nova Senha",
@@ -208,7 +208,12 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                   const Padding(padding: EdgeInsets.only(bottom: 30)),
 
                   TextButton(
-                      onPressed: (null), //Adicionar uma modal confirmando
+                      onPressed: (null
+
+                          //alertUser();
+
+                          ),
+                      //Adicionar uma modal confirmando
                       style: TextButton.styleFrom(
                         backgroundColor: const Color.fromARGB(255, 252, 72, 27),
                         fixedSize: const Size(330, 50),
@@ -245,6 +250,24 @@ class _PerfilAlunoState extends State<PerfilAluno> {
         //barra infeirior
         bottomNavigationBar: const BotaoInferior(),
       ),
+    );
+  }
+
+  //Alerta do usuário
+  alertUser() {
+    showDialog<String>(
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Alterações realizadas!'),
+        content: Text(''),
+        actions: <Widget>[
+          TextButton(
+            //Se for selecionado Não
+            onPressed: () => Navigator.pop(context, 'Ok'),
+            child: const Text('Ok'),
+          ),
+        ],
+      ),
+      context: context,
     );
   }
 }
