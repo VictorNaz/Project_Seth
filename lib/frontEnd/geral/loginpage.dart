@@ -152,9 +152,10 @@ class _LoginPageState extends State<LoginPage> {
                       //Abre a splashscreen
 
                       if (_formKey.currentState!.validate()) {
+                        loading();
                         nivel_acess = (await loginUsuario(
                             txtUsuario.text, txtSenha.text))!;
-                        loading();
+
                         if (nivel_acess == "1") {
                           //Remove as abas acessadas anteriormente, limpa a memória
                           //Impedindo que o usuário volte para a tela de login

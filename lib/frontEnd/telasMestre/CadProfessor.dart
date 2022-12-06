@@ -104,7 +104,7 @@ class _CadProfessorState extends State<CadProfessor> {
                               Icons.person,
                               color: Color.fromARGB(255, 252, 72, 27),
                             ),
-                            labelText: "Nome de Usuário",
+                            labelText: "Usuário",
                             focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
                                     color: Color.fromARGB(255, 252, 72, 27))),
@@ -312,7 +312,7 @@ class _CadProfessorState extends State<CadProfessor> {
                         ),
                       ), //texto do button e estilo da escrita
                       child: const Text(
-                        "Cadastrar-se",
+                        "Cadastrar",
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       )),
                 ],
