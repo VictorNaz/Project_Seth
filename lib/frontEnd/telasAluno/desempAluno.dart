@@ -59,7 +59,6 @@ class _DesempAlunoState extends State<DesempAluno> {
 
   //O comando abaixo define a inicialização do getList antes do carregamento da pagina
   void initState() {
-    // TODO: implement initState
     getList();
     getAulas();
     super.initState();

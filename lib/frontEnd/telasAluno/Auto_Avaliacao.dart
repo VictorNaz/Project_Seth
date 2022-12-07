@@ -32,11 +32,9 @@ class _Auto_AvaliacaoState extends State<Auto_Avaliacao> {
     var aluno = Aluno();
     aluno.usuario = await PrefsService.returnUser();
     await buscaAvaliacao(aluno).then((value) {
-      if (value != null) {
-        setState(() {
-          lista = value;
-        });
-      }
+      setState(() {
+        lista = value;
+      });
     });
   }
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/frontEnd/telasAluno/info.dart';
-import '../telasAluno/desempAluno.dart';
+import 'package:flutter_project_seth/frontEnd/telasMestre/ListaAluno.dart';
 import '../widgets/utilClass.dart';
 import 'ValPresenca.dart';
 
@@ -77,7 +77,7 @@ class _MenuProfessorState extends State<MenuProfessor> {
                           size: 80,
                           color: Color.fromARGB(255, 252, 72, 27),
                         ),
-                        tela: DesempAluno()),
+                        tela: ListaAluno()),
                   ],
                 ),
 
@@ -103,10 +103,10 @@ class _MenuProfessorState extends State<MenuProfessor> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
+          /*Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const MenuProfessor()),
-          );
+          );*/
         },
         backgroundColor: const Color.fromARGB(255, 252, 72, 27),
         elevation: 2.0,
