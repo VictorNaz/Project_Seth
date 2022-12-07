@@ -70,10 +70,10 @@ Future<String?> cadAvaliacao(
 }
 
 //busca a auto-avaliação do aluno
-Future<List<double>> buscaAvaliacao() async {
-  var aluno = Aluno();
+Future<List<double>> buscaAvaliacao(Aluno aluno) async {
+  //var aluno = Aluno();
   var avaliacao = AutoAvaliacao();
-  aluno.usuario = await PrefsService.returnUser();
+  //aluno.usuario = await PrefsService.returnUser();
   aluno.id = await ServerAluno.buscaAlunoId(aluno);
   avaliacao = await ServerAluno.buscaAvaliacao(aluno);
 
@@ -98,10 +98,10 @@ Future<List<double>> buscaAvaliacao() async {
 }
 
 //Busca a quantidade de aulas frequentadas
-Future<int?> buscaAulas() async {
-  var aluno = Aluno();
+Future<int?> buscaAulas(Aluno aluno) async {
+  //var aluno = Aluno();
   var aulas = Faixa();
-  aluno.usuario = await PrefsService.returnUser();
+  //aluno.usuario = await PrefsService.returnUser();
   aluno.id = await ServerAluno.buscaAlunoId(aluno);
   aulas.quantAulas = await ServerAluno.buscaAulas(aluno);
 

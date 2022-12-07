@@ -3,6 +3,8 @@ import 'package:kg_charts/kg_charts.dart';
 import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import '../../backEnd/modelo/aluno.dart';
+import '../../backEnd/security/sessionService.dart';
 import '../widgets/utilClass.dart';
 
 class DesempAluno extends StatefulWidget {
@@ -21,8 +23,12 @@ class _DesempAlunoState extends State<DesempAluno> {
 
   //O comando getList serve para podermos mudar o tipo do retorno da buscaAvaliacao
   //de Future<list<double>> para list<double>, alem de setar o valor em uma variavel global
+  //Este método irá coletar o usuario da sessão e passará por parametro para outro método na CtrlAluno
+
   getList<List>() async {
-    await buscaAvaliacao().then((value) {
+    var aluno = Aluno();
+    aluno.usuario = await PrefsService.returnUser();
+    await buscaAvaliacao(aluno).then((value) {
       if (value != null) {
         setState(() {
           lista = value;
@@ -33,8 +39,12 @@ class _DesempAlunoState extends State<DesempAluno> {
 
   //O comando getaulas serve para pegar o valor do backend da quantidade de aulas frequentadas quando a página é carregada
   //alem de setar o valor após a coleta dos dados.
+  //Este método irá coletar o usuario da sessão e passará por parametro para outro método na CtrlAluno
+
   getAulas<int>() async {
-    await buscaAulas().then((value) {
+    var aluno = Aluno();
+    aluno.usuario = await PrefsService.returnUser();
+    await buscaAulas(aluno).then((value) {
       if (value != null) {
         setState(() {
           print(value);

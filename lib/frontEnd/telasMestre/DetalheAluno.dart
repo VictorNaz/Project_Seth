@@ -3,13 +3,16 @@ import 'package:intl/intl.dart';
 import 'package:kg_charts/kg_charts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
+import '../../backEnd/controladora/CtrlAluno.dart';
+import '../../backEnd/modelo/aluno.dart';
 import '../widgets/utilClass.dart';
 
 class DetalheAluno extends StatefulWidget {
-  const DetalheAluno({required String aluno}) : super();
-  //final String aluno;
-
-  //DetalheAluno(this.aluno);
+  final String usuario;
+  const DetalheAluno({
+    Key? key,
+    required this.usuario,
+  }) : super(key: key);
 
   @override
   State<DetalheAluno> createState() => _DetalheAlunoState();
@@ -24,20 +27,26 @@ class _DetalheAlunoState extends State<DetalheAluno> {
 
   //O comando getList serve para podermos mudar o tipo do retorno da buscaAvaliacao
   //de Future<list<double>> para list<double>, alem de setar o valor em uma variavel global
+  //este método recebe o usuario como um parametro da classe DetalheAluno
   getAvaliacao<List>() async {
-    /*await buscaAvaliacao().then((value) {
+    var aluno = Aluno();
+    aluno.usuario = widget.usuario;
+    aluno.usuario = await buscaAvaliacao(aluno).then((value) {
       if (value != null) {
         setState(() {
           lista = value;
         });
       }
-    });*/
+    });
   }
 
   //O comando getaulas serve para pegar o valor do backend da quantidade de aulas frequentadas quando a página é carregada
   //alem de setar o valor após a coleta dos dados.
+  //este método recebe o usuario como um parametro da classe DetalheAluno
   getAulas<int>() async {
-    /*await buscaAulas().then((value) {
+    var aluno = Aluno();
+    aluno.usuario = widget.usuario;
+    await buscaAulas(aluno).then((value) {
       if (value != null) {
         setState(() {
           print(value);
@@ -45,7 +54,7 @@ class _DetalheAlunoState extends State<DetalheAluno> {
           percAulas = (quantAulas / 250) * 100;
         });
       }
-    });*/
+    });
   }
 
   @override

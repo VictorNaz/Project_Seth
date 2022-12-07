@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
 import 'package:kg_charts/kg_charts.dart';
+import 'package:flutter_project_seth/backEnd/security/sessionService.dart';
 
+import '../../backEnd/modelo/aluno.dart';
 import '../widgets/utilClass.dart';
 
 class Auto_Avaliacao extends StatefulWidget {
@@ -24,8 +26,12 @@ class _Auto_AvaliacaoState extends State<Auto_Avaliacao> {
 
   //O comando getList serve para podermos mudar o tipo do retorno da buscaAvaliacao
   //de Future<list<double>> para list<double>, alem de setar o valor em uma variavel global
+  //Este método irá coletar o usuario da sessão e passará por parametro para outro método na CtrlAluno
+
   getList<List>() async {
-    await buscaAvaliacao().then((value) {
+    var aluno = Aluno();
+    aluno.usuario = await PrefsService.returnUser();
+    await buscaAvaliacao(aluno).then((value) {
       if (value != null) {
         setState(() {
           lista = value;
@@ -38,7 +44,6 @@ class _Auto_AvaliacaoState extends State<Auto_Avaliacao> {
 
   //O comando abaixo define a inicialização do getList antes do carregamento da pagina
   void initState() {
-    // TODO: implement initState
     getList();
     super.initState();
   }
@@ -358,7 +363,6 @@ class _Auto_AvaliacaoState extends State<Auto_Avaliacao> {
                       ),
                     ),
                     onPressed: () {
-                      buscaAvaliacao();
                       cadAvaliacao(
                           valAlimentacao,
                           valPrevencao,
