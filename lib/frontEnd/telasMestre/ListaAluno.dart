@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
 import 'package:flutter_project_seth/frontEnd/telasMestre/DetalheAluno.dart';
 
+import '../../backEnd/controladora/CtrlProfessor.dart';
 import '../widgets/utilClass.dart';
 
 class ListaAluno extends StatefulWidget {

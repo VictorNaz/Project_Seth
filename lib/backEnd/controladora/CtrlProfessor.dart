@@ -2,7 +2,9 @@ import 'package:flutter_project_seth/backEnd/security/dataCrypt.dart';
 import 'package:flutter_project_seth/backEnd/server/serverProfessor.dart';
 
 import '../modelo/professor.dart';
+import '../server/serverAluno.dart';
 
+//CADASTRA O PROFESSOR
 String? cadProfessor(String txtNome, String txtUsuario, String txtSenha,
     String txtEmail, String txtCpf) {
   var professor = Professor();
@@ -15,7 +17,17 @@ String? cadProfessor(String txtNome, String txtUsuario, String txtSenha,
   professor.cpf = txtCpf;
 
   ServerProfessor.cadastrarProfessor(professor);
+  return null;
 }
+
+//BUSCA OS ALUNOS CADASTRADOS PARA EXIBIR NA LISTA DE ALUNOS DO PROFESSOR
+Future<List> buscaAlunos() async {
+  var alunos = await ServerAluno.buscaAlunos();
+
+  return alunos;
+}
+
+/*************************** VALIDAÇÕES DE CAMPO *******************************/
 
 String? validarNome(String value) {
   String patttern = r'(^[a-zA-Z ]*$)';

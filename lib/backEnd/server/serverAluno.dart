@@ -7,10 +7,6 @@ import 'package:http/http.dart' as http;
 
 import '../modelo/autoAvaliacao.dart';
 
-//Pendencias
-//Validação de campos para dados repetidos
-//Criptografia de senha
-
 //Escopo padrão com Auth nos paramêtros
 var headers = {
   'Content-Type': 'application/json',
@@ -256,6 +252,31 @@ class ServerAluno {
     } else {
       print(response.reasonPhrase);
       print("Erro ao cadastrar a avaliação");
+    }
+  }
+
+  static Future<Aluno> buscaInfo(Aluno aluno) async {
+    var request =
+        http.Request('POST', Uri.parse('https://apiseth.cyclic.app/buscaInfo'));
+    request.body = json.encode({"usuario": aluno.usuario});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+    var info = Aluno();
+
+    if (response.statusCode == 200) {
+      String jsonString = await response.stream.bytesToString();
+      var result = await json.decode(jsonString);
+
+      info.nome = result["nome"];
+      info.email = result["email"];
+      info.cpf = result["cpf"];
+      print("Informações encontradas encontrados!");
+      return info;
+    } else {
+      print("Erro ao procurar as informações!");
+      print(response.reasonPhrase);
+      return info;
     }
   }
 }

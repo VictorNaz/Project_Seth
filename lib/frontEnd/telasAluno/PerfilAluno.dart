@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_seth/frontEnd/telasAluno/menuPrincipal.dart';
-
 import '../../backEnd/controladora/CtrlAluno.dart';
+import '../../backEnd/modelo/aluno.dart';
 import '../widgets/utilClass.dart';
-import 'CadAluno.dart';
-import 'MenuPrincipal.dart';
 
 class PerfilAluno extends StatefulWidget {
   const PerfilAluno({Key? key}) : super(key: key);
@@ -15,13 +12,25 @@ class PerfilAluno extends StatefulWidget {
 class _PerfilAlunoState extends State<PerfilAluno> {
   bool isChecked = false;
   bool showPassword = false;
-  TextEditingController txtNome = TextEditingController();
-  TextEditingController txtSenha = TextEditingController();
-  TextEditingController txtConfSenha = TextEditingController();
-  TextEditingController txtEmail = TextEditingController();
-  TextEditingController txtcpf = TextEditingController();
+  var usuario = Aluno();
 
+  TextEditingController _controler = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  getInfo<Aluno>() async {
+    await buscaInfo().then((value) async {
+      setState(() {
+        usuario = value;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    getInfo();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     //Detecta a ára fora dos campos
@@ -91,22 +100,20 @@ class _PerfilAlunoState extends State<PerfilAluno> {
 
                   SizedBox(
                     width: 325,
-                    child: TextFormField(
-                        controller: txtNome,
-                        keyboardType: TextInputType.name,
-                        decoration: const InputDecoration(
-                          icon: Icon(
-                            Icons.person,
-                            color: Color.fromARGB(255, 252, 72, 27),
-                          ),
-                          labelText: "Nome Completo",
-                          focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Color.fromARGB(255, 252, 72, 27))),
+                    child: TextField(
+                      controller: TextEditingController(text: usuario.nome),
+                      keyboardType: TextInputType.name,
+                      decoration: const InputDecoration(
+                        icon: Icon(
+                          Icons.person,
+                          color: Color.fromARGB(255, 252, 72, 27),
                         ),
-                        validator: (value) {
-                          return validarNome(txtNome.text);
-                        }),
+                        labelText: "Nome Completo",
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 252, 72, 27))),
+                      ),
+                    ),
                   ),
                   //Espaçamento entre inputs
                   const Padding(padding: EdgeInsets.only(top: 15)),
@@ -114,23 +121,22 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                   SizedBox(
                     width: 325,
                     child: TextFormField(
-                        controller: txtEmail,
-                        //Define o teclado para digitar e-mail(adiciona o @ no teclado)
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: const InputDecoration(
-                          icon: Icon(
-                            Icons.email,
-                            color: Color.fromARGB(255, 252, 72, 27),
-                          ),
-                          labelText: "Email",
-                          hintStyle: TextStyle(color: Colors.black),
-                          focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Color.fromARGB(255, 252, 72, 27))),
+                      //initialValue: usuario.email,
+                      controller: TextEditingController(text: usuario.email),
+                      //Define o teclado para digitar e-mail(adiciona o @ no teclado)
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: const InputDecoration(
+                        icon: Icon(
+                          Icons.email,
+                          color: Color.fromARGB(255, 252, 72, 27),
                         ),
-                        validator: (value) {
-                          return validarEmail(txtEmail.text);
-                        }),
+                        labelText: "Email",
+                        hintStyle: TextStyle(color: Colors.black),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 252, 72, 27))),
+                      ),
+                    ),
                   ),
 
                   //Espaçamento entre inputs
@@ -138,9 +144,9 @@ class _PerfilAlunoState extends State<PerfilAluno> {
 
                   SizedBox(
                     width: 325,
-                    child: TextFormField(
-                      controller: txtcpf,
-                      //Define o teclado para numérico
+                    child: TextField(
+                      controller: TextEditingController(
+                          text: usuario.cpf), //Define o teclado para numérico
                       keyboardType: TextInputType.number,
                       decoration: const InputDecoration(
                         icon: Icon(
@@ -153,65 +159,14 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                             borderSide: BorderSide(
                                 color: Color.fromARGB(255, 252, 72, 27))),
                       ),
-                      validator: (value) {
-                        return validaCpf(txtcpf.text);
-                      },
                     ),
                   ),
 
-                  const Padding(padding: EdgeInsets.only(bottom: 15)),
-
-                  SizedBox(
-                    width: 325,
-                    child: TextFormField(
-                      controller: txtSenha,
-                      keyboardType: TextInputType.name,
-                      decoration: const InputDecoration(
-                        icon: Icon(
-                          Icons.lock_outline,
-                          color: Color.fromARGB(255, 252, 72, 27),
-                        ),
-                        labelText: "Nova Senha",
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Color.fromARGB(255, 252, 72, 27))),
-                      ),
-                      validator: (value) {
-                        return validarSenha(txtSenha.text);
-                      },
-                    ),
-                  ),
-
-                  const Padding(padding: EdgeInsets.only(bottom: 15)),
-
-                  SizedBox(
-                    width: 325,
-                    child: TextFormField(
-                        controller: txtConfSenha,
-                        keyboardType: TextInputType.name,
-                        decoration: const InputDecoration(
-                          icon: Icon(
-                            Icons.lock_outline,
-                            color: Color.fromARGB(255, 252, 72, 27),
-                          ),
-                          labelText: "Confirmar Nova Senha",
-                          focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Color.fromARGB(255, 252, 72, 27))),
-                        ),
-                        validator: (value) {
-                          return validarConfSenha(
-                              txtSenha.text, txtConfSenha.text);
-                        }),
-                  ),
-
-                  const Padding(padding: EdgeInsets.only(bottom: 30)),
+                  const Padding(padding: EdgeInsets.only(bottom: 150)),
 
                   TextButton(
                       onPressed: (null
-
                           //alertUser();
-
                           ),
                       //Adicionar uma modal confirmando
                       style: TextButton.styleFrom(
@@ -231,7 +186,8 @@ class _PerfilAlunoState extends State<PerfilAluno> {
               ),
             )
           ],
-        ), //botão flutuante sobre a barra inferior
+        ),
+        //botão flutuante sobre a barra inferior
 
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: FloatingActionButton(

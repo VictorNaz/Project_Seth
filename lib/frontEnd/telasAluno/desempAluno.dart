@@ -29,11 +29,9 @@ class _DesempAlunoState extends State<DesempAluno> {
     var aluno = Aluno();
     aluno.usuario = await PrefsService.returnUser();
     await buscaAvaliacao(aluno).then((value) {
-      if (value != null) {
-        setState(() {
-          lista = value;
-        });
-      }
+      setState(() {
+        lista = value;
+      });
     });
   }
 
@@ -47,7 +45,6 @@ class _DesempAlunoState extends State<DesempAluno> {
     await buscaAulas(aluno).then((value) {
       if (value != null) {
         setState(() {
-          print(value);
           quantAulas = value;
           percAulas = (quantAulas / 250) * 100;
         });
@@ -184,8 +181,8 @@ class _DesempAlunoState extends State<DesempAluno> {
                                     Text("$quantAulas/250 Aulas"),
                                     const Padding(
                                         padding: EdgeInsets.only(right: 125)),
-                                    Text(formatter.format(percAulas) +
-                                        "% Concluído"),
+                                    Text(
+                                        "${formatter.format(percAulas)}% Concluído"),
                                   ],
                                 )
                               ],
@@ -345,7 +342,7 @@ class _DesempAlunoState extends State<DesempAluno> {
                                 duration: 2000,
                                 shape: Shape.square,
                                 maxWidth: 90,
-                                line: LineModel(5),
+                                line: LineModel(10),
                               ),
                               textStyle: const TextStyle(
                                   color: Colors.black, fontSize: 12),

@@ -9,7 +9,7 @@ import '../modelo/autoAvaliacao.dart';
 /********************** CLASSES DE CONTROLE  **************************/
 
 //Cadastra aluno
-Future<String?> cadAluno(String txtNome, String txtUsuario, String txtSenha,
+void cadAluno(String txtNome, String txtUsuario, String txtSenha,
     String txtEmail, String txtCpf) async {
   var aluno = Aluno();
 
@@ -26,7 +26,7 @@ Future<String?> cadAluno(String txtNome, String txtUsuario, String txtSenha,
 }
 
 //Valida Presença do aluno
-Future<String?> validaPresAluno(String txtUsuario) async {
+void validaPresAluno(String txtUsuario) async {
   var aluno = Aluno();
   aluno.setUsuario = txtUsuario;
 
@@ -45,7 +45,7 @@ Future<String?> loginUsuario(String txtUsuario, String txtSenha) async {
   return aluno.nivel_acess;
 }
 
-Future<String?> cadAvaliacao(
+void cadAvaliacao(
     double valAlimentacao,
     double valPrevencao,
     double valAtivFisica,
@@ -108,10 +108,13 @@ Future<int?> buscaAulas(Aluno aluno) async {
   return aulas.quantAulas;
 }
 
-Future<List> buscaAlunos() async {
-  var alunos = await ServerAluno.buscaAlunos();
+Future<Aluno> buscaInfo() async {
+  var aluno = Aluno();
 
-  return alunos;
+  aluno.usuario = await PrefsService.returnUser();
+  aluno = await ServerAluno.buscaInfo(aluno);
+
+  return aluno;
 }
 
 /*************************** VALIDAÇÕES DE CAMPO *******************************/
