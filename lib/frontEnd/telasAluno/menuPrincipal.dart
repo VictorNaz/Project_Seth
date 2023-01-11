@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/frontEnd/telasAluno/Auto_Avaliacao.dart';
 import 'package:flutter_project_seth/frontEnd/telasAluno/info.dart';
+import 'package:flutter_project_seth/frontEnd/widgets/QR_CodePage.dart';
 
 import '../widgets/utilClass.dart';
 import 'desempAluno.dart';
@@ -93,13 +94,13 @@ class _MenuState extends State<Menu> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: const [
                     BotaoMenu(
-                      texto: "Quadro de Aulas",
+                      texto: "Validar Presença",
                       icone: Icon(
-                        Icons.calendar_month_outlined,
+                        Icons.fact_check_outlined,
                         size: 80,
                         color: Color.fromARGB(255, 252, 72, 27),
                       ),
-                      tela: Menu(),
+                      tela: QRCodeRead(),
                     ),
                     Padding(padding: EdgeInsets.only(right: 30)),
                     BotaoMenu(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/frontEnd/telasAluno/info.dart';
 import 'package:flutter_project_seth/frontEnd/telasMestre/ListaAluno.dart';
 import 'package:flutter_project_seth/frontEnd/telasMestre/Relatorio.dart';
+import 'package:flutter_project_seth/frontEnd/widgets/QR_CodePage.dart';
 import '../telasProf/ValPresenca.dart';
 import '../widgets/utilClass.dart';
 import 'CadProfessor.dart';
@@ -77,7 +78,7 @@ class _MenuMestreState extends State<MenuMestre> {
                           size: 80,
                           color: Color.fromARGB(255, 252, 72, 27),
                         ),
-                        tela: ValPresenca()),
+                        tela: QRCodeMake()),
                   ],
                 ),
                 const Padding(padding: EdgeInsets.only(top: 30)),
