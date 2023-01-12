@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/frontEnd/telasAluno/info.dart';
+import 'package:flutter_project_seth/frontEnd/telasMestre/ForceProgress.dart';
 import 'package:flutter_project_seth/frontEnd/telasMestre/ListaAluno.dart';
 import 'package:flutter_project_seth/frontEnd/telasMestre/Relatorio.dart';
 import '../telasProf/ValPresenca.dart';
@@ -105,13 +106,13 @@ class _MenuMestreState extends State<MenuMestre> {
                 ),
                 const Padding(padding: EdgeInsets.only(top: 30)),
                 const BotaoMenu(
-                    texto: "Informações",
+                    texto: "Forçar Progresso",
                     icone: Icon(
-                      Icons.info_outline_rounded,
+                      Icons.build,
                       size: 80,
                       color: Color.fromARGB(255, 252, 72, 27),
                     ),
-                    tela: Info()),
+                    tela: ForceProgress()),
                 const Padding(padding: EdgeInsets.only(bottom: 80)),
               ],
             ),
