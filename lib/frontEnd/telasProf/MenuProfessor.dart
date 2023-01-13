@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/frontEnd/telasAluno/info.dart';
 import 'package:flutter_project_seth/frontEnd/telasMestre/ListaAluno.dart';
+import 'package:flutter_project_seth/frontEnd/widgets/QR_CodePage.dart';
 import '../widgets/utilClass.dart';
 import 'ValPresenca.dart';
 
@@ -68,7 +69,7 @@ class _MenuProfessorState extends State<MenuProfessor> {
                           size: 80,
                           color: Color.fromARGB(255, 252, 72, 27),
                         ),
-                        tela: ValPresenca()),
+                        tela: QRCodeMake()),
                     Padding(padding: EdgeInsets.only(right: 30)),
                     BotaoMenu(
                         texto: "Desempenho \n Alunos",
