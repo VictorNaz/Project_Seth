@@ -138,7 +138,7 @@ class _DetalheAlunoState extends State<DetalheAluno> {
                           childrenPadding: const EdgeInsets.all(16),
                           //titulo do botão
                           title: const Text(
-                            "Meu Desempenho",
+                            "Desempenho",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 25,
@@ -186,7 +186,41 @@ class _DetalheAlunoState extends State<DetalheAluno> {
                                     Text(
                                         "${formatter.format(percAulas)}% Concluído"),
                                   ],
-                                )
+                                ),
+                                const Padding(
+                                    padding: EdgeInsets.only(bottom: 20)),
+                                const Text(
+                                  "Progresso Fundamental",
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                                const Padding(padding: EdgeInsets.only(top: 7)),
+                                Padding(
+                                  padding: const EdgeInsets.all(1),
+                                  child: LinearPercentIndicator(
+                                    width:
+                                        MediaQuery.of(context).size.width - 50,
+                                    animation: true,
+                                    lineHeight: 25.0,
+                                    animationDuration: 2000,
+                                    percent: 0.8,
+                                    barRadius: const Radius.circular(16),
+                                    progressColor:
+                                        const Color.fromARGB(255, 252, 72, 27),
+                                    backgroundColor: const Color.fromARGB(
+                                        252, 207, 203, 203),
+                                  ),
+                                ),
+                                const Padding(
+                                    padding: EdgeInsets.only(bottom: 10)),
+                                Row(
+                                  children: const [
+                                    Padding(padding: EdgeInsets.only(left: 10)),
+                                    Text("50/60 Aulas"),
+                                    Padding(
+                                        padding: EdgeInsets.only(right: 150)),
+                                    Text("80% Concluído")
+                                  ],
+                                ),
                               ],
                             ),
                           ],
@@ -196,7 +230,7 @@ class _DetalheAlunoState extends State<DetalheAluno> {
                 //Espaçamento entre botões
                 const Padding(padding: EdgeInsets.only(bottom: 40)),
 
-                Card(
+                /* Card(
 
                     //Determinamos o raio das bordas do card
                     shape: (RoundedRectangleBorder(
@@ -278,10 +312,7 @@ class _DetalheAlunoState extends State<DetalheAluno> {
                           ],
                         ),
                       ),
-                    )),
-
-                //Espaçamento entre botões
-                const Padding(padding: EdgeInsets.only(bottom: 40)),
+                    )), */
 
                 // Esta classe retorna um card com um expansionTile dentro, recebendo o titulo e a descrição do mesmo.
                 Card(
@@ -370,7 +401,7 @@ class _DetalheAlunoState extends State<DetalheAluno> {
                       ),
                     )),
                 //Espaçamento entre botão e o final da tela
-                const Padding(padding: EdgeInsets.only(bottom: 170)),
+                const Padding(padding: EdgeInsets.only(bottom: 280)),
               ],
             ),
           ),

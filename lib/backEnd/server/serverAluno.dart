@@ -92,12 +92,12 @@ class ServerAluno {
     var aulas = Faixa();
 
     http.StreamedResponse response = await request.send();
-    String jsonString = await response.stream.bytesToString();
-    var result = await json.decode(jsonString);
-    aulas.quantAulas = result["quant_aula"];
 
     if (response.statusCode == 200) {
       print("Quantidade de aulas encontrada!");
+      String jsonString = await response.stream.bytesToString();
+      var result = await json.decode(jsonString);
+      aulas.quantAulas = result["quant_aula"];
     } else {
       print("Erro ao procurar a quantidade de aulas");
       print(response.reasonPhrase);
