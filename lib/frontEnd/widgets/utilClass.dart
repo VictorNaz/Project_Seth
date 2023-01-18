@@ -1,10 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
 import 'package:flutter_project_seth/backEnd/security/sessionService.dart';
 import 'package:flutter_project_seth/frontEnd/geral/Homepage.dart';
-import 'package:flutter_project_seth/frontEnd/geral/loginpage.dart';
 
 import '../telasAluno/PerfilAluno.dart';
 

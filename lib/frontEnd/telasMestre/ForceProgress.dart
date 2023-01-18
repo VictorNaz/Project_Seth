@@ -14,7 +14,7 @@ class _ForceProgressState extends State<ForceProgress> {
   TextEditingController txtUsuario = TextEditingController();
   TextEditingController txtQtdeAulas = TextEditingController();
 
-  List<String> faixas = ["Branca", "Azul", "Marrom", "Preta"];
+  List<String> faixas = ["Branca", "Azul", "Roxa", "Marrom", "Preta"];
   List<String> graus = ["1", "2", "3", "4"];
   String? faixaSelecionada;
   String? grauSelecionado;
@@ -50,7 +50,13 @@ class _ForceProgressState extends State<ForceProgress> {
           appBar: AppBar(
             //Barra superior já com o icone de voltar
             backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-            title: const Text("Cadastro Aluno"),
+
+            title: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Text("        Forçar Progresso"),
+              ],
+            ),
 
             //Icone de voltar quando utilizado o drawer no appbar
             automaticallyImplyLeading: true,
@@ -130,7 +136,7 @@ class _ForceProgressState extends State<ForceProgress> {
                             ),
                             validator: (value) {
                               //no return está sendo utilizado o validaUsuario pelo mesmo apenas validar se o campo está vazio
-                              return validaUsuario(txtQtdeAulas.text);
+                              return validaQtdeAulas(txtQtdeAulas.text);
                             },
                           ),
                         ),
@@ -149,6 +155,9 @@ class _ForceProgressState extends State<ForceProgress> {
                               const Padding(padding: EdgeInsets.only(left: 17)),
                               const Text(
                                 "Selecione a Faixa:",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: Color.fromARGB(255, 107, 107, 107)),
                               ),
                               const Padding(
                                 padding: EdgeInsets.only(right: 20),
@@ -189,7 +198,12 @@ class _ForceProgressState extends State<ForceProgress> {
                                 color: Color.fromARGB(255, 252, 72, 27),
                               ),
                               const Padding(padding: EdgeInsets.only(left: 17)),
-                              const Text("Selecione o grau da faixa:"),
+                              const Text(
+                                "Selecione o grau da faixa:",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: Color.fromARGB(255, 107, 107, 107)),
+                              ),
                               const Padding(
                                 padding: EdgeInsets.only(right: 20),
                               ),
