@@ -1,91 +1,301 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
 
+import '../geral/loginPage.dart';
 import '../widgets/utilClass.dart';
 
 class ForceProgress extends StatefulWidget {
   const ForceProgress({Key? key}) : super(key: key);
-
   @override
   State<ForceProgress> createState() => _ForceProgressState();
 }
 
 class _ForceProgressState extends State<ForceProgress> {
   TextEditingController txtUsuario = TextEditingController();
+  TextEditingController txtQtdeAulas = TextEditingController();
+
+  List<String> faixas = ["Branca", "Azul", "Marrom", "Preta"];
+  List<String> graus = ["1", "2", "3", "4"];
+  String? faixaSelecionada;
+  String? grauSelecionado;
+
   final _formKey = GlobalKey<FormState>();
+
+  void dropDownFaixaSelected(String novoItem) {
+    setState(() {
+      faixaSelecionada = novoItem;
+    });
+  }
+
+  void dropDownGrauSelected(String novoItem) {
+    setState(() {
+      grauSelecionado = novoItem;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBody: true,
-      appBar: AppBar(
-        //Barra superior já com o icone de voltar
-        backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-        title: const Text("Forçar Progresso"),
+    //Detecta a ára fora dos campos
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
 
-        //Icone de voltar quando utilizado o drawer no appbar
-        automaticallyImplyLeading: true,
-        leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              size: 30,
-            ),
-            onPressed: () => Navigator.pop(context, false)),
-      ),
+        if (!currentFocus.hasPrimaryFocus) {
+          //Foco no campo primario
+          //Desfocar
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
+          appBar: AppBar(
+            //Barra superior já com o icone de voltar
+            backgroundColor: const Color.fromARGB(255, 252, 72, 27),
+            title: const Text("Cadastro Aluno"),
 
-      //drawer para navegação no appbar
-      //A classe Drawer está sendo chamada de outro arquivo e está recebendo por parametro o texto desejado.
-      endDrawer: const Drawer(
-        child: DrawerTop(
-          texto: "Opções",
-        ),
-      ),
-      //botão flutuante sobre a barra inferior
-
-      body: Form(
-          key: _formKey,
-          child: Column(children: [
-            //Campo email
-            SizedBox(
-              width: 325,
-              child: TextFormField(
-                controller: txtUsuario,
-
-                //foca no primeiro campo ao entrar na página
-                autofocus: true,
-
-                //Define o teclado para digitar e-mail(adiciona o @ no teclado)
-                keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(
-                  icon: Icon(Icons.person_outline,
-                      color: Color.fromARGB(255, 252, 72, 27), size: 35),
-                  labelText: "Usuário",
-                  hintStyle: TextStyle(color: Colors.black),
-                  focusedBorder: UnderlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Color.fromARGB(255, 252, 72, 27))),
+            //Icone de voltar quando utilizado o drawer no appbar
+            automaticallyImplyLeading: true,
+            leading: IconButton(
+                icon: const Icon(
+                  Icons.arrow_back,
+                  size: 30,
                 ),
-                validator: (value) {
-                  return null;
-                },
+                onPressed: () => Navigator.pop(context, false)),
+          ),
+
+          //drawer para navegação no appbar
+          //A classe Drawer está sendo chamada de outro arquivo e está recebendo por parametro o texto desejado.
+          endDrawer: const Drawer(
+            child: DrawerTop(
+              texto: "Opções",
+            ),
+          ),
+          body: Stack(alignment: Alignment.center, children: <Widget>[
+            Container(),
+            //Posicionamento do campo ao selecionar o campo
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  const Text("Insira os dados abaixo:",
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 26)),
+
+                  const Padding(padding: EdgeInsets.only(top: 20)),
+
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: 325,
+                          child: TextFormField(
+                            controller: txtUsuario,
+                            keyboardType: TextInputType.name,
+                            decoration: const InputDecoration(
+                              icon: Icon(
+                                Icons.person,
+                                color: Color.fromARGB(255, 252, 72, 27),
+                              ),
+                              labelText: "Usuário",
+                              focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color.fromARGB(255, 252, 72, 27))),
+                            ),
+                            validator: (value) {
+                              return validaUsuario(txtUsuario.text);
+                            },
+                          ),
+                        ),
+
+                        //Espaçamento entre inputs
+                        const Padding(padding: EdgeInsets.only(top: 15)),
+
+                        SizedBox(
+                          width: 325,
+                          child: TextFormField(
+                            controller: txtQtdeAulas,
+                            keyboardType: TextInputType.number,
+                            decoration: const InputDecoration(
+                              icon: Icon(
+                                Icons.numbers,
+                                color: Color.fromARGB(255, 252, 72, 27),
+                              ),
+                              labelText: "Quantidade de aulas frequentadas",
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 252, 72, 27),
+                                ),
+                              ),
+                            ),
+                            validator: (value) {
+                              //no return está sendo utilizado o validaUsuario pelo mesmo apenas validar se o campo está vazio
+                              return validaUsuario(txtQtdeAulas.text);
+                            },
+                          ),
+                        ),
+
+                        //Espaçamento entre inputs
+                        const Padding(padding: EdgeInsets.only(top: 15)),
+
+                        SizedBox(
+                          width: 325,
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.upgrade,
+                                color: Color.fromARGB(255, 252, 72, 27),
+                              ),
+                              const Padding(padding: EdgeInsets.only(left: 17)),
+                              const Text(
+                                "Selecione a Faixa:",
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.only(right: 20),
+                              ),
+                              DropdownButton<String>(
+                                underline: Container(
+                                  height: 2,
+                                  color: const Color.fromARGB(255, 252, 72, 27),
+                                ),
+                                value: faixaSelecionada,
+                                items: faixas.map<DropdownMenuItem<String>>(
+                                    (String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                                onChanged: (String? value) {
+                                  // This is called when the user selects an item.
+                                  setState(() {
+                                    faixaSelecionada = value!;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        //Espaçamento entre inputs
+                        const Padding(padding: EdgeInsets.only(top: 15)),
+
+                        SizedBox(
+                          width: 325,
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.upgrade,
+                                color: Color.fromARGB(255, 252, 72, 27),
+                              ),
+                              const Padding(padding: EdgeInsets.only(left: 17)),
+                              const Text("Selecione o grau da faixa:"),
+                              const Padding(
+                                padding: EdgeInsets.only(right: 20),
+                              ),
+                              DropdownButton<String>(
+                                underline: Container(
+                                  height: 2,
+                                  color: const Color.fromARGB(255, 252, 72, 27),
+                                ),
+                                value: grauSelecionado,
+                                items: graus.map<DropdownMenuItem<String>>(
+                                    (String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                                onChanged: (String? value) {
+                                  setState(() {
+                                    grauSelecionado = value!;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  //Espaçamento entre os campos e o botão cadastrar
+                  const Padding(padding: EdgeInsets.only(top: 300)),
+
+                  //Botão cadastrar
+                  TextButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          loading();
+                          //cadAluno(txtUsuario.text);
+                          closeLoading();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginPage()),
+                          );
+                          alertUser();
+                        }
+                      },
+                      style: TextButton.styleFrom(
+                        backgroundColor: const Color.fromARGB(255, 252, 72, 27),
+                        fixedSize: const Size(330, 50),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ), //texto do button e estilo da escrita
+                      child: const Text(
+                        "Enviar",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      )),
+                ],
+              ),
+            )
+          ])),
+    );
+  }
+
+  loading() {
+    showDialog(
+        builder: (context) => Container(
+              color: const Color.fromARGB(255, 252, 72, 27),
+              child: Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      margin: const EdgeInsets.only(bottom: 80),
+                      child: const CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ])),
+        context: context);
+  }
 
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pop(context, false);
-        },
-        backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-        elevation: 2.0,
-        child: const Icon(
-          Icons.home,
-          color: Colors.black,
-          size: 35,
-        ),
+//Fecha a tela de carregamento
+  closeLoading() {
+    Navigator.pop(context);
+  }
+
+  alertUser() {
+    String name = txtUsuario.text;
+    showDialog<String>(
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Progresso alterado!'),
+        content: Text('A alteração do progresso do aluno $name foi realizada.'),
+        actions: <Widget>[
+          TextButton(
+            //Se for selecionado Não
+            onPressed: () => Navigator.pop(context, 'Ok'),
+            child: const Text('Ok'),
+          ),
+        ],
       ),
-      //barra infeirior
-      bottomNavigationBar: const BotaoInferior(),
+      context: context,
     );
   }
 }
