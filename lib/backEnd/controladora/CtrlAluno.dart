@@ -26,9 +26,11 @@ void cadAluno(String txtNome, String txtUsuario, String txtSenha,
 }
 
 //Valida Presença do aluno
-void validaPresAluno(String txtUsuario) async {
+void validaPresAluno() async {
+  var txtUsuario = await PrefsService.returnUser();
   var aluno = Aluno();
-  aluno.setUsuario = txtUsuario;
+  String? usr = txtUsuario;
+  aluno.setUsuario = usr!;
 
   aluno.id = await ServerAluno.buscaAlunoId(aluno);
   await ServerAluno.valPresenAluno(aluno);

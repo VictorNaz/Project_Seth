@@ -124,7 +124,7 @@ class _ValPresencaState extends State<ValPresenca> {
                   TextButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          validaPresAluno(txtUsuario.text);
+                          //validaPresAluno(txtUsuario.text);
                           Navigator.pop(context, false);
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('Presença Validada')),
