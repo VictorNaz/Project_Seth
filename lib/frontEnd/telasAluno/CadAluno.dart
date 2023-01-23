@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
-
+import 'package:flutter_project_seth/frontEnd/widgets/PDFViewerPage.dart';
 import '../geral/loginPage.dart';
 import '../widgets/utilClass.dart';
 
@@ -256,12 +256,12 @@ class _CadAlunoState extends State<CadAluno> {
                   const Padding(padding: EdgeInsets.only(top: 20)),
 
                   //Row para checkbox e Termos de Uso
-                  Row(
-                    //Alinhamento dos itens da Row
-                    mainAxisAlignment: MainAxisAlignment.center,
 
+                  /*                // Row(
+                    //Alinhamento dos itens da Row
+                   // mainAxisAlignment: MainAxisAlignment.center,
                     //CheckBox Termos de uso
-                    children: [
+                  //  children: [
                       Checkbox(
                         checkColor: Colors.black,
                         activeColor: const Color.fromARGB(255, 252, 72, 27),
@@ -291,7 +291,8 @@ class _CadAlunoState extends State<CadAluno> {
                             style: TextStyle(color: Colors.grey, fontSize: 16),
                           )),
                     ],
-                  ),
+               //   ),*/
+
                   //Row para as regras do tatame
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -302,6 +303,16 @@ class _CadAlunoState extends State<CadAluno> {
                         activeColor: const Color.fromARGB(255, 252, 72, 27),
                         value: checkRegras,
                         onChanged: (bool? value) {
+                          /* showModalBottomSheet(
+                              builder: (context) => optionModalSeth(),
+                              context: context,
+                              isScrollControlled: true,
+                            );*/
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PdfViewerPage()),
+                          );
                           setState(() {
                             checkRegras = value!;
                           });
@@ -310,13 +321,7 @@ class _CadAlunoState extends State<CadAluno> {
 
                       //textbutton da regras do tatame
                       TextButton(
-                          onPressed: () {
-                            showModalBottomSheet(
-                              builder: (context) => optionModalSeth(),
-                              context: context,
-                              isScrollControlled: true,
-                            );
-                          },
+                          onPressed: null,
                           style: TextButton.styleFrom(
                             fixedSize: const Size(300, 60),
                             shape: RoundedRectangleBorder(
@@ -386,10 +391,12 @@ class _CadAlunoState extends State<CadAluno> {
           fixedSize: const Size(165, 1000),
           // padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
         ),
-        onPressed: null,
-        child: const Text("Termos de uso do tatame"),
+        onPressed: () {
+          PdfViewerPage();
+        },
+        child: Text("t"),
       );
-      
+
   loading() {
     showDialog(
         builder: (context) => Container(

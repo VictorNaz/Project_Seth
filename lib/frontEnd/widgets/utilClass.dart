@@ -1,10 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
 import 'package:flutter_project_seth/backEnd/security/sessionService.dart';
 import 'package:flutter_project_seth/frontEnd/geral/Homepage.dart';
 import 'package:flutter_project_seth/frontEnd/geral/loginpage.dart';
+import 'package:path/path.dart';
 
 import '../telasAluno/PerfilAluno.dart';
 
@@ -327,7 +329,9 @@ class BotaoInferior extends StatelessWidget {
                       //Se for selecionado sim
                       onPressed: () {
                         PrefsService.logout;
-                        exit(0);
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(builder: (context) => exit(0)),
+                            (Route<dynamic> route) => false);
                       },
                       child: const Text('Sim'),
                     ),

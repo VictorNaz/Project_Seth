@@ -170,6 +170,9 @@ class _LoginPageState extends State<LoginPage> {
                               MaterialPageRoute(
                                   builder: (context) => const MenuProfessor()),
                               (Route<dynamic> route) => false);
+
+
+                              
                         } else if (nivel_acess == "3") {
                           closeLoading();
                           Navigator.of(context).pushAndRemoveUntil(

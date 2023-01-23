@@ -26,10 +26,11 @@ class PrefsService {
     return false;
   }
 
-  //Remove a chavee do Shared, desativando a sessão
+  //Remove a chave do Shared, desativando a sessão
   static logout() async {
     var prefs = await SharedPreferences.getInstance();
-    await prefs.remove(_key);
+    prefs.remove(_key);
+    return true;
   }
 
   static Future<String?> returnUser() async {

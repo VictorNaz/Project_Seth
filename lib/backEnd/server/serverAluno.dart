@@ -218,6 +218,7 @@ class ServerAluno {
 
     if (response.statusCode == 200) {
       print("Usuario encontrado!");
+      bool bol = await PrefsService.logout();
       PrefsService.save(aluno.usuario!);
       var teste = await PrefsService.returnUser();
     } else {
