@@ -40,8 +40,9 @@ class _CadProfessorState extends State<CadProfessor> {
           appBar: AppBar(
             //Barra superior já com o icone de voltar
             backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-            title: const Center(
-              child: Text("Cadastro Professor"),
+            title: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [Text("       Cadastro Professor")],
             ),
 
             //Icone de voltar quando utilizado o drawer no appbar

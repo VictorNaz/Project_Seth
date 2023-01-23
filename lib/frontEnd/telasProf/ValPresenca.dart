@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../backEnd/controladora/CtrlAluno.dart';
 import '../widgets/utilClass.dart';
 
 class ValPresenca extends StatefulWidget {

@@ -179,6 +179,13 @@ String? validaUsuario(String value) {
   return null;
 }
 
+String? validaQtdeAulas(String value) {
+  if (value.isEmpty) {
+    return "Informe o número de aulas!";
+  }
+  return null;
+}
+
 String? validaSenhaLogin(String value) {
   if (value.isEmpty) {
     return "Informe a senha!";

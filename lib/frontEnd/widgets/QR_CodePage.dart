@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
-import 'package:flutter_project_seth/backEnd/security/sessionService.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class QRCodeRead extends StatefulWidget {
@@ -23,7 +20,6 @@ class _QRCodeReadState extends State<QRCodeRead> {
       false,
       ScanMode.QR,
     );
-    print(code + "wwwwwwwwwwwwwwwwwwww");
     if (code == "S3th") {
       setState(() => ticket = code != '-1' ? code : 'Não validado');
       if (ticket != 'Não validado') {
@@ -41,7 +37,20 @@ class _QRCodeReadState extends State<QRCodeRead> {
       appBar: AppBar(
         //Barra superior já com o icone de voltar
         backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-        title: Text("            Validar Presença"),
+
+        title: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [Text("        QR-Code de Presença")],
+        ),
+
+        //Icone de voltar quando utilizado o drawer no appbar
+        automaticallyImplyLeading: true,
+        leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              size: 30,
+            ),
+            onPressed: () => Navigator.pop(context, false)),
       ),
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
@@ -62,12 +71,12 @@ class _QRCodeReadState extends State<QRCodeRead> {
                 icon: const Icon(Icons.qr_code),
                 label: const Text('Ler QRCode'),
                 style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                  backgroundColor: Color.fromARGB(255, 252, 72, 27),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                  backgroundColor: const Color.fromARGB(255, 252, 72, 27),
                   textStyle: const TextStyle(
                       fontSize: 20, fontWeight: FontWeight.bold),
-                      
-                )),  
+                )),
           ],
         ),
       ),
@@ -87,10 +96,14 @@ class _QRCodeMakeState extends State<QRCodeMake> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          //Barra superior já com o icone de voltar
-          backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-          title: Text("         QR-Code de Presença"),
-        ),
+            //Barra superior já com o icone de voltar
+            backgroundColor: const Color.fromARGB(255, 252, 72, 27),
+            title: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Text("QR-Code de Presença"),
+              ],
+            )),
         body: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
