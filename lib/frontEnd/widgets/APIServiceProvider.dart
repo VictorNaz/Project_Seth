@@ -1,23 +1,25 @@
-import 'dart:io';
-
+import 'dart:async';
+import 'package:flutter/services.dart';
+import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 
-class ApiServiceProvider {
-  // ignore: constant_identifier_names
-  static final BASE_URL = Uri(
-      scheme: 'https',
-      host: 'raw.githubusercontent.com',
-      path:
-          'PedroViniciusVeiga/ProjetoColdigo/master/ProjetoFaClube/WebContent/img/loja/almofada.jpg');
+import 'dart:io';
 
-  static Future<String> loadPDF() async {
-    print(BASE_URL);
-    var response = await http.get(BASE_URL);
+class PDFApi {
+  static Future<File> loadAsset(String path) async {
+    final data = await rootBundle.load(path);
+    final bytes = data.buffer.asUint8List();
 
-    var dir = await getApplicationDocumentsDirectory();
-    File file = File("${dir.path}/data.pdf");
-    file.writeAsBytesSync(response.bodyBytes, flush: true);
-    return file.path;
+    return _storeFile(path, bytes);
+  }
+
+  static Future<File> _storeFile(String url, List<int> bytes) async {
+    final filename = basename(url);
+    final dir = await getApplicationDocumentsDirectory();
+
+    final file = File('${dir.path}/$filename');
+    await file.writeAsBytes(bytes, flush: true);
+    return file;
   }
 }

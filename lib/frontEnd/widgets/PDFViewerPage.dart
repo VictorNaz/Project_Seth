@@ -1,41 +1,66 @@
+import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
-import 'package:flutter_project_seth/frontEnd/widgets/APIServiceProvider.dart';
+import 'package:path/path.dart';
 
-class PdfViewerPage extends StatefulWidget {
+class PDFViewerPage extends StatefulWidget {
+  final File file;
+
+  const PDFViewerPage({
+    Key? key,
+    required this.file,
+  }) : super(key: key);
+
   @override
-  _PdfViewerPageState createState() => _PdfViewerPageState();
+  _PDFViewerPageState createState() => _PDFViewerPageState();
 }
 
-class _PdfViewerPageState extends State<PdfViewerPage> {
-  String? localPath;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    ApiServiceProvider.loadPDF().then((value) {
-      setState(() {
-        localPath = value;
-      });
-    });
-  }
+class _PDFViewerPageState extends State<PDFViewerPage> {
+  late PDFViewController controller;
+  int pages = 0;
+  int indexPage = 0;
 
   @override
   Widget build(BuildContext context) {
+    final name = basename(widget.file.path);
+    final text = '${indexPage + 1} of $pages';
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "CodingBoot Flutter PDF Viewer",
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
+        title: Text(name),
+        actions: pages >= 2
+            ? [
+                Center(child: Text(text)),
+                IconButton(
+                  icon: Icon(Icons.chevron_left, size: 32),
+                  onPressed: () {
+                    final page = indexPage == 0 ? pages : indexPage - 1;
+                    controller.setPage(page);
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.chevron_right, size: 32),
+                  onPressed: () {
+                    final page = indexPage == pages - 1 ? 0 : indexPage + 1;
+                    controller.setPage(page);
+                  },
+                ),
+              ]
+            : null,
       ),
-      body: localPath != null
-          ? PDFView(
-              filePath: localPath,
-            )
-          : const Center(child: CircularProgressIndicator()),
+      body: PDFView(
+        filePath: widget.file.path,
+        // autoSpacing: false,
+        // swipeHorizontal: true,
+        // pageSnap: false,
+        // pageFling: false,
+        onRender: (pages) => setState(() => this.pages = pages!),
+        onViewCreated: (controller) =>
+            setState(() => this.controller = controller),
+        onPageChanged: (indexPage, _) =>
+            setState(() => this.indexPage = indexPage!),
+      ),
     );
   }
 }

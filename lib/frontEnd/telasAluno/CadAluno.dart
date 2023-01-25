@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
+import 'package:flutter_project_seth/frontEnd/widgets/APIServiceProvider.dart';
 import 'package:flutter_project_seth/frontEnd/widgets/PDFViewerPage.dart';
 import '../geral/loginPage.dart';
 import '../widgets/utilClass.dart';
@@ -302,17 +305,21 @@ class _CadAlunoState extends State<CadAluno> {
                         checkColor: Colors.black,
                         activeColor: const Color.fromARGB(255, 252, 72, 27),
                         value: checkRegras,
-                        onChanged: (bool? value) {
+                        onChanged: (bool? value) async {
                           /* showModalBottomSheet(
                               builder: (context) => optionModalSeth(),
                               context: context,
                               isScrollControlled: true,
                             );*/
-                          Navigator.push(
+                          final path = 'assets/image/sample.pdf';
+                          final file = await PDFApi.loadAsset(path);
+                          openPDF(context, file);
+                          /* Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => PdfViewerPage()),
+                                builder: (context) =>  PDFViewerPage()),
                           );
+                          */
                           setState(() {
                             checkRegras = value!;
                           });
@@ -392,9 +399,9 @@ class _CadAlunoState extends State<CadAluno> {
           // padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
         ),
         onPressed: () {
-          PdfViewerPage();
+          // PDFViewerPage();
         },
-        child: Text("t"),
+        child: const Text("t"),
       );
 
   loading() {
@@ -440,4 +447,8 @@ class _CadAlunoState extends State<CadAluno> {
       context: context,
     );
   }
+
+  void openPDF(BuildContext context, File file) => Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => PDFViewerPage(file: file)),
+      );
 }
