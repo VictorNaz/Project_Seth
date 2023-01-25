@@ -28,7 +28,8 @@ class _PDFViewerPageState extends State<PDFViewerPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(name),
+        backgroundColor: const Color.fromARGB(255, 252, 72, 27),
+        title: const Text("Regras do Tatame"),
         actions: pages >= 2
             ? [
                 Center(child: Text(text)),
