@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
 import 'package:flutter_project_seth/frontEnd/widgets/APIServiceProvider.dart';
-import 'package:flutter_project_seth/frontEnd/widgets/PDFViewerPage.dart';
 import '../geral/loginPage.dart';
 import '../widgets/utilClass.dart';
 
@@ -311,7 +310,7 @@ class _CadAlunoState extends State<CadAluno> {
                               context: context,
                               isScrollControlled: true,
                             );*/
-                          final path = 'assets/image/sample.pdf';
+                          final path = 'assets/image/Regras_Tatame.pdf';
                           final file = await PDFApi.loadAsset(path);
                           openPDF(context, file);
                           /* Navigator.push(
