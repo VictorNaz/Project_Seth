@@ -41,8 +41,8 @@ class _Auto_AvaliacaoState extends State<Auto_Avaliacao> {
   @override
 
   //O comando abaixo define a inicialização do getList antes do carregamento da pagina
-  void initState() {
-    getList();
+  void initState()  {
+     getList();
     super.initState();
   }
 

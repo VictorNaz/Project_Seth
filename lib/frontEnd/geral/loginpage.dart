@@ -251,7 +251,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
 //Tela de carregamento pré-login
-  loading() {
+   loading() {
     showDialog(
         builder: (context) => Container(
               color: const Color.fromARGB(255, 252, 72, 27),

@@ -1,8 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_project_seth/frontEnd/telasAluno/Auto_Avaliacao.dart';
 import 'package:flutter_project_seth/frontEnd/telasAluno/info.dart';
 import 'package:flutter_project_seth/frontEnd/widgets/QR_CodePage.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 
+import '../widgets/APIServiceProvider.dart';
 import '../widgets/utilClass.dart';
 import 'desempAluno.dart';
 
@@ -89,11 +95,11 @@ class _MenuState extends State<Menu> {
                     ),
                   ],
                 ),
-                const Padding(padding: EdgeInsets.only(top: 30)),
+                Padding(padding: EdgeInsets.only(top: 30)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    BotaoMenu(
+                  children: [
+                    const BotaoMenu(
                       texto: "Validar Presença",
                       icone: Icon(
                         Icons.fact_check_outlined,
@@ -103,14 +109,42 @@ class _MenuState extends State<Menu> {
                       tela: QRCodeRead(),
                     ),
                     Padding(padding: EdgeInsets.only(right: 30)),
-                    BotaoMenu(
-                      texto: "Informações",
-                      icone: Icon(
-                        Icons.info_outline_rounded,
-                        size: 80,
-                        color: Color.fromARGB(255, 252, 72, 27),
+                    ElevatedButton(
+                      onPressed: () async {
+                        final path = 'assets/image/info.pdf';
+                        final files = await PDFApi.loadAsset(path);
+                        // ignore: use_build_context_synchronously
+                        openPDF(context, files);
+                      },
+                      style: TextButton.styleFrom(
+                        backgroundColor:
+                            const Color.fromARGB(255, 248, 248, 248),
+                        fixedSize: const Size(165, 150),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        elevation: 15,
+                        shadowColor: const Color.fromARGB(255, 252, 72, 27),
                       ),
-                      tela: Info(),
+                      child: Column(
+                        children: const [
+                          Padding(padding: EdgeInsets.only(top: 8)),
+                          Icon(
+                            Icons.info_outline_rounded,
+                            size: 80,
+                            color: Color.fromARGB(255, 252, 72, 27),
+                          ),
+                          Padding(padding: EdgeInsets.only(bottom: 4)),
+                          Text(
+                            "Informações",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -141,4 +175,12 @@ class _MenuState extends State<Menu> {
       bottomNavigationBar: const BotaoInferior(),
     );
   }
+
+  void openPDF(BuildContext context, File file) => Navigator.of(context).push(
+        MaterialPageRoute(
+            builder: (context) => PDFViewerPage(
+                  file: file,
+                  titulo: 'Informações',
+                )),
+      );
 }

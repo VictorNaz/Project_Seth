@@ -305,20 +305,9 @@ class _CadAlunoState extends State<CadAluno> {
                         activeColor: const Color.fromARGB(255, 252, 72, 27),
                         value: checkRegras,
                         onChanged: (bool? value) async {
-                          /* showModalBottomSheet(
-                              builder: (context) => optionModalSeth(),
-                              context: context,
-                              isScrollControlled: true,
-                            );*/
                           final path = 'assets/image/Regras_Tatame.pdf';
-                          final file = await PDFApi.loadAsset(path);
-                          openPDF(context, file);
-                          /* Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>  PDFViewerPage()),
-                          );
-                          */
+                          final files = await PDFApi.loadAsset(path);
+                          openPDF(context, files);
                           setState(() {
                             checkRegras = value!;
                           });
@@ -379,20 +368,11 @@ class _CadAlunoState extends State<CadAluno> {
     );
   }
 
-  //Modal do termos de uso do aplicativo
 
-  Widget optionModal() => ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          fixedSize: const Size(165, 1000),
-          // padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-        ),
-        onPressed: null,
-        child: const Text("Termos de uso"),
-      );
 
   //Modal dos termos de uso da academia
 
-  Widget optionModalSeth() => ElevatedButton(
+ /* Widget optionModalSeth() => ElevatedButton(
         style: ElevatedButton.styleFrom(
           fixedSize: const Size(165, 1000),
           // padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
@@ -401,7 +381,7 @@ class _CadAlunoState extends State<CadAluno> {
           // PDFViewerPage();
         },
         child: const Text("t"),
-      );
+      );*/
 
   loading() {
     showDialog(
@@ -448,6 +428,6 @@ class _CadAlunoState extends State<CadAluno> {
   }
 
   void openPDF(BuildContext context, File file) => Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => PDFViewerPage(file: file)),
+        MaterialPageRoute(builder: (context) => PDFViewerPage(file: file, titulo: 'Regras do Tatame',)),
       );
 }
