@@ -111,7 +111,7 @@ class _CadProfessorState extends State<CadProfessor> {
                                     color: Color.fromARGB(255, 252, 72, 27))),
                           ),
                           validator: (value) {
-                            return validaUsuario(txtUsuario.text);
+                            return validaProfessor(txtUsuario.text);
                           },
                         ),
                       ),
@@ -293,11 +293,8 @@ class _CadProfessorState extends State<CadProfessor> {
                           if (isChecked == true) {
                             cadProfessor(txtNome.text, txtUsuario.text,
                                 txtSenha.text, txtEmail.text, txtcpf.text);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const LoginPage()),
-                            );
+                            Navigator.pop(context, false);
+
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                   content: Text('Casdastrado com sucesso')),

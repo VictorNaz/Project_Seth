@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
 
+import '../../backEnd/controladora/CtrlProfessor.dart';
 import '../geral/loginPage.dart';
 import '../widgets/utilClass.dart';
 
@@ -15,7 +16,7 @@ class _ForceProgressState extends State<ForceProgress> {
   TextEditingController txtQtdeAulas = TextEditingController();
 
   List<String> faixas = ["Branca", "Azul", "Roxa", "Marrom", "Preta"];
-  List<String> graus = ["1", "2", "3", "4"];
+  List<String> graus = ["0", "1", "2", "3", "4"];
   String? faixaSelecionada;
   String? grauSelecionado;
 
@@ -119,33 +120,6 @@ class _ForceProgressState extends State<ForceProgress> {
 
                         SizedBox(
                           width: 325,
-                          child: TextFormField(
-                            controller: txtQtdeAulas,
-                            keyboardType: TextInputType.number,
-                            decoration: const InputDecoration(
-                              icon: Icon(
-                                Icons.numbers,
-                                color: Color.fromARGB(255, 252, 72, 27),
-                              ),
-                              labelText: "Quantidade de aulas frequentadas",
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color.fromARGB(255, 252, 72, 27),
-                                ),
-                              ),
-                            ),
-                            validator: (value) {
-                              //no return está sendo utilizado o validaUsuario pelo mesmo apenas validar se o campo está vazio
-                              return validaQtdeAulas(txtQtdeAulas.text);
-                            },
-                          ),
-                        ),
-
-                        //Espaçamento entre inputs
-                        const Padding(padding: EdgeInsets.only(top: 15)),
-
-                        SizedBox(
-                          width: 325,
                           child: Row(
                             children: [
                               const Icon(
@@ -240,14 +214,12 @@ class _ForceProgressState extends State<ForceProgress> {
                   TextButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
+                          forcaProgresso(txtUsuario.text, faixaSelecionada!,
+                              grauSelecionado!);
                           loading();
                           //cadAluno(txtUsuario.text);
                           closeLoading();
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const LoginPage()),
-                          );
+                          Navigator.pop(context, false);
                           alertUser();
                         }
                       },

@@ -1,30 +1,30 @@
 class Faixa {
-  int? id;
-  int? faixa;
-  int? grau;
+  String? id;
+  String? faixa;
+  String? grau;
   int? quantAulas;
 
-  int? get getId {
+  String? get getId {
     return id;
   }
 
-  set setId(int id) {
+  set setId(String id) {
     this.id = id;
   }
 
-  int? get getFaixa {
+  String? get getFaixa {
     return faixa;
   }
 
-  set setFaixa(int faixa) {
+  set setFaixa(String faixa) {
     this.faixa = faixa;
   }
 
-  int? get getGrau {
+  String? get getGrau {
     return grau;
   }
 
-  set setGrau(int grau) {
+  set setGrau(String grau) {
     this.grau = grau;
   }
 
