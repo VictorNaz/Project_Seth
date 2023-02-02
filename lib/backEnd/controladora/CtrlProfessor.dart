@@ -1,6 +1,9 @@
+import 'package:flutter/gestures.dart';
+import 'package:flutter_project_seth/backEnd/modelo/aluno.dart';
 import 'package:flutter_project_seth/backEnd/security/dataCrypt.dart';
 import 'package:flutter_project_seth/backEnd/server/serverProfessor.dart';
 
+import '../modelo/faixa.dart';
 import '../modelo/professor.dart';
 import '../server/serverAluno.dart';
 
@@ -17,6 +20,21 @@ String? cadProfessor(String txtNome, String txtUsuario, String txtSenha,
   professor.cpf = txtCpf;
 
   ServerProfessor.cadastrarProfessor(professor);
+  return null;
+}
+
+Future<String?> forcaProgresso(
+    String txtUsuario, String txtFaixa, String txtGrau) async {
+  var progresso = Faixa();
+  var aluno = Aluno();
+
+  progresso.faixa = txtFaixa;
+  progresso.grau = txtGrau;
+  aluno.usuario = txtUsuario;
+  aluno.id = await ServerAluno.buscaAlunoId(aluno);
+  progresso.id = await ServerProfessor.buscaFaixaId(progresso);
+  print(progresso.id);
+  ServerProfessor.forcaProgresso(aluno, progresso);
   return null;
 }
 
@@ -80,7 +98,7 @@ String? validarCpf(String value) {
   return null;
 }
 
-String? validaUsuario(String value) {
+String? validaProfessor(String value) {
   if (value.isEmpty) {
     return "Informe o usuário";
   }
