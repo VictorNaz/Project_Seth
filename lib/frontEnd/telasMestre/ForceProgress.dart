@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
 
 import '../../backEnd/controladora/CtrlProfessor.dart';
-import '../geral/loginPage.dart';
 import '../widgets/utilClass.dart';
 
 class ForceProgress extends StatefulWidget {

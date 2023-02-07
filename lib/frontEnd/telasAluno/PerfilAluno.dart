@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../backEnd/controladora/CtrlAluno.dart';
 import '../../backEnd/modelo/aluno.dart';
+import '../../backEnd/security/sessionService.dart';
 import '../widgets/utilClass.dart';
 
 class PerfilAluno extends StatefulWidget {
@@ -18,7 +19,8 @@ class _PerfilAlunoState extends State<PerfilAluno> {
   final _formKey = GlobalKey<FormState>();
 
   getInfo<Aluno>() async {
-    await buscaInfo().then((value) async {
+    usuario.usuario = await PrefsService.returnUser();
+    await buscaInfo(usuario).then((value) async {
       setState(() {
         usuario = value;
       });

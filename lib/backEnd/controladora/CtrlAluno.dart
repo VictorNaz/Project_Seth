@@ -110,13 +110,17 @@ Future<int?> buscaAulas(Aluno aluno) async {
   return aulas.quantAulas;
 }
 
-Future<Aluno> buscaInfo() async {
-  var aluno = Aluno();
-
-  aluno.usuario = await PrefsService.returnUser();
+Future<Aluno> buscaInfo(Aluno aluno) async {
   aluno = await ServerAluno.buscaInfo(aluno);
 
   return aluno;
+}
+
+Future<Faixa> buscaFaixa(Aluno aluno) async {
+  var progresso = Faixa();
+  progresso = await ServerAluno.buscaFaixa(aluno);
+
+  return progresso;
 }
 
 /*************************** VALIDAÇÕES DE CAMPO *******************************/

@@ -17,6 +17,8 @@ class DesempAluno extends StatefulWidget {
 class _DesempAlunoState extends State<DesempAluno> {
   List<double> lista = [];
   int quantAulas = 0;
+  String? faixa = "...";
+  String? grau = "...";
   double percAulas = 0;
 
   NumberFormat formatter = NumberFormat("00.0");
@@ -25,7 +27,7 @@ class _DesempAlunoState extends State<DesempAluno> {
   //de Future<list<double>> para list<double>, alem de setar o valor em uma variavel global
   //Este método irá coletar o usuario da sessão e passará por parametro para outro método na CtrlAluno
 
-  getList<List>() async {
+  getAvaliacao<List>() async {
     var aluno = Aluno();
     aluno.usuario = await PrefsService.returnUser();
     await buscaAvaliacao(aluno).then((value) {
@@ -39,16 +41,31 @@ class _DesempAlunoState extends State<DesempAluno> {
   //alem de setar o valor após a coleta dos dados.
   //Este método irá coletar o usuario da sessão e passará por parametro para outro método na CtrlAluno
 
-  getAulas<int>() async {
+  getInfo<int>() async {
     var aluno = Aluno();
     aluno.usuario = await PrefsService.returnUser();
-    await buscaAulas(aluno).then((value) {
-      if (value != null) {
-        setState(() {
-          quantAulas = value;
-          percAulas = (quantAulas / 250) * 100;
-        });
-      }
+    await buscaAulas(aluno).then(
+      (value) {
+        if (value != null) {
+          setState(() {
+            quantAulas = value;
+            percAulas = (quantAulas / 250) * 100;
+          });
+        }
+      },
+    );
+  }
+
+  getFaixa<String>() async {
+    var aluno = Aluno();
+    aluno.usuario = await PrefsService.returnUser();
+    aluno = await buscaInfo(aluno);
+    await buscaFaixa(aluno).then((value) {
+      setState(() {
+        faixa = value.faixa;
+        grau = value.grau;
+        print(faixa);
+      });
     });
   }
 
@@ -56,8 +73,9 @@ class _DesempAlunoState extends State<DesempAluno> {
 
   //O comando abaixo define a inicialização do getList antes do carregamento da pagina
   void initState() {
-    getList();
-    getAulas();
+    getAvaliacao();
+    getFaixa();
+    getInfo();
     super.initState();
   }
 
@@ -162,9 +180,9 @@ class _DesempAlunoState extends State<DesempAluno> {
                                     lineHeight: 25.0,
                                     animationDuration: 2000,
                                     percent: quantAulas / 250,
-                                    center: const Text(
-                                      "Branca",
-                                      style: TextStyle(fontSize: 16),
+                                    center: Text(
+                                      "$faixa °$grau",
+                                      style: const TextStyle(fontSize: 16),
                                     ),
                                     barRadius: const Radius.circular(16),
                                     progressColor: Colors.blue,
@@ -194,7 +212,7 @@ class _DesempAlunoState extends State<DesempAluno> {
                 //Espaçamento entre botões
                 const Padding(padding: EdgeInsets.only(bottom: 40)),
 
-                Card(
+                /*Card(
 
                     //Determinamos o raio das bordas do card
                     shape: (RoundedRectangleBorder(
@@ -276,7 +294,7 @@ class _DesempAlunoState extends State<DesempAluno> {
                           ],
                         ),
                       ),
-                    )),
+                    )),*/
 
                 //Espaçamento entre botões
                 const Padding(padding: EdgeInsets.only(bottom: 40)),
