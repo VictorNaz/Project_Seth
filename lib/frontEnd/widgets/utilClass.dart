@@ -1,23 +1,38 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_project_seth/backEnd/security/sessionService.dart';
 import 'package:flutter_project_seth/frontEnd/geral/Homepage.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:flutter_project_seth/frontEnd/widgets/APIServiceProvider.dart';
 import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
+import '../../backEnd/controladora/CtrlAluno.dart';
+import '../../backEnd/modelo/aluno.dart';
+import '../../backEnd/server/serverAluno.dart';
 import '../telasAluno/PerfilAluno.dart';
 
 //classe que retorna o drawertop
 class DrawerTop extends StatelessWidget {
-  const DrawerTop({Key? key, required this.texto}) : super(key: key);
+  DrawerTop({Key? key, required this.texto}) : super(key: key);
 
   final String texto;
+  var usuario = Aluno();
+  String nome = "";
+  String email = "";
+
+
+  getInfo<Aluno>() async {
+    usuario.usuario = await PrefsService.returnUser();
+    usuario = await ServerAluno.buscaInfo(usuario);
+    nome = usuario.nome!;
+    email = usuario.email!;
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
+    getInfo();
+    
     return ListView(
       padding: EdgeInsets.zero,
       children: [
@@ -56,21 +71,20 @@ class DrawerTop extends StatelessWidget {
         ),
 
         //Parte do Drawer que vai conter as informações do usuário
-        const UserAccountsDrawerHeader(
-          currentAccountPictureSize: Size.square(70.0),
-          decoration: BoxDecoration(
+        UserAccountsDrawerHeader(
+          currentAccountPictureSize: const Size.square(70.0),
+          decoration: const BoxDecoration(
             border: Border(
                 bottom: BorderSide(
                     width: 12.0, color: Color.fromARGB(255, 252, 72, 27))),
             color: Color.fromARGB(0, 255, 255, 255),
           ),
-          accountName:
-              Text("Teste Usuário", style: TextStyle(color: Colors.black)),
-          accountEmail: Text("teste@gmail.com",
-              style: TextStyle(
+          accountName: Text(nome, style: const TextStyle(color: Colors.black)),
+          accountEmail: Text(email,
+              style: const TextStyle(
                 color: Colors.black,
               )),
-          currentAccountPicture: CircleAvatar(
+          currentAccountPicture: const CircleAvatar(
             backgroundImage: AssetImage('assets/image/marciano.jpg'),
           ),
         ),
@@ -241,7 +255,11 @@ class DrawerTop extends StatelessWidget {
 
   static void openPDF(BuildContext context, File file) =>
       Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => PDFViewerPage(file: file, titulo: 'Regras do Tatame',)),
+        MaterialPageRoute(
+            builder: (context) => PDFViewerPage(
+                  file: file,
+                  titulo: 'Regras do Tatame',
+                )),
       );
 }
 
@@ -404,10 +422,10 @@ class PDFViewerPage extends StatefulWidget {
   final File? file;
   final String titulo;
 
-  const PDFViewerPage(
-     {
+  const PDFViewerPage({
     Key? key,
-    required this.file, required this.titulo,
+    required this.file,
+    required this.titulo,
   }) : super(key: key);
 
   @override
@@ -465,84 +483,3 @@ class _PDFViewerPageState extends State<PDFViewerPage> {
   }
 }
 
-/*class InfoScreen extends StatefulWidget {
-  const InfoScreen({super.key});
-
-  @override
-  State<InfoScreen> createState() => _InfoScreenState();
-}
-
-class _InfoScreenState extends State<InfoScreen> {
-  late PDFViewController controller;
-  int pages = 0;
-  int indexPage = 0;
-  final path = 'assets/image/Info.pdf';
-   final File? files = null;                       
-
-
-
-  @override
-  Widget build(BuildContext context) {
-
-                       
-    final text = '${indexPage + 1} de $pages';
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-        title: const Text("Regras do Tatame"),
-        actions: pages >= 2
-            ? [
-              
-                Center(child: Text(text)),
-                IconButton(
-                  icon: const Icon(Icons.chevron_left, size: 32),
-                  onPressed: () {
-                    final page = indexPage == 0 ? pages : indexPage - 1;
-                    controller.setPage(page);
-                  },
-                ),
-                IconButton(
-                  icon: const Icon(Icons.chevron_right, size: 32),
-                  onPressed: () {
-                    final page = indexPage == pages - 1 ? 0 : indexPage + 1;
-                    controller.setPage(page);
-                  },
-                ),
-              ]
-            : null,
-      ),
-      
-      body: PDFView (
-      
-        filePath: widget.file.path,
-        // autoSpacing: false,
-        // swipeHorizontal: true,
-        // pageSnap: false,
-        // pageFling: false,
-        onRender: (pages) => setState(() => this.pages = pages!),
-        onViewCreated: (controller) =>
-            setState(() => this.controller = controller),
-        onPageChanged: (indexPage, _) =>
-            setState(() => this.indexPage = indexPage!),
-      ),
-    );
-  }
-
-  closeLoading() {
-    Navigator.pop(context as BuildContext);
-  }
-
-  Future<Widget> loadAsset() async {
-    final path = 'assets/image/Info.pdf';
-
-    final data = await rootBundle.load(path);
-    final bytes = data.buffer.asUint8List();
-
-    final filename = basename(path);
-    final dir = await getApplicationDocumentsDirectory();
-
-    final file = File('${dir.path}/$filename');
-    await file.writeAsBytes(bytes, flush: true);
-    return PDFViewerPage(file: file);
-  }
-}*/

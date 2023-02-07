@@ -50,7 +50,7 @@ class _ListaAlunoState extends State<ListaAluno> {
             ),
             onPressed: () => Navigator.pop(context, false)),
       ),
-      endDrawer: const Drawer(
+      endDrawer:  Drawer(
         child: DrawerTop(
           texto: "Opções",
         ),

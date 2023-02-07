@@ -45,7 +45,7 @@ class _ValPresencaState extends State<ValPresenca> {
 
         //drawer para navegação no appbar
         //A classe Drawer está sendo chamada de outro arquivo e está recebendo por parametro o texto desejado.
-        endDrawer: const Drawer(
+        endDrawer:  Drawer(
           child: DrawerTop(
             texto: "Opções",
           ),
