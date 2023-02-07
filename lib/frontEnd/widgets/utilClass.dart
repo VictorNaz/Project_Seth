@@ -1,13 +1,13 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
 import 'package:flutter_project_seth/backEnd/security/sessionService.dart';
 import 'package:flutter_project_seth/frontEnd/geral/Homepage.dart';
-import 'package:flutter_project_seth/frontEnd/geral/loginpage.dart';
+import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:flutter_project_seth/frontEnd/widgets/APIServiceProvider.dart';
 import 'package:path/path.dart';
-
+import 'package:path_provider/path_provider.dart';
 import '../telasAluno/PerfilAluno.dart';
 
 //classe que retorna o drawertop
@@ -151,8 +151,10 @@ class DrawerTop extends StatelessWidget {
                   ),
                 ],
               )),
-          onTap: () {
-            Navigator.pop(context);
+          onTap: () async {
+            final path = 'assets/image/Regras_Tatame.pdf';
+            final files = await PDFApi.loadAsset(path);
+            openPDF(context, files);
           },
         ),
         ListTile(
@@ -236,13 +238,21 @@ class DrawerTop extends StatelessWidget {
       ],
     );
   }
+
+  static void openPDF(BuildContext context, File file) =>
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => PDFViewerPage(file: file, titulo: 'Regras do Tatame',)),
+      );
 }
 
 //classe que retorna o botão configurado
 class BotaoMenu extends StatelessWidget {
-  const BotaoMenu(
-      {Key? key, required this.texto, required this.icone, required this.tela})
-      : super(key: key);
+  const BotaoMenu({
+    Key? key,
+    required this.texto,
+    required this.icone,
+    required this.tela,
+  }) : super(key: key);
 
   final String texto;
   final Icon icone;
@@ -388,3 +398,151 @@ class selectNota extends StatelessWidget {
     );
   }
 }
+
+//Visualização dos PDF´s
+class PDFViewerPage extends StatefulWidget {
+  final File? file;
+  final String titulo;
+
+  const PDFViewerPage(
+     {
+    Key? key,
+    required this.file, required this.titulo,
+  }) : super(key: key);
+
+  @override
+  _PDFViewerPageState createState() => _PDFViewerPageState();
+}
+
+//Gera a página que exibirá os PDF´s
+class _PDFViewerPageState extends State<PDFViewerPage> {
+  late PDFViewController controller;
+
+  int pages = 0;
+  int indexPage = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    final name = basename(widget.file!.path);
+    final text = '${indexPage + 1} de $pages';
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 252, 72, 27),
+        title: Text(widget.titulo),
+        actions: pages >= 2
+            ? [
+                Center(child: Text(text)),
+                IconButton(
+                  icon: const Icon(Icons.chevron_left, size: 32),
+                  onPressed: () {
+                    final page = indexPage == 0 ? pages : indexPage - 1;
+                    controller.setPage(page);
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(Icons.chevron_right, size: 32),
+                  onPressed: () {
+                    final page = indexPage == pages - 1 ? 0 : indexPage + 1;
+                    controller.setPage(page);
+                  },
+                ),
+              ]
+            : null,
+      ),
+      body: PDFView(
+        filePath: widget.file!.path,
+        // autoSpacing: false,
+        // swipeHorizontal: true,
+        // pageSnap: false,
+        // pageFling: false,
+        onRender: (pages) => setState(() => this.pages = pages!),
+        onViewCreated: (controller) =>
+            setState(() => this.controller = controller),
+        onPageChanged: (indexPage, _) =>
+            setState(() => this.indexPage = indexPage!),
+      ),
+    );
+  }
+}
+
+/*class InfoScreen extends StatefulWidget {
+  const InfoScreen({super.key});
+
+  @override
+  State<InfoScreen> createState() => _InfoScreenState();
+}
+
+class _InfoScreenState extends State<InfoScreen> {
+  late PDFViewController controller;
+  int pages = 0;
+  int indexPage = 0;
+  final path = 'assets/image/Info.pdf';
+   final File? files = null;                       
+
+
+
+  @override
+  Widget build(BuildContext context) {
+
+                       
+    final text = '${indexPage + 1} de $pages';
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 252, 72, 27),
+        title: const Text("Regras do Tatame"),
+        actions: pages >= 2
+            ? [
+              
+                Center(child: Text(text)),
+                IconButton(
+                  icon: const Icon(Icons.chevron_left, size: 32),
+                  onPressed: () {
+                    final page = indexPage == 0 ? pages : indexPage - 1;
+                    controller.setPage(page);
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(Icons.chevron_right, size: 32),
+                  onPressed: () {
+                    final page = indexPage == pages - 1 ? 0 : indexPage + 1;
+                    controller.setPage(page);
+                  },
+                ),
+              ]
+            : null,
+      ),
+      
+      body: PDFView (
+      
+        filePath: widget.file.path,
+        // autoSpacing: false,
+        // swipeHorizontal: true,
+        // pageSnap: false,
+        // pageFling: false,
+        onRender: (pages) => setState(() => this.pages = pages!),
+        onViewCreated: (controller) =>
+            setState(() => this.controller = controller),
+        onPageChanged: (indexPage, _) =>
+            setState(() => this.indexPage = indexPage!),
+      ),
+    );
+  }
+
+  closeLoading() {
+    Navigator.pop(context as BuildContext);
+  }
+
+  Future<Widget> loadAsset() async {
+    final path = 'assets/image/Info.pdf';
+
+    final data = await rootBundle.load(path);
+    final bytes = data.buffer.asUint8List();
+
+    final filename = basename(path);
+    final dir = await getApplicationDocumentsDirectory();
+
+    final file = File('${dir.path}/$filename');
+    await file.writeAsBytes(bytes, flush: true);
+    return PDFViewerPage(file: file);
+  }
+}*/

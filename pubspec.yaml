@@ -37,7 +37,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   #flutter_plugin_pdf_viewer - Não funciona
-  percent_indicator: ^4.0.1     #Indicador de Porcentagem
+  percent_indicator: ^4.0.1           #Indicador de Porcentagem
   cupertino_icons: ^1.0.2
   crypto: ^3.0.2                      #Criptografias
   shared_preferences: ^2.0.15         #Dados da sessão
@@ -45,9 +45,9 @@ dependencies:
   qr_flutter: ^4.0.0                  #Criar QR-Code
   flutter_barcode_scanner: ^2.0.0     #Ler QR-Code
   http: ^0.13.5                       #Serviços de Session
-  flutter_pdfview: ^1.2.5
-  path_provider: ^2.0.11
-  path: ^1.8.2
+  flutter_pdfview: ^1.2.5             #Ver PDF
+  path_provider: ^2.0.11              #Componentes para adicionar o caminho do PDF
+  path: ^1.8.2                        #Configuração do caminho PDF
 
   
 
