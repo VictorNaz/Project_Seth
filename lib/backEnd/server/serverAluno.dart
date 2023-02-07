@@ -38,7 +38,6 @@ class ServerAluno {
   }
 
   //valida a presença do aluno no banco
-
   static Future<void> valPresenAluno(Aluno aluno) async {
     try {
       String url_Api = 'https://apiseth.cyclic.app/validaPresenca';
@@ -62,7 +61,6 @@ class ServerAluno {
   }
 
   //busca o id do aluno recebendo o usuario dele
-
   static Future<String> buscaAlunoId(Aluno aluno) async {
     var request = http.Request(
         'POST', Uri.parse('https://apiseth.cyclic.app/buscaAlunoId'));
@@ -82,7 +80,6 @@ class ServerAluno {
   }
 
   //busca a quantidade de aulas que o aluno já frequentou
-
   static Future<int?> buscaAulas(Aluno aluno) async {
     var request = http.Request(
         'POST', Uri.parse('https://apiseth.cyclic.app/buscaAulas'));
@@ -107,7 +104,6 @@ class ServerAluno {
   }
 
   //busca todos os alunos no banco de dados
-
   static Future<List> buscaAlunos() async {
     var request = http.Request(
         'POST', Uri.parse('https://apiseth.cyclic.app/buscaAlunos'));
@@ -136,7 +132,6 @@ class ServerAluno {
   }
 
   //busca a auto-avaliação do aluno
-
   static Future<AutoAvaliacao> buscaAvaliacao(Aluno aluno) async {
     var request = http.Request(
         'POST', Uri.parse('https://apiseth.cyclic.app/buscarAvaliacao'));
@@ -229,7 +224,6 @@ class ServerAluno {
   }
 
   //cadastra a auto-avaliação do aluno
-
   static Future<void> cadAvaliacao(Aluno aluno, List avaliacao) async {
     var request = http.Request(
         'POST', Uri.parse('https://apiseth.cyclic.app/cadAvaliacao'));
@@ -272,12 +266,39 @@ class ServerAluno {
       info.nome = result["nome"];
       info.email = result["email"];
       info.cpf = result["cpf"];
+      info.faixa_id = result["faixa_id"];
       print("Informações encontradas encontrados!");
       return info;
     } else {
       print("Erro ao procurar as informações!");
       print(response.reasonPhrase);
       return info;
+    }
+  }
+
+  static Future<Faixa> buscaFaixa(Aluno aluno) async {
+    var request = http.Request(
+        'POST', Uri.parse('https://apiseth.cyclic.app/buscaFaixa'));
+    request.body = json.encode({"faixa_id": aluno.faixa_id});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+    var progresso = Faixa();
+
+    if (response.statusCode == 200) {
+      String jsonString = await response.stream.bytesToString();
+      var result = await json.decode(jsonString);
+
+      progresso.faixa = result["nome"];
+      int grau = result["grau"];
+      progresso.grau = grau.toString();
+
+      print("Progresso encontrado com sucesso!");
+      return progresso;
+    } else {
+      print("Erro ao procurar o progresso!");
+      print(response.reasonPhrase);
+      return progresso;
     }
   }
 }

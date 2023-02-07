@@ -119,6 +119,13 @@ Future<Aluno> buscaInfo() async {
   return aluno;
 }
 
+Future<Faixa> buscaFaixa(Aluno aluno) async {
+  var progresso = Faixa();
+  progresso = await ServerAluno.buscaFaixa(aluno);
+
+  return progresso;
+}
+
 /*************************** VALIDAÇÕES DE CAMPO *******************************/
 
 String? validarNome(String value) {

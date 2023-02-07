@@ -5,6 +5,7 @@ class Aluno {
   String? senha;
   String? email;
   String? cpf;
+  int? faixa_id;
   String? nivel_acess;
 
   String? get getId {
