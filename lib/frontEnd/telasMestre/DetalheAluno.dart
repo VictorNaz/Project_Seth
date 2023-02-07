@@ -22,6 +22,8 @@ class _DetalheAlunoState extends State<DetalheAluno> {
   List<double> lista = [];
   int quantAulas = 0;
   double percAulas = 0;
+  String? faixa = "...";
+  String? grau = "...";
 
   NumberFormat formatter = NumberFormat("00.0");
 
@@ -54,11 +56,24 @@ class _DetalheAlunoState extends State<DetalheAluno> {
     });
   }
 
+  getFaixa<String>() async {
+    var aluno = Aluno();
+    aluno.usuario = widget.usuario;
+    aluno = await buscaInfo(aluno);
+    await buscaFaixa(aluno).then((value) {
+      setState(() {
+        faixa = value.faixa;
+        grau = value.grau;
+      });
+    });
+  }
+
   @override
 
   //O comando abaixo define a inicialização do getList antes do carregamento da pagina
   void initState() {
     getAvaliacao();
+    getFaixa();
     getAulas();
     super.initState();
   }
@@ -164,9 +179,9 @@ class _DetalheAlunoState extends State<DetalheAluno> {
                                     lineHeight: 25.0,
                                     animationDuration: 2000,
                                     percent: quantAulas / 250,
-                                    center: const Text(
-                                      "Branca",
-                                      style: TextStyle(fontSize: 16),
+                                    center: Text(
+                                      "$faixa °$grau",
+                                      style: const TextStyle(fontSize: 16),
                                     ),
                                     barRadius: const Radius.circular(16),
                                     progressColor: Colors.blue,
@@ -187,7 +202,7 @@ class _DetalheAlunoState extends State<DetalheAluno> {
                                         "${formatter.format(percAulas)}% Concluído"),
                                   ],
                                 ),
-                                const Padding(
+                                /*const Padding(
                                     padding: EdgeInsets.only(bottom: 20)),
                                 const Text(
                                   "Progresso Fundamental",
@@ -220,7 +235,7 @@ class _DetalheAlunoState extends State<DetalheAluno> {
                                         padding: EdgeInsets.only(right: 150)),
                                     Text("80% Concluído")
                                   ],
-                                ),
+                                ),*/
                               ],
                             ),
                           ],

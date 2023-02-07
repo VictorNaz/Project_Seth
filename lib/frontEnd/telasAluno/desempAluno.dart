@@ -58,7 +58,8 @@ class _DesempAlunoState extends State<DesempAluno> {
 
   getFaixa<String>() async {
     var aluno = Aluno();
-    aluno = await buscaInfo();
+    aluno.usuario = await PrefsService.returnUser();
+    aluno = await buscaInfo(aluno);
     await buscaFaixa(aluno).then((value) {
       setState(() {
         faixa = value.faixa;
