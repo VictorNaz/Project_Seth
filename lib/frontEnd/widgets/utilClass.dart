@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, file_names
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/backEnd/security/sessionService.dart';
@@ -5,34 +7,45 @@ import 'package:flutter_project_seth/frontEnd/geral/Homepage.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:flutter_project_seth/frontEnd/widgets/APIServiceProvider.dart';
 import 'package:path/path.dart';
-import '../../backEnd/controladora/CtrlAluno.dart';
 import '../../backEnd/modelo/aluno.dart';
 import '../../backEnd/server/serverAluno.dart';
 import '../telasAluno/PerfilAluno.dart';
 
 //classe que retorna o drawertop
-class DrawerTop extends StatelessWidget {
-  DrawerTop({Key? key, required this.texto}) : super(key: key);
-
+class DrawerTop extends StatefulWidget {
   final String texto;
-  var usuario = Aluno();
+  const DrawerTop({super.key, required this.texto});
+
+  @override
+  // ignore: no_logic_in_create_state
+  State<DrawerTop> createState() => _DrawerTopState(texto);
+}
+
+class _DrawerTopState extends State<DrawerTop> {
+  _DrawerTopState(this.texto);
+  final String texto;
+  var aluno = Aluno();
   String nome = "";
   String email = "";
 
-
   getInfo<Aluno>() async {
-    usuario.usuario = await PrefsService.returnUser();
-    usuario = await ServerAluno.buscaInfo(usuario);
-    nome = usuario.nome!;
-    email = usuario.email!;
+    aluno.usuario = await PrefsService.returnUser();
+    await ServerAluno.buscaInfo(aluno).then((value) {
+      setState(() {
+        aluno = value;
+        nome = aluno.nome!;
+        email = aluno.email!;
+      });
+    });
   }
 
-
-
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     getInfo();
-    
+    super.initState();
+  }
+
+  Widget build(BuildContext context) {
     return ListView(
       padding: EdgeInsets.zero,
       children: [
@@ -483,3 +496,266 @@ class _PDFViewerPageState extends State<PDFViewerPage> {
   }
 }
 
+class DrawerTop2 extends StatefulWidget {
+  final String texto;
+  const DrawerTop2({super.key, required this.texto});
+
+  @override
+  // ignore: no_logic_in_create_state
+  _DrawerTopState2 createState() => _DrawerTopState2(texto);
+}
+
+class _DrawerTopState2 extends State<DrawerTop> {
+  _DrawerTopState2(this.texto);
+  final String texto;
+  var aluno = Aluno();
+  String nome = "";
+  String email = "";
+
+  getInfo<Aluno>() async {
+    aluno.usuario = await PrefsService.returnUser();
+    await ServerAluno.buscaInfo(aluno).then((value) {
+      setState(() {
+        aluno = value;
+        nome = aluno.nome!;
+        email = aluno.email!;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    getInfo();
+    super.initState();
+  }
+
+  Widget build(BuildContext context) {
+    return ListView(
+      padding: EdgeInsets.zero,
+      children: [
+        SizedBox(
+          height: 64,
+          child: DrawerHeader(
+            padding: const EdgeInsets.only(right: 30),
+            decoration: const BoxDecoration(
+              color: Color.fromARGB(255, 252, 72, 27),
+            ),
+            child: Row(
+              //  mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  // alignment: Alignment.bottomRight,
+                  onPressed: () {
+                    Navigator.pop(context, false);
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: Color.fromARGB(255, 255, 255, 255),
+                    size: 30,
+                  ),
+                ),
+                const Padding(padding: EdgeInsets.only(right: 10)),
+                Text(
+                  texto,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+
+        //Parte do Drawer que vai conter as informações do usuário
+        UserAccountsDrawerHeader(
+          currentAccountPictureSize: const Size.square(70.0),
+          decoration: const BoxDecoration(
+            border: Border(
+                bottom: BorderSide(
+                    width: 12.0, color: Color.fromARGB(255, 252, 72, 27))),
+            color: Color.fromARGB(0, 255, 255, 255),
+          ),
+          accountName: Text(nome, style: const TextStyle(color: Colors.black)),
+          accountEmail: Text(email,
+              style: const TextStyle(
+                color: Colors.black,
+              )),
+          currentAccountPicture: const CircleAvatar(
+            backgroundImage: AssetImage('assets/image/marciano.jpg'),
+          ),
+        ),
+        ListTile(
+          title: Container(
+              padding: const EdgeInsets.only(top: 5),
+              color: const Color.fromARGB(255, 228, 227, 227),
+              height: 50,
+              child: Row(
+                children: const [
+                  Padding(padding: EdgeInsets.only(left: 20)),
+                  Icon(
+                    Icons.notifications,
+                    color: Colors.black,
+                    size: 32,
+                  ),
+                  Padding(padding: EdgeInsets.only(right: 30)),
+                  Text(
+                    'Notificações',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ],
+              )),
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
+        ListTile(
+          title: Container(
+              padding: const EdgeInsets.only(top: 5),
+              color: const Color.fromARGB(255, 228, 227, 227),
+              height: 50,
+              child: Row(
+                children: const [
+                  Padding(padding: EdgeInsets.only(left: 20)),
+                  Icon(
+                    Icons.list,
+                    color: Colors.black,
+                    size: 32,
+                  ),
+                  Padding(padding: EdgeInsets.only(right: 27)),
+                  Text(
+                    'Termos de Uso',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ],
+              )),
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
+        ListTile(
+          title: Container(
+              padding: const EdgeInsets.only(top: 5),
+              color: const Color.fromARGB(255, 228, 227, 227),
+              height: 50,
+              child: Row(
+                children: const [
+                  Padding(padding: EdgeInsets.only(left: 20)),
+                  Icon(
+                    Icons.checklist_rtl,
+                    color: Colors.black,
+                    size: 32,
+                  ),
+                  Padding(padding: EdgeInsets.only(right: 12)),
+                  Text(
+                    'Regras do Tatame',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ],
+              )),
+          onTap: () async {
+            const path = 'assets/image/Regras_Tatame.pdf';
+            final files = await PDFApi.loadAsset(path);
+            openPDF(context, files);
+          },
+        ),
+        ListTile(
+          title: Container(
+              padding: const EdgeInsets.only(top: 5),
+              color: const Color.fromARGB(255, 228, 227, 227),
+              height: 50,
+              child: Row(
+                children: const [
+                  Padding(padding: EdgeInsets.only(left: 20)),
+                  Icon(
+                    Icons.info,
+                    color: Colors.black,
+                    size: 32,
+                  ),
+                  Padding(padding: EdgeInsets.only(right: 62)),
+                  Text(
+                    'Sobre',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ],
+              )),
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
+        ListTile(
+          title: Container(
+              padding: const EdgeInsets.only(top: 5),
+              color: const Color.fromARGB(255, 228, 227, 227),
+              height: 50,
+              child: Row(
+                children: const [
+                  Padding(padding: EdgeInsets.only(left: 20)),
+                  Icon(
+                    Icons.close,
+                    color: Colors.black,
+                    size: 32,
+                  ),
+                  Padding(padding: EdgeInsets.only(right: 12)),
+                  Text(
+                    'Encerrar Sessão',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ],
+              )),
+          onTap: () {
+            showDialog<String>(
+              context: context,
+              builder: (BuildContext context) => AlertDialog(
+                title: const Text('Deseja Sair da Sessão?'),
+                content: const Text('Esta sessão será encerrada'),
+                actions: <Widget>[
+                  TextButton(
+                    //Se for selecionado Não
+                    onPressed: () => Navigator.pop(context, 'Não'),
+                    child: const Text('Não'),
+                  ),
+                  TextButton(
+                    //Se for selecionado sim
+                    onPressed: () {
+                      PrefsService.logout;
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                              builder: (context) => const HomePage()),
+                          (Route<dynamic> route) => false);
+                    },
+                    child: const Text('Sim'),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  static void openPDF(BuildContext context, File file) =>
+      Navigator.of(context).push(
+        MaterialPageRoute(
+            builder: (context) => PDFViewerPage(
+                  file: file,
+                  titulo: 'Regras do Tatame',
+                )),
+      );
+}

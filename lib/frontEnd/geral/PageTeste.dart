@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/frontEnd/telasAluno/menuPrincipal.dart';
+import '../../backEnd/modelo/aluno.dart';
+import '../../backEnd/security/sessionService.dart';
 import '../telasMestre/CadProfessor.dart';
 import '../telasMestre/MenuMestre.dart';
 import '../telasMestre/ListaAluno.dart';
@@ -20,8 +22,25 @@ class _PageTestState extends State<PageTest> {
   bool isChecked = false;
   bool showPassword = false;
   bool _showPassword = false;
+  var aluno = Aluno();
+  String? usuarioAluno = "";
+
+  getAluno<Aluno>() async {
+    usuarioAluno = await PrefsService.returnUser().then((value) {
+      setState(() {
+        aluno.usuario = value;
+            usuarioAluno = aluno.usuario;
+
+      });
+    });
+  }
 
   @override
+  void initState() {
+    getAluno();
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -41,7 +60,7 @@ class _PageTestState extends State<PageTest> {
 
       //drawer para navegação no appbar
       //A classe Drawer está sendo chamada de outro arquivo e está recebendo por parametro o texto desejado.
-      endDrawer:  Drawer(
+      endDrawer: const Drawer(
         child: DrawerTop(
           texto: "Opções",
         ),
