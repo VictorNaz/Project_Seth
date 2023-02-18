@@ -60,6 +60,30 @@ class ServerAluno {
     }
   }
 
+  static Future<void> atualizaProgresso(Aluno aluno) async {
+    try {
+      String url_Api = 'https://apiseth.cyclic.app/atualizaProgresso';
+      var request = http.Request('POST', Uri.parse(url_Api));
+      request.body = json.encode({
+        "aluno_id": aluno.id,
+      });
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        print(await response.stream.bytesToString());
+        print("Progresso atualizado com sucesso!!");
+      } else {
+        print(response.reasonPhrase);
+        print("Erro ao atualizar o progresso!!");
+      }
+    } catch (e, url_Api) {
+      throw Exception(
+          'Conexão não estabelecida! Não foi possivel se conectar ao endereço $url_Api.\n Erro $e');
+    }
+  }
+
   //busca o id do aluno recebendo o usuario dele
   static Future<String> buscaAlunoId(Aluno aluno) async {
     var request = http.Request(

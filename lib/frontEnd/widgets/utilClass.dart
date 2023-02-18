@@ -5,7 +5,6 @@ import 'package:flutter_project_seth/frontEnd/geral/Homepage.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:flutter_project_seth/frontEnd/widgets/APIServiceProvider.dart';
 import 'package:path/path.dart';
-import '../../backEnd/controladora/CtrlAluno.dart';
 import '../../backEnd/modelo/aluno.dart';
 import '../../backEnd/server/serverAluno.dart';
 import '../telasAluno/PerfilAluno.dart';
@@ -19,7 +18,6 @@ class DrawerTop extends StatelessWidget {
   String nome = "";
   String email = "";
 
-
   getInfo<Aluno>() async {
     usuario.usuario = await PrefsService.returnUser();
     usuario = await ServerAluno.buscaInfo(usuario);
@@ -27,12 +25,10 @@ class DrawerTop extends StatelessWidget {
     email = usuario.email!;
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     getInfo();
-    
+
     return ListView(
       padding: EdgeInsets.zero,
       children: [
@@ -166,7 +162,7 @@ class DrawerTop extends StatelessWidget {
                 ],
               )),
           onTap: () async {
-            final path = 'assets/image/Regras_Tatame.pdf';
+            const path = 'assets/image/Regras_Tatame.pdf';
             final files = await PDFApi.loadAsset(path);
             openPDF(context, files);
           },
@@ -482,4 +478,3 @@ class _PDFViewerPageState extends State<PDFViewerPage> {
     );
   }
 }
-
