@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, file_names
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/backEnd/security/sessionService.dart';
@@ -10,25 +12,40 @@ import '../../backEnd/server/serverAluno.dart';
 import '../telasAluno/PerfilAluno.dart';
 
 //classe que retorna o drawertop
-class DrawerTop extends StatelessWidget {
-  DrawerTop({Key? key, required this.texto}) : super(key: key);
-
+class DrawerTop extends StatefulWidget {
   final String texto;
-  var usuario = Aluno();
+  const DrawerTop({super.key, required this.texto});
+
+  @override
+  // ignore: no_logic_in_create_state
+  State<DrawerTop> createState() => _DrawerTopState(texto);
+}
+
+class _DrawerTopState extends State<DrawerTop> {
+  _DrawerTopState(this.texto);
+  final String texto;
+  var aluno = Aluno();
   String nome = "";
   String email = "";
 
   getInfo<Aluno>() async {
-    usuario.usuario = await PrefsService.returnUser();
-    usuario = await ServerAluno.buscaInfo(usuario);
-    nome = usuario.nome!;
-    email = usuario.email!;
+    aluno.usuario = await PrefsService.returnUser();
+    await ServerAluno.buscaInfo(aluno).then((value) {
+      setState(() {
+        aluno = value;
+        nome = aluno.nome!;
+        email = aluno.email!;
+      });
+    });
   }
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     getInfo();
+    super.initState();
+  }
 
+  Widget build(BuildContext context) {
     return ListView(
       padding: EdgeInsets.zero,
       children: [
