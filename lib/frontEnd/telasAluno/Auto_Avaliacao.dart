@@ -1,3 +1,5 @@
+// ignore_for_file: sort_child_properties_last
+
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
 import 'package:kg_charts/kg_charts.dart';
@@ -67,7 +69,7 @@ class _Auto_AvaliacaoState extends State<Auto_Avaliacao> {
 
       //drawer para navegação no appbar
       //A classe Drawer está sendo chamada de outro arquivo e está recebendo por parametro o texto desejado.
-      endDrawer:  Drawer(
+      endDrawer:  const Drawer(
         child: DrawerTop(
           texto: "Opções",
         ),
@@ -174,7 +176,7 @@ class _Auto_AvaliacaoState extends State<Auto_Avaliacao> {
 
               //texto de titulo
               Card(
-                child: const SizedBox(
+                child:  const SizedBox(
                   child: Center(
                     child: Text(
                       "Fazer avaliação",
