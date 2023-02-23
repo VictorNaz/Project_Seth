@@ -6,6 +6,7 @@ import 'package:kg_charts/kg_charts.dart';
 import 'package:flutter_project_seth/backEnd/security/sessionService.dart';
 
 import '../../backEnd/modelo/aluno.dart';
+import '../../backEnd/server/serverAluno.dart';
 import '../widgets/utilClass.dart';
 
 class Auto_Avaliacao extends StatefulWidget {
@@ -23,8 +24,24 @@ class _Auto_AvaliacaoState extends State<Auto_Avaliacao> {
   double valRelacionamento = 1;
   double valEspiritual = 1;
   double valDefPessoal = 1;
+  String usuario = "";
 
   List<double> lista = [];
+
+  String nome = "";
+  String email = "";
+  var aluno = Aluno();
+
+  getInfoAluno<Aluno>() async {
+    aluno.usuario = await PrefsService.returnUser();
+    await ServerAluno.buscaInfo(aluno).then((value) {
+      setState(() {
+        aluno = value;
+        nome = aluno.nome!;
+        email = aluno.email!;
+      });
+    });
+  }
 
   //O comando getList serve para podermos mudar o tipo do retorno da buscaAvaliacao
   //de Future<list<double>> para list<double>, alem de setar o valor em uma variavel global
@@ -33,9 +50,11 @@ class _Auto_AvaliacaoState extends State<Auto_Avaliacao> {
   getList<List>() async {
     var aluno = Aluno();
     aluno.usuario = await PrefsService.returnUser();
+
     await buscaAvaliacao(aluno).then((value) {
       setState(() {
         lista = value;
+        usuario = aluno.usuario!;
       });
     });
   }
@@ -43,8 +62,9 @@ class _Auto_AvaliacaoState extends State<Auto_Avaliacao> {
   @override
 
   //O comando abaixo define a inicialização do getList antes do carregamento da pagina
-  void initState()  {
-     getList();
+  void initState() {
+    getList();
+    getInfoAluno();
     super.initState();
   }
 
@@ -69,9 +89,11 @@ class _Auto_AvaliacaoState extends State<Auto_Avaliacao> {
 
       //drawer para navegação no appbar
       //A classe Drawer está sendo chamada de outro arquivo e está recebendo por parametro o texto desejado.
-      endDrawer:  const Drawer(
+      endDrawer: Drawer(
         child: DrawerTop(
           texto: "Opções",
+          nome: nome,
+          email: email,
         ),
       ),
 
@@ -176,7 +198,7 @@ class _Auto_AvaliacaoState extends State<Auto_Avaliacao> {
 
               //texto de titulo
               Card(
-                child:  const SizedBox(
+                child: const SizedBox(
                   child: Center(
                     child: Text(
                       "Fazer avaliação",

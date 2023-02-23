@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/frontEnd/telasAluno/menuPrincipal.dart';
 
+import '../../backEnd/modelo/aluno.dart';
+import '../../backEnd/security/sessionService.dart';
+import '../../backEnd/server/serverAluno.dart';
 import '../widgets/utilClass.dart';
 
 class Info extends StatefulWidget {
@@ -11,6 +14,27 @@ class Info extends StatefulWidget {
 }
 
 class _InfoState extends State<Info> {
+   String nome = "";
+  String email = "";
+  var aluno = Aluno();
+
+  getInfoAluno<Aluno>() async {
+    aluno.usuario = await PrefsService.returnUser();
+    await ServerAluno.buscaInfo(aluno).then((value) {
+      setState(() {
+        aluno = value;
+        nome = aluno.nome!;
+        email = aluno.email!;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    getInfoAluno();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +59,8 @@ class _InfoState extends State<Info> {
       endDrawer:  Drawer(
         child: DrawerTop(
           texto: "Opções",
+          nome: nome,
+          email: email,
         ),
       ),
       //botão flutuante sobre a barra inferior

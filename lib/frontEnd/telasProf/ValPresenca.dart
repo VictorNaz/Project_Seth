@@ -2,6 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/frontEnd/telasAluno/menuPrincipal.dart';
+import '../../backEnd/modelo/aluno.dart';
+import '../../backEnd/security/sessionService.dart';
+import '../../backEnd/server/serverAluno.dart';
 import '../widgets/utilClass.dart';
 
 class ValPresenca extends StatefulWidget {
@@ -15,6 +18,27 @@ class _ValPresencaState extends State<ValPresenca> {
 
   TextEditingController txtUsuario = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+    String nome = "";
+  String email = "";
+  var aluno = Aluno();
+
+  getInfoAluno<Aluno>() async {
+    aluno.usuario = await PrefsService.returnUser();
+    await ServerAluno.buscaInfo(aluno).then((value) {
+      setState(() {
+        aluno = value;
+        nome = aluno.nome!;
+        email = aluno.email!;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    getInfoAluno();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +72,11 @@ class _ValPresencaState extends State<ValPresenca> {
 
         //drawer para navegação no appbar
         //A classe Drawer está sendo chamada de outro arquivo e está recebendo por parametro o texto desejado.
-        endDrawer: const Drawer(
+        endDrawer: Drawer(
           child: DrawerTop(
-            texto: "Opções",
+            texto: "Opções", 
+            nome: nome,
+            email: email,
           ),
         ),
 
