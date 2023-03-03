@@ -146,6 +146,9 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                             borderSide: BorderSide(
                                 color: Color.fromARGB(255, 252, 72, 27))),
                       ),
+                       validator: (value) {
+                              return validarEmail(aluno.email!);
+                            },
                     ),
                   ),
 
