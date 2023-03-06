@@ -14,12 +14,13 @@ class PerfilAluno extends StatefulWidget {
 class _PerfilAlunoState extends State<PerfilAluno> {
   bool isChecked = false;
   bool showPassword = false;
-  var usuario = Aluno();
 
   TextEditingController _controler = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   String nome = "";
   String email = "";
+  String cpf = "";
+
   var aluno = Aluno();
 
   getInfoAluno<Aluno>() async {
@@ -29,6 +30,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
         aluno = value;
         nome = aluno.nome!;
         email = aluno.email!;
+        cpf = aluno.cpf!;
       });
     });
   }
@@ -73,7 +75,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
 
         //drawer para navegação no appbar
         //A classe Drawer está sendo chamada de outro arquivo e está recebendo por parametro o texto desejado.
-        endDrawer:  Drawer(
+        endDrawer: Drawer(
           child: DrawerTop(
             texto: "Opções",
             nome: nome,
@@ -110,8 +112,8 @@ class _PerfilAlunoState extends State<PerfilAluno> {
 
                   SizedBox(
                     width: 325,
-                    child: TextField(
-                      controller: TextEditingController(text: usuario.nome),
+                    child: TextFormField(
+                      controller: TextEditingController(text: nome),
                       keyboardType: TextInputType.name,
                       decoration: const InputDecoration(
                         icon: Icon(
@@ -132,7 +134,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                     width: 325,
                     child: TextFormField(
                       //initialValue: usuario.email,
-                      controller: TextEditingController(text: usuario.email),
+                      controller: TextEditingController(text: email),
                       //Define o teclado para digitar e-mail(adiciona o @ no teclado)
                       keyboardType: TextInputType.emailAddress,
                       decoration: const InputDecoration(
@@ -146,9 +148,9 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                             borderSide: BorderSide(
                                 color: Color.fromARGB(255, 252, 72, 27))),
                       ),
-                       validator: (value) {
-                              return validarEmail(aluno.email!);
-                            },
+                      validator: (value) {
+                        return validarEmail(aluno.email!);
+                      },
                     ),
                   ),
 
@@ -159,7 +161,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                     width: 325,
                     child: TextField(
                       controller: TextEditingController(
-                          text: usuario.cpf), //Define o teclado para numérico
+                          text: cpf), //Define o teclado para numérico
                       keyboardType: TextInputType.number,
                       decoration: const InputDecoration(
                         icon: Icon(
