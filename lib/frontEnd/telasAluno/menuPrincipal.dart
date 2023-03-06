@@ -8,6 +8,9 @@ import 'package:flutter_project_seth/frontEnd/widgets/QR_CodePage.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../../backEnd/modelo/aluno.dart';
+import '../../backEnd/security/sessionService.dart';
+import '../../backEnd/server/serverAluno.dart';
 import '../widgets/APIServiceProvider.dart';
 import '../widgets/utilClass.dart';
 import 'desempAluno.dart';
@@ -20,6 +23,27 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
+  String nome = "";
+  String email = "";
+  var aluno = Aluno();
+
+  getInfoAluno<Aluno>() async {
+    aluno.usuario = await PrefsService.returnUser();
+    await ServerAluno.buscaInfo(aluno).then((value) {
+      setState(() {
+        aluno = value;
+        nome = aluno.nome!;
+        email = aluno.email!;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    getInfoAluno();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,22 +57,15 @@ class _MenuState extends State<Menu> {
             style: TextStyle(fontSize: 25),
           ),
         ),
-
-        //Icone de voltar quando utilizado o drawer no appbar
-        /*automaticallyImplyLeading: true,
-        leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              size: 30,
-            ),
-            onPressed: () => Navigator.pop(context, false)),*/
       ),
 
       //drawer para navegação no appbar
       //A classe Drawer está sendo chamada de outro arquivo e está recebendo por parametro o texto desejado.
-      endDrawer:  Drawer(
+      endDrawer: Drawer(
         child: DrawerTop(
           texto: "Opções",
+          nome: nome,
+          email: email,
         ),
       ),
       //corpo
@@ -95,7 +112,7 @@ class _MenuState extends State<Menu> {
                     ),
                   ],
                 ),
-                Padding(padding: EdgeInsets.only(top: 30)),
+                const Padding(padding: EdgeInsets.only(top: 30)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -108,7 +125,7 @@ class _MenuState extends State<Menu> {
                       ),
                       tela: QRCodeRead(),
                     ),
-                    Padding(padding: EdgeInsets.only(right: 30)),
+                    const Padding(padding: EdgeInsets.only(right: 30)),
                     ElevatedButton(
                       onPressed: () async {
                         final path = 'assets/image/info.pdf';

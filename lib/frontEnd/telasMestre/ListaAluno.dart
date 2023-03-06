@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/frontEnd/telasMestre/DetalheAluno.dart';
 
 import '../../backEnd/controladora/CtrlProfessor.dart';
+import '../../backEnd/modelo/aluno.dart';
+import '../../backEnd/security/sessionService.dart';
+import '../../backEnd/server/serverAluno.dart';
 import '../widgets/utilClass.dart';
 
 class ListaAluno extends StatefulWidget {
@@ -15,6 +18,24 @@ class _ListaAlunoState extends State<ListaAluno> {
   List listaAlunos = [];
   String teste = "";
 
+  String nome = "";
+  String email = "";
+  var aluno = Aluno();
+
+  getInfoAluno<Aluno>() async {
+    aluno.usuario = await PrefsService.returnUser();
+    await ServerAluno.buscaInfo(aluno).then((value) {
+      setState(() {
+        aluno = value;
+        nome = aluno.nome!;
+        email = aluno.email!;
+      });
+    });
+  }
+
+ 
+
+  
   getList<List>() async {
     await buscaAlunos().then((value) {
       setState(() {
@@ -26,6 +47,7 @@ class _ListaAlunoState extends State<ListaAluno> {
   @override
   void initState() {
     getList();
+    getInfoAluno();
     super.initState();
   }
 
@@ -50,9 +72,11 @@ class _ListaAlunoState extends State<ListaAluno> {
             ),
             onPressed: () => Navigator.pop(context, false)),
       ),
-      endDrawer:  Drawer(
+      endDrawer: Drawer(
         child: DrawerTop(
           texto: "Opções",
+          nome: nome,
+          email: email,
         ),
       ),
       //body: _buildListView(context),

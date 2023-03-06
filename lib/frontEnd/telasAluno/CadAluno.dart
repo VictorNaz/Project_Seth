@@ -58,11 +58,7 @@ class _CadAlunoState extends State<CadAluno> {
 
           //drawer para navegação no appbar
           //A classe Drawer está sendo chamada de outro arquivo e está recebendo por parametro o texto desejado.
-          endDrawer:  Drawer(
-            child: DrawerTop(
-              texto: "Opções",
-            ),
-          ),
+
           body: Stack(alignment: Alignment.center, children: <Widget>[
             Container(),
             //Posicionamento do campo ao selecionar o campo
@@ -334,19 +330,33 @@ class _CadAlunoState extends State<CadAluno> {
 
                   //Botão cadastrar
                   TextButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          if (checkRegras == true && checkTermos == true) {
+                          if (checkRegras == true) {
                             loading();
-                            cadAluno(txtNome.text, txtUsuario.text,
-                                txtSenha.text, txtEmail.text, txtcpf.text);
-                            closeLoading();
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const LoginPage()),
-                            );
-                            alertUser();
+                            bool validaEmail =
+                                await buscaUsuarioPorEmail(txtEmail.text);
+                            print(validaEmail);
+                            //true = Usuário com o email encontrado, não permitir criação
+                            if (validaEmail == true) {
+                              closeLoading();
+                              alertUser("Falha ao cadastrar usuário!",
+                                  "O e-mail selecionado já esta em uso.");
+                            //false = Usuário com o email NÃO encontrado, permitir criação
+                            } else if (validaEmail == false) {
+                              cadAluno(txtNome.text, txtUsuario.text,
+                                  txtSenha.text, txtEmail.text, txtcpf.text);
+                              closeLoading();
+                              // ignore: use_build_context_synchronously
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const LoginPage()),
+                              );
+
+                              alertUser('Usuário cadastrado com sucesso!',
+                                  'Seja bem vindo ao time ${txtNome.text}!');
+                            }
                           }
                         }
                       },
@@ -368,11 +378,9 @@ class _CadAlunoState extends State<CadAluno> {
     );
   }
 
-
-
   //Modal dos termos de uso da academia
 
- /* Widget optionModalSeth() => ElevatedButton(
+  /* Widget optionModalSeth() => ElevatedButton(
         style: ElevatedButton.styleFrom(
           fixedSize: const Size(165, 1000),
           // padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
@@ -409,12 +417,12 @@ class _CadAlunoState extends State<CadAluno> {
     Navigator.pop(context);
   }
 
-  alertUser() {
-    String name = txtNome.text;
+  alertUser(String titulo, String corpo) {
+    //String name = txtNome.text;
     showDialog<String>(
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Usuário cadastrado com sucesso!'),
-        content: Text('Seja bem vindo ao time $name!'),
+        title: Text(titulo),
+        content: Text(corpo),
         actions: <Widget>[
           TextButton(
             //Se for selecionado Não
@@ -428,6 +436,10 @@ class _CadAlunoState extends State<CadAluno> {
   }
 
   void openPDF(BuildContext context, File file) => Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => PDFViewerPage(file: file, titulo: 'Regras do Tatame',)),
+        MaterialPageRoute(
+            builder: (context) => PDFViewerPage(
+                  file: file,
+                  titulo: 'Regras do Tatame',
+                )),
       );
 }

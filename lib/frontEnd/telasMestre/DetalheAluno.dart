@@ -5,6 +5,8 @@ import 'package:percent_indicator/percent_indicator.dart';
 
 import '../../backEnd/controladora/CtrlAluno.dart';
 import '../../backEnd/modelo/aluno.dart';
+import '../../backEnd/security/sessionService.dart';
+import '../../backEnd/server/serverAluno.dart';
 import '../widgets/utilClass.dart';
 
 class DetalheAluno extends StatefulWidget {
@@ -26,6 +28,21 @@ class _DetalheAlunoState extends State<DetalheAluno> {
   String? grau = "...";
 
   NumberFormat formatter = NumberFormat("00.0");
+
+  String nome = "";
+  String email = "";
+  var aluno = Aluno();
+
+  getInfoAluno<Aluno>() async {
+    aluno.usuario = await PrefsService.returnUser();
+    await ServerAluno.buscaInfo(aluno).then((value) {
+      setState(() {
+        aluno = value;
+        nome = aluno.nome!;
+        email = aluno.email!;
+      });
+    });
+  }
 
   //O comando getList serve para podermos mudar o tipo do retorno da buscaAvaliacao
   //de Future<list<double>> para list<double>, alem de setar o valor em uma variavel global
@@ -75,6 +92,7 @@ class _DetalheAlunoState extends State<DetalheAluno> {
     getAvaliacao();
     getFaixa();
     getAulas();
+    getInfoAluno();
     super.initState();
   }
 
@@ -102,9 +120,11 @@ class _DetalheAlunoState extends State<DetalheAluno> {
 
       //drawer para navegação no appbar
       //A classe Drawer está sendo chamada de outro arquivo e está recebendo por parametro o texto desejado.
-      endDrawer:  Drawer(
+      endDrawer: Drawer(
         child: DrawerTop(
           texto: "Opções",
+          nome: nome,
+          email: email,
         ),
       ),
       body: Stack(

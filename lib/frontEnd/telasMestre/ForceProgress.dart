@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
 
 import '../../backEnd/controladora/CtrlProfessor.dart';
+import '../../backEnd/modelo/aluno.dart';
+import '../../backEnd/security/sessionService.dart';
+import '../../backEnd/server/serverAluno.dart';
 import '../widgets/utilClass.dart';
 
 class ForceProgress extends StatefulWidget {
@@ -20,6 +23,28 @@ class _ForceProgressState extends State<ForceProgress> {
   String? grauSelecionado;
 
   final _formKey = GlobalKey<FormState>();
+    String nome = "";
+  String email = "";
+  var aluno = Aluno();
+
+  getInfoAluno<Aluno>() async {
+    aluno.usuario = await PrefsService.returnUser();
+    await ServerAluno.buscaInfo(aluno).then((value) {
+      setState(() {
+        aluno = value;
+        nome = aluno.nome!;
+        email = aluno.email!;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    getInfoAluno();
+    super.initState();
+  }
+
+
 
   void dropDownFaixaSelected(String novoItem) {
     setState(() {
@@ -72,7 +97,8 @@ class _ForceProgressState extends State<ForceProgress> {
           //A classe Drawer está sendo chamada de outro arquivo e está recebendo por parametro o texto desejado.
           endDrawer:  Drawer(
             child: DrawerTop(
-              texto: "Opções",
+              texto: "Opções", nome: nome,
+              email: email,
             ),
           ),
           body: Stack(alignment: Alignment.center, children: <Widget>[

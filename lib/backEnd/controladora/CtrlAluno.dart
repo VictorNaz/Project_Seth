@@ -112,9 +112,18 @@ Future<int?> buscaAulas(Aluno aluno) async {
 }
 
 Future<Aluno> buscaInfo(Aluno aluno) async {
+  print("Email do aluno:");
   aluno = await ServerAluno.buscaInfo(aluno);
-
+  print(aluno.email);
   return aluno;
+}
+
+Future<bool> buscaUsuarioPorEmail(String email) async {
+  var aluno = Aluno();
+  aluno.email = email;
+  var existe = await ServerAluno.buscaUsuarioPorEmail(aluno);
+
+  return existe;
 }
 
 Future<Faixa> buscaFaixa(Aluno aluno) async {
@@ -138,12 +147,17 @@ String? validarNome(String value) {
 }
 
 String? validarEmail(String value) {
+  /* var aluno = Aluno();
+  aluno.email = value;
+  buscaUsuarioPorEmail(aluno);*/
   String patttern = r'(^[A-zÀ-ü]{1,}[@]{1}[A-z]{2,}([.]{1}[A-z]{1,})+$)';
   RegExp regExp = RegExp(patttern);
   if (value.isEmpty || value == null) {
     return "Informe o Email";
   } else if (!regExp.hasMatch(value)) {
     return "O Email digitado não é válido";
+    /*} else if (value == aluno.email) {
+    return "O E-mail digitado já pertence a outro usuário!";*/
   }
   return null;
 }
@@ -178,8 +192,10 @@ String? validaCpf(String value) {
 }
 
 String? validaUsuario(String value) {
+  var aluno = Aluno();
+  aluno.usuario = value;
   if (value.isEmpty) {
-    return "Informe o usuário!";
+    return "O campo usuário não ser vazio!";
   }
   return null;
 }
@@ -196,4 +212,18 @@ String? validaSenhaLogin(String value) {
     return "Informe a senha!";
   }
   return null;
+}
+
+Future<bool> duplicaEmail(String value) async {
+  var aluno = Aluno();
+  aluno.email = value;
+  
+  print(aluno.usuario);
+  if (aluno.usuario == null) {
+    return false;
+    //Email não cadastrado
+  } else {
+    return true;
+    //Email cadastrado, encontrou usuário realizando a pesquisa pelo email
+  }
 }

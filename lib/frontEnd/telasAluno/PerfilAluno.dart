@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../backEnd/controladora/CtrlAluno.dart';
 import '../../backEnd/modelo/aluno.dart';
 import '../../backEnd/security/sessionService.dart';
+import '../../backEnd/server/serverAluno.dart';
 import '../widgets/utilClass.dart';
 
 class PerfilAluno extends StatefulWidget {
@@ -17,19 +18,24 @@ class _PerfilAlunoState extends State<PerfilAluno> {
 
   TextEditingController _controler = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  String nome = "";
+  String email = "";
+  var aluno = Aluno();
 
-  getInfo<Aluno>() async {
-    usuario.usuario = await PrefsService.returnUser();
-    await buscaInfo(usuario).then((value) async {
+  getInfoAluno<Aluno>() async {
+    aluno.usuario = await PrefsService.returnUser();
+    await ServerAluno.buscaInfo(aluno).then((value) {
       setState(() {
-        usuario = value;
+        aluno = value;
+        nome = aluno.nome!;
+        email = aluno.email!;
       });
     });
   }
 
   @override
   void initState() {
-    getInfo();
+    getInfoAluno();
     super.initState();
   }
 
@@ -70,6 +76,8 @@ class _PerfilAlunoState extends State<PerfilAluno> {
         endDrawer:  Drawer(
           child: DrawerTop(
             texto: "Opções",
+            nome: nome,
+            email: email,
           ),
         ),
         body: Stack(
@@ -138,6 +146,9 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                             borderSide: BorderSide(
                                 color: Color.fromARGB(255, 252, 72, 27))),
                       ),
+                       validator: (value) {
+                              return validarEmail(aluno.email!);
+                            },
                     ),
                   ),
 

@@ -4,6 +4,9 @@ import 'package:flutter_project_seth/frontEnd/telasMestre/ForceProgress.dart';
 import 'package:flutter_project_seth/frontEnd/telasMestre/ListaAluno.dart';
 import 'package:flutter_project_seth/frontEnd/telasMestre/Relatorio.dart';
 import 'package:flutter_project_seth/frontEnd/widgets/QR_CodePage.dart';
+import '../../backEnd/modelo/aluno.dart';
+import '../../backEnd/security/sessionService.dart';
+import '../../backEnd/server/serverAluno.dart';
 import '../telasProf/ValPresenca.dart';
 import '../widgets/utilClass.dart';
 import 'CadProfessor.dart';
@@ -16,6 +19,27 @@ class MenuMestre extends StatefulWidget {
 }
 
 class _MenuMestreState extends State<MenuMestre> {
+  String nome = "";
+  String email = "";
+  var aluno = Aluno();
+
+  getInfoAluno<Aluno>() async {
+    aluno.usuario = await PrefsService.returnUser();
+    await ServerAluno.buscaInfo(aluno).then((value) {
+      setState(() {
+        aluno = value;
+        nome = aluno.nome!;
+        email = aluno.email!;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    getInfoAluno();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +65,8 @@ class _MenuMestreState extends State<MenuMestre> {
       //A classe Drawer está sendo chamada de outro arquivo e está recebendo por parametro o texto desejado.
       endDrawer:  Drawer(
         child: DrawerTop(
-          texto: "Opções",
+          texto: "Opções", nome: nome,
+          email: email,
         ),
       ),
       //corpo

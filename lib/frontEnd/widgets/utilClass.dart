@@ -14,21 +14,26 @@ import '../telasAluno/PerfilAluno.dart';
 //classe que retorna o drawertop
 class DrawerTop extends StatefulWidget {
   final String texto;
-  const DrawerTop({super.key, required this.texto});
+  final String nome;
+  final String email;
+  const DrawerTop({super.key, required this.texto,
+   required this.nome, required this.email});
 
   @override
   // ignore: no_logic_in_create_state
-  State<DrawerTop> createState() => _DrawerTopState(texto);
+  State<DrawerTop> createState() => _DrawerTopState(texto, nome, email);
 }
 
 class _DrawerTopState extends State<DrawerTop> {
-  _DrawerTopState(this.texto);
+  _DrawerTopState(this.texto, this.nome, this.email);
   final String texto;
+  final String nome;
+  final String email;
   var aluno = Aluno();
-  String nome = "";
-  String email = "";
 
-  getInfo<Aluno>() async {
+
+/*  getInfo<Aluno>() async {
+    
     aluno.usuario = await PrefsService.returnUser();
     await ServerAluno.buscaInfo(aluno).then((value) {
       setState(() {
@@ -44,7 +49,7 @@ class _DrawerTopState extends State<DrawerTop> {
     getInfo();
     super.initState();
   }
-
+*/
   Widget build(BuildContext context) {
     return ListView(
       padding: EdgeInsets.zero,
@@ -92,7 +97,8 @@ class _DrawerTopState extends State<DrawerTop> {
                     width: 12.0, color: Color.fromARGB(255, 252, 72, 27))),
             color: Color.fromARGB(0, 255, 255, 255),
           ),
-          accountName: Text(nome, style: const TextStyle(color: Colors.black)),
+          accountName:
+              Text(nome, style: const TextStyle(color: Colors.black)),
           accountEmail: Text(email,
               style: const TextStyle(
                 color: Colors.black,

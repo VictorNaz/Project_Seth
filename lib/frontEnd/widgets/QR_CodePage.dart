@@ -1,7 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+
+import '../telasAluno/menuPrincipal.dart';
 
 class QRCodeRead extends StatefulWidget {
   const QRCodeRead({super.key});
@@ -25,7 +29,12 @@ class _QRCodeReadState extends State<QRCodeRead> {
       if (ticket != 'Não validado') {
         validaPresAluno();
       }
-      ticket = "Presença validada com sucesso!";
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => const Menu()),
+          (Route<dynamic> route) => false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Presença validada com sucesso!')),
+      );
     } else {
       ticket = "Presença não validada!";
     }

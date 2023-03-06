@@ -1,4 +1,10 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
+import 'package:flutter_project_seth/frontEnd/telasAluno/menuPrincipal.dart';
+import '../../backEnd/modelo/aluno.dart';
+import '../../backEnd/security/sessionService.dart';
+import '../../backEnd/server/serverAluno.dart';
 import '../widgets/utilClass.dart';
 
 class ValPresenca extends StatefulWidget {
@@ -12,6 +18,27 @@ class _ValPresencaState extends State<ValPresenca> {
 
   TextEditingController txtUsuario = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+    String nome = "";
+  String email = "";
+  var aluno = Aluno();
+
+  getInfoAluno<Aluno>() async {
+    aluno.usuario = await PrefsService.returnUser();
+    await ServerAluno.buscaInfo(aluno).then((value) {
+      setState(() {
+        aluno = value;
+        nome = aluno.nome!;
+        email = aluno.email!;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    getInfoAluno();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +72,11 @@ class _ValPresencaState extends State<ValPresenca> {
 
         //drawer para navegação no appbar
         //A classe Drawer está sendo chamada de outro arquivo e está recebendo por parametro o texto desejado.
-        endDrawer:  Drawer(
+        endDrawer: Drawer(
           child: DrawerTop(
-            texto: "Opções",
+            texto: "Opções", 
+            nome: nome,
+            email: email,
           ),
         ),
 
@@ -77,8 +106,8 @@ class _ValPresencaState extends State<ValPresenca> {
                   const Padding(padding: EdgeInsets.only(top: 20)),
 
                   const Text(
-                      "Para confirmar a sua presença \n" +
-                          "digite o seu usuário no campo abaixo",
+                      "Para confirmar a sua presença \n"
+                      "digite o seu usuário no campo abaixo",
                       textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.grey, fontSize: 16)),
 
@@ -124,7 +153,10 @@ class _ValPresencaState extends State<ValPresenca> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           //validaPresAluno(txtUsuario.text);
-                          Navigator.pop(context, false);
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) => const Menu()),
+                              (Route<dynamic> route) => false);
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('Presença Validada')),
                           );
