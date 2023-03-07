@@ -336,14 +336,27 @@ class _CadAlunoState extends State<CadAluno> {
                             loading();
                             bool validaEmail =
                                 await buscaUsuarioPorEmail(txtEmail.text);
-                            print(validaEmail);
-                            //true = Usuário com o email encontrado, não permitir criação
-                            if (validaEmail == true) {
+                            bool validaUsuario =
+                                await buscaUsuarioPorUsuario(txtUsuario.text);
+
+                            if (validaEmail == true && validaUsuario == true) {
                               closeLoading();
                               alertUser("Falha ao cadastrar usuário!",
-                                  "O e-mail selecionado já esta em uso.");
-                            //false = Usuário com o email NÃO encontrado, permitir criação
-                            } else if (validaEmail == false) {
+                                  "O e-mail e o nome de usuário cadastrados já estão em uso.");
+                              //false = Usuário com o email NÃO encontrado, permitir criação
+                            }
+                            //true = Usuário com o email encontrado, não permitir criação
+                            else if (validaEmail == true) {
+                              closeLoading();
+                              alertUser("Falha ao cadastrar usuário!",
+                                  "O e-mail inserido já esta em uso.");
+                              //false = Usuário com o email NÃO encontrado, permitir criação
+                            } else if (validaUsuario == true) {
+                              closeLoading();
+                              alertUser("Falha ao cadastrar usuário!",
+                                  "O nome de usuário inserido já esta em uso.");
+                            } else if (validaEmail == false &&
+                                validaUsuario == false) {
                               cadAluno(txtNome.text, txtUsuario.text,
                                   txtSenha.text, txtEmail.text, txtcpf.text);
                               closeLoading();

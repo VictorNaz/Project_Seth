@@ -125,6 +125,14 @@ Future<bool> buscaUsuarioPorEmail(String email) async {
   return existe;
 }
 
+Future<bool> buscaUsuarioPorUsuario(String usuario) async {
+  var aluno = Aluno();
+  aluno.usuario = usuario;
+  var existe = await ServerAluno.buscaUsuarioPorUsuario(aluno);
+
+  return existe;
+}
+
 Future<Faixa> buscaFaixa(Aluno aluno) async {
   var progresso = Faixa();
   progresso = await ServerAluno.buscaFaixa(aluno);
@@ -216,7 +224,7 @@ String? validaSenhaLogin(String value) {
 Future<bool> duplicaEmail(String value) async {
   var aluno = Aluno();
   aluno.email = value;
-  
+
   print(aluno.usuario);
   if (aluno.usuario == null) {
     return false;
