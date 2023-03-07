@@ -34,6 +34,7 @@ void validaPresAluno() async {
 
   aluno.id = await ServerAluno.buscaAlunoId(aluno);
   await ServerAluno.valPresenAluno(aluno);
+  await ServerAluno.atualizaProgresso(aluno);
 }
 
 //Login de Usuario
