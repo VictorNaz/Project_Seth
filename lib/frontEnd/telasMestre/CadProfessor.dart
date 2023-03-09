@@ -74,6 +74,30 @@ class _CadProfessorState extends State<CadProfessor> {
                       SizedBox(
                         width: 325,
                         child: TextFormField(
+                          controller: txtUsuario,
+                          keyboardType: TextInputType.name,
+                          decoration: const InputDecoration(
+                            icon: Icon(
+                              Icons.person_outline_outlined,
+                              color: Color.fromARGB(255, 252, 72, 27),
+                            ),
+                            labelText: "Usuário de Acesso",
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color.fromARGB(255, 252, 72, 27))),
+                          ),
+                          validator: (value) {
+                            return validaProfessor(txtUsuario.text);
+                          },
+                        ),
+                      ),
+
+                      //Espaçamento entre inputs
+                      const Padding(padding: EdgeInsets.only(top: 15)),
+
+                      SizedBox(
+                        width: 325,
+                        child: TextFormField(
                           controller: txtNome,
                           keyboardType: TextInputType.name,
                           decoration: const InputDecoration(
@@ -88,30 +112,6 @@ class _CadProfessorState extends State<CadProfessor> {
                           ),
                           validator: (value) {
                             return validarNome(txtNome.text);
-                          },
-                        ),
-                      ),
-
-                      //Espaçamento entre inputs
-                      const Padding(padding: EdgeInsets.only(top: 15)),
-
-                      SizedBox(
-                        width: 325,
-                        child: TextFormField(
-                          controller: txtUsuario,
-                          keyboardType: TextInputType.name,
-                          decoration: const InputDecoration(
-                            icon: Icon(
-                              Icons.person,
-                              color: Color.fromARGB(255, 252, 72, 27),
-                            ),
-                            labelText: "Usuário",
-                            focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Color.fromARGB(255, 252, 72, 27))),
-                          ),
-                          validator: (value) {
-                            return validaProfessor(txtUsuario.text);
                           },
                         ),
                       ),

@@ -90,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                             icon: Icon(Icons.person_outline,
                                 color: Color.fromARGB(255, 252, 72, 27),
                                 size: 35),
-                            labelText: "Usuario",
+                            labelText: "Usuario de Acesso",
                             hintStyle: TextStyle(color: Colors.black),
                             focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(

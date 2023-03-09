@@ -59,7 +59,7 @@ String? validarNome(String value) {
 }
 
 String? validarEmail(String value) {
-  String patttern = r'(^[A-zÀ-ü]{1,}[@]{1}[A-z]{2,}([.]{1}[A-z]{1,})+$)';
+  String patttern = r'(^[A-zÀ-ü0-9]{1,}[@]{1}[A-z]{2,}([.]{1}[A-z]{1,})+$)';
   RegExp regExp = RegExp(patttern);
   if (value.isEmpty || value == null) {
     return "Informe o Email";
@@ -99,8 +99,12 @@ String? validarCpf(String value) {
 }
 
 String? validaProfessor(String value) {
+  String patttern = r'(^[a-z]*$)';
+  RegExp regExp = RegExp(patttern);
   if (value.isEmpty) {
     return "Informe o usuário";
+  } else if (!regExp.hasMatch(value)) {
+    return "O usuário de acesso precisa estar em minúsculo!";
   }
   return null;
 }
