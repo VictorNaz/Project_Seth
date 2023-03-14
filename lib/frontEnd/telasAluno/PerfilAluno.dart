@@ -16,6 +16,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
   bool showPassword = false;
 
   TextEditingController _controler = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
   String nome = "";
   String email = "";
@@ -125,6 +126,9 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                             borderSide: BorderSide(
                                 color: Color.fromARGB(255, 252, 72, 27))),
                       ),
+                      validator: (value) {
+                        return validarNome(nome);
+                      },
                     ),
                   ),
                   //Espaçamento entre inputs
@@ -149,7 +153,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                                 color: Color.fromARGB(255, 252, 72, 27))),
                       ),
                       validator: (value) {
-                        return validarEmail(aluno.email!);
+                        return validarEmail(email);
                       },
                     ),
                   ),

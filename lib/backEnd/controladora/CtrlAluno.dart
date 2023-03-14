@@ -158,7 +158,7 @@ String? validarEmail(String value) {
   /* var aluno = Aluno();
   aluno.email = value;
   buscaUsuarioPorEmail(aluno);*/
-  String patttern = r'(^[A-zÀ-ü0-9]{1,}[@]{1}[A-z]{2,}([.]{1}[A-z]{1,})+$)';
+  String patttern = r'(^[\.-_A-zÀ-ü0-9]{1,}[@]{1}[A-z]{2,}([.]{1}[A-z]{1,})+$)';
   RegExp regExp = RegExp(patttern);
   if (value.isEmpty || value == null) {
     return "Informe o Email";
