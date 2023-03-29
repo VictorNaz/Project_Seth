@@ -1,7 +1,10 @@
 // ignore_for_file: must_be_immutable, file_names
 
 import 'dart:io';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
+import 'package:flutter_project_seth/backEnd/modelo/faixa.dart';
 import 'package:flutter_project_seth/backEnd/security/sessionService.dart';
 import 'package:flutter_project_seth/frontEnd/geral/Homepage.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
@@ -16,8 +19,12 @@ class DrawerTop extends StatefulWidget {
   final String texto;
   final String nome;
   final String email;
-  const DrawerTop({super.key, required this.texto,
-   required this.nome, required this.email});
+
+  const DrawerTop(
+      {super.key,
+      required this.texto,
+      required this.nome,
+      required this.email});
 
   @override
   // ignore: no_logic_in_create_state
@@ -29,27 +36,48 @@ class _DrawerTopState extends State<DrawerTop> {
   final String texto;
   final String nome;
   final String email;
+  String? faixa = "...";
+  String? grau = "...";
+  String? nivel;
   var aluno = Aluno();
+  var faixaInfo = Faixa();
 
-
-/*  getInfo<Aluno>() async {
-    
+  getInfo<Aluno>() async {
     aluno.usuario = await PrefsService.returnUser();
     await ServerAluno.buscaInfo(aluno).then((value) {
       setState(() {
         aluno = value;
-        nome = aluno.nome!;
-        email = aluno.email!;
+        aluno.nivel_acess = nivel;
+      });
+    });
+  }
+
+  //Obtem a faixa e o grau do aluno
+  getFaixa<String>() async {
+    var aluno = Aluno();
+    aluno.usuario = await PrefsService.returnUser();
+    aluno = await buscaInfo(aluno);
+    await buscaFaixa(aluno).then((value) {
+      setState(() {
+        faixaInfo = value;
+        faixa = value.faixa;
+        grau = value.grau;
       });
     });
   }
 
   @override
   void initState() {
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
+    getFaixa();
     getInfo();
     super.initState();
   }
-*/
+
   Widget build(BuildContext context) {
     return ListView(
       padding: EdgeInsets.zero,
@@ -97,8 +125,7 @@ class _DrawerTopState extends State<DrawerTop> {
                     width: 12.0, color: Color.fromARGB(255, 252, 72, 27))),
             color: Color.fromARGB(0, 255, 255, 255),
           ),
-          accountName:
-              Text(nome, style: const TextStyle(color: Colors.black)),
+          accountName: Text(nome, style: const TextStyle(color: Colors.black)),
           accountEmail: Text(email,
               style: const TextStyle(
                 color: Colors.black,
@@ -108,32 +135,39 @@ class _DrawerTopState extends State<DrawerTop> {
           ),
         ),
         ListTile(
-          title: Container(
-              padding: const EdgeInsets.only(top: 5),
-              color: const Color.fromARGB(255, 228, 227, 227),
-              height: 50,
-              child: Row(
-                children: const [
-                  Padding(padding: EdgeInsets.only(left: 20)),
-                  Icon(
-                    Icons.notifications,
-                    color: Colors.black,
-                    size: 32,
-                  ),
-                  Padding(padding: EdgeInsets.only(right: 30)),
-                  Text(
-                    'Notificações',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 20,
+            title: Container(
+                padding: const EdgeInsets.only(top: 5),
+                color: const Color.fromARGB(255, 228, 227, 227),
+                height: 50,
+                child: Row(
+                  children: const [
+                    Padding(padding: EdgeInsets.only(left: 20)),
+                    Icon(
+                      Icons.notifications,
+                      color: Colors.black,
+                      size: 32,
                     ),
-                  ),
-                ],
-              )),
-          onTap: () {
-            Navigator.pop(context);
-          },
-        ),
+                    Padding(padding: EdgeInsets.only(right: 30)),
+                    Text(
+                      'Notificações',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                  ],
+                )),
+            onTap: () {
+              if (aluno.nome == 'Administrador') {
+                print(aluno.usuario);
+                //Passada as informações do aluno e de sua faixa
+                NotificationService(aluno, faixaInfo);
+              } else {
+                print("nivel");
+                print(aluno.usuario);
+                null;
+              }
+            }),
         ListTile(
           title: Container(
               padding: const EdgeInsets.only(top: 5),
@@ -500,4 +534,39 @@ class _PDFViewerPageState extends State<PDFViewerPage> {
       ),
     );
   }
+}
+
+NotificationService(Aluno aluno, Faixa faixa) {
+  AwesomeNotifications().initialize(
+    null,
+    [
+      NotificationChannel(
+          channelKey: 'Basic',
+          channelName: 'Progresso Alcançado!',
+          channelDescription: 'Mensagem Seth',
+          importance: NotificationImportance.Max)
+    ],
+    debug: true,
+  );
+  AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+    if (!isAllowed) {
+      AwesomeNotifications().requestPermissionToSendNotifications();
+    }
+  });
+  //Verifica se o Grau da faixa é liso para alterar o texto
+  String corpoMsg;
+  if (faixa.grau == '0') {
+    corpoMsg = '${aluno.nome} agora está no Grau liso da faixa ${faixa.faixa}!';
+  } else {
+    corpoMsg =
+        '${aluno.nome} agora está no ${faixa.grau}º Grau da faixa ${faixa.faixa}!';
+  }
+  AwesomeNotifications().createNotification(
+      content: NotificationContent(
+          id: 10,
+          icon: Emojis.body_tongue,
+          channelKey: 'Basic',
+          title: "Novo progresso de aluno!",
+          body: corpoMsg,
+          criticalAlert: true));
 }
