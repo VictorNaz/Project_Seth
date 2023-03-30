@@ -142,12 +142,14 @@ class ServerAluno {
       String jsonString = await response.stream.bytesToString();
       //converto os dados obtidos em um objeto JSON
       var result = await json.decode(jsonString);
+      print(result);
       //for in para adicionar os resultados em um array
       for (var list in result) {
-        lista.add(list["usuario"]);
+        lista.add(list["nome"]);
       }
 
       print("Alunos encontrados!");
+      print(lista);
       return lista;
     } else {
       print("Erro ao procurar os alunos");
