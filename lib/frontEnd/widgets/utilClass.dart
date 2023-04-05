@@ -54,10 +54,9 @@ class _DrawerTopState extends State<DrawerTop> {
 
   //Obtem a faixa e o grau do aluno
   getFaixa<String>() async {
-    var aluno = Aluno();
     aluno.usuario = await PrefsService.returnUser();
     aluno = await buscaInfo(aluno);
-    await buscaFaixa(aluno).then((value) {
+    await ServerAluno.buscaFaixa(aluno).then((value) {
       setState(() {
         faixaInfo = value;
         faixa = value.faixa;
@@ -73,8 +72,10 @@ class _DrawerTopState extends State<DrawerTop> {
         AwesomeNotifications().requestPermissionToSendNotifications();
       }
     });
-    getFaixa();
     getInfo();
+    print(aluno);
+    getFaixa();
+    print(faixaInfo);
     super.initState();
   }
 
@@ -159,7 +160,7 @@ class _DrawerTopState extends State<DrawerTop> {
                 )),
             onTap: () {
               if (aluno.nome == 'Administrador') {
-                print(aluno.usuario);
+                print("aquii");
                 //Passada as informações do aluno e de sua faixa
                 NotificationService(aluno, faixaInfo);
               } else {
@@ -564,7 +565,6 @@ NotificationService(Aluno aluno, Faixa faixa) {
   AwesomeNotifications().createNotification(
       content: NotificationContent(
           id: 10,
-          icon: Emojis.body_tongue,
           channelKey: 'Basic',
           title: "Novo progresso de aluno!",
           body: corpoMsg,

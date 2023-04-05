@@ -43,12 +43,12 @@ dependencies:
   shared_preferences: ^2.0.15          #Dados da sessão
   intl: ^0.17.0
   qr_flutter: ^4.0.0                   #Criar QR-Code
-  flutter_barcode_scanner: ^2.0.0      #Ler QR-Code
   http: ^0.13.5                        #Serviços de Session
   flutter_pdfview: ^1.2.5              #Ver PDF
   path_provider: ^2.0.11               #Componentes para adicionar o caminho do PDF
   path: ^1.8.2                         #Configuração do caminho PDF
   awesome_notifications: ^0.7.4+1       #Notificações Locais
+  flutter_barcode_scanner: ^2.0.0      #Ler QR-Code
 #  timezone: ^0.9.1                     #Pega o timezone global
 #  flutter_native_timezone: ^2.0.0      #Pega o timezone do dispositivo
 #  provider:                            #Plugin com o caminho Ex: /Home

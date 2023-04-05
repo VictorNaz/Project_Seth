@@ -371,10 +371,15 @@ class ServerAluno {
     if (response.statusCode == 200) {
       String jsonString = await response.stream.bytesToString();
       var result = await json.decode(jsonString);
-
+      String quantAula = result["quantidade_aulas"];
       progresso.faixa = result["nome"];
       int grau = result["grau"];
+      //Converte o int em String 
       progresso.grau = grau.toString();
+      //Converte um String em int?
+      int? quantAulaInt = int.tryParse(quantAula);
+      print(quantAulaInt);
+      progresso.quantAulas = quantAulaInt;
 
       print("Progresso encontrado com sucesso!");
       return progresso;

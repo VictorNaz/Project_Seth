@@ -1,8 +1,10 @@
 import 'package:flutter_project_seth/backEnd/modelo/aluno.dart';
 import 'package:flutter_project_seth/backEnd/modelo/faixa.dart';
+import 'package:flutter_project_seth/backEnd/modelo/progresso.dart';
 import 'package:flutter_project_seth/backEnd/security/dataCrypt.dart';
 import 'package:flutter_project_seth/backEnd/security/sessionService.dart';
 import 'package:flutter_project_seth/backEnd/server/serverAluno.dart';
+import 'package:flutter_project_seth/frontEnd/widgets/utilClass.dart';
 
 import '../modelo/autoAvaliacao.dart';
 
@@ -29,12 +31,32 @@ void cadAluno(String txtNome, String txtUsuario, String txtSenha,
 void validaPresAluno() async {
   var txtUsuario = await PrefsService.returnUser();
   var aluno = Aluno();
+  var faixa = Faixa();
   String? usr = txtUsuario;
   aluno.setUsuario = usr!;
 
   aluno.id = await ServerAluno.buscaAlunoId(aluno);
+  aluno = await ServerAluno.buscaInfo(aluno);
+  print(aluno);
+  print("ctrlaluno 41");
   await ServerAluno.valPresenAluno(aluno);
   await ServerAluno.atualizaProgresso(aluno);
+  faixa = await ServerAluno.buscaFaixa(aluno);
+  int? aulasPendentes = faixa.quantAulas;
+  int? aulasFeitas = await ServerAluno.buscaAulas(aluno);
+  
+  if (aulasFeitas == aulasPendentes) {
+NotificationService(aluno, faixa);
+    if (txtUsuario == 'admin') {
+      print(txtUsuario);
+      //Passada as informações do aluno e de sua faixa
+      NotificationService(aluno, faixa);
+    } else {
+      print("nivel");
+      print(aluno.usuario);
+      null;
+    }
+  }
 }
 
 //Login de Usuario
