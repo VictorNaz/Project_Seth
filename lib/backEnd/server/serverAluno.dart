@@ -108,7 +108,7 @@ class ServerAluno {
   static Future<int?> buscaAulas(Aluno aluno) async {
     var request = http.Request(
         'POST', Uri.parse('https://apiseth.cyclic.app/buscaAulas'));
-    request.body = await json.encode({"aluno_id": aluno.id});
+    request.body = json.encode({"aluno_id": aluno.id});
     request.headers.addAll(headers);
 
     var aulas = Faixa();
@@ -289,7 +289,7 @@ class ServerAluno {
     if (response.statusCode == 200) {
       String jsonString = await response.stream.bytesToString();
       var result = await json.decode(jsonString);
-
+      info.usuario = result["usuario"];
       info.nome = result["nome"];
       info.email = result["email"];
       info.cpf = result["cpf"];
@@ -366,17 +366,18 @@ class ServerAluno {
         'POST', Uri.parse('https://apiseth.cyclic.app/buscaFaixa'));
     request.body = json.encode({"faixa_id": aluno.faixa_id});
     request.headers.addAll(headers);
-
+    print(aluno.faixa_id);
     http.StreamedResponse response = await request.send();
     var progresso = Faixa();
 
     if (response.statusCode == 200) {
       String jsonString = await response.stream.bytesToString();
-      var result = await json.decode(jsonString);
+      print(jsonString);
+      var result = await json.decode(jsonString); //parou
       String quantAula = result["quantidade_aulas"];
       progresso.faixa = result["nome"];
       int grau = result["grau"];
-      //Converte o int em String 
+      //Converte o int em String
       progresso.grau = grau.toString();
       //Converte um String em int?
       int? quantAulaInt = int.tryParse(quantAula);
@@ -389,6 +390,26 @@ class ServerAluno {
       print("Erro ao procurar o progresso!");
       print(response.reasonPhrase);
       return progresso;
+    }
+  }
+
+  static Future<void> registraNotificacao(Aluno aluno, Faixa faixa) async {
+    var request = http.Request(
+        'POST', Uri.parse('https://apiseth.cyclic.app/registraNotificacao'));
+    request.body = json.encode({
+      "nome_aluno": aluno.nome,
+      "usuario_aluno": aluno.usuario,
+      "grau": faixa.grau,
+      "faixa": faixa.faixa
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+    } else {
+      print(response.reasonPhrase);
     }
   }
 }

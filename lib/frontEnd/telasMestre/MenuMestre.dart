@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_seth/frontEnd/telasAluno/info.dart';
 import 'package:flutter_project_seth/frontEnd/telasMestre/ForceProgress.dart';
 import 'package:flutter_project_seth/frontEnd/telasMestre/ListaAluno.dart';
 import 'package:flutter_project_seth/frontEnd/telasMestre/Relatorio.dart';
 import 'package:flutter_project_seth/frontEnd/widgets/QR_CodePage.dart';
 import '../../backEnd/modelo/aluno.dart';
+import '../../backEnd/modelo/faixa.dart';
 import '../../backEnd/security/sessionService.dart';
 import '../../backEnd/server/serverAluno.dart';
-import '../telasProf/ValPresenca.dart';
 import '../widgets/utilClass.dart';
 import 'CadProfessor.dart';
 
@@ -22,6 +21,7 @@ class _MenuMestreState extends State<MenuMestre> {
   String nome = "";
   String email = "";
   var aluno = Aluno();
+  var faixaInfo = Faixa();
 
   getInfoAluno<Aluno>() async {
     aluno.usuario = await PrefsService.returnUser();
@@ -34,9 +34,19 @@ class _MenuMestreState extends State<MenuMestre> {
     });
   }
 
+  //Obtem a faixa e o grau do aluno, assim como suas informaces
+  getInfo<Aluno>() async {
+    aluno.usuario = await PrefsService.returnUser();
+    aluno = await ServerAluno.buscaInfo(aluno);
+    faixaInfo = await ServerAluno.buscaFaixa(aluno);
+    email = aluno.email!;
+    nome = aluno.nome!;
+  }
+
   @override
   void initState() {
     getInfoAluno();
+    NotificationService(aluno, faixaInfo);
     super.initState();
   }
 
@@ -50,22 +60,14 @@ class _MenuMestreState extends State<MenuMestre> {
         title: const Center(
           child: Text("       Menu Mestre"),
         ),
-
-        //Icone de voltar quando utilizado o drawer no appbar
-        /*automaticallyImplyLeading: true,
-        leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              size: 30,
-            ),
-            onPressed: () => Navigator.pop(context, false)),*/
       ),
 
       //drawer para navegação no appbar
       //A classe Drawer está sendo chamada de outro arquivo e está recebendo por parametro o texto desejado.
-      endDrawer:  Drawer(
+      endDrawer: Drawer(
         child: DrawerTop(
-          texto: "Opções", nome: nome,
+          texto: "Opções",
+          nome: nome,
           email: email,
         ),
       ),

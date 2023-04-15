@@ -42,27 +42,11 @@ class _DrawerTopState extends State<DrawerTop> {
   var aluno = Aluno();
   var faixaInfo = Faixa();
 
+  //Obtem a faixa e o grau do aluno, assim como suas informaces
   getInfo<Aluno>() async {
     aluno.usuario = await PrefsService.returnUser();
-    await ServerAluno.buscaInfo(aluno).then((value) {
-      setState(() {
-        aluno = value;
-        aluno.nivel_acess = nivel;
-      });
-    });
-  }
-
-  //Obtem a faixa e o grau do aluno
-  getFaixa<String>() async {
-    aluno.usuario = await PrefsService.returnUser();
-    aluno = await buscaInfo(aluno);
-    await ServerAluno.buscaFaixa(aluno).then((value) {
-      setState(() {
-        faixaInfo = value;
-        faixa = value.faixa;
-        grau = value.grau;
-      });
-    });
+    aluno = await ServerAluno.buscaInfo(aluno);
+    faixaInfo = await ServerAluno.buscaFaixa(aluno);
   }
 
   @override
@@ -73,9 +57,6 @@ class _DrawerTopState extends State<DrawerTop> {
       }
     });
     getInfo();
-    print(aluno);
-    getFaixa();
-    print(faixaInfo);
     super.initState();
   }
 
@@ -164,8 +145,9 @@ class _DrawerTopState extends State<DrawerTop> {
                 //Passada as informações do aluno e de sua faixa
                 NotificationService(aluno, faixaInfo);
               } else {
-                print("nivel");
-                print(aluno.usuario);
+                NotificationService(aluno, faixaInfo);
+
+                
                 null;
               }
             }),

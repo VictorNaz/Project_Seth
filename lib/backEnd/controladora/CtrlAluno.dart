@@ -35,18 +35,20 @@ void validaPresAluno() async {
   String? usr = txtUsuario;
   aluno.setUsuario = usr!;
 
-  aluno.id = await ServerAluno.buscaAlunoId(aluno);
+  String? idAluno = await ServerAluno.buscaAlunoId(aluno);
+  //Teve de ser adicionado a uma variável, pois ao receber um novo valor, o usuário perdia o aluno.id
   aluno = await ServerAluno.buscaInfo(aluno);
-  print(aluno);
-  print("ctrlaluno 41");
   await ServerAluno.valPresenAluno(aluno);
   await ServerAluno.atualizaProgresso(aluno);
   faixa = await ServerAluno.buscaFaixa(aluno);
+  aluno.id = idAluno;
   int? aulasPendentes = faixa.quantAulas;
   int? aulasFeitas = await ServerAluno.buscaAulas(aluno);
-  
+
   if (aulasFeitas == aulasPendentes) {
-NotificationService(aluno, faixa);
+    //Verifica se o aluno alcançou a meta de aulas para o seu faixa_id
+    await ServerAluno.registraNotificacao(aluno, faixa);
+    NotificationService(aluno, faixa);
     if (txtUsuario == 'admin') {
       print(txtUsuario);
       //Passada as informações do aluno e de sua faixa
@@ -134,7 +136,6 @@ Future<int?> buscaAulas(Aluno aluno) async {
 }
 
 Future<Aluno> buscaInfo(Aluno aluno) async {
-  print("Email do aluno:");
   aluno = await ServerAluno.buscaInfo(aluno);
   print(aluno.email);
   return aluno;
