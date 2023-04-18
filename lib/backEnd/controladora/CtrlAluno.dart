@@ -112,9 +112,9 @@ Future<int?> buscaAulas(Aluno aluno) async {
 }
 
 Future<Aluno> buscaInfo(Aluno aluno) async {
-  print("Email do aluno:");
+  print("Informações do aluno encontradas!");
   aluno = await ServerAluno.buscaInfo(aluno);
-  print(aluno.email);
+  print("Erro ao procurar as informações do aluno!");
   return aluno;
 }
 
@@ -230,7 +230,6 @@ Future<bool> duplicaEmail(String value) async {
   var aluno = Aluno();
   aluno.email = value;
 
-  print(aluno.usuario);
   if (aluno.usuario == null) {
     return false;
     //Email não cadastrado
