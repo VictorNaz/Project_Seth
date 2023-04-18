@@ -18,6 +18,7 @@ class _QRCodeReadState extends State<QRCodeRead> {
   String ticket = '';
 
   readQRCode() async {
+    
     String code = await FlutterBarcodeScanner.scanBarcode(
       "#FFFFFF",
       "Cancelar",

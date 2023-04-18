@@ -1,8 +1,10 @@
 import 'package:flutter_project_seth/backEnd/modelo/aluno.dart';
 import 'package:flutter_project_seth/backEnd/modelo/faixa.dart';
+import 'package:flutter_project_seth/backEnd/modelo/progresso.dart';
 import 'package:flutter_project_seth/backEnd/security/dataCrypt.dart';
 import 'package:flutter_project_seth/backEnd/security/sessionService.dart';
 import 'package:flutter_project_seth/backEnd/server/serverAluno.dart';
+import 'package:flutter_project_seth/frontEnd/widgets/utilClass.dart';
 
 import '../modelo/autoAvaliacao.dart';
 
@@ -29,12 +31,45 @@ void cadAluno(String txtNome, String txtUsuario, String txtSenha,
 void validaPresAluno() async {
   var txtUsuario = await PrefsService.returnUser();
   var aluno = Aluno();
+  var faixa = Faixa();
   String? usr = txtUsuario;
   aluno.setUsuario = usr!;
+  bool
+      isFaixa; //Verifica se o que houve progresso é faixa ou grau TRUE= Faixa ; FALSE=Grau
 
-  aluno.id = await ServerAluno.buscaAlunoId(aluno);
+  String? idAluno = await ServerAluno.buscaAlunoId(aluno);
+  //Teve de ser adicionado a uma variável, pois ao receber um novo valor, o usuário perdia o aluno.id
+  aluno = await ServerAluno.buscaInfo(aluno);
   await ServerAluno.valPresenAluno(aluno);
   await ServerAluno.atualizaProgresso(aluno);
+  faixa = await ServerAluno.buscaFaixa(aluno);
+  aluno.id = idAluno;
+  int? aulasPendentes = faixa.quantAulas;
+  int? aulasFeitas = await ServerAluno.buscaAulas(aluno);
+
+  if (aluno.faixa_id == 6 ||
+      aluno.faixa_id == 11 ||
+      aluno.faixa_id == 16 ||
+      aluno.faixa_id == 21) {
+    //Se cair no if abaixo, significa que o aluno passou de faixa
+    isFaixa = true;
+    await ServerAluno.registraNotificacao(aluno, faixa);
+    NotificationService(aluno, faixa, isFaixa);
+  } else if (aulasFeitas == aulasPendentes) {
+    // Else, apenas foi mais um grau concluido, lembrando que grau 0 é igual a "liso"
+    isFaixa = false;
+    await ServerAluno.registraNotificacao(aluno, faixa);
+    NotificationService(aluno, faixa, isFaixa);
+    if (txtUsuario == 'admin') {
+      print(txtUsuario);
+      //Passada as informações do aluno e de sua faixa
+      NotificationService(aluno, faixa);
+    } else {
+      print("nivel");
+      print(aluno.usuario);
+      null;
+    }
+  }
 }
 
 //Login de Usuario
@@ -112,7 +147,7 @@ Future<int?> buscaAulas(Aluno aluno) async {
 }
 
 Future<Aluno> buscaInfo(Aluno aluno) async {
-  print("Informações do aluno encontradas!");
+  print("Email do aluno:");
   aluno = await ServerAluno.buscaInfo(aluno);
   print("Erro ao procurar as informações do aluno!");
   return aluno;
