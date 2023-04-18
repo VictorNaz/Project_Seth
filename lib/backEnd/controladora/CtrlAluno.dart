@@ -34,6 +34,7 @@ void validaPresAluno() async {
   var faixa = Faixa();
   String? usr = txtUsuario;
   aluno.setUsuario = usr!;
+  bool isFaixa; //Verifica se o que houve progresso é faixa ou grau TRUE= Faixa ; FALSE=Grau
 
   String? idAluno = await ServerAluno.buscaAlunoId(aluno);
   //Teve de ser adicionado a uma variável, pois ao receber um novo valor, o usuário perdia o aluno.id
@@ -45,10 +46,19 @@ void validaPresAluno() async {
   int? aulasPendentes = faixa.quantAulas;
   int? aulasFeitas = await ServerAluno.buscaAulas(aluno);
 
-  if (aulasFeitas == aulasPendentes) {
-    //Verifica se o aluno alcançou a meta de aulas para o seu faixa_id
+  if (aluno.faixa_id == 6 ||
+      aluno.faixa_id == 11 ||
+      aluno.faixa_id == 16 ||
+      aluno.faixa_id == 21) {
+    //Se cair no if abaixo, significa que o aluno passou de faixa
+    isFaixa = true;
     await ServerAluno.registraNotificacao(aluno, faixa);
-    NotificationService(aluno, faixa);
+    NotificationService(aluno, faixa, isFaixa);
+  } else if (aulasFeitas == aulasPendentes) {
+    // Else, apenas foi mais um grau concluido, lembrando que grau 0 é igual a "liso"
+    isFaixa = false;
+    await ServerAluno.registraNotificacao(aluno, faixa);
+    NotificationService(aluno, faixa,isFaixa);
     if (txtUsuario == 'admin') {
       print(txtUsuario);
       //Passada as informações do aluno e de sua faixa

@@ -147,7 +147,6 @@ class _DrawerTopState extends State<DrawerTop> {
               } else {
                 NotificationService(aluno, faixaInfo);
 
-                
                 null;
               }
             }),
@@ -519,7 +518,7 @@ class _PDFViewerPageState extends State<PDFViewerPage> {
   }
 }
 
-NotificationService(Aluno aluno, Faixa faixa) {
+NotificationService(Aluno aluno, Faixa faixa, [bool? isFaixa]) {
   AwesomeNotifications().initialize(
     null,
     [
@@ -536,19 +535,40 @@ NotificationService(Aluno aluno, Faixa faixa) {
       AwesomeNotifications().requestPermissionToSendNotifications();
     }
   });
-  //Verifica se o Grau da faixa é liso para alterar o texto
-  String corpoMsg;
-  if (faixa.grau == '0') {
-    corpoMsg = '${aluno.nome} agora está no Grau liso da faixa ${faixa.faixa}!';
-  } else {
-    corpoMsg =
-        '${aluno.nome} agora está no ${faixa.grau}º Grau da faixa ${faixa.faixa}!';
+  if (isFaixa == true) {
+    //Passagem de Faixa
+    //Verifica se o Grau da faixa é liso para alterar o texto
+    String corpoMsg;
+    if (faixa.grau == '0') {
+      corpoMsg =
+          '${aluno.nome} agora está no Grau liso da faixa ${faixa.faixa}!';
+    } else {
+      corpoMsg =
+          '${aluno.nome} agora está no ${faixa.grau}º Grau da faixa ${faixa.faixa}!';
+    }
+    AwesomeNotifications().createNotification(
+        content: NotificationContent(
+            id: 10,
+            channelKey: 'Basic',
+            title: "Nova Faixa alcançada",
+            body: corpoMsg,
+            criticalAlert: true));
+  } else {//Passagem de Grau
+//Verifica se o Grau da faixa é liso para alterar o texto
+    String corpoMsg;
+    if (faixa.grau == '0') {
+      corpoMsg =
+          '${aluno.nome} agora está no Grau liso da faixa ${faixa.faixa}!';
+    } else {
+      corpoMsg =
+          '${aluno.nome} agora está no ${faixa.grau}º Grau da faixa ${faixa.faixa}!';
+    }
+    AwesomeNotifications().createNotification(
+        content: NotificationContent(
+            id: 10,
+            channelKey: 'Basic',
+            title: "Novo Grau alcançado!",
+            body: corpoMsg,
+            criticalAlert: true));
   }
-  AwesomeNotifications().createNotification(
-      content: NotificationContent(
-          id: 10,
-          channelKey: 'Basic',
-          title: "Novo progresso de aluno!",
-          body: corpoMsg,
-          criticalAlert: true));
 }
