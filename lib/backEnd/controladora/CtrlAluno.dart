@@ -147,9 +147,7 @@ Future<int?> buscaAulas(Aluno aluno) async {
 }
 
 Future<Aluno> buscaInfo(Aluno aluno) async {
-  print("Email do aluno:");
   aluno = await ServerAluno.buscaInfo(aluno);
-  print("Erro ao procurar as informações do aluno!");
   return aluno;
 }
 
@@ -174,6 +172,11 @@ Future<Faixa> buscaFaixa(Aluno aluno) async {
   progresso = await ServerAluno.buscaFaixa(aluno);
 
   return progresso;
+}
+
+Future<String?> buscaUsarioPorNome(Aluno aluno) async {
+  aluno.usuario = await ServerAluno.buscaUsarioPorNome(aluno);
+  return aluno.usuario;
 }
 
 /*************************** VALIDAÇÕES DE CAMPO *******************************/

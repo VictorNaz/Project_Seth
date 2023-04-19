@@ -10,10 +10,10 @@ import '../../backEnd/server/serverAluno.dart';
 import '../widgets/utilClass.dart';
 
 class DetalheAluno extends StatefulWidget {
-  final String usuario;
+  final String nome;
   const DetalheAluno({
     Key? key,
-    required this.usuario,
+    required this.nome,
   }) : super(key: key);
 
   @override
@@ -33,36 +33,35 @@ class _DetalheAlunoState extends State<DetalheAluno> {
   String email = "";
   var aluno = Aluno();
 
+  //A instancia mestre do tipo aluno carrega as informações do usuario da seção principal
+  var mestre = Aluno();
+  //Esse método serve para carregar as informações do usuario logado para mostrar no drower
   getInfoAluno<Aluno>() async {
-    aluno.usuario = await PrefsService.returnUser();
-    await ServerAluno.buscaInfo(aluno).then((value) {
+    mestre.usuario = await PrefsService.returnUser();
+    await ServerAluno.buscaInfo(mestre).then((value) {
       setState(() {
-        aluno = value;
-        nome = aluno.nome!;
-        email = aluno.email!;
+        mestre = value;
+        nome = mestre.nome!;
+        email = mestre.email!;
       });
     });
   }
 
-  //O comando getList serve para podermos mudar o tipo do retorno da buscaAvaliacao
+  // serve para podermos mudar o tipo do retorno da buscaAvaliacao
   //de Future<list<double>> para list<double>, alem de setar o valor em uma variavel global
   //este método recebe o usuario como um parametro da classe DetalheAluno
-  getAvaliacao<List>() async {
-    var aluno = Aluno();
-    aluno.usuario = widget.usuario;
-    aluno.usuario = await buscaAvaliacao(aluno).then((value) {
+  getInfoUsuario<List>() async {
+    aluno.nome = widget.nome;
+    aluno.usuario = await buscaUsarioPorNome(aluno);
+    print(aluno.usuario);
+    await buscaAvaliacao(aluno).then((value) {
       setState(() {
         lista = value;
       });
     });
-  }
-
-  //O comando getaulas serve para pegar o valor do backend da quantidade de aulas frequentadas quando a página é carregada
-  //alem de setar o valor após a coleta dos dados.
-  //este método recebe o usuario como um parametro da classe DetalheAluno
-  getAulas<int>() async {
-    var aluno = Aluno();
-    aluno.usuario = widget.usuario;
+    //este serve para pegar o valor do backend da quantidade de aulas frequentadas quando a página é carregada
+    //alem de setar o valor após a coleta dos dados.
+    //este método recebe o usuario como um parametro da classe DetalheAluno
     await buscaAulas(aluno).then((value) {
       if (value != null) {
         setState(() {
@@ -71,11 +70,6 @@ class _DetalheAlunoState extends State<DetalheAluno> {
         });
       }
     });
-  }
-
-  getFaixa<String>() async {
-    var aluno = Aluno();
-    aluno.usuario = widget.usuario;
     aluno = await buscaInfo(aluno);
     await buscaFaixa(aluno).then((value) {
       setState(() {
@@ -89,9 +83,7 @@ class _DetalheAlunoState extends State<DetalheAluno> {
 
   //O comando abaixo define a inicialização do getList antes do carregamento da pagina
   void initState() {
-    getAvaliacao();
-    getFaixa();
-    getAulas();
+    getInfoUsuario();
     getInfoAluno();
     super.initState();
   }
@@ -264,91 +256,6 @@ class _DetalheAlunoState extends State<DetalheAluno> {
                     )),
                 //Espaçamento entre botões
                 const Padding(padding: EdgeInsets.only(bottom: 40)),
-
-                /* Card(
-
-                    //Determinamos o raio das bordas do card
-                    shape: (RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    )),
-
-                    //determinamos a cor do card
-                    //color: const Color.fromARGB(255, 252, 72, 27),
-
-                    //ClopRRect serve para que o texto não ultrapasse os raios do card
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-
-                      //SingleChildScrollView serve para o texto quando expandido não ultrapasse o tamanho da tela
-                      child: SingleChildScrollView(
-                        physics: const BouncingScrollPhysics(),
-
-                        //ExpansionTile é um botão que se expande mostrando informações adicionais
-                        child: ExpansionTile(
-                          //mantem a caixa de texto aberta quando carregada a página
-                          initiallyExpanded: true,
-                          //determinamos as cores do botão quando aberto e fechado
-                          textColor: const Color.fromARGB(255, 252, 72, 27),
-                          collapsedBackgroundColor:
-                              const Color.fromARGB(255, 252, 72, 27),
-                          collapsedTextColor: Colors.white,
-                          backgroundColor: Colors.white,
-                          childrenPadding: const EdgeInsets.all(16),
-                          //titulo do botão
-                          title: const Text(
-                            "Aulas Fundamentais",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 25,
-                            ),
-                          ),
-
-                          //texto quando expandido
-                          children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Text(
-                                  "Progresso Fundamental",
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                                const Padding(padding: EdgeInsets.only(top: 7)),
-                                Padding(
-                                  padding: const EdgeInsets.all(1),
-                                  child: LinearPercentIndicator(
-                                    width:
-                                        MediaQuery.of(context).size.width - 50,
-                                    animation: true,
-                                    lineHeight: 25.0,
-                                    animationDuration: 2000,
-                                    percent: 0.8,
-                                    barRadius: const Radius.circular(16),
-                                    progressColor:
-                                        const Color.fromARGB(255, 252, 72, 27),
-                                    backgroundColor: const Color.fromARGB(
-                                        252, 207, 203, 203),
-                                  ),
-                                ),
-                                const Padding(
-                                    padding: EdgeInsets.only(bottom: 10)),
-                                Row(
-                                  children: const [
-                                    Padding(padding: EdgeInsets.only(left: 10)),
-                                    Text("50/60 Aulas"),
-                                    Padding(
-                                        padding: EdgeInsets.only(right: 150)),
-                                    Text("80% Concluído")
-                                  ],
-                                ),
-                                const Padding(
-                                    padding: EdgeInsets.only(bottom: 10)),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    )), */
-
                 // Esta classe retorna um card com um expansionTile dentro, recebendo o titulo e a descrição do mesmo.
                 Card(
 
