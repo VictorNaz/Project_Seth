@@ -440,7 +440,7 @@ class ServerAluno {
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
 
-    var listaNot = [Aluno()];
+    var listaNot = [];
 
     if (response.statusCode == 200) {
       //converte os dados do banco em String
