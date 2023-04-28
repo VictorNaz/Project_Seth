@@ -1,21 +1,20 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:ffi';
 import 'package:flutter_project_seth/backEnd/modelo/aluno.dart';
 import 'package:flutter_project_seth/backEnd/modelo/faixa.dart';
 import 'package:flutter_project_seth/backEnd/security/sessionService.dart';
 import 'package:http/http.dart' as http;
-
 import '../modelo/autoAvaliacao.dart';
 
-//Escopo padrão com Auth nos paramêtros
+//!Escopo padrão com Auth nos paramêtros
 var headers = {
   'Content-Type': 'application/json',
   'Authorization': 'Basic YWRtaW46QWxlc2V0aCFAIw=='
 };
 
-//cadastra o aluno no banco de dados
+//Classe de transações com a API para operações com alunos
 class ServerAluno {
+  //Cadastra o aluno no banco de dados
   static Future<void> cadastrarAluno(Aluno aluno) async {
     var request = http.Request(
         'POST', Uri.parse('https://apiseth.cyclic.app/cadastrarAluno'));
@@ -38,7 +37,7 @@ class ServerAluno {
     }
   }
 
-  //valida a presença do aluno no banco
+  //Valida a presença do aluno no banco
   static Future<void> valPresenAluno(Aluno aluno) async {
     try {
       String url_Api = 'https://apiseth.cyclic.app/validaPresenca';
@@ -61,6 +60,7 @@ class ServerAluno {
     }
   }
 
+  //Atualiza o progresso do aluno, altera o valor do id da tabela de faixas
   static Future<void> atualizaProgresso(Aluno aluno) async {
     try {
       String url_Api = 'https://apiseth.cyclic.app/atualizaProgresso';
@@ -85,7 +85,7 @@ class ServerAluno {
     }
   }
 
-  //busca o id do aluno recebendo o usuario dele
+  //Busca o id do aluno recebendo o usuario dele
   static Future<String> buscaAlunoId(Aluno aluno) async {
     var request = http.Request(
         'POST', Uri.parse('https://apiseth.cyclic.app/buscaAlunoId'));
@@ -104,7 +104,7 @@ class ServerAluno {
     return id;
   }
 
-  //busca a quantidade de aulas que o aluno já frequentou
+  //Busca a quantidade de aulas que o aluno já frequentou
   static Future<int?> buscaAulas(Aluno aluno) async {
     var request = http.Request(
         'POST', Uri.parse('https://apiseth.cyclic.app/buscaAulas'));
@@ -128,7 +128,7 @@ class ServerAluno {
     return aulas.quantAulas;
   }
 
-  //busca todos os alunos no banco de dados
+  //Busca todos os alunos no banco de dados
   static Future<List> buscaAlunos() async {
     var request = http.Request(
         'POST', Uri.parse('https://apiseth.cyclic.app/buscaAlunos'));
@@ -158,7 +158,7 @@ class ServerAluno {
     }
   }
 
-  //busca a auto-avaliação do aluno
+  //Busca a auto-avaliação do aluno
   static Future<AutoAvaliacao> buscaAvaliacao(Aluno aluno) async {
     var request = http.Request(
         'POST', Uri.parse('https://apiseth.cyclic.app/buscarAvaliacao'));
@@ -188,7 +188,7 @@ class ServerAluno {
     }
   }
 
-  //inicia o progresso do aluno quando ele é cadastrado
+  //Inicia o progresso do aluno quando ele é cadastrado
   static Future<void> iniciaProgresso(Aluno aluno) async {
     var request = http.Request(
         'POST', Uri.parse('https://apiseth.cyclic.app/iniciaProgresso'));
@@ -205,7 +205,7 @@ class ServerAluno {
     }
   }
 
-  //verifica se o usuario já existe no banco
+  //Verifica se o usuario já existe no banco
   static Future<bool> verificaUsuario(Aluno aluno) async {
     var request = http.Request(
         'POST', Uri.parse('https://apiseth.cyclic.app/buscaUsuarioAluno'));
@@ -226,8 +226,7 @@ class ServerAluno {
     }
   }
 
-  //procura o usuario e senha digitados no banco e loga o usuario
-
+  //Procura o usuario e senha digitados no banco e loga o usuario
   static Future<String> logaUsuario(Aluno aluno) async {
     var request = http.Request(
         'POST', Uri.parse('https://apiseth.cyclic.app/loginUsuario'));
@@ -277,6 +276,7 @@ class ServerAluno {
     }
   }
 
+  //Busca informações do aluno pelo usuario do aluno e retorna as informações
   static Future<Aluno> buscaInfo(Aluno aluno) async {
     var request =
         http.Request('POST', Uri.parse('https://apiseth.cyclic.app/buscaInfo'));
@@ -303,6 +303,7 @@ class ServerAluno {
     }
   }
 
+  //Busca o usuário pelo e-mail
   static Future<bool> buscaUsuarioPorEmail(Aluno aluno) async {
     var request = http.Request(
         'POST', Uri.parse('https://apiseth.cyclic.app/buscaUsuarioPorEmail'));
@@ -332,6 +333,7 @@ class ServerAluno {
     }
   }
 
+  //Busca o usuario do aluno no BD, e valida se já existe
   static Future<bool> buscaUsuarioPorUsuario(Aluno aluno) async {
     var request = http.Request(
         'POST', Uri.parse('https://apiseth.cyclic.app/buscaUsuarioPorUsuario'));
@@ -344,9 +346,6 @@ class ServerAluno {
     http.StreamedResponse response = await request.send();
     print(
         '${response.reasonPhrase} ${response.contentLength} : Response Print 288');
-
-    String jsonString = await response.stream.bytesToString();
-
     if (response.contentLength != 0) {
       print("Usuário já utilizado!");
       print(response.reasonPhrase);
@@ -361,6 +360,7 @@ class ServerAluno {
     }
   }
 
+  //Busca informações sobre a faixa do aluno
   static Future<Faixa> buscaFaixa(Aluno aluno) async {
     var request = http.Request(
         'POST', Uri.parse('https://apiseth.cyclic.app/buscaFaixa'));
@@ -376,11 +376,9 @@ class ServerAluno {
       var result = await json.decode(jsonString); //parou
       String quantAula = result["quantidade_aulas"];
       progresso.faixa = result["nome"];
-      int grau = result["grau"];
-      //Converte o int em String
-      progresso.grau = grau.toString();
-      //Converte um String em int?
-      int? quantAulaInt = int.tryParse(quantAula);
+      progresso.grau = result["grau"];
+      //progresso.grau = grau.toString(); //!Converte o int em String
+      int? quantAulaInt = int.tryParse(quantAula); //!Converte um String em int?
       print(quantAulaInt);
       progresso.quantAulas = quantAulaInt;
 
@@ -393,23 +391,58 @@ class ServerAluno {
     }
   }
 
-  static Future<void> registraNotificacao(Aluno aluno, Faixa faixa) async {
+  //Registra do BD quando o aluno passa de faixa ou de grau, para gerar a notificação
+  static Future<void> registraNotificacao(
+      Aluno aluno, Faixa faixa, String isFaixa) async {
     var request = http.Request(
         'POST', Uri.parse('https://apiseth.cyclic.app/registraNotificacao'));
     request.body = json.encode({
       "nome_aluno": aluno.nome,
       "usuario_aluno": aluno.usuario,
       "grau": faixa.grau,
-      "faixa": faixa.faixa
+      "faixa": faixa.faixa,
+      "is_faixa": isFaixa
     });
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
-
+    print(isFaixa);
     if (response.statusCode == 200) {
       print(await response.stream.bytesToString());
     } else {
       print(response.reasonPhrase);
     }
   }
-}
+
+  //busca todos os alunos no banco de dados que possuem notificações disponiveis
+  static Future<List> buscaNotificacoes() async {
+    var request = http.Request(
+        'POST', Uri.parse('https://apiseth.cyclic.app/buscaNotificacoes'));
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+
+    var listaNot = [Aluno()];
+
+    if (response.statusCode == 200) {
+      //converte os dados do banco em String
+      String jsonString = await response.stream.bytesToString();
+      var result = await json.decode(jsonString);
+
+      for (var list in result) {
+        listaNot.add(list["nome_aluno"]);
+      }
+      //for in para adicionar os resultados em um array
+      // for (var list in result) {
+      //  listaNot.add(list["usuario_aluno"]);
+      //   listaNot.add(list["nome_aluno"]);
+      //  listaNot.add(list["grau"]);
+      //  listaNot.add(list["faixa"]);
+      // }
+
+      return listaNot;
+    } else {
+      print(response.reasonPhrase);
+      return listaNot;
+    }
+  }
+}//Fim da classe

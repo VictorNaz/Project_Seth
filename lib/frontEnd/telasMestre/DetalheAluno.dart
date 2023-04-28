@@ -80,7 +80,7 @@ class _DetalheAlunoState extends State<DetalheAluno> {
     await buscaFaixa(aluno).then((value) {
       setState(() {
         faixa = value.faixa;
-        grau = value.grau;
+        grau = value.grau.toString();
       });
     });
   }

@@ -79,7 +79,7 @@ class _DesempAlunoState extends State<DesempAluno> {
     await buscaFaixa(aluno).then((value) {
       setState(() {
         faixa = value.faixa;
-        grau = value.grau;
+        grau = value.grau.toString();
         print(faixa);
       });
     });

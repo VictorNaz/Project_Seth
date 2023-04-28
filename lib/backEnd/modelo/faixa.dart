@@ -1,7 +1,7 @@
 class Faixa {
   String? id;
   String? faixa;
-  String? grau;
+  int? grau;
   int? quantAulas;
 
   String? get getId {
@@ -20,11 +20,11 @@ class Faixa {
     this.faixa = faixa;
   }
 
-  String? get getGrau {
+  int? get getGrau {
     return grau;
   }
 
-  set setGrau(String grau) {
+  set setGrau(int grau) {
     this.grau = grau;
   }
 

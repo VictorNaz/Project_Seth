@@ -13,6 +13,7 @@ import 'package:path/path.dart';
 import '../../backEnd/modelo/aluno.dart';
 import '../../backEnd/server/serverAluno.dart';
 import '../telasAluno/PerfilAluno.dart';
+import '../telasMestre/listaNotificacoes.dart';
 
 //classe que retorna o drawertop
 class DrawerTop extends StatefulWidget {
@@ -141,7 +142,16 @@ class _DrawerTopState extends State<DrawerTop> {
                 )),
             onTap: () {
               if (aluno.nome == 'Administrador') {
-                print("aquii");
+                /*  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                        builder: (context) => const ListaNotificacoes()),
+                    (Route<dynamic> route) => false);*/
+
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: ((context) => const ListaNotificacoes())));
+
                 //Passada as informações do aluno e de sua faixa
                 NotificationService(aluno, faixaInfo);
               } else {
@@ -518,9 +528,9 @@ class _PDFViewerPageState extends State<PDFViewerPage> {
   }
 }
 
-NotificationService(Aluno aluno, Faixa faixa, [bool? isFaixa]) {
+NotificationService(Aluno aluno, Faixa faixa, [String? isFaixa]) {
   AwesomeNotifications().initialize(
-    null,
+    'resource://drawable/launcher_icon',
     [
       NotificationChannel(
           channelKey: 'Basic',
@@ -535,11 +545,11 @@ NotificationService(Aluno aluno, Faixa faixa, [bool? isFaixa]) {
       AwesomeNotifications().requestPermissionToSendNotifications();
     }
   });
-  if (isFaixa == true) {
+  if (isFaixa == "true") {
     //Passagem de Faixa
     //Verifica se o Grau da faixa é liso para alterar o texto
     String corpoMsg;
-    if (faixa.grau == '0') {
+    if (faixa.grau == 0) {
       corpoMsg =
           '${aluno.nome} agora está no Grau liso da faixa ${faixa.faixa}!';
     } else {
@@ -553,7 +563,8 @@ NotificationService(Aluno aluno, Faixa faixa, [bool? isFaixa]) {
             title: "Nova Faixa alcançada",
             body: corpoMsg,
             criticalAlert: true));
-  } else {//Passagem de Grau
+  } else {
+    //Passagem de Grau
 //Verifica se o Grau da faixa é liso para alterar o texto
     String corpoMsg;
     if (faixa.grau == '0') {

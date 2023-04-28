@@ -29,7 +29,7 @@ Future<String?> forcaProgresso(
   var aluno = Aluno();
 
   progresso.faixa = txtFaixa;
-  progresso.grau = txtGrau;
+  progresso.grau = int.tryParse(txtGrau);
   aluno.usuario = txtUsuario;
   aluno.id = await ServerAluno.buscaAlunoId(aluno);
   progresso.id = await ServerProfessor.buscaFaixaId(progresso);
@@ -43,6 +43,13 @@ Future<List> buscaAlunos() async {
   var alunos = await ServerAluno.buscaAlunos();
 
   return alunos;
+}
+
+//BUSCA AS NOTIFICAÇÕES DISPONIVEIS
+Future<List> buscaNotificacoes() async {
+  var notificacao = await ServerAluno.buscaNotificacoes();
+
+  return notificacao;
 }
 
 /*************************** VALIDAÇÕES DE CAMPO *******************************/

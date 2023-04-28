@@ -1,6 +1,5 @@
-import 'package:flutter_project_seth/backEnd/modelo/aluno.dart';
+import '../modelo/aluno.dart';
 import 'package:flutter_project_seth/backEnd/modelo/faixa.dart';
-import 'package:flutter_project_seth/backEnd/modelo/progresso.dart';
 import 'package:flutter_project_seth/backEnd/security/dataCrypt.dart';
 import 'package:flutter_project_seth/backEnd/security/sessionService.dart';
 import 'package:flutter_project_seth/backEnd/server/serverAluno.dart';
@@ -8,7 +7,7 @@ import 'package:flutter_project_seth/frontEnd/widgets/utilClass.dart';
 
 import '../modelo/autoAvaliacao.dart';
 
-/********************** CLASSES DE CONTROLE  **************************/
+/// ******************** CLASSES DE CONTROLE  *************************///
 
 //Cadastra aluno
 void cadAluno(String txtNome, String txtUsuario, String txtSenha,
@@ -34,7 +33,7 @@ void validaPresAluno() async {
   var faixa = Faixa();
   String? usr = txtUsuario;
   aluno.setUsuario = usr!;
-  bool
+  String
       isFaixa; //Verifica se o que houve progresso é faixa ou grau TRUE= Faixa ; FALSE=Grau
 
   String? idAluno = await ServerAluno.buscaAlunoId(aluno);
@@ -46,19 +45,19 @@ void validaPresAluno() async {
   aluno.id = idAluno;
   int? aulasPendentes = faixa.quantAulas;
   int? aulasFeitas = await ServerAluno.buscaAulas(aluno);
-
-  if (aluno.faixa_id == 6 ||
-      aluno.faixa_id == 11 ||
-      aluno.faixa_id == 16 ||
-      aluno.faixa_id == 21) {
-    //Se cair no if abaixo, significa que o aluno passou de faixa
-    isFaixa = true;
-    await ServerAluno.registraNotificacao(aluno, faixa);
+  //Se cair no if abaixo, significa que o aluno passou de faixa
+  if ((aluno.faixa_id == 5 && aulasFeitas == aulasPendentes) ||
+      (aluno.faixa_id == 10 && aulasFeitas == aulasPendentes) ||
+      (aluno.faixa_id == 15 && aulasFeitas == aulasPendentes) ||
+      (aluno.faixa_id == 20 && aulasFeitas == aulasPendentes)) {
+    isFaixa = "true";
+    await ServerAluno.registraNotificacao(aluno, faixa, isFaixa);
     NotificationService(aluno, faixa, isFaixa);
+
+  // Else, apenas foi mais um grau concluido, lembrando que grau 0 é igual a "liso"
   } else if (aulasFeitas == aulasPendentes) {
-    // Else, apenas foi mais um grau concluido, lembrando que grau 0 é igual a "liso"
-    isFaixa = false;
-    await ServerAluno.registraNotificacao(aluno, faixa);
+    isFaixa = "false";
+    await ServerAluno.registraNotificacao(aluno, faixa, isFaixa);
     NotificationService(aluno, faixa, isFaixa);
     if (txtUsuario == 'admin') {
       print(txtUsuario);
@@ -240,7 +239,7 @@ String? validaUsuario(String value) {
   var aluno = Aluno();
   aluno.usuario = value;
   if (value.isEmpty) {
-    return "O campo usuário não ser vazio!";
+    return "O campo usuário não pode ser vazio!";
   } else if (!regExp.hasMatch(value)) {
     return "O usuário de acesso precisa estar em minúsculo!";
   }
