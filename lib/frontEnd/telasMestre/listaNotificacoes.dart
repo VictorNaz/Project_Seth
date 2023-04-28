@@ -83,7 +83,7 @@ class _ListaNotificacoesState extends State<ListaNotificacoes> {
               tileColor: Colors.indigo[50],
               horizontalTitleGap: 20,
               title: Text('${listaNotificacoes[index]}'),
-              subtitle: const Text('Faixa'),
+              subtitle: const Text('Faixa - 1º'),
               leading: const Icon(Icons.person),
               trailing: IconButton(
                 icon: const Icon(Icons.arrow_forward),
@@ -92,7 +92,7 @@ class _ListaNotificacoesState extends State<ListaNotificacoes> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => DetalheAluno(
-                              usuario: listaNotificacoes[index],
+                              nome: listaNotificacoes[index],
                             )),
                   );
                   print(listaNotificacoes[index]);
