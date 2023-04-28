@@ -100,8 +100,27 @@ class ServerAluno {
     } else {
       print(response.reasonPhrase);
     }
-
     return id;
+  }
+
+  //Busca o usuario pelo nome do aluno
+  static Future<String?> buscaUsarioPorNome(Aluno aluno) async {
+    var request = http.Request(
+        'POST', Uri.parse('https://apiseth.cyclic.app/buscaUsuarioPorNome'));
+    request.body = await json.encode({"nome": aluno.nome});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+    String jsonString = await response.stream.bytesToString();
+    aluno.usuario = await json.decode(jsonString);
+
+    if (response.statusCode == 200) {
+      print("Conexão estabelecida! valor retornado: $aluno.usuario ");
+    } else {
+      print(response.reasonPhrase);
+    }
+
+    return aluno.usuario;
   }
 
   //Busca a quantidade de aulas que o aluno já frequentou

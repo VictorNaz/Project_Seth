@@ -93,7 +93,7 @@ class _ListaAlunoState extends State<ListaAluno> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => DetalheAluno(
-                              usuario: listaAlunos[index],
+                              nome: listaAlunos[index],
                             )),
                   );
                   print(listaAlunos[index]);
