@@ -5,6 +5,7 @@ import 'package:flutter_project_seth/backEnd/modelo/faixa.dart';
 import 'package:flutter_project_seth/backEnd/security/sessionService.dart';
 import 'package:http/http.dart' as http;
 import '../modelo/autoAvaliacao.dart';
+import '../modelo/notificacoes.dart';
 
 //!Escopo padrão com Auth nos paramêtros
 var headers = {
@@ -94,7 +95,7 @@ class ServerAluno {
 
     http.StreamedResponse response = await request.send();
     String id = await response.stream.bytesToString();
-
+    print(id);
     if (response.statusCode == 200) {
       print("Conexão estabelecida! valor retornado: $id ");
     } else {
@@ -313,6 +314,8 @@ class ServerAluno {
       info.email = result["email"];
       info.cpf = result["cpf"];
       info.faixa_id = result["faixa_id"];
+      int? idUser = result["id"];
+      info.id = idUser.toString();
       print("Informações encontradas encontrados!");
       return info;
     } else {
@@ -434,22 +437,76 @@ class ServerAluno {
   }
 
   //busca todos os alunos no banco de dados que possuem notificações disponiveis
-  static Future<List> buscaNotificacoes() async {
+  static Future buscaNotificacoes() async {
     var request = http.Request(
         'POST', Uri.parse('https://apiseth.cyclic.app/buscaNotificacoes'));
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
 
-    var listaNot = [];
-
     if (response.statusCode == 200) {
       //converte os dados do banco em String
       String jsonString = await response.stream.bytesToString();
-      var result = await json.decode(jsonString);
+      var result = await json.decode(jsonString)
+          as List; //identificar o tamanho do result
+      // print(result);
 
-      for (var list in result) {
-        listaNot.add(list["nome_aluno"]);
-      }
+      String? is_Faixa;
+      var listaNotif = ListaNoti(result);
+      int p = 0;
+      List<Notificacoes> listaNot = [];
+
+      listaNotif.notificacoes.forEach((element) {
+        //   for (int i = 0; i < listaNotif.notificacoes.length; i++) {
+        //   p = p + 1;
+
+        if (element['is_faixa'] == 'true') {
+          is_Faixa = 'Faixa';
+        } else {
+          is_Faixa = 'Grau';
+        }
+
+        Notificacoes notificacoes = Notificacoes(
+            element['idnotificacoes'],
+            element['usuario_aluno'],
+            element['nome_aluno'],
+            element['grau'],
+            element['faixa'],
+            is_Faixa);
+        listaNot.add(notificacoes);
+
+        print(listaNotif.notificacoes.length);
+        //    }
+      });
+      print(listaNot[0].is_Faixa);
+      /*result.forEach((element) {
+        print(element['usuario_aluno']);
+      });
+     result.forEach((element) {
+        print('$element print here 453');
+        int? grau = int.tryParse(element['grau']);
+        int? idNotificacoes = int.tryParse(element['idnotificacoes']);
+        Notificacoes notificacoes = Notificacoes(
+            idNotificacoes,
+            element['usuario_aluno'],
+            element['nome_aluno'],
+            grau,
+            element['faixa'],
+            element['is_Faixa']);
+
+        listaNot.add(element);
+        print(listaNot);
+      });*/
+      //  for (var list in result) {
+      //    listaNot[0].idNotificacoes = result['idnotificacoes'];
+      //  }
+      /* for (int i = 0; i < result[i]; i++) {
+        listaNot[i].nomeAluno = result['nome_aluno'];
+        listaNot[i].usuarioAluno = result['usuario_aluno'];
+        listaNot[i].grau = result['grau'];
+      listaNot[i].faixa = result['faixa'];
+        listaNot[i].is_Faixa = result['is_Faixa'];
+     }
+     */
       //for in para adicionar os resultados em um array
       // for (var list in result) {
       //  listaNot.add(list["usuario_aluno"]);
@@ -461,7 +518,7 @@ class ServerAluno {
       return listaNot;
     } else {
       print(response.reasonPhrase);
-      return listaNot;
+      return null; //ajusttar
     }
   }
 }//Fim da classe

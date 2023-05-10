@@ -4,6 +4,7 @@ import 'package:flutter_project_seth/backEnd/security/dataCrypt.dart';
 import 'package:flutter_project_seth/backEnd/server/serverProfessor.dart';
 
 import '../modelo/faixa.dart';
+import '../modelo/notificacoes.dart';
 import '../modelo/professor.dart';
 import '../server/serverAluno.dart';
 
@@ -33,7 +34,6 @@ Future<String?> forcaProgresso(
   aluno.usuario = txtUsuario;
   aluno.id = await ServerAluno.buscaAlunoId(aluno);
   progresso.id = await ServerProfessor.buscaFaixaId(progresso);
-  print(progresso.id);
   ServerProfessor.forcaProgresso(aluno, progresso);
   return null;
 }
@@ -47,8 +47,8 @@ Future<List> buscaAlunos() async {
 
 //BUSCA AS NOTIFICAÇÕES DISPONIVEIS
 Future<List> buscaNotificacoes() async {
-  var notificacao = await ServerAluno.buscaNotificacoes();
-
+  List notificacao = await ServerAluno.buscaNotificacoes(
+  );
   return notificacao;
 }
 

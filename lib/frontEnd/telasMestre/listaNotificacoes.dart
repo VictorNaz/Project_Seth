@@ -3,6 +3,7 @@ import 'package:flutter_project_seth/frontEnd/telasMestre/DetalheAluno.dart';
 
 import '../../backEnd/controladora/CtrlProfessor.dart';
 import '../../backEnd/modelo/aluno.dart';
+import '../../backEnd/modelo/notificacoes.dart';
 import '../../backEnd/security/sessionService.dart';
 import '../../backEnd/server/serverAluno.dart';
 import '../widgets/utilClass.dart';
@@ -15,7 +16,8 @@ class ListaNotificacoes extends StatefulWidget {
 }
 
 class _ListaNotificacoesState extends State<ListaNotificacoes> {
-  List listaNotificacoes = [];
+  var listaNotificacoes = [];
+
   String teste = "";
 
   String nome = "";
@@ -37,6 +39,8 @@ class _ListaNotificacoesState extends State<ListaNotificacoes> {
     await buscaNotificacoes().then((value) {
       setState(() {
         listaNotificacoes = value;
+        print(listaNotificacoes);
+        print('hereee');
       });
     });
   }
@@ -56,7 +60,7 @@ class _ListaNotificacoesState extends State<ListaNotificacoes> {
         //Barra superior já com o icone de voltar
         backgroundColor: const Color.fromARGB(255, 252, 72, 27),
         title: const Center(
-          child: Text("Desempenho do Aluno        "),
+          child: Text("Notificações de Progresso        "),
         ),
 
         //Icone de voltar quando utilizado o drawer no appbar
@@ -82,8 +86,10 @@ class _ListaNotificacoesState extends State<ListaNotificacoes> {
                 child: ListTile(
               tileColor: Colors.indigo[50],
               horizontalTitleGap: 20,
-              title: Text('${listaNotificacoes[index]}'),
-              subtitle: const Text('Faixa - 1º'),
+              title: Text(
+                  'Tipo de Progresso: ${listaNotificacoes[index].is_Faixa}\nAluno: ${listaNotificacoes[index].nomeAluno}'),
+              subtitle: Text(
+                  "Faixa - ${listaNotificacoes[index].faixa} ${listaNotificacoes[index].grau}º Grau"),
               leading: const Icon(Icons.person),
               trailing: IconButton(
                 icon: const Icon(Icons.arrow_forward),
@@ -91,9 +97,9 @@ class _ListaNotificacoesState extends State<ListaNotificacoes> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => DetalheAluno(
-                              nome: listaNotificacoes[index],
-                            )),
+                        builder: (context) =>
+                            DetalheAluno(nome: "" //listaNotificacoes[index],
+                                )),
                   );
                   print(listaNotificacoes[index]);
                 },

@@ -37,6 +37,7 @@ class _ListaAlunoState extends State<ListaAluno> {
     await buscaAlunos().then((value) {
       setState(() {
         listaAlunos = value;
+        
       });
     });
   }

@@ -36,15 +36,16 @@ void validaPresAluno() async {
   String
       isFaixa; //Verifica se o que houve progresso é faixa ou grau TRUE= Faixa ; FALSE=Grau
 
-  String? idAluno = await ServerAluno.buscaAlunoId(aluno);
+  //aluno.id = idAluno;
   //Teve de ser adicionado a uma variável, pois ao receber um novo valor, o usuário perdia o aluno.id
   aluno = await ServerAluno.buscaInfo(aluno);
   await ServerAluno.valPresenAluno(aluno);
+  int? aulasFeitas = await ServerAluno.buscaAulas(aluno);
   await ServerAluno.atualizaProgresso(aluno);
   faixa = await ServerAluno.buscaFaixa(aluno);
-  aluno.id = idAluno;
+
   int? aulasPendentes = faixa.quantAulas;
-  int? aulasFeitas = await ServerAluno.buscaAulas(aluno);
+
   //Se cair no if abaixo, significa que o aluno passou de faixa
   if ((aluno.faixa_id == 5 && aulasFeitas == aulasPendentes) ||
       (aluno.faixa_id == 10 && aulasFeitas == aulasPendentes) ||
@@ -54,7 +55,7 @@ void validaPresAluno() async {
     await ServerAluno.registraNotificacao(aluno, faixa, isFaixa);
     NotificationService(aluno, faixa, isFaixa);
 
-  // Else, apenas foi mais um grau concluido, lembrando que grau 0 é igual a "liso"
+    // Else, apenas foi mais um grau concluido, lembrando que grau 0 é igual a "liso"
   } else if (aulasFeitas == aulasPendentes) {
     isFaixa = "false";
     await ServerAluno.registraNotificacao(aluno, faixa, isFaixa);
