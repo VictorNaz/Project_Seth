@@ -45,8 +45,8 @@ class _MenuMestreState extends State<MenuMestre> {
 
   @override
   void initState() {
+   // getList();
     getInfoAluno();
-    NotificationService(aluno, faixaInfo);
     super.initState();
   }
 

@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/frontEnd/telasMestre/DetalheAluno.dart';
 
@@ -19,12 +20,12 @@ class _ListaNotificacoesState extends State<ListaNotificacoes> {
   var listaNotificacoes = [];
 
   String teste = "";
-
+  List grau = []; //!Armazena a informação do grau da notificação
   String nome = "";
   String email = "";
   var aluno = Aluno();
 
-  getInfoAluno<Aluno>() async {
+  /*getInfoAluno<Aluno>() async {
     aluno.usuario = await PrefsService.returnUser();
     await ServerAluno.buscaInfo(aluno).then((value) {
       setState(() {
@@ -33,16 +34,25 @@ class _ListaNotificacoesState extends State<ListaNotificacoes> {
         email = aluno.email!;
       });
     });
-  }
+  }*/
 
   getList<List>() async {
     await buscaNotificacoes().then((value) {
       setState(() {
         listaNotificacoes = value;
-        print(listaNotificacoes);
-        print('hereee');
+        print(listaNotificacoes.length);
+        print("object");
       });
     });
+
+    for (int i = 0; i < listaNotificacoes.length; i++) {
+      //!Valida a descrição quando o grau é liso
+      if (listaNotificacoes[i].grau == 0) {
+        grau.add('Grau Liso');
+      } else {
+        grau.add('${listaNotificacoes[i].grau}º Grau');
+      }
+    }
   }
 
   @override
@@ -50,8 +60,6 @@ class _ListaNotificacoesState extends State<ListaNotificacoes> {
     getList();
     super.initState();
   }
-
-  List<String> faixa = ["Branca", "Azul", "Marrom", "Preta"];
 
   @override
   Widget build(BuildContext context) {
@@ -72,14 +80,6 @@ class _ListaNotificacoesState extends State<ListaNotificacoes> {
             ),
             onPressed: () => Navigator.pop(context, false)),
       ),
-      /* endDrawer: Drawer(
-        child: DrawerTop(
-          texto: "Opções",
-          nome: nome,
-          email: email,
-        ),
-      ),*/
-      //body: _buildListView(context),
       body: ListView.separated(
           itemBuilder: (_, index) {
             return SizedBox(
@@ -89,19 +89,87 @@ class _ListaNotificacoesState extends State<ListaNotificacoes> {
               title: Text(
                   'Tipo de Progresso: ${listaNotificacoes[index].is_Faixa}\nAluno: ${listaNotificacoes[index].nomeAluno}'),
               subtitle: Text(
-                  "Faixa - ${listaNotificacoes[index].faixa} ${listaNotificacoes[index].grau}º Grau"),
-              leading: const Icon(Icons.person),
-              trailing: IconButton(
-                icon: const Icon(Icons.arrow_forward),
-                onPressed: () {
+                  "Faixa - ${listaNotificacoes[index].faixa} ${grau[index]}"), //${listaNotificacoes[index].grau}º Grau"),
+              leading: const Icon(Icons.notification_important_outlined,
+                  color: Color.fromARGB(255, 252, 72, 27)),
+              onTap: () {
+                if (listaNotificacoes[index].is_Faixa == 'Faixa') {
+                  //!Se a notificação for de Faixa, leva ao DetalheAluno()
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            DetalheAluno(nome: "" //listaNotificacoes[index],
-                                )),
+                        builder: (context) => DetalheAluno(
+                              nome: listaNotificacoes[index].nomeAluno,
+                            )),
                   );
-                  print(listaNotificacoes[index]);
+                } else {
+                  showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      title: const Text('Notificação de Grau!'),
+                      content: const Text(
+                          'A notificação por grau não é necessário aprovar.'),
+                      actions: <Widget>[
+                        TextButton(
+                          //Se for selecionado Não
+                          onPressed: () => Navigator.pop(context, 'Ok'),
+                          child: const Text('Ok'),
+                        ),
+                      ],
+                    ),
+                  );
+                  null;
+                }
+              },
+              trailing: IconButton(
+                icon: const Icon(
+                  Icons.delete_outline_outlined,
+                ),
+                onPressed: () {
+                  print(listaNotificacoes[index].idNotificacoes);
+                  showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      title: const Text('Deseja realmente excluir?'),
+                      content: Text(
+                          'Isto irá excluir a seguinte notificação:\nTipo de Progresso: ${listaNotificacoes[index].is_Faixa}\nAluno: ${listaNotificacoes[index].nomeAluno}'),
+                      actions: <Widget>[
+                        TextButton(
+                          //Se for selecionado Não
+                          onPressed: () => Navigator.pop(context, 'Não'),
+                          style: const ButtonStyle(
+                              alignment: Alignment.bottomLeft),
+
+                          child: const Text(
+                            'Não',
+                          ),
+                        ),
+                        TextButton(
+                          //Se for selecionado sim
+                          onPressed: () async {
+                            Navigator.pop(context, 'Sim');
+
+                            print(listaNotificacoes[index].idNotificacoes);
+                            loading();
+                            bool validaExclusao =
+                                await ServerAluno.excluiNotificacao(
+                                    listaNotificacoes[index].idNotificacoes);
+                            if (validaExclusao == true) {
+                              closeLoading();
+                              exibeAviso('Notificação Excluida',
+                                  'A notificação selecionada foi excluida com sucesso!');
+                            } else {
+                              closeLoading();
+                              exibeAviso('Notificação Não Excluída',
+                                  'Não foi possivel excluir a notificação selecionada!');
+                            }
+                            //
+                          },
+                          child: const Text('Sim'),
+                        ),
+                      ],
+                    ),
+                  );
                 },
               ),
             ));
@@ -154,5 +222,23 @@ class _ListaNotificacoesState extends State<ListaNotificacoes> {
 //Fecha a tela de carregamento
   closeLoading() {
     Navigator.pop(context);
+  }
+
+  //Gera uma caixa de dialogo, com o botão "OK, apenas para avisos, titulo e corpo por parametro"
+  exibeAviso(String titulo, String conteudo) {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(titulo),
+        content: Text(conteudo),
+        actions: <Widget>[
+          TextButton(
+            //Se for selecionado Não
+            onPressed: () => Navigator.pop(context, 'Ok'),
+            child: const Text('Ok'),
+          ),
+        ],
+      ),
+    );
   }
 }

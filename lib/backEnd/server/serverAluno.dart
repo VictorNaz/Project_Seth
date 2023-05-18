@@ -456,7 +456,7 @@ class ServerAluno {
       List<Notificacoes> listaNot = [];
 
       listaNotif.notificacoes.forEach((element) {
-        //   for (int i = 0; i < listaNotif.notificacoes.length; i++) {
+        //   for (int i = 0; i < listaNotif.notificacoes.length; i++) {}
         //   p = p + 1;
 
         if (element['is_faixa'] == 'true') {
@@ -475,50 +475,36 @@ class ServerAluno {
         listaNot.add(notificacoes);
 
         print(listaNotif.notificacoes.length);
-        //    }
       });
       print(listaNot[0].is_Faixa);
-      /*result.forEach((element) {
-        print(element['usuario_aluno']);
-      });
-     result.forEach((element) {
-        print('$element print here 453');
-        int? grau = int.tryParse(element['grau']);
-        int? idNotificacoes = int.tryParse(element['idnotificacoes']);
-        Notificacoes notificacoes = Notificacoes(
-            idNotificacoes,
-            element['usuario_aluno'],
-            element['nome_aluno'],
-            grau,
-            element['faixa'],
-            element['is_Faixa']);
-
-        listaNot.add(element);
-        print(listaNot);
-      });*/
-      //  for (var list in result) {
-      //    listaNot[0].idNotificacoes = result['idnotificacoes'];
-      //  }
-      /* for (int i = 0; i < result[i]; i++) {
-        listaNot[i].nomeAluno = result['nome_aluno'];
-        listaNot[i].usuarioAluno = result['usuario_aluno'];
-        listaNot[i].grau = result['grau'];
-      listaNot[i].faixa = result['faixa'];
-        listaNot[i].is_Faixa = result['is_Faixa'];
-     }
-     */
-      //for in para adicionar os resultados em um array
-      // for (var list in result) {
-      //  listaNot.add(list["usuario_aluno"]);
-      //   listaNot.add(list["nome_aluno"]);
-      //  listaNot.add(list["grau"]);
-      //  listaNot.add(list["faixa"]);
-      // }
 
       return listaNot;
     } else {
       print(response.reasonPhrase);
       return null; //ajusttar
+    }
+  }
+
+  //Exclui a notificação que foi selecionada na tela de notificações
+  static Future<bool> excluiNotificacao(int idnotificacoes) async {
+    var request = http.Request(
+        'DELETE', Uri.parse('https://apiseth.cyclic.app/excluiNotificacao'));
+    request.body = json.encode({
+      "idnotificacoes": idnotificacoes,
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+      print("Notificação deletada");
+      return true;
+    } else {
+      print(response.reasonPhrase);
+      print("Erro Deletar notificação");
+
+      return false;
     }
   }
 }//Fim da classe

@@ -53,17 +53,17 @@ void validaPresAluno() async {
       (aluno.faixa_id == 20 && aulasFeitas == aulasPendentes)) {
     isFaixa = "true";
     await ServerAluno.registraNotificacao(aluno, faixa, isFaixa);
-    NotificationService(aluno, faixa, isFaixa);
+    notificacaoAluno(aluno, faixa, isFaixa);
 
     // Else, apenas foi mais um grau concluido, lembrando que grau 0 é igual a "liso"
   } else if (aulasFeitas == aulasPendentes) {
     isFaixa = "false";
     await ServerAluno.registraNotificacao(aluno, faixa, isFaixa);
-    NotificationService(aluno, faixa, isFaixa);
+    notificacaoAluno(aluno, faixa, isFaixa);
     if (txtUsuario == 'admin') {
       print(txtUsuario);
       //Passada as informações do aluno e de sua faixa
-      NotificationService(aluno, faixa);
+      notificacaoAluno(aluno, faixa);
     } else {
       print("nivel");
       print(aluno.usuario);

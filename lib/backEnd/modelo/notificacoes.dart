@@ -62,7 +62,7 @@ class Notificacoes {
 }
 
 class ListaNoti {
-   List notificacoes = [];
+  List notificacoes = [];
 
   ListaNoti(this.notificacoes);
 }

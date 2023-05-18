@@ -10,6 +10,7 @@ import 'package:flutter_project_seth/frontEnd/geral/Homepage.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:flutter_project_seth/frontEnd/widgets/APIServiceProvider.dart';
 import 'package:path/path.dart';
+import '../../backEnd/controladora/CtrlProfessor.dart';
 import '../../backEnd/modelo/aluno.dart';
 import '../../backEnd/server/serverAluno.dart';
 import '../telasAluno/PerfilAluno.dart';
@@ -42,12 +43,22 @@ class _DrawerTopState extends State<DrawerTop> {
   String? nivel;
   var aluno = Aluno();
   var faixaInfo = Faixa();
+  var listaNotificacoes = [];
 
   //Obtem a faixa e o grau do aluno, assim como suas informaces
   getInfo<Aluno>() async {
     aluno.usuario = await PrefsService.returnUser();
     aluno = await ServerAluno.buscaInfo(aluno);
     faixaInfo = await ServerAluno.buscaFaixa(aluno);
+  }
+
+  getList<List>() async {
+    await buscaNotificacoes().then((value) {
+      setState(() {
+        listaNotificacoes = value;
+        print(listaNotificacoes.length);
+      });
+    });
   }
 
   @override
@@ -58,6 +69,7 @@ class _DrawerTopState extends State<DrawerTop> {
       }
     });
     getInfo();
+    getList();
     super.initState();
   }
 
@@ -142,20 +154,38 @@ class _DrawerTopState extends State<DrawerTop> {
                 )),
             onTap: () {
               if (aluno.nome == 'Administrador') {
-                /*  Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(
-                        builder: (context) => const ListaNotificacoes()),
-                    (Route<dynamic> route) => false);*/
+                //!Verifica se é administrador
+                if (listaNotificacoes.isEmpty) {
+                  //!Verifica se existem notificações
+                  showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      title: const Text('Você não possui notificações!'),
+                      content: const Text(
+                          'Não há nenhum progresso de faixa ou grau ativo no momento.'),
+                      actions: <Widget>[
+                        TextButton(
+                          //Se for selecionado Não
+                          onPressed: () => Navigator.pop(context, 'Ok'),
+                          child: const Text('Ok'),
+                        ),
+                      ],
+                    ),
+                  );
+                } else {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: ((context) => const ListaNotificacoes())));
 
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: ((context) => const ListaNotificacoes())));
-
-                //Passada as informações do aluno e de sua faixa
-                NotificationService(aluno, faixaInfo);
+                  //Passada as informações do aluno e de sua faixa
+                  notificacaoMestre(1, 1);
+                  //   NotificationAluno(aluno, faixaInfo);
+                }
               } else {
-                NotificationService(aluno, faixaInfo);
+                notificacaoMestre(1, 1);
+
+                //    NotificationAluno(aluno, faixaInfo);
 
                 null;
               }
@@ -528,7 +558,7 @@ class _PDFViewerPageState extends State<PDFViewerPage> {
   }
 }
 
-NotificationService(Aluno aluno, Faixa faixa, [String? isFaixa]) {
+notificacaoAluno(Aluno aluno, Faixa faixa, [String? isFaixa]) {
   AwesomeNotifications().initialize(
     'resource://drawable/launcher_icon',
     [
@@ -546,7 +576,7 @@ NotificationService(Aluno aluno, Faixa faixa, [String? isFaixa]) {
     }
   });
   if (isFaixa == "true") {
-    //Passagem de Faixa
+    //!Passagem de Faixa
     //Verifica se o Grau da faixa é liso para alterar o texto
     String corpoMsg;
     if (faixa.grau == 0) {
@@ -564,7 +594,7 @@ NotificationService(Aluno aluno, Faixa faixa, [String? isFaixa]) {
             body: corpoMsg,
             criticalAlert: true));
   } else {
-    //Passagem de Grau
+    //!Passagem de Grau
 //Verifica se o Grau da faixa é liso para alterar o texto
     String corpoMsg;
     if (faixa.grau == '0') {
@@ -582,4 +612,55 @@ NotificationService(Aluno aluno, Faixa faixa, [String? isFaixa]) {
             body: corpoMsg,
             criticalAlert: true));
   }
+}
+
+notificacaoMestre(int quantFaixa, int quantGrau) {
+  AwesomeNotifications().initialize(
+    'resource://drawable/launcher_icon',
+    [
+      NotificationChannel(
+          channelKey: 'Basic',
+          channelName: 'Novos progressos disponiveis!',
+          channelDescription: 'Mensagem Seth',
+          enableVibration: true,
+          channelShowBadge: true,
+          importance: NotificationImportance.Max)
+    ],
+    debug: true,
+  );
+  AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+    if (!isAllowed) {
+      AwesomeNotifications().requestPermissionToSendNotifications();
+    }
+  });
+
+  String corpoMsg;
+  String tituloMsg;
+  if (quantGrau == 0) {
+    tituloMsg = 'Você possui novas passagens de Faixa!';
+    corpoMsg = 'Alunos com novas Faixas alcançadas: $quantFaixa';
+  } else if (quantFaixa == 0) {
+    tituloMsg = 'Você possui novos progressos de Grau!';
+    corpoMsg = 'Alunos com novos niveis de grau alcançadas: $quantGrau';
+  } else {
+    tituloMsg = 'Você possui novos progressos ativos!';
+    corpoMsg =
+        'Você possui $quantGrau aluno(s) com passagem de Grau disponíveis, e $quantFaixa aluno(s) com passagem de Faixa para aprovação.';
+  }
+
+  AwesomeNotifications().createNotification(
+      content: NotificationContent(
+          id: createUniqueId(),
+          channelKey: 'Basic',
+          title: tituloMsg,
+          body: corpoMsg,
+          groupKey: "testeee",
+          wakeUpScreen: true,
+          category: NotificationCategory.Workout,
+          notificationLayout: NotificationLayout.BigText,
+          criticalAlert: true));
+}
+
+int createUniqueId() {
+  return DateTime.now().millisecondsSinceEpoch.remainder(HttpStatus.seeOther);
 }

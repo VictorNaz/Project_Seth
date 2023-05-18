@@ -155,7 +155,7 @@ class _DetalheAlunoState extends State<DetalheAluno> {
                         //ExpansionTile é um botão que se expande mostrando informações adicionais
                         child: ExpansionTile(
                           //mantem a caixa de texto aberta quando carregada a página
-                          initiallyExpanded: true,
+                          //*initiallyExpanded: true,
                           //determinamos as cores do botão quando aberto e fechado
                           textColor: const Color.fromARGB(255, 252, 72, 27),
                           collapsedBackgroundColor:

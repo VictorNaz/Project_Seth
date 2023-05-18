@@ -3,9 +3,11 @@ import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
 import 'package:flutter_project_seth/frontEnd/telasMestre/MenuMestre.dart';
 import 'package:flutter_project_seth/frontEnd/widgets/splashScreen.dart';
 
+import '../../backEnd/controladora/CtrlProfessor.dart';
 import '../telasAluno/CadAluno.dart';
 import '../telasAluno/MenuPrincipal.dart';
 import '../telasProf/MenuProfessor.dart';
+import '../widgets/utilClass.dart';
 import 'RecSenha.dart';
 
 class LoginPage extends StatefulWidget {
@@ -13,6 +15,10 @@ class LoginPage extends StatefulWidget {
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
+
+int quantFaixa = 0;
+int quantGrau = 0;
+var listaNotificacoes = [];
 
 class _LoginPageState extends State<LoginPage> {
   bool showPassword = false;
@@ -171,6 +177,25 @@ class _LoginPageState extends State<LoginPage> {
                                   builder: (context) => const MenuProfessor()),
                               (Route<dynamic> route) => false);
                         } else if (nivel_acess == "3") {
+                          quantFaixa = 0;
+                          quantGrau = 0;
+                          listaNotificacoes = await buscaNotificacoes();
+                          for (int i = 0; i < listaNotificacoes.length; i++) {
+                            if (listaNotificacoes[i].is_Faixa == 'Faixa') {
+                              //!Conta a quantidade de progressos com a faixa
+                              quantFaixa = quantFaixa + 1;
+                            } else {
+                              //!Conta a quantidade de progressos com o grau
+                              quantGrau = quantGrau + 1;
+                            }
+                          }
+                          if (listaNotificacoes.isNotEmpty) {
+                            //! Verificar
+                            notificacaoMestre(
+                              quantFaixa,
+                              quantGrau,
+                            );
+                          }
                           closeLoading();
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
