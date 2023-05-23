@@ -34,40 +34,33 @@ void validaPresAluno() async {
   String? usr = txtUsuario;
   aluno.setUsuario = usr!;
   String
-      isFaixa; //Verifica se o que houve progresso é faixa ou grau TRUE= Faixa ; FALSE=Grau
-
-  //aluno.id = idAluno;
-  //Teve de ser adicionado a uma variável, pois ao receber um novo valor, o usuário perdia o aluno.id
+      isFaixa; //!Verifica se o que houve progresso é faixa ou grau TRUE= Faixa ; FALSE=Grau
+  //!Teve de ser adicionado a uma variável, pois ao receber um novo valor, o usuário perdia o aluno.id
   aluno = await ServerAluno.buscaInfo(aluno);
   await ServerAluno.valPresenAluno(aluno);
   int? aulasFeitas = await ServerAluno.buscaAulas(aluno);
-  await ServerAluno.atualizaProgresso(aluno);
+  //!await ServerAluno.atualizaProgresso(aluno); Apenas o mestre deve aprovar o progresso
   faixa = await ServerAluno.buscaFaixa(aluno);
-
   int? aulasPendentes = faixa.quantAulas;
 
-  //Se cair no if abaixo, significa que o aluno passou de faixa
-  if ((aluno.faixa_id == 5 && aulasFeitas == aulasPendentes) ||
-      (aluno.faixa_id == 10 && aulasFeitas == aulasPendentes) ||
-      (aluno.faixa_id == 15 && aulasFeitas == aulasPendentes) ||
-      (aluno.faixa_id == 20 && aulasFeitas == aulasPendentes)) {
-    isFaixa = "true";
-    await ServerAluno.registraNotificacao(aluno, faixa, isFaixa);
-    notificacaoAluno(aluno, faixa, isFaixa);
+  if (aluno.usuario == 'admin') {
+    //*Notificação de aluno não emitido ao mestre
+    null;
+  } else {
+    //!Se cair no if abaixo, significa que o aluno passou de faixa
+    if ((aluno.faixa_id == 5 && aulasFeitas == aulasPendentes) ||
+        (aluno.faixa_id == 10 && aulasFeitas == aulasPendentes) ||
+        (aluno.faixa_id == 15 && aulasFeitas == aulasPendentes) ||
+        (aluno.faixa_id == 20 && aulasFeitas == aulasPendentes)) {
+      isFaixa = "true";
+      await ServerAluno.registraNotificacao(aluno, faixa, isFaixa);
+      notificacaoAluno(aluno, faixa, isFaixa);
 
-    // Else, apenas foi mais um grau concluido, lembrando que grau 0 é igual a "liso"
-  } else if (aulasFeitas == aulasPendentes) {
-    isFaixa = "false";
-    await ServerAluno.registraNotificacao(aluno, faixa, isFaixa);
-    notificacaoAluno(aluno, faixa, isFaixa);
-    if (txtUsuario == 'admin') {
-      print(txtUsuario);
-      //Passada as informações do aluno e de sua faixa
-      notificacaoAluno(aluno, faixa);
-    } else {
-      print("nivel");
-      print(aluno.usuario);
-      null;
+      //! Else, apenas foi mais um grau concluido, lembrando que grau 0 é igual a "liso"
+    } else if (aulasFeitas == aulasPendentes) {
+      isFaixa = "false";
+      await ServerAluno.registraNotificacao(aluno, faixa, isFaixa);
+      notificacaoAluno(aluno, faixa, isFaixa);
     }
   }
 }

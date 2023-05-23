@@ -312,6 +312,8 @@ class ServerAluno {
       info.usuario = result["usuario"];
       info.nome = result["nome"];
       info.email = result["email"];
+      int nivel_acess = result["nivel_acess"];
+      info.nivel_acess = nivel_acess.toString();
       info.cpf = result["cpf"];
       info.faixa_id = result["faixa_id"];
       int? idUser = result["id"];
@@ -476,7 +478,6 @@ class ServerAluno {
 
         print(listaNotif.notificacoes.length);
       });
-      print(listaNot[0].is_Faixa);
 
       return listaNot;
     } else {

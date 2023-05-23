@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/frontEnd/telasMestre/DetalheAluno.dart';
+import 'package:flutter_project_seth/frontEnd/telasMestre/detalhe_progresso.dart';
 
 import '../../backEnd/controladora/CtrlProfessor.dart';
 import '../../backEnd/modelo/aluno.dart';
@@ -98,7 +99,7 @@ class _ListaNotificacoesState extends State<ListaNotificacoes> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => DetalheAluno(
+                        builder: (context) => DetalheProgresso(
                               nome: listaNotificacoes[index].nomeAluno,
                             )),
                   );
