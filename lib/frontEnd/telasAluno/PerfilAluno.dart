@@ -93,6 +93,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
             SingleChildScrollView(
               child: Column(
                 //Lugar onde deve adicionar a foto de perfil do usuario.
+
                 children: <Widget>[
                   const CircleAvatar(
                     radius: 100,
@@ -111,26 +112,38 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                   //Espaçamento entre foto de perfil e campos de input
                   const Padding(padding: EdgeInsets.only(top: 20)),
 
-                  SizedBox(
-                    width: 325,
-                    child: TextFormField(
-                      controller: TextEditingController(text: nome),
-                      keyboardType: TextInputType.name,
-                      decoration: const InputDecoration(
-                        icon: Icon(
-                          Icons.person,
-                          color: Color.fromARGB(255, 252, 72, 27),
-                        ),
-                        labelText: "Nome Completo",
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Color.fromARGB(255, 252, 72, 27))),
-                      ),
-                      validator: (value) {
-                        return validarNome(nome);
-                      },
-                    ),
+                  Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 325,
+                            child: TextFormField(
+                              controller: TextEditingController(text: nome),
+                              keyboardType: TextInputType.name,
+                              decoration: const InputDecoration(
+                                icon: Icon(
+                                  Icons.person,
+                                  color: Color.fromARGB(255, 252, 72, 27),
+                                ),
+                                labelText: "Nome Completo",
+                                focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color:
+                                            Color.fromARGB(255, 252, 72, 27))),
+                              ),
+                              validator: (value) {
+                                return validarNome(nome);
+                              },
+                            ),
+                          ),
+                          const Icon(Icons.edit)
+                        ],
+                      )
+                    ],
                   ),
+
                   //Espaçamento entre inputs
                   const Padding(padding: EdgeInsets.only(top: 15)),
 
@@ -180,27 +193,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                       ),
                     ),
                   ),
-
-                  const Padding(padding: EdgeInsets.only(bottom: 150)),
-
-                  TextButton(
-                      onPressed: (null
-                          //alertUser();
-                          ),
-                      //Adicionar uma modal confirmando
-                      style: TextButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-                        fixedSize: const Size(330, 50),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ), //texto do button e estilo da escrita
-                      child: const Text(
-                        "Confirmar Alterações",
-                        style: TextStyle(color: Colors.white, fontSize: 18),
-                      )),
-
-                  const Padding(padding: EdgeInsets.only(bottom: 70)),
+                  const Padding(padding: EdgeInsets.only(bottom: 250)),
                 ],
               ),
             )
