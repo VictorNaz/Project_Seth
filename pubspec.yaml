@@ -120,3 +120,6 @@ flutter_icons:
   android: "launcher_icon"
   adaptive_icon_backgroud: "#FFFFFF"
   adaptive_icon_foreground: "assets/image/logomarca2.png"
+
+dependency_overrides:
+  flutter_pdfview: 1.2.9
