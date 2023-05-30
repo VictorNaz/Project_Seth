@@ -101,6 +101,8 @@ class _ListaNotificacoesState extends State<ListaNotificacoes> {
                     MaterialPageRoute(
                         builder: (context) => DetalheProgresso(
                               nome: listaNotificacoes[index].nomeAluno,
+                              id: listaNotificacoes[index].idNotificacoes,
+                              
                             )),
                   );
                 } else {

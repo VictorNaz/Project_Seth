@@ -182,17 +182,8 @@ class _DrawerTopState extends State<DrawerTop> {
                         MaterialPageRoute(
                             builder: ((context) => const ListaNotificacoes())));
 
-                    //Passada as informações do aluno e de sua faixa
-                    notificacaoMestre(1, 1);
-                    //   NotificationAluno(aluno, faixaInfo);
                   }
-                } else {
-                  notificacaoMestre(1, 1);
-
-                  //    NotificationAluno(aluno, faixaInfo);
-
-                  null;
-                }
+                } 
               }),
           ListTile(
             title: Container(

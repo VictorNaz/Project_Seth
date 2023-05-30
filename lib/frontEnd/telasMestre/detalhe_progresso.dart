@@ -1,4 +1,7 @@
+// ignore_for_file: no_logic_in_create_state, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
+import 'package:flutter_project_seth/frontEnd/geral/loginpage.dart';
 import 'package:intl/intl.dart';
 import 'package:kg_charts/kg_charts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -8,19 +11,26 @@ import '../../backEnd/modelo/aluno.dart';
 import '../../backEnd/security/sessionService.dart';
 import '../../backEnd/server/serverAluno.dart';
 import '../widgets/utilClass.dart';
+import 'MenuMestre.dart';
+import 'listaNotificacoes.dart';
 
 class DetalheProgresso extends StatefulWidget {
+  final int id;
   final String nome;
+
   const DetalheProgresso({
     Key? key,
     required this.nome,
+    required this.id,
   }) : super(key: key);
 
   @override
-  State<DetalheProgresso> createState() => _DetalheAlunoState();
+  State<DetalheProgresso> createState() => _DetalheProgressoState(id);
 }
 
-class _DetalheAlunoState extends State<DetalheProgresso> {
+class _DetalheProgressoState extends State<DetalheProgresso> {
+  _DetalheProgressoState(this.id);
+  final int id;
   List<double> lista = [];
   int quantAulas = 0;
   double percAulas = 0;
@@ -32,9 +42,11 @@ class _DetalheAlunoState extends State<DetalheProgresso> {
   String nome = "";
   String email = "";
   var aluno = Aluno();
+  String? idAluno;
 
   //A instancia mestre do tipo aluno carrega as informações do usuario da seção principal
   var mestre = Aluno();
+
   //Esse método serve para carregar as informações do usuario logado para mostrar no drower
   getInfoAluno<Aluno>() async {
     mestre.usuario = await PrefsService.returnUser();
@@ -214,40 +226,6 @@ class _DetalheAlunoState extends State<DetalheProgresso> {
                                         "${formatter.format(percAulas)}% Concluído"),
                                   ],
                                 ),
-                                /*const Padding(
-                                    padding: EdgeInsets.only(bottom: 20)),
-                                const Text(
-                                  "Progresso Fundamental",
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                                const Padding(padding: EdgeInsets.only(top: 7)),
-                                Padding(
-                                  padding: const EdgeInsets.all(1),
-                                  child: LinearPercentIndicator(
-                                    width:
-                                        MediaQuery.of(context).size.width - 50,
-                                    animation: true,
-                                    lineHeight: 25.0,
-                                    animationDuration: 2000,
-                                    percent: 0.8,
-                                    barRadius: const Radius.circular(16),
-                                    progressColor:
-                                        const Color.fromARGB(255, 252, 72, 27),
-                                    backgroundColor: const Color.fromARGB(
-                                        252, 207, 203, 203),
-                                  ),
-                                ),
-                                const Padding(
-                                    padding: EdgeInsets.only(bottom: 10)),
-                                Row(
-                                  children: const [
-                                    Padding(padding: EdgeInsets.only(left: 10)),
-                                    Text("50/60 Aulas"),
-                                    Padding(
-                                        padding: EdgeInsets.only(right: 150)),
-                                    Text("80% Concluído")
-                                  ],
-                                ),*/
                               ],
                             ),
                           ],
@@ -345,9 +323,7 @@ class _DetalheAlunoState extends State<DetalheProgresso> {
                 const Padding(padding: EdgeInsets.only(bottom: 20)),
                 TextButton(
                     onPressed: () {
-                      AlertUser();
-
-                      //!Adicionar o atualizaProgresso
+                      AlertUser(); //!No Alert chama a função para aprovar progresso
                     },
                     style: TextButton.styleFrom(
                       backgroundColor: const Color.fromARGB(255, 252, 72, 27),
@@ -408,8 +384,30 @@ class _DetalheAlunoState extends State<DetalheProgresso> {
           TextButton(
             //Se for selecionado sim
             onPressed: () async {
-              await ServerAluno.atualizaProgresso(aluno);
-              Navigator.pop(context, 'Sim');
+              idAluno = aluno.id;
+              await ServerAluno.atualizaQuantAulas(idAluno);
+              await ServerAluno.atualizaProgresso(idAluno);
+              await ServerAluno.excluiNotificacao(id);
+              /* showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                          title: const Text(
+                              'Não foi possivel aprovar o progresso!'),
+                          content: const Text('Erro interno'),
+                          actions: <Widget>[
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context, 'Ok');
+                                },
+                                child: const Text(
+                                  'Ok',
+                                ))
+                          ]));
+*/
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => const MenuMestre()),
+                  (Route<dynamic> route) => false);
+              //!!verificar isso e se não esta deletando as aulas feitas
             },
             child: const Text('Sim'),
           ),
