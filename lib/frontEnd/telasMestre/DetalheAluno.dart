@@ -32,6 +32,8 @@ class _DetalheAlunoState extends State<DetalheAluno> {
   String nome = "";
   String email = "";
   var aluno = Aluno();
+  num quantAulasFaixa = 0;
+  Color faixaCor = const Color.fromARGB(252, 207, 203, 203);
 
   //A instancia mestre do tipo aluno carrega as informações do usuario da seção principal
   var mestre = Aluno();
@@ -66,7 +68,6 @@ class _DetalheAlunoState extends State<DetalheAluno> {
       if (value != null) {
         setState(() {
           quantAulas = value;
-          percAulas = (quantAulas / 250) * 100;
         });
       }
     });
@@ -75,6 +76,26 @@ class _DetalheAlunoState extends State<DetalheAluno> {
       setState(() {
         faixa = value.faixa;
         grau = value.grau.toString();
+
+        if (grau == "0" || grau == 0) {
+          grau = "Lisa";
+        } else {
+          grau = "$grauº";
+        }
+        if (faixa == "Branca") {
+          quantAulasFaixa = 150;
+          faixaCor = Colors.white;
+        } else if (faixa == "Azul") {
+          quantAulasFaixa = 300;
+          faixaCor = Colors.blue;
+        } else if (faixa == "Roxa") {
+          faixaCor = Colors.purple;
+          quantAulasFaixa = 200;
+        } else if (faixa == "Marrom") {
+          quantAulasFaixa = 150;
+          faixaCor = Colors.brown;
+        }
+        percAulas = (quantAulas / quantAulasFaixa) * 100;
       });
     });
   }
@@ -96,8 +117,8 @@ class _DetalheAlunoState extends State<DetalheAluno> {
       appBar: AppBar(
         //Barra superior já com o icone de voltar
         backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-        title: const Center(
-          child: Text("Meu Desempenho"),
+        title: Center(
+          child: Text("Aluno: ${aluno.nome}"),
         ),
 
         //Icone de voltar quando utilizado o drawer no appbar
@@ -178,7 +199,7 @@ class _DetalheAlunoState extends State<DetalheAluno> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const Text(
-                                  "Faixa Atual:",
+                                  "Progresso Atual:",
                                   style: TextStyle(fontSize: 18),
                                 ),
                                 const Padding(padding: EdgeInsets.only(top: 7)),
@@ -190,13 +211,13 @@ class _DetalheAlunoState extends State<DetalheAluno> {
                                     animation: true,
                                     lineHeight: 25.0,
                                     animationDuration: 2000,
-                                    percent: quantAulas / 250,
+                                    percent: quantAulas / 100,
                                     center: Text(
-                                      "$faixa °$grau",
+                                      "$faixa $grau",
                                       style: const TextStyle(fontSize: 16),
                                     ),
                                     barRadius: const Radius.circular(16),
-                                    progressColor: Colors.blue,
+                                    progressColor: faixaCor,
                                     backgroundColor: const Color.fromARGB(
                                         252, 207, 203, 203),
                                   ),
@@ -207,7 +228,7 @@ class _DetalheAlunoState extends State<DetalheAluno> {
                                   children: [
                                     const Padding(
                                         padding: EdgeInsets.only(left: 10)),
-                                    Text("$quantAulas/250 Aulas"),
+                                    Text("$quantAulas/$quantAulasFaixa Aulas"),
                                     const Padding(
                                         padding: EdgeInsets.only(right: 125)),
                                     Text(

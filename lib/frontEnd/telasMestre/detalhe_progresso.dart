@@ -43,6 +43,7 @@ class _DetalheProgressoState extends State<DetalheProgresso> {
   String email = "";
   var aluno = Aluno();
   String? idAluno;
+  num quantAulasFaixa = 0;
 
   //A instancia mestre do tipo aluno carrega as informações do usuario da seção principal
   var mestre = Aluno();
@@ -78,7 +79,6 @@ class _DetalheProgressoState extends State<DetalheProgresso> {
       if (value != null) {
         setState(() {
           quantAulas = value;
-          percAulas = (quantAulas / 250) * 100;
         });
       }
     });
@@ -87,6 +87,21 @@ class _DetalheProgressoState extends State<DetalheProgresso> {
       setState(() {
         faixa = value.faixa;
         grau = value.grau.toString();
+        if (grau == "0") {
+          grau = "Liso";
+        } else {
+          grau = "$grauº";
+        }
+        if (faixa == "Branca") {
+          quantAulasFaixa = 150;
+        } else if (faixa == "Azul") {
+          quantAulasFaixa = 300;
+        } else if (faixa == "Roxa") {
+          quantAulasFaixa = 200;
+        } else if (faixa == "Marrom") {
+          quantAulasFaixa = 150;
+        }
+        percAulas = (quantAulas / quantAulasFaixa) * 100;
       });
     });
   }
@@ -190,7 +205,7 @@ class _DetalheProgressoState extends State<DetalheProgresso> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const Text(
-                                  "Faixa Atual:",
+                                  "Progresso Atual:",
                                   style: TextStyle(fontSize: 18),
                                 ),
                                 const Padding(padding: EdgeInsets.only(top: 7)),
@@ -204,7 +219,7 @@ class _DetalheProgressoState extends State<DetalheProgresso> {
                                     animationDuration: 2000,
                                     percent: quantAulas / 250,
                                     center: Text(
-                                      "$faixa °$grau",
+                                      "$faixa $grau",
                                       style: const TextStyle(fontSize: 16),
                                     ),
                                     barRadius: const Radius.circular(16),
@@ -219,7 +234,7 @@ class _DetalheProgressoState extends State<DetalheProgresso> {
                                   children: [
                                     const Padding(
                                         padding: EdgeInsets.only(left: 10)),
-                                    Text("$quantAulas/250 Aulas"),
+                                    Text("$quantAulas/$quantAulasFaixa Aulas"),
                                     const Padding(
                                         padding: EdgeInsets.only(right: 125)),
                                     Text(
@@ -323,7 +338,7 @@ class _DetalheProgressoState extends State<DetalheProgresso> {
                 const Padding(padding: EdgeInsets.only(bottom: 20)),
                 TextButton(
                     onPressed: () {
-                      AlertUser(); //!No Alert chama a função para aprovar progresso
+                      alertUser(); //!No Alert chama a função para aprovar progresso
                     },
                     style: TextButton.styleFrom(
                       backgroundColor: const Color.fromARGB(255, 252, 72, 27),
@@ -364,7 +379,7 @@ class _DetalheProgressoState extends State<DetalheProgresso> {
     );
   }
 
-  AlertUser() {
+  alertUser() {
     showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -407,7 +422,9 @@ class _DetalheProgressoState extends State<DetalheProgresso> {
               Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) => const MenuMestre()),
                   (Route<dynamic> route) => false);
-              //!!verificar isso e se não esta deletando as aulas feitas
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Aluno aprovado com sucesso!')),
+              );
             },
             child: const Text('Sim'),
           ),

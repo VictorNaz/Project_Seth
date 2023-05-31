@@ -27,6 +27,8 @@ class _DesempAlunoState extends State<DesempAluno> {
   String nome = "";
   String email = "";
   var aluno = Aluno();
+  num quantAulasFaixa = 0;
+
 
   getInfoAluno<Aluno>() async {
     aluno.usuario = await PrefsService.returnUser();
@@ -65,7 +67,7 @@ class _DesempAlunoState extends State<DesempAluno> {
         if (value != null) {
           setState(() {
             quantAulas = value;
-            percAulas = (quantAulas / 250) * 100;
+            
           });
         }
       },
@@ -80,7 +82,21 @@ class _DesempAlunoState extends State<DesempAluno> {
       setState(() {
         faixa = value.faixa;
         grau = value.grau.toString();
-        print(faixa);
+                if (grau == "0" || grau == 0) {
+          grau = "Lisa";
+        } else {
+          grau = "$grauº";
+        }
+        if (faixa == "Branca") {
+          quantAulasFaixa = 150;
+        } else if (faixa == "Azul") {
+          quantAulasFaixa = 300;
+        } else if (faixa == "Roxa") {
+          quantAulasFaixa = 200;
+        } else if (faixa == "Marrom") {
+          quantAulasFaixa = 150;
+        }
+        percAulas = (quantAulas / quantAulasFaixa) * 100;
       });
     });
   }
@@ -186,7 +202,7 @@ class _DesempAlunoState extends State<DesempAluno> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const Text(
-                                  "Faixa Atual:",
+                                  "Progresso Atual:",
                                   style: TextStyle(fontSize: 18),
                                 ),
                                 const Padding(padding: EdgeInsets.only(top: 7)),
@@ -200,7 +216,7 @@ class _DesempAlunoState extends State<DesempAluno> {
                                     animationDuration: 2000,
                                     percent: quantAulas / 250,
                                     center: Text(
-                                      "$faixa °$grau",
+                                      "$faixa $grau",
                                       style: const TextStyle(fontSize: 16),
                                     ),
                                     barRadius: const Radius.circular(16),
@@ -215,7 +231,7 @@ class _DesempAlunoState extends State<DesempAluno> {
                                   children: [
                                     const Padding(
                                         padding: EdgeInsets.only(left: 10)),
-                                    Text("$quantAulas/250 Aulas"),
+                                    Text("$quantAulas/$quantAulasFaixa Aulas"),
                                     const Padding(
                                         padding: EdgeInsets.only(right: 125)),
                                     Text(
