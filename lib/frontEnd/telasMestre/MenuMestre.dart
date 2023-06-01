@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/frontEnd/telasMestre/ForceProgress.dart';
 import 'package:flutter_project_seth/frontEnd/telasMestre/ListaAluno.dart';
 import 'package:flutter_project_seth/frontEnd/telasMestre/Relatorio.dart';
+import 'package:flutter_project_seth/frontEnd/telasMestre/lista_alunos_presenca.dart';
 import 'package:flutter_project_seth/frontEnd/widgets/QR_CodePage.dart';
 import '../../backEnd/modelo/aluno.dart';
 import '../../backEnd/modelo/faixa.dart';
@@ -45,7 +46,7 @@ class _MenuMestreState extends State<MenuMestre> {
 
   @override
   void initState() {
-   // getList();
+    // getList();
     getInfoAluno();
     super.initState();
   }
@@ -100,9 +101,9 @@ class _MenuMestreState extends State<MenuMestre> {
                         tela: CadProfessor()),
                     Padding(padding: EdgeInsets.only(right: 30)),
                     BotaoMenu(
-                        texto: "Validar Presença",
+                        texto: "Presença\nvia QR Code",
                         icone: Icon(
-                          Icons.fact_check_outlined,
+                          Icons.qr_code_2,
                           size: 80,
                           color: Color.fromARGB(255, 252, 72, 27),
                         ),
@@ -123,20 +124,20 @@ class _MenuMestreState extends State<MenuMestre> {
                         tela: ListaAluno()),
                     Padding(padding: EdgeInsets.only(right: 30)),
                     BotaoMenu(
-                        texto: "Relatórios",
+                        texto: "Presença\nvia Listagem",
                         icone: Icon(
-                          Icons.grading_sharp,
+                          Icons.list_alt_rounded,
                           size: 80,
                           color: Color.fromARGB(255, 252, 72, 27),
                         ),
-                        tela: Relatorio()),
+                        tela: ListaAlunoPresenca()),
                   ],
                 ),
                 const Padding(padding: EdgeInsets.only(top: 30)),
                 const BotaoMenu(
                     texto: "Forçar Progresso",
                     icone: Icon(
-                      Icons.build,
+                      Icons.build_outlined,
                       size: 80,
                       color: Color.fromARGB(255, 252, 72, 27),
                     ),
