@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/frontEnd/telasMestre/DetalheAluno.dart';
 
@@ -22,6 +21,8 @@ class _ListaAlunoPresencaState extends State<ListaAlunoPresenca> {
   String nome = "";
   String email = "";
   var aluno = Aluno();
+  bool showPassword = false;
+  TextEditingController txtSenha = TextEditingController();
 
   getInfoAluno<Aluno>() async {
     aluno.usuario = await PrefsService.returnUser();
@@ -38,7 +39,6 @@ class _ListaAlunoPresencaState extends State<ListaAlunoPresenca> {
     await buscaAlunos().then((value) {
       setState(() {
         listaAlunos = value;
-        
       });
     });
   }
@@ -91,19 +91,13 @@ class _ListaAlunoPresencaState extends State<ListaAlunoPresenca> {
               trailing: IconButton(
                 icon: const Icon(Icons.arrow_forward),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => DetalheAluno(
-                              nome: listaAlunos[index],
-                            )),
-                  );
+                  validaPresenca();
                   print(listaAlunos[index]);
                 },
               ),
             ));
           },
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           separatorBuilder: (context, index) => Divider(),
           itemCount: listaAlunos.length),
 
@@ -124,6 +118,78 @@ class _ListaAlunoPresencaState extends State<ListaAlunoPresenca> {
       ),
       //barra infeirior
       bottomNavigationBar: const BotaoInferior(),
+    );
+  }
+
+  validaPresenca() {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Deseja realmente excluir?'),
+        content: const Text(
+            'Isto irá excluir a seguinte notificação:\nTipo de Progresso1'),
+        actions: <Widget>[
+          Center(
+            child: SizedBox(
+              width: 250,
+              child: TextFormField(
+                controller: txtSenha,
+                keyboardType: TextInputType.visiblePassword,
+                textAlign: TextAlign.start,
+                decoration: InputDecoration(
+                  labelText: "Senha",
+                  fillColor: Colors.black,
+                  hintStyle: const TextStyle(color: Colors.black),
+                  focusedBorder: const UnderlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Color.fromARGB(255, 252, 72, 27))),
+                  suffixIcon: GestureDetector(
+                    child: Icon(
+                      showPassword == false
+                          ? Icons.visibility_off
+                          : Icons.visibility,
+                      color: Colors.black,
+                    ),
+                    onTap: () {
+                      setState(() {
+                        showPassword = !showPassword;
+                      });
+                    },
+                  ),
+                ),
+                validator: (value) {
+                  return validarSenha(txtSenha.text);
+                },
+                obscureText: showPassword == false ? true : false,
+              ),
+            ),
+          ),
+          const Padding(padding: EdgeInsets.only(top: 15)),
+          SizedBox(
+            width: 250,
+            child: TextButton(
+              onPressed: () => Navigator.pop(context, 'Não'),
+              style: ButtonStyle(
+                  alignment: Alignment.center,
+                  backgroundColor: MaterialStatePropertyAll(Colors.black)),
+              child: const Text(
+                'Não',
+              ),
+            ),
+          ),
+          TextButton(
+            //Se for selecionado sim
+            onPressed: () async {
+              Navigator.pop(context, 'Sim');
+              style:
+              const ButtonStyle(
+                  alignment: Alignment.bottomRight,
+                  backgroundColor: MaterialStatePropertyAll(Colors.black));
+            },
+            child: const Text('Sim'),
+          ),
+        ],
+      ),
     );
   }
 }
