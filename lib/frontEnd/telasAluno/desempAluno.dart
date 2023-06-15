@@ -29,8 +29,7 @@ class _DesempAlunoState extends State<DesempAluno> {
   var aluno = Aluno();
   num quantAulasFaixa = 0;
 
-
-  getInfoAluno<Aluno>() async {
+  getInfo<Aluno>() async {
     aluno.usuario = await PrefsService.returnUser();
     await ServerAluno.buscaInfo(aluno).then((value) {
       setState(() {
@@ -41,12 +40,7 @@ class _DesempAlunoState extends State<DesempAluno> {
     });
   }
 
-  //O comando getList serve para podermos mudar o tipo do retorno da buscaAvaliacao
-  //de Future<list<double>> para list<double>, alem de setar o valor em uma variavel global
-  //Este método irá coletar o usuario da sessão e passará por parametro para outro método na CtrlAluno
-
-  getAvaliacao<List>() async {
-    var aluno = Aluno();
+  getAvalizacao<Aluno>() async {
     aluno.usuario = await PrefsService.returnUser();
     await buscaAvaliacao(aluno).then((value) {
       setState(() {
@@ -55,34 +49,27 @@ class _DesempAlunoState extends State<DesempAluno> {
     });
   }
 
-  //O comando getaulas serve para pegar o valor do backend da quantidade de aulas frequentadas quando a página é carregada
-  //alem de setar o valor após a coleta dos dados.
-  //Este método irá coletar o usuario da sessão e passará por parametro para outro método na CtrlAluno
-
-  getInfo<int>() async {
-    var aluno = Aluno();
+  getAulas<Aluno>() async {
     aluno.usuario = await PrefsService.returnUser();
     await buscaAulas(aluno).then(
       (value) {
         if (value != null) {
           setState(() {
             quantAulas = value;
-            
           });
         }
       },
     );
   }
 
-  getFaixa<String>() async {
-    var aluno = Aluno();
+  getFaixa<Aluno>() async {
     aluno.usuario = await PrefsService.returnUser();
     aluno = await buscaInfo(aluno);
     await buscaFaixa(aluno).then((value) {
       setState(() {
         faixa = value.faixa;
         grau = value.grau.toString();
-                if (grau == "0" || grau == 0) {
+        if (grau == "0" || grau == 0) {
           grau = "Lisa";
         } else {
           grau = "$grauº";
@@ -101,14 +88,13 @@ class _DesempAlunoState extends State<DesempAluno> {
     });
   }
 
-  @override
-
   //O comando abaixo define a inicialização do getList antes do carregamento da pagina
+  @override
   void initState() {
-    getAvaliacao();
-    getFaixa();
     getInfo();
-    getInfoAluno();
+    getAvalizacao();
+    getAulas();
+    getFaixa();
     super.initState();
   }
 
@@ -214,7 +200,7 @@ class _DesempAlunoState extends State<DesempAluno> {
                                     animation: true,
                                     lineHeight: 25.0,
                                     animationDuration: 2000,
-                                    percent: quantAulas / 250,
+                                    percent: quantAulas / quantAulasFaixa,
                                     center: Text(
                                       "$faixa $grau",
                                       style: const TextStyle(fontSize: 16),
