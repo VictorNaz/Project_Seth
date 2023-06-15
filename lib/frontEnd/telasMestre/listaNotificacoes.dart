@@ -102,6 +102,7 @@ class _ListaNotificacoesState extends State<ListaNotificacoes> {
                         builder: (context) => DetalheProgresso(
                               nome: listaNotificacoes[index].nomeAluno,
                               id: listaNotificacoes[index].idNotificacoes,
+                              usuario: listaNotificacoes[index].usuarioAluno,
                               
                             )),
                   );

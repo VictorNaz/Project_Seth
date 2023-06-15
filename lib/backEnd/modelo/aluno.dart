@@ -10,6 +10,8 @@ class Aluno {
   int? faixa_id;
   String? nivel_acess;
 
+  Aluno([this.nome, this.usuario, this.email]);
+
   String? get getId {
     return id;
   }
@@ -65,4 +67,10 @@ class Aluno {
   set setNivel_acess(String nivel_acess) {
     this.nivel_acess = nivel_acess;
   }
+}
+
+class ListaAlu {
+  List aluno = [];
+
+  ListaAlu(this.aluno);
 }

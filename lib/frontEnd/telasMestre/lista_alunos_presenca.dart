@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_seth/frontEnd/telasMestre/DetalheAluno.dart';
 
 import '../../backEnd/controladora/CtrlProfessor.dart';
 import '../../backEnd/modelo/aluno.dart';
@@ -85,20 +84,20 @@ class _ListaAlunoPresencaState extends State<ListaAlunoPresenca> {
                 child: ListTile(
               tileColor: Colors.indigo[50],
               horizontalTitleGap: 20,
-              title: Text('${listaAlunos[index]}'),
-              //subtitle: const Text('Faixa'),
+              title: Text('${listaAlunos[index].nome}'),
+              subtitle: Text('Usuário: ${listaAlunos[index].usuario}'),
               leading: const Icon(Icons.person),
               trailing: IconButton(
                 icon: const Icon(Icons.arrow_forward),
                 onPressed: () {
-                  validaPresenca();
+                  validaPresenca('${listaAlunos[index].nome}','${listaAlunos[index].usuario}');
                   print(listaAlunos[index]);
                 },
               ),
             ));
           },
           padding: const EdgeInsets.all(10),
-          separatorBuilder: (context, index) => Divider(),
+          separatorBuilder: (context, index) => const Divider(),
           itemCount: listaAlunos.length),
 
       //botão flutuante sobre a barra inferior
@@ -121,17 +120,17 @@ class _ListaAlunoPresencaState extends State<ListaAlunoPresenca> {
     );
   }
 
-  validaPresenca() {
+  validaPresenca(String nomeAluno, String usuarioAluno) {
     showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Deseja realmente excluir?'),
+        title: Text('Aluno: $nomeAluno'),
         content: const Text(
-            'Isto irá excluir a seguinte notificação:\nTipo de Progresso1'),
+            'Para contabilizar a sua presença, é necessário inserir abaixo a sua senha de acesso!'),
         actions: <Widget>[
           Center(
             child: SizedBox(
-              width: 250,
+              width: 200,
               child: TextFormField(
                 controller: txtSenha,
                 keyboardType: TextInputType.visiblePassword,
@@ -166,28 +165,37 @@ class _ListaAlunoPresencaState extends State<ListaAlunoPresenca> {
           ),
           const Padding(padding: EdgeInsets.only(top: 15)),
           SizedBox(
-            width: 250,
-            child: TextButton(
-              onPressed: () => Navigator.pop(context, 'Não'),
-              style: ButtonStyle(
-                  alignment: Alignment.center,
-                  backgroundColor: MaterialStatePropertyAll(Colors.black)),
-              child: const Text(
-                'Não',
+            //  width: 250,
+            child: Align(
+              alignment: Alignment.center,
+              child: TextButton(
+                onPressed: () => Navigator.pop(context, 'Não'),
+                style: const ButtonStyle(
+                    iconSize: MaterialStatePropertyAll(1.2),
+                    alignment: Alignment.center,
+                    backgroundColor: MaterialStatePropertyAll(Colors.black)),
+                child: const Text(
+                  'Não',
+                ),
               ),
             ),
           ),
-          TextButton(
-            //Se for selecionado sim
-            onPressed: () async {
-              Navigator.pop(context, 'Sim');
-              style:
-              const ButtonStyle(
-                  alignment: Alignment.bottomRight,
-                  backgroundColor: MaterialStatePropertyAll(Colors.black));
-            },
-            child: const Text('Sim'),
-          ),
+          SizedBox(
+              // width: 200,
+              child: Align(
+            alignment: Alignment.center,
+            child: TextButton(
+              //Se for selecionado sim
+              onPressed: () => Navigator.pop(context, 'Sim'),
+              style: const ButtonStyle(
+                  alignment: Alignment.center,
+                  backgroundColor: MaterialStatePropertyAll(Colors.black)),
+
+              child: const Text(
+                'Sim',
+              ),
+            ),
+          ))
         ],
       ),
     );

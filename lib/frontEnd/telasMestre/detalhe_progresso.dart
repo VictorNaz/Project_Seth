@@ -17,10 +17,12 @@ import 'listaNotificacoes.dart';
 class DetalheProgresso extends StatefulWidget {
   final int id;
   final String nome;
+  final String usuario;
 
   const DetalheProgresso({
     Key? key,
     required this.nome,
+    required this.usuario,
     required this.id,
   }) : super(key: key);
 
@@ -65,7 +67,7 @@ class _DetalheProgressoState extends State<DetalheProgresso> {
   //este método recebe o usuario como um parametro da classe DetalheProgresso
   getInfoUsuario<List>() async {
     aluno.nome = widget.nome;
-    aluno.usuario = await buscaUsarioPorNome(aluno);
+    aluno.usuario = widget.usuario; //await buscaUsarioPorNome(aluno);
     print(aluno.usuario);
     await buscaAvaliacao(aluno).then((value) {
       setState(() {

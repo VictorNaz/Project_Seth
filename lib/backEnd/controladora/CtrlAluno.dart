@@ -167,10 +167,10 @@ Future<Faixa> buscaFaixa(Aluno aluno) async {
   return progresso;
 }
 
-Future<String?> buscaUsarioPorNome(Aluno aluno) async {
+/*Future<String?> buscaUsarioPorNome(Aluno aluno) async {
   aluno.usuario = await ServerAluno.buscaUsarioPorNome(aluno);
   return aluno.usuario;
-}
+}*/
 
 /*************************** VALIDAÇÕES DE CAMPO *******************************/
 

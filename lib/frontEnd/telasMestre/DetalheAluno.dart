@@ -10,9 +10,11 @@ import '../../backEnd/server/serverAluno.dart';
 import '../widgets/utilClass.dart';
 
 class DetalheAluno extends StatefulWidget {
+  final String usuario;
   final String nome;
   const DetalheAluno({
     Key? key,
+    required this.usuario,
     required this.nome,
   }) : super(key: key);
 
@@ -36,15 +38,16 @@ class _DetalheAlunoState extends State<DetalheAluno> {
   Color faixaCor = const Color.fromARGB(252, 207, 203, 203);
 
   //A instancia mestre do tipo aluno carrega as informações do usuario da seção principal
-  var mestre = Aluno();
+  var usuarioLogado = Aluno();
+
   //Esse método serve para carregar as informações do usuario logado para mostrar no drower
   getInfoAluno<Aluno>() async {
-    mestre.usuario = await PrefsService.returnUser();
-    await ServerAluno.buscaInfo(mestre).then((value) {
+    usuarioLogado.usuario = await PrefsService.returnUser();
+    await ServerAluno.buscaInfo(usuarioLogado).then((value) {
       setState(() {
-        mestre = value;
-        nome = mestre.nome!;
-        email = mestre.email!;
+        usuarioLogado = value;
+        nome = usuarioLogado.nome!;
+        email = usuarioLogado.email!;
       });
     });
   }
@@ -54,8 +57,7 @@ class _DetalheAlunoState extends State<DetalheAluno> {
   //este método recebe o usuario como um parametro da classe DetalheAluno
   getInfoUsuario<List>() async {
     aluno.nome = widget.nome;
-    aluno.usuario = await buscaUsarioPorNome(aluno);
-    print(aluno.usuario);
+    aluno.usuario = widget.usuario; //await buscaUsarioPorNome(aluno);
     await buscaAvaliacao(aluno).then((value) {
       setState(() {
         lista = value;
@@ -84,7 +86,7 @@ class _DetalheAlunoState extends State<DetalheAluno> {
         }
         if (faixa == "Branca") {
           quantAulasFaixa = 150;
-          faixaCor = Colors.white;
+          faixaCor = const Color.fromARGB(255, 248, 248, 248);
         } else if (faixa == "Azul") {
           quantAulasFaixa = 300;
           faixaCor = Colors.blue;

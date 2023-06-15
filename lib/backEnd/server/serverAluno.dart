@@ -130,7 +130,7 @@ class ServerAluno {
   }
 
   //Busca o usuario pelo nome do aluno
-  static Future<String?> buscaUsarioPorNome(Aluno aluno) async {
+ /* static Future<String?> buscaUsarioPorNome(Aluno aluno) async {
     var request = http.Request(
         'POST', Uri.parse('https://apiseth.cyclic.app/buscaUsuarioPorNome'));
     request.body = await json.encode({"nome": aluno.nome});
@@ -148,7 +148,7 @@ class ServerAluno {
 
     return aluno.usuario;
   }
-
+*/
   //Busca a quantidade de aulas que o aluno já frequentou
   static Future<int?> buscaAulas(Aluno aluno) async {
     var request = http.Request(
@@ -174,12 +174,45 @@ class ServerAluno {
   }
 
   //Busca todos os alunos no banco de dados
-  static Future<List> buscaAlunos() async {
+  static Future buscaAlunos() async {
     var request = http.Request(
         'POST', Uri.parse('https://apiseth.cyclic.app/buscaAlunos'));
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
 
+    if (response.statusCode == 200) {
+      //converte os dados do banco em String
+      String jsonString = await response.stream.bytesToString();
+      var result = await json.decode(jsonString)
+          as List; //identificar o tamanho do result
+      // print(result);
+
+      var listaAlu = ListaAlu(result);
+      List<Aluno> listaAluno = [];
+
+      listaAlu.aluno.forEach((element) {
+        //   for (int i = 0; i < listaNotif.notificacoes.length; i++) {}
+        //   p = p + 1;
+        Aluno aluno = Aluno(
+          // element['id'],
+          element['nome'],
+          element['usuario'],
+          element['email'],
+          //element['faixa_id'],
+          //element['nivel_acess'],
+        );
+        listaAluno.add(aluno);
+
+        print(listaAlu.aluno.length);
+      });
+
+      return listaAluno;
+    } else {
+      print(response.reasonPhrase);
+      return null; //ajusttar
+    }
+
+/*
     var lista = [];
 
     if (response.statusCode == 200) {
@@ -201,6 +234,8 @@ class ServerAluno {
       print(response.reasonPhrase);
       return lista;
     }
+
+*/
   }
 
   //Busca a auto-avaliação do aluno
@@ -479,7 +514,6 @@ class ServerAluno {
 
       String? is_Faixa;
       var listaNotif = ListaNoti(result);
-      int p = 0;
       List<Notificacoes> listaNot = [];
 
       listaNotif.notificacoes.forEach((element) {

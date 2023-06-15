@@ -37,7 +37,6 @@ class _ListaAlunoState extends State<ListaAluno> {
     await buscaAlunos().then((value) {
       setState(() {
         listaAlunos = value;
-        
       });
     });
   }
@@ -84,8 +83,8 @@ class _ListaAlunoState extends State<ListaAluno> {
                 child: ListTile(
               tileColor: Colors.indigo[50],
               horizontalTitleGap: 20,
-              title: Text('${listaAlunos[index]}'),
-              //subtitle: const Text('Faixa'),
+              title: Text('${listaAlunos[index].nome}'),
+              subtitle: Text('Usuário: ${listaAlunos[index].usuario}'),
               leading: const Icon(Icons.person),
               trailing: IconButton(
                 icon: const Icon(Icons.arrow_forward),
@@ -94,10 +93,10 @@ class _ListaAlunoState extends State<ListaAluno> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => DetalheAluno(
-                              nome: listaAlunos[index],
+                              nome: listaAlunos[index].nome,
+                              usuario: listaAlunos[index].usuario,
                             )),
                   );
-                  print(listaAlunos[index]);
                 },
               ),
             ));
