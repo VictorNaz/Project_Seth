@@ -1,4 +1,5 @@
 import 'package:flutter/gestures.dart';
+import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
 import 'package:flutter_project_seth/backEnd/modelo/aluno.dart';
 import 'package:flutter_project_seth/backEnd/security/dataCrypt.dart';
 import 'package:flutter_project_seth/backEnd/server/serverProfessor.dart';
@@ -47,11 +48,22 @@ Future<List> buscaAlunos() async {
 
 //BUSCA AS NOTIFICAÇÕES DISPONIVEIS
 Future<List> buscaNotificacoes() async {
-  List notificacao = await ServerAluno.buscaNotificacoes(
-  );
+  List notificacao = await ServerAluno.buscaNotificacoes();
   return notificacao;
 }
 
+Future<String> validaPresencaSenha(String usuario, String senha) async {
+  String resposta;
+  var novaSenha = dataCrypt(senha);
+  bool retorno = await ServerAluno.validaCredenciais(usuario, novaSenha);
+  if (retorno == true) {
+    resposta = "Presença validada com sucesso!";
+    //validaPresAluno();
+  } else {
+    resposta = "Não foi possivel validar a presença, senha incorreta!";
+  }
+  return resposta;
+}
 /*************************** VALIDAÇÕES DE CAMPO *******************************/
 
 String? validarNome(String value) {

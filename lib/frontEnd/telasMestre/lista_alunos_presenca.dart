@@ -20,8 +20,9 @@ class _ListaAlunoPresencaState extends State<ListaAlunoPresenca> {
   String nome = "";
   String email = "";
   var aluno = Aluno();
-  bool showPassword = false;
+  bool showPassword = true;
   TextEditingController txtSenha = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   getInfoAluno<Aluno>() async {
     aluno.usuario = await PrefsService.returnUser();
@@ -90,7 +91,8 @@ class _ListaAlunoPresencaState extends State<ListaAlunoPresenca> {
               trailing: IconButton(
                 icon: const Icon(Icons.arrow_forward),
                 onPressed: () {
-                  validaPresenca('${listaAlunos[index].nome}','${listaAlunos[index].usuario}');
+                  validaPresenca('${listaAlunos[index].nome}',
+                      '${listaAlunos[index].usuario}');
                   print(listaAlunos[index]);
                 },
               ),
@@ -122,80 +124,82 @@ class _ListaAlunoPresencaState extends State<ListaAlunoPresenca> {
 
   validaPresenca(String nomeAluno, String usuarioAluno) {
     showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+                title: Text('Aluno: $nomeAluno'),
+                content: const Text(
+                    'Para contabilizar a sua presença, é necessário inserir abaixo a sua senha de acesso!'),
+                actions: <Widget>[
+                  Form(
+                    key: _formKey,
+                    child: Column(children: [
+                      SizedBox(
+                        width: 200,
+                        child: TextFormField(
+                          controller: txtSenha,
+                          keyboardType: TextInputType.visiblePassword,
+                          textAlign: TextAlign.start,
+                          decoration: InputDecoration(
+                            labelText: "Senha",
+                            fillColor: Colors.black,
+                            hintStyle: const TextStyle(color: Colors.black),
+                            focusedBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color.fromARGB(255, 252, 72, 27))),
+                            suffixIcon: GestureDetector(
+                              child: Icon(
+                                showPassword == false
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: Colors.black,
+                              ),
+                              onTap: () {
+                                setState(() {
+                                  showPassword = !showPassword;
+                                });
+                              },
+                            ),
+                          ),
+                          validator: (value) {
+                            return validarSenha(txtSenha.text);
+                          },
+                          obscureText: showPassword == false ? true : false,
+                        ),
+                      ),
+                      const Padding(padding: EdgeInsets.only(top: 15)),
+                      TextButton(
+                        //Se for selecionado Não
+                        onPressed: () => Navigator.pop(context, 'Não'),
+                        child: const Text('Não'),
+                        
+                      ),
+                      TextButton(
+                        //Se for selecionado sim
+                        onPressed: () async {
+                          String senha = txtSenha.text;
+                          String retorno =
+                              await validaPresencaSenha(usuarioAluno, senha);
+                          exibeAviso(retorno);
+                        },
+                        child: const Text('Sim'),
+                      ),
+                    ]),
+                  ),
+                ]));
+  }
+
+  exibeAviso(String conteudo) {
+    showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: Text('Aluno: $nomeAluno'),
-        content: const Text(
-            'Para contabilizar a sua presença, é necessário inserir abaixo a sua senha de acesso!'),
+        title: const Text("Validação de Presença"),
+        content: Text(conteudo),
         actions: <Widget>[
-          Center(
-            child: SizedBox(
-              width: 200,
-              child: TextFormField(
-                controller: txtSenha,
-                keyboardType: TextInputType.visiblePassword,
-                textAlign: TextAlign.start,
-                decoration: InputDecoration(
-                  labelText: "Senha",
-                  fillColor: Colors.black,
-                  hintStyle: const TextStyle(color: Colors.black),
-                  focusedBorder: const UnderlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Color.fromARGB(255, 252, 72, 27))),
-                  suffixIcon: GestureDetector(
-                    child: Icon(
-                      showPassword == false
-                          ? Icons.visibility_off
-                          : Icons.visibility,
-                      color: Colors.black,
-                    ),
-                    onTap: () {
-                      setState(() {
-                        showPassword = !showPassword;
-                      });
-                    },
-                  ),
-                ),
-                validator: (value) {
-                  return validarSenha(txtSenha.text);
-                },
-                obscureText: showPassword == false ? true : false,
-              ),
-            ),
+          TextButton(
+            //Se for selecionado Não
+            onPressed: () => Navigator.pop(context, 'Ok'),
+            child: const Text('Ok'),
           ),
-          const Padding(padding: EdgeInsets.only(top: 15)),
-          SizedBox(
-            //  width: 250,
-            child: Align(
-              alignment: Alignment.center,
-              child: TextButton(
-                onPressed: () => Navigator.pop(context, 'Não'),
-                style: const ButtonStyle(
-                    iconSize: MaterialStatePropertyAll(1.2),
-                    alignment: Alignment.center,
-                    backgroundColor: MaterialStatePropertyAll(Colors.black)),
-                child: const Text(
-                  'Não',
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-              // width: 200,
-              child: Align(
-            alignment: Alignment.center,
-            child: TextButton(
-              //Se for selecionado sim
-              onPressed: () => Navigator.pop(context, 'Sim'),
-              style: const ButtonStyle(
-                  alignment: Alignment.center,
-                  backgroundColor: MaterialStatePropertyAll(Colors.black)),
-
-              child: const Text(
-                'Sim',
-              ),
-            ),
-          ))
         ],
       ),
     );

@@ -130,7 +130,7 @@ class ServerAluno {
   }
 
   //Busca o usuario pelo nome do aluno
- /* static Future<String?> buscaUsarioPorNome(Aluno aluno) async {
+  /* static Future<String?> buscaUsarioPorNome(Aluno aluno) async {
     var request = http.Request(
         'POST', Uri.parse('https://apiseth.cyclic.app/buscaUsuarioPorNome'));
     request.body = await json.encode({"nome": aluno.nome});
@@ -566,5 +566,29 @@ class ServerAluno {
 
       return false;
     }
+  }
+
+  static Future<bool> validaCredenciais(String usuario, String senha) async {
+    var request = http.Request(
+        'POST', Uri.parse('https://apiseth.cyclic.app/validaCredenciais'));
+    request.body = json.encode({
+      "usuario": usuario,
+      "senha": senha,
+    });
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      String jsonString = await response.stream.bytesToString();
+      //! Se não encontrar o aluno, vai trazer somente "[]"
+      int count = jsonString.length;
+      print(count);
+      if (jsonString.length <= 2) {
+        return false; //!Não encontrou nada com aquele usuário e senha
+      } else {
+        return true; //!Encontrou aquele usuário e senha
+      }
+    }
+    return false;
   }
 }//Fim da classe
