@@ -53,12 +53,16 @@ Future<List> buscaNotificacoes() async {
 }
 
 Future<String> validaPresencaSenha(String usuario, String senha) async {
+  var aluno = Aluno();
+  aluno.usuario = usuario;
+  aluno = await ServerAluno.buscaInfo(aluno);
   String resposta;
   var novaSenha = dataCrypt(senha);
   bool retorno = await ServerAluno.validaCredenciais(usuario, novaSenha);
   if (retorno == true) {
+   
+    await ServerAluno.valPresenAluno(aluno);
     resposta = "Presença validada com sucesso!";
-    //validaPresAluno();
   } else {
     resposta = "Não foi possivel validar a presença, senha incorreta!";
   }

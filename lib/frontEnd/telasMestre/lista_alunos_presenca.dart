@@ -43,6 +43,10 @@ class _ListaAlunoPresencaState extends State<ListaAlunoPresenca> {
     });
   }
 
+  void clearText() {
+    txtSenha.clear();
+  }
+
   @override
   void initState() {
     getList();
@@ -91,9 +95,9 @@ class _ListaAlunoPresencaState extends State<ListaAlunoPresenca> {
               trailing: IconButton(
                 icon: const Icon(Icons.arrow_forward),
                 onPressed: () {
+                  clearText();
                   validaPresenca('${listaAlunos[index].nome}',
                       '${listaAlunos[index].usuario}');
-                  print(listaAlunos[index]);
                 },
               ),
             ));
@@ -170,8 +174,8 @@ class _ListaAlunoPresencaState extends State<ListaAlunoPresenca> {
                       TextButton(
                         //Se for selecionado Não
                         onPressed: () => Navigator.pop(context, 'Não'),
+
                         child: const Text('Não'),
-                        
                       ),
                       TextButton(
                         //Se for selecionado sim
@@ -189,6 +193,7 @@ class _ListaAlunoPresencaState extends State<ListaAlunoPresenca> {
   }
 
   exibeAviso(String conteudo) {
+    clearText();
     showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
