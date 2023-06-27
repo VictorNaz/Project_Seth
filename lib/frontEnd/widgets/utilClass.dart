@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable, file_names
 
 import 'dart:io';
+import 'dart:ui';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
@@ -76,41 +77,38 @@ class _DrawerTopState extends State<DrawerTop> {
 
   @override
   Widget build(BuildContext context) {
-    if (nome == 'Administrador') { //*Se for Admin ele exibe as notificações
+    if (nome == 'Administrador') {
+      //*Se for Admin ele exibe as notificações
       return ListView(
         padding: EdgeInsets.zero,
         children: [
-          SizedBox(
-            height: 64,
-            child: DrawerHeader(
-              padding: const EdgeInsets.only(right: 30),
-              decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 252, 72, 27),
-              ),
-              child: Row(
-                //  mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    // alignment: Alignment.bottomRight,
-                    onPressed: () {
-                      Navigator.pop(context, false);
-                    },
-                    icon: const Icon(
-                      Icons.arrow_back,
-                      color: Color.fromARGB(255, 255, 255, 255),
-                      size: 30,
-                    ),
+          Container(
+            height: 56,
+            color: const Color.fromARGB(255, 252, 72, 27),
+            child: Row(
+              //  mainAxisAlignment: MainAxisAlignment.center,
+
+              children: [
+                IconButton(
+                  // alignment: Alignment.bottomRight,
+                  onPressed: () {
+                    Navigator.pop(context, false);
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: Color.fromARGB(255, 255, 255, 255),
+                    size: 30,
                   ),
-                  const Padding(padding: EdgeInsets.only(right: 10)),
-                  Text(
-                    texto,
-                    style: const TextStyle(
+                ),
+                const Padding(padding: EdgeInsets.only(right: 10)),
+                Text(
+                  texto,
+                  style: const TextStyle(
                       color: Colors.white,
-                      fontSize: 20,
-                    ),
-                  ),
-                ],
-              ),
+                      fontSize: 21,
+                      fontWeight: FontWeight.w500),
+                ),
+              ],
             ),
           ),
 
@@ -120,8 +118,9 @@ class _DrawerTopState extends State<DrawerTop> {
             decoration: const BoxDecoration(
               border: Border(
                   bottom: BorderSide(
-                      width: 12.0, color: Color.fromARGB(255, 252, 72, 27))),
-              color: Color.fromARGB(0, 255, 255, 255),
+                width: 2.0,
+                color: Color.fromARGB(14, 252, 72, 27),
+              )),
             ),
             accountName:
                 Text(nome, style: const TextStyle(color: Colors.black)),
@@ -131,27 +130,27 @@ class _DrawerTopState extends State<DrawerTop> {
                 )),
             currentAccountPicture: const CircleAvatar(
               backgroundImage: AssetImage('assets/image/marciano.jpg'),
-            ),
+            ), //
           ),
           ListTile(
               title: Container(
                   padding: const EdgeInsets.only(top: 5),
-                  color: const Color.fromARGB(255, 228, 227, 227),
-                  height: 50,
+                  color: const Color.fromARGB(14, 252, 72, 27),
+                  height: 70,
                   child: Row(
                     children: const [
                       Padding(padding: EdgeInsets.only(left: 20)),
                       Icon(
-                        Icons.notifications,
-                        color: Colors.black,
+                        Icons.notifications_none_sharp,
+                        color: Color.fromARGB(255, 252, 72, 27),
                         size: 32,
                       ),
-                      Padding(padding: EdgeInsets.only(right: 30)),
+                      Padding(padding: EdgeInsets.only(right: 28)),
                       Text(
                         'Notificações',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 16,
                         ),
                       ),
                     ],
@@ -181,29 +180,28 @@ class _DrawerTopState extends State<DrawerTop> {
                         context,
                         MaterialPageRoute(
                             builder: ((context) => const ListaNotificacoes())));
-
                   }
-                } 
+                }
               }),
           ListTile(
             title: Container(
                 padding: const EdgeInsets.only(top: 5),
-                color: const Color.fromARGB(255, 228, 227, 227),
-                height: 50,
+                color: const Color.fromARGB(14, 252, 72, 27),
+                height: 70,
                 child: Row(
                   children: const [
                     Padding(padding: EdgeInsets.only(left: 20)),
                     Icon(
                       Icons.list,
-                      color: Colors.black,
+                      color: Color.fromARGB(255, 252, 72, 27),
                       size: 32,
                     ),
-                    Padding(padding: EdgeInsets.only(right: 27)),
+                    Padding(padding: EdgeInsets.only(right: 28)),
                     Text(
                       'Termos de Uso',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 16,
                       ),
                     ),
                   ],
@@ -215,22 +213,22 @@ class _DrawerTopState extends State<DrawerTop> {
           ListTile(
             title: Container(
                 padding: const EdgeInsets.only(top: 5),
-                color: const Color.fromARGB(255, 228, 227, 227),
-                height: 50,
+                color: const Color.fromARGB(14, 252, 72, 27),
+                height: 70,
                 child: Row(
                   children: const [
                     Padding(padding: EdgeInsets.only(left: 20)),
                     Icon(
                       Icons.checklist_rtl,
-                      color: Colors.black,
+                      color: Color.fromARGB(255, 252, 72, 27),
                       size: 32,
                     ),
-                    Padding(padding: EdgeInsets.only(right: 12)),
+                    Padding(padding: EdgeInsets.only(right: 28)),
                     Text(
                       'Regras do Tatame',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 16,
                       ),
                     ),
                   ],
@@ -244,22 +242,22 @@ class _DrawerTopState extends State<DrawerTop> {
           ListTile(
             title: Container(
                 padding: const EdgeInsets.only(top: 5),
-                color: const Color.fromARGB(255, 228, 227, 227),
-                height: 50,
+                color: const Color.fromARGB(14, 252, 72, 27),
+                height: 70,
                 child: Row(
                   children: const [
                     Padding(padding: EdgeInsets.only(left: 20)),
                     Icon(
-                      Icons.info,
-                      color: Colors.black,
+                      Icons.info_outline_rounded,
+                      color: Color.fromARGB(255, 252, 72, 27),
                       size: 32,
                     ),
-                    Padding(padding: EdgeInsets.only(right: 62)),
+                    Padding(padding: EdgeInsets.only(right: 28)),
                     Text(
                       'Sobre',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 16,
                       ),
                     ),
                   ],
@@ -271,22 +269,22 @@ class _DrawerTopState extends State<DrawerTop> {
           ListTile(
             title: Container(
                 padding: const EdgeInsets.only(top: 5),
-                color: const Color.fromARGB(255, 228, 227, 227),
-                height: 50,
+                color: const Color.fromARGB(14, 252, 72, 27),
+                height: 70,
                 child: Row(
                   children: const [
                     Padding(padding: EdgeInsets.only(left: 20)),
                     Icon(
                       Icons.close,
-                      color: Colors.black,
+                      color: Color.fromARGB(255, 252, 72, 27),
                       size: 32,
                     ),
-                    Padding(padding: EdgeInsets.only(right: 12)),
+                    Padding(padding: EdgeInsets.only(right: 28)),
                     Text(
                       'Encerrar Sessão',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 16,
                       ),
                     ),
                   ],
@@ -321,13 +319,40 @@ class _DrawerTopState extends State<DrawerTop> {
           ),
         ],
       );
-    } else { //*Se NÃO for Admin ele NÃO exibe as notificações
+    } else {
+      //*Se NÃO for Admin ele NÃO exibe as notificações
       return ListView(
         padding: EdgeInsets.zero,
         children: [
-          SizedBox(
-            height: 64,
-            child: DrawerHeader(
+          Container(
+            height: 56,
+            color: const Color.fromARGB(255, 252, 72, 27),
+            child: Row(
+              //  mainAxisAlignment: MainAxisAlignment.center,
+
+              children: [
+                IconButton(
+                  // alignment: Alignment.bottomRight,
+                  onPressed: () {
+                    Navigator.pop(context, false);
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: Color.fromARGB(255, 255, 255, 255),
+                    size: 30,
+                  ),
+                ),
+                const Padding(padding: EdgeInsets.only(right: 10)),
+                Text(
+                  texto,
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 21,
+                      fontWeight: FontWeight.w500),
+                ),
+              ],
+            ),
+            /*child: DrawerHeader(
               padding: const EdgeInsets.only(right: 30),
               decoration: const BoxDecoration(
                 color: Color.fromARGB(255, 252, 72, 27),
@@ -357,6 +382,7 @@ class _DrawerTopState extends State<DrawerTop> {
                 ],
               ),
             ),
+            */
           ),
 
           //Parte do Drawer que vai conter as informações do usuário
@@ -365,8 +391,9 @@ class _DrawerTopState extends State<DrawerTop> {
             decoration: const BoxDecoration(
               border: Border(
                   bottom: BorderSide(
-                      width: 12.0, color: Color.fromARGB(255, 252, 72, 27))),
-              color: Color.fromARGB(0, 255, 255, 255),
+                width: 2.0,
+                color: Color.fromARGB(14, 252, 72, 27),
+              )),
             ),
             accountName:
                 Text(nome, style: const TextStyle(color: Colors.black)),
@@ -376,27 +403,27 @@ class _DrawerTopState extends State<DrawerTop> {
                 )),
             currentAccountPicture: const CircleAvatar(
               backgroundImage: AssetImage('assets/image/marciano.jpg'),
-            ),
+            ), //
           ),
           ListTile(
             title: Container(
                 padding: const EdgeInsets.only(top: 5),
-                color: const Color.fromARGB(255, 228, 227, 227),
-                height: 50,
+                color: const Color.fromARGB(14, 252, 72, 27),
+                height: 70,
                 child: Row(
                   children: const [
                     Padding(padding: EdgeInsets.only(left: 20)),
                     Icon(
                       Icons.list,
-                      color: Colors.black,
+                      color: Color.fromARGB(255, 252, 72, 27),
                       size: 32,
                     ),
-                    Padding(padding: EdgeInsets.only(right: 27)),
+                    Padding(padding: EdgeInsets.only(right: 28)),
                     Text(
                       'Termos de Uso',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 16,
                       ),
                     ),
                   ],
@@ -408,22 +435,22 @@ class _DrawerTopState extends State<DrawerTop> {
           ListTile(
             title: Container(
                 padding: const EdgeInsets.only(top: 5),
-                color: const Color.fromARGB(255, 228, 227, 227),
-                height: 50,
+                color: const Color.fromARGB(14, 252, 72, 27),
+                height: 70,
                 child: Row(
                   children: const [
                     Padding(padding: EdgeInsets.only(left: 20)),
                     Icon(
                       Icons.checklist_rtl,
-                      color: Colors.black,
+                      color: Color.fromARGB(255, 252, 72, 27),
                       size: 32,
                     ),
-                    Padding(padding: EdgeInsets.only(right: 12)),
+                    Padding(padding: EdgeInsets.only(right: 28)),
                     Text(
                       'Regras do Tatame',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 16,
                       ),
                     ),
                   ],
@@ -437,22 +464,22 @@ class _DrawerTopState extends State<DrawerTop> {
           ListTile(
             title: Container(
                 padding: const EdgeInsets.only(top: 5),
-                color: const Color.fromARGB(255, 228, 227, 227),
-                height: 50,
+                color: const Color.fromARGB(14, 252, 72, 27),
+                height: 70,
                 child: Row(
                   children: const [
                     Padding(padding: EdgeInsets.only(left: 20)),
                     Icon(
-                      Icons.info,
-                      color: Colors.black,
+                      Icons.info_outline_rounded,
+                      color: Color.fromARGB(255, 252, 72, 27),
                       size: 32,
                     ),
-                    Padding(padding: EdgeInsets.only(right: 62)),
+                    Padding(padding: EdgeInsets.only(right: 28)),
                     Text(
                       'Sobre',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 16,
                       ),
                     ),
                   ],
@@ -464,22 +491,22 @@ class _DrawerTopState extends State<DrawerTop> {
           ListTile(
             title: Container(
                 padding: const EdgeInsets.only(top: 5),
-                color: const Color.fromARGB(255, 228, 227, 227),
-                height: 50,
+                color: const Color.fromARGB(14, 252, 72, 27),
+                height: 70,
                 child: Row(
                   children: const [
                     Padding(padding: EdgeInsets.only(left: 20)),
                     Icon(
                       Icons.close,
-                      color: Colors.black,
+                      color: Color.fromARGB(255, 252, 72, 27),
                       size: 32,
                     ),
-                    Padding(padding: EdgeInsets.only(right: 12)),
+                    Padding(padding: EdgeInsets.only(right: 28)),
                     Text(
                       'Encerrar Sessão',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 16,
                       ),
                     ),
                   ],
