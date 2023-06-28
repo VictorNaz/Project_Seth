@@ -70,6 +70,8 @@ class _ListaAlunoState extends State<ListaAluno> {
             onPressed: () => Navigator.pop(context, false)),
       ),
       endDrawer: Drawer(
+                backgroundColor: Color.fromARGB(207, 255, 255, 255),
+
         child: DrawerTop(
           texto: "Opções",
           nome: nome,

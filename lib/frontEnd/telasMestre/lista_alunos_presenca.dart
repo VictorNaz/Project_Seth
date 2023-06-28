@@ -76,6 +76,7 @@ class _ListaAlunoPresencaState extends State<ListaAlunoPresenca> {
             onPressed: () => Navigator.pop(context, false)),
       ),
       endDrawer: Drawer(
+        backgroundColor: Color.fromARGB(207, 255, 255, 255),
         child: DrawerTop(
           texto: "Opções",
           nome: nome,

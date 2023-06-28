@@ -16,7 +16,7 @@ class MenuProfessor extends StatefulWidget {
 }
 
 class _MenuProfessorState extends State<MenuProfessor> {
-    String nome = "";
+  String nome = "";
   String email = "";
   var aluno = Aluno();
 
@@ -60,9 +60,11 @@ class _MenuProfessorState extends State<MenuProfessor> {
 
       //drawer para navegação no appbar
       //A classe Drawer está sendo chamada de outro arquivo e está recebendo por parametro o texto desejado.
-      endDrawer:  Drawer(
+      endDrawer: Drawer(
+        backgroundColor: Color.fromARGB(207, 255, 255, 255),
         child: DrawerTop(
-          texto: "Opções", nome: nome,
+          texto: "Opções",
+          nome: nome,
           email: email,
         ),
       ),

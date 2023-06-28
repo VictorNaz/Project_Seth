@@ -66,6 +66,8 @@ class _MenuMestreState extends State<MenuMestre> {
       //drawer para navegação no appbar
       //A classe Drawer está sendo chamada de outro arquivo e está recebendo por parametro o texto desejado.
       endDrawer: Drawer(
+                backgroundColor: Color.fromARGB(207, 255, 255, 255),
+
         child: DrawerTop(
           texto: "Opções",
           nome: nome,
