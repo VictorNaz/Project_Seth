@@ -394,21 +394,17 @@ class ServerAluno {
     request.body = json.encode({"email": aluno.email});
     request.headers.addAll(headers);
 
-    var info = Aluno();
-    print('$request : Request Print 286');
 
     http.StreamedResponse response = await request.send();
     print(
         '${response.reasonPhrase} ${response.contentLength} : Response Print 288');
 
-    String jsonString = await response.stream.bytesToString();
 
     if (response.contentLength != 0) {
       print("E-mail já utilizado!");
       print(response.reasonPhrase);
       return true;
     } else if (response.statusCode == 200 || response.contentLength == 0) {
-      print("Informações encontradas encontrados!");
       return false;
     } else {
       print("Erro ao procurar as informações!");

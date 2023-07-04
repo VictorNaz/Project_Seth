@@ -49,6 +49,7 @@ dependencies:
   path: ^1.8.2                         #Configuração do caminho PDF
   awesome_notifications: ^0.7.4+1       #Notificações Locais
   flutter_barcode_scanner: ^2.0.0      #Ler QR-Code
+  mailer: ^6.0.1
 #  timezone: ^0.9.1                    #Pega o timezone global
 #  flutter_native_timezone: ^2.0.0      #Pega o timezone do dispositivo
 #  provider:                            #Plugin com o caminho Ex: /Home

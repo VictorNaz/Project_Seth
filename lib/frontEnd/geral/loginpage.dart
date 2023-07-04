@@ -8,7 +8,7 @@ import '../telasAluno/CadAluno.dart';
 import '../telasAluno/MenuPrincipal.dart';
 import '../telasProf/MenuProfessor.dart';
 import '../widgets/utilClass.dart';
-import 'RecSenha.dart';
+import 'enviarEmailSenha.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -241,7 +241,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ), //texto do button e estilo da escrita
                     child: const Text(
-                      "Recuperar senha",
+                      "Redefinir senha",
                       style: TextStyle(color: Colors.grey, fontSize: 18),
                     )),
 
