@@ -1,8 +1,10 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter_project_seth/backEnd/security/dataCrypt.dart';
 import 'package:flutter_project_seth/frontEnd/geral/loginpage.dart';
 import 'package:flutter_project_seth/frontEnd/widgets/sendEmail.dart';
+import 'package:random_password_generator/random_password_generator.dart';
 
 import '../../backEnd/controladora/CtrlAluno.dart';
 import '../widgets/utilClass.dart';
@@ -17,15 +19,25 @@ class RecSenha extends StatefulWidget {
 class _RecSenhaState extends State<RecSenha> {
   TextEditingController txtEmail = TextEditingController();
   String _text = '';
+  String senhaCript = "";
   var email = Email('pedro_v_veiga@estudante.sc.senai.br', 'Charger0077');
+  String mensagem =
+      "Olá, Aluno,\n\nRecebemos uma solicitação para restaurar sua senha de acesso em nosso site.\n\nSe você reconhece essa ação, clique no botão abaixo para prosseguir:";
 
-  void _sendEmail() async {
-    bool result = await email.sendMessage('Sua mensagem de email',
-        'pedroviniciusveiga01@gmail.com', 'Seu assunto do email');
+  Future<String> _sendEmail(String destinatario) async {
+    final password = RandomPasswordGenerator();
+    String novaSenha = password.randomPassword();
+    senhaCript = dataCrypt(novaSenha);
+
+    bool result = await email.sendMessage(
+        'Olá Aluno!\n\nSegue abaixo a sua nova senha de acesso ao Aplicativo Seth JiuJitsu\n\n Sua nova senha é: $novaSenha',
+        destinatario,
+        'APP Seth | Redefinição de Senha');
 
     setState(() {
       _text = result ? 'Enviado.' : 'Não enviado.';
     });
+    return _text;
   }
 
   @override
@@ -115,13 +127,18 @@ class _RecSenhaState extends State<RecSenha> {
                     onPressed: () async {
                       bool existe = await buscaUsuarioPorEmail(txtEmail.text);
                       if (existe == true) {
-                        _sendEmail();
                         //!Se encontrar é true
+                        String statusEmail = await _sendEmail(txtEmail.text);
+                        if(statusEmail == 'Enviado.'){
+//!Atualiza a senha
+                        }else{
+//!Não foi possivel atualizar a senha
+                        }
                         await showDialog<String>(
                           builder: (BuildContext context) => AlertDialog(
                             title: const Text("E-mail encontrado!"),
                             content: Text(
-                                "As instruções para o processo de recuperação da senha foram enviadas para o e-mail ${txtEmail.text}."),
+                                "As instruções para o processo de recuperação da senha foram enviadas para o e-mail ${txtEmail.text}.\nStatus do Envio: $statusEmail"),
                             actions: <Widget>[
                               TextButton(
                                 //Se for selecionado Não

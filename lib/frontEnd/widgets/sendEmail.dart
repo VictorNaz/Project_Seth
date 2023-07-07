@@ -15,7 +15,7 @@ class Email {
       String mensagem, String destinatario, String assunto) async {
     //Configurar a mensagem
     final message = Message()
-      ..from = Address(_username, 'Nome')
+      ..from = Address(_username, 'Seth JiuJitsu')
       ..recipients.add(destinatario)
       ..subject = assunto
       ..text = mensagem;
