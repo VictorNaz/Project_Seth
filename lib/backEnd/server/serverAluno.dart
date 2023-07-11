@@ -394,11 +394,9 @@ class ServerAluno {
     request.body = json.encode({"email": aluno.email});
     request.headers.addAll(headers);
 
-
     http.StreamedResponse response = await request.send();
     print(
         '${response.reasonPhrase} ${response.contentLength} : Response Print 288');
-
 
     if (response.contentLength != 0) {
       print("E-mail já utilizado!");
@@ -586,5 +584,31 @@ class ServerAluno {
       }
     }
     return false;
+  }
+
+  //Atualiza a quant de aulas feitas no progresso da faixa
+  static Future<bool> recuperaSenha(String? emailAluno, String senha) async {
+    try {
+      String url_Api = 'https://apiseth.cyclic.app/recuperaSenha';
+      var request = http.Request('POST', Uri.parse(url_Api));
+      request.body = json.encode({
+        "email": emailAluno,
+        "senha": senha,
+      });
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        print(await response.stream.bytesToString());
+        return true;
+      } else {
+        print(response.reasonPhrase);
+        return false;
+      }
+    } catch (e, url_Api) {
+      throw Exception(
+          'Conexão não estabelecida! Não foi possivel se conectar ao endereço $url_Api.\n Erro $e');
+    }
   }
 }//Fim da classe

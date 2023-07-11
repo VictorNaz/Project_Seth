@@ -167,6 +167,13 @@ Future<Faixa> buscaFaixa(Aluno aluno) async {
   return progresso;
 }
 
+Future<bool> recuperaSenha(String email,String senha) async {
+  bool progresso;
+  progresso = await ServerAluno.recuperaSenha(email,senha);
+
+  return progresso;
+}
+
 /*Future<String?> buscaUsarioPorNome(Aluno aluno) async {
   aluno.usuario = await ServerAluno.buscaUsarioPorNome(aluno);
   return aluno.usuario;

@@ -22,7 +22,7 @@ class Email {
 
     try {
       final sendReport = await send(message, smtpServer);
-      print('Message sent: ' + sendReport.toString());
+      print('Message sent: ' + sendReport.toString() );
 
       return true;
     } on MailerException catch (e) {

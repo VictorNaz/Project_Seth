@@ -30,12 +30,12 @@ class _RecSenhaState extends State<RecSenha> {
     senhaCript = dataCrypt(novaSenha);
 
     bool result = await email.sendMessage(
-        'Olá Aluno!\n\nSegue abaixo a sua nova senha de acesso ao Aplicativo Seth JiuJitsu\n\n Sua nova senha é: $novaSenha',
+        'Olá Aluno!\n\nSegue abaixo a sua nova senha de acesso ao Aplicativo Seth JiuJitsu\n\nSua nova senha é: $novaSenha',
         destinatario,
         'APP Seth | Redefinição de Senha');
 
     setState(() {
-      _text = result ? 'Enviado.' : 'Não enviado.';
+      _text = result ? 'Enviado' : 'Não enviado';
     });
     return _text;
   }
@@ -128,17 +128,24 @@ class _RecSenhaState extends State<RecSenha> {
                       bool existe = await buscaUsuarioPorEmail(txtEmail.text);
                       if (existe == true) {
                         //!Se encontrar é true
+                        String isChange = '';
                         String statusEmail = await _sendEmail(txtEmail.text);
-                        if(statusEmail == 'Enviado.'){
-//!Atualiza a senha
-                        }else{
-//!Não foi possivel atualizar a senha
+                        if (statusEmail == 'Enviado') {
+                          bool checkChange = await recuperaSenha(txtEmail.text,senhaCript);
+                          print(checkChange);
+                          if (checkChange) {
+                            isChange = 'Executado';
+                          } else {
+                            isChange = 'Não Executado';
+                          }
+                        } else {
+                          isChange = 'Não Executado';
                         }
                         await showDialog<String>(
                           builder: (BuildContext context) => AlertDialog(
                             title: const Text("E-mail encontrado!"),
                             content: Text(
-                                "As instruções para o processo de recuperação da senha foram enviadas para o e-mail ${txtEmail.text}.\nStatus do Envio: $statusEmail"),
+                                "As instruções para o processo de recuperação da senha foram enviadas para o e-mail ${txtEmail.text}.\n\nStatus do Envio: $statusEmail;\nAlteração de Senha: $isChange;"),
                             actions: <Widget>[
                               TextButton(
                                 //Se for selecionado Não
