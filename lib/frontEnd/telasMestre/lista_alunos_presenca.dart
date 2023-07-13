@@ -76,7 +76,7 @@ class _ListaAlunoPresencaState extends State<ListaAlunoPresenca> {
             onPressed: () => Navigator.pop(context, false)),
       ),
       endDrawer: Drawer(
-        backgroundColor: Color.fromARGB(207, 255, 255, 255),
+        backgroundColor: const Color.fromARGB(207, 255, 255, 255),
         child: DrawerTop(
           texto: "Opções",
           nome: nome,
@@ -138,37 +138,25 @@ class _ListaAlunoPresencaState extends State<ListaAlunoPresenca> {
                   Form(
                     key: _formKey,
                     child: Column(children: [
-                      SizedBox(
-                        width: 200,
+                      Center(
                         child: TextFormField(
                           controller: txtSenha,
                           keyboardType: TextInputType.visiblePassword,
                           textAlign: TextAlign.start,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: "Senha",
                             fillColor: Colors.black,
-                            hintStyle: const TextStyle(color: Colors.black),
-                            focusedBorder: const UnderlineInputBorder(
+                            hintStyle: TextStyle(color: Colors.black),
+                            focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
                                     color: Color.fromARGB(255, 252, 72, 27))),
-                            suffixIcon: GestureDetector(
-                              child: Icon(
-                                showPassword == false
-                                    ? Icons.visibility_off
-                                    : Icons.visibility,
-                                color: Colors.black,
-                              ),
-                              onTap: () {
-                                setState(() {
-                                  showPassword = !showPassword;
-                                });
-                              },
-                            ),
                           ),
+
                           validator: (value) {
                             return validarSenha(txtSenha.text);
                           },
                           obscureText: showPassword == false ? true : false,
+                          //== false ? true : false,
                         ),
                       ),
                       const Padding(padding: EdgeInsets.only(top: 15)),
