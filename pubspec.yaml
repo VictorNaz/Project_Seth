@@ -51,6 +51,8 @@ dependencies:
   flutter_barcode_scanner: ^2.0.0       #Ler QR-Code
   mailer: ^6.0.1                        #Envia e-mail
   random_password_generator: ^0.2.1     #Gera senha aleatória
+  image_picker: ^1.0.1                  #Utilização de imagens para foto de perfil
+  phosphor_flutter: ^2.0.0              #Para auxiliar o image_picker com as fotos
 #  timezone: ^0.9.1                     #Pega o timezone global
 #  flutter_native_timezone: ^2.0.0      #Pega o timezone do dispositivo
 #  provider:                            #Plugin com o caminho Ex: /Home

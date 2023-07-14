@@ -4,6 +4,8 @@ import '../../backEnd/modelo/aluno.dart';
 import '../../backEnd/security/sessionService.dart';
 import '../../backEnd/server/serverAluno.dart';
 import '../widgets/utilClass.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class PerfilAluno extends StatefulWidget {
   const PerfilAluno({Key? key}) : super(key: key);
@@ -77,8 +79,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
         //drawer para navegação no appbar
         //A classe Drawer está sendo chamada de outro arquivo e está recebendo por parametro o texto desejado.
         endDrawer: Drawer(
-                  backgroundColor: Color.fromARGB(207, 255, 255, 255),
-
+          backgroundColor: const Color.fromARGB(207, 255, 255, 255),
           child: DrawerTop(
             texto: "Opções",
             nome: nome,
@@ -88,8 +89,8 @@ class _PerfilAlunoState extends State<PerfilAluno> {
         body: Stack(
           alignment: Alignment.center,
           children: <Widget>[
-            Container(),
             const Padding(padding: EdgeInsets.only(top: 30)),
+            Container(),
 
             //Posicionamento do campo ao selecionar o campo
             SingleChildScrollView(
@@ -97,7 +98,34 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                 //Lugar onde deve adicionar a foto de perfil do usuario.
 
                 children: <Widget>[
-                  const CircleAvatar(
+                  CircleAvatar(
+                    radius: 87,
+                    backgroundColor: Colors.grey[200],
+                    child: CircleAvatar(
+                      radius: 80,
+                      backgroundColor: Colors.grey[300],
+
+                      // backgroundImage:
+                      // imageFile != null ? FileImage(imageFile!) : null,
+                    ),
+                  ),
+                  Positioned(
+                    // bottom: 7,
+                    // right: 6.5,
+                    child: CircleAvatar(
+                      backgroundColor: Colors.grey[200],
+                      child: IconButton(
+                        alignment: Alignment.topRight,
+                        onPressed: _showOpcoesBottomSheet,
+                        icon: Icon(
+                          PhosphorIcons.regular.pencilSimple,
+                          color: const Color.fromARGB(255, 252, 72, 27),
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  /* const CircleAvatar(
                     radius: 100,
                     backgroundImage: AssetImage('assets/image/marciano.jpg'),
                     child: IconButton(
@@ -109,10 +137,10 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                           size: 35.0,
                         ),
                         hoverColor: Color.fromARGB(106, 8, 8, 8)),
-                  ),
+                  ),*/
 
                   //Espaçamento entre foto de perfil e campos de input
-                  const Padding(padding: EdgeInsets.only(top: 20)),
+                  const Padding(padding: EdgeInsets.only(top: 50)),
 
                   Column(
                     children: [
@@ -126,7 +154,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                               keyboardType: TextInputType.name,
                               decoration: const InputDecoration(
                                 icon: Icon(
-                                  Icons.person,
+                                  Icons.person_outline_rounded,
                                   color: Color.fromARGB(255, 252, 72, 27),
                                 ),
                                 labelText: "Nome Completo",
@@ -140,61 +168,74 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                               },
                             ),
                           ),
-                          const Icon(Icons.edit)
+                          Icon(
+                            PhosphorIcons.regular.pencilSimple,
+                            color: const Color.fromARGB(255, 252, 72, 27),
+                          )
                         ],
                       )
                     ],
                   ),
 
                   //Espaçamento entre inputs
-                  const Padding(padding: EdgeInsets.only(top: 15)),
-
-                  SizedBox(
-                    width: 325,
-                    child: TextFormField(
-                      //initialValue: usuario.email,
-                      controller: TextEditingController(text: email),
-                      //Define o teclado para digitar e-mail(adiciona o @ no teclado)
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: const InputDecoration(
-                        icon: Icon(
-                          Icons.email,
-                          color: Color.fromARGB(255, 252, 72, 27),
+                  const Padding(padding: EdgeInsets.only(top: 30)),
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    SizedBox(
+                      width: 325,
+                      child: TextFormField(
+                        //initialValue: usuario.email,
+                        controller: TextEditingController(text: email),
+                        //Define o teclado para digitar e-mail(adiciona o @ no teclado)
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: const InputDecoration(
+                          icon: Icon(
+                            Icons.email_outlined,
+                            color: Color.fromARGB(255, 252, 72, 27),
+                          ),
+                          labelText: "Email",
+                          hintStyle: TextStyle(color: Colors.black),
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 252, 72, 27))),
                         ),
-                        labelText: "Email",
-                        hintStyle: TextStyle(color: Colors.black),
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Color.fromARGB(255, 252, 72, 27))),
+                        validator: (value) {
+                          return validarEmail(email);
+                        },
                       ),
-                      validator: (value) {
-                        return validarEmail(email);
-                      },
                     ),
-                  ),
-
+                    Icon(
+                      PhosphorIcons.regular.pencilSimple,
+                      color: const Color.fromARGB(255, 252, 72, 27),
+                    )
+                  ]),
                   //Espaçamento entre inputs
-                  const Padding(padding: EdgeInsets.only(top: 15)),
-
-                  SizedBox(
-                    width: 325,
-                    child: TextField(
-                      controller: TextEditingController(
-                          text: cpf), //Define o teclado para numérico
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        icon: Icon(
-                          Icons.document_scanner,
-                          color: Color.fromARGB(255, 252, 72, 27),
+                  const Padding(padding: EdgeInsets.only(top: 30)),
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    SizedBox(
+                      width: 325,
+                      child: TextField(
+                        controller: TextEditingController(
+                            text: cpf), //Define o teclado para numérico
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          icon: Icon(
+                            Icons.document_scanner_outlined,
+                            color: Color.fromARGB(255, 252, 72, 27),
+                          ),
+                          labelText: "CPF",
+                          hintStyle: TextStyle(color: Colors.black),
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 252, 72, 27))),
                         ),
-                        labelText: "CPF",
-                        hintStyle: TextStyle(color: Colors.black),
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Color.fromARGB(255, 252, 72, 27))),
                       ),
                     ),
-                  ),
+                    Icon(
+                      PhosphorIcons.regular.pencilSimple,
+                      color: const Color.fromARGB(255, 252, 72, 27),
+                    )
+                  ]),
+
                   const Padding(padding: EdgeInsets.only(bottom: 250)),
                 ],
               ),
@@ -228,7 +269,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
     showDialog<String>(
       builder: (BuildContext context) => AlertDialog(
         title: const Text('Alterações realizadas!'),
-        content: Text(''),
+        content: const Text(''),
         actions: <Widget>[
           TextButton(
             //Se for selecionado Não
@@ -238,6 +279,85 @@ class _PerfilAlunoState extends State<PerfilAluno> {
         ],
       ),
       context: context,
+    );
+  }
+
+  //!!teste
+  void _showOpcoesBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (_) {
+        return Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: CircleAvatar(
+                  backgroundColor: Colors.grey[200],
+                  child: Center(
+                    child: Icon(
+                      PhosphorIcons.regular.image,
+                      color: Colors.grey[500],
+                    ),
+                  ),
+                ),
+                title: Text(
+                  'Galeria',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  // Buscar imagem da galeria
+                  //pick(ImageSource.gallery);
+                },
+              ),
+              ListTile(
+                leading: CircleAvatar(
+                  backgroundColor: Colors.grey[200],
+                  child: Center(
+                    child: Icon(
+                      PhosphorIcons.regular.camera,
+                      color: Colors.grey[500],
+                    ),
+                  ),
+                ),
+                title: Text(
+                  'Câmera',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  // Fazer foto da câmera
+                  /*pick(ImageSource.camera);*/
+                },
+              ),
+              ListTile(
+                leading: CircleAvatar(
+                  backgroundColor: Colors.grey[200],
+                  child: Center(
+                    child: Icon(
+                      PhosphorIcons.regular.trash,
+                      color: Colors.grey[500],
+                    ),
+                  ),
+                ),
+                title: Text(
+                  'Remover',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  // Tornar a foto null
+                  setState(() {
+                    // imageFile = null;
+                  });
+                },
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
