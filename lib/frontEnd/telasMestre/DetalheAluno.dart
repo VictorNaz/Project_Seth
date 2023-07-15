@@ -233,7 +233,10 @@ class _DetalheAlunoState extends State<DetalheAluno> {
                                         padding: EdgeInsets.only(left: 10)),
                                     Text("$quantAulas/$quantAulasFaixa Aulas"),
                                     const Padding(
-                                        padding: EdgeInsets.only(right: 125)),
+                                        padding: EdgeInsets.only(right: 50)),
+                                        const Text("Data Faixa"),
+                                        const Padding(
+                                        padding: EdgeInsets.only(right: 50)),
                                     Text(
                                         "${formatter.format(percAulas)}% Concluído"),
                                   ],

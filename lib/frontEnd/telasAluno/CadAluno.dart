@@ -253,44 +253,6 @@ class _CadAlunoState extends State<CadAluno> {
 
                   const Padding(padding: EdgeInsets.only(top: 20)),
 
-                  //Row para checkbox e Termos de Uso
-
-                  /*                // Row(
-                    //Alinhamento dos itens da Row
-                   // mainAxisAlignment: MainAxisAlignment.center,
-                    //CheckBox Termos de uso
-                  //  children: [
-                      Checkbox(
-                        checkColor: Colors.black,
-                        activeColor: const Color.fromARGB(255, 252, 72, 27),
-                        value: checkTermos,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            checkTermos = value!;
-                          });
-                        },
-                      ),
-                      TextButton(
-                          onPressed: () {
-                            showModalBottomSheet(
-                              builder: (context) => optionModal(),
-                              context: context,
-                              isScrollControlled: true,
-                            );
-                          },
-                          style: TextButton.styleFrom(
-                            fixedSize: const Size(300, 60),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ), //texto do button e estilo da escrita
-                          child: const Text(
-                            "Li e estou de acordo com os Termos de Uso e Política de Privacidade.",
-                            style: TextStyle(color: Colors.grey, fontSize: 16),
-                          )),
-                    ],
-               //   ),*/
-
                   //Row para as regras do tatame
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -391,18 +353,6 @@ class _CadAlunoState extends State<CadAluno> {
     );
   }
 
-  //Modal dos termos de uso da academia
-
-  /* Widget optionModalSeth() => ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          fixedSize: const Size(165, 1000),
-          // padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-        ),
-        onPressed: () {
-          // PDFViewerPage();
-        },
-        child: const Text("t"),
-      );*/
 
   loading() {
     showDialog(

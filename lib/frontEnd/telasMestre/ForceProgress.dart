@@ -76,9 +76,9 @@ class _ForceProgressState extends State<ForceProgress> {
             //Barra superior já com o icone de voltar
             backgroundColor: const Color.fromARGB(255, 252, 72, 27),
 
-            title: Column(
+            title: const Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 Text("        Forçar Progresso"),
               ],
             ),
@@ -96,7 +96,7 @@ class _ForceProgressState extends State<ForceProgress> {
           //drawer para navegação no appbar
           //A classe Drawer está sendo chamada de outro arquivo e está recebendo por parametro o texto desejado.
           endDrawer:  Drawer(
-                    backgroundColor: Color.fromARGB(207, 255, 255, 255),
+                    backgroundColor: const Color.fromARGB(207, 255, 255, 255),
 
             child: DrawerTop(
               texto: "Opções", nome: nome,
@@ -132,6 +132,26 @@ class _ForceProgressState extends State<ForceProgress> {
                                 color: Color.fromARGB(255, 252, 72, 27),
                               ),
                               labelText: "Usuário",
+                              focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color.fromARGB(255, 252, 72, 27))),
+                            ),
+                            validator: (value) {
+                              return validaUsuario(txtUsuario.text);
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          width: 325,
+                          child: TextFormField(
+                            controller: txtUsuario,
+                            keyboardType: TextInputType.name,
+                            decoration: const InputDecoration(
+                              icon: Icon(
+                                Icons.person,
+                                color: Color.fromARGB(255, 252, 72, 27),
+                              ),
+                              labelText: "Data da Faixa",
                               focusedBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
                                       color: Color.fromARGB(255, 252, 72, 27))),
