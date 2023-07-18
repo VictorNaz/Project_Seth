@@ -1,6 +1,7 @@
 class Progresso {
   late int id;
   late int quant_aula;
+  late String data_faixa;
   late int aluno_id;
 
   int get getId {

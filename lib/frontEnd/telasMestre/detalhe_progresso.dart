@@ -8,11 +8,11 @@ import 'package:percent_indicator/percent_indicator.dart';
 
 import '../../backEnd/controladora/CtrlAluno.dart';
 import '../../backEnd/modelo/aluno.dart';
+import '../../backEnd/modelo/progresso.dart';
 import '../../backEnd/security/sessionService.dart';
 import '../../backEnd/server/serverAluno.dart';
 import '../widgets/utilClass.dart';
 import 'MenuMestre.dart';
-import 'listaNotificacoes.dart';
 
 class DetalheProgresso extends StatefulWidget {
   final int id;
@@ -32,6 +32,7 @@ class DetalheProgresso extends StatefulWidget {
 
 class _DetalheProgressoState extends State<DetalheProgresso> {
   _DetalheProgressoState(this.id);
+    var progAluno = Progresso();
   final int id;
   List<double> lista = [];
   int quantAulas = 0;
@@ -78,11 +79,10 @@ class _DetalheProgressoState extends State<DetalheProgresso> {
     //alem de setar o valor após a coleta dos dados.
     //este método recebe o usuario como um parametro da classe DetalheProgresso
     await buscaAulas(aluno).then((value) {
-      if (value != null) {
-        setState(() {
-          quantAulas = value;
-        });
-      }
+      setState(() {
+        progAluno = value;
+        quantAulas = progAluno.quant_aula;
+      });
     });
     aluno = await buscaInfo(aluno);
     await buscaFaixa(aluno).then((value) {

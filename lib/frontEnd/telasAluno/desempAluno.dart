@@ -4,6 +4,7 @@ import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import '../../backEnd/modelo/aluno.dart';
+import '../../backEnd/modelo/progresso.dart';
 import '../../backEnd/security/sessionService.dart';
 import '../../backEnd/server/serverAluno.dart';
 import '../widgets/utilClass.dart';
@@ -17,6 +18,8 @@ class DesempAluno extends StatefulWidget {
 
 class _DesempAlunoState extends State<DesempAluno> {
   List<double> lista = [];
+  var progAluno = Progresso();
+  late final data_faixa;
   int quantAulas = 0;
   String? faixa = "...";
   String? grau = "...";
@@ -53,11 +56,11 @@ class _DesempAlunoState extends State<DesempAluno> {
     aluno.usuario = await PrefsService.returnUser();
     await buscaAulas(aluno).then(
       (value) {
-        if (value != null) {
-          setState(() {
-            quantAulas = value;
-          });
-        }
+        setState(() {
+          progAluno = value;
+          quantAulas = progAluno.quant_aula;
+          data_faixa = progAluno.data_faixa;
+        });
       },
     );
   }
@@ -123,7 +126,7 @@ class _DesempAlunoState extends State<DesempAluno> {
       //drawer para navegação no appbar
       //A classe Drawer está sendo chamada de outro arquivo e está recebendo por parametro o texto desejado.
       endDrawer: Drawer(
-                backgroundColor: Color.fromARGB(207, 255, 255, 255),
+                backgroundColor: const Color.fromARGB(207, 255, 255, 255),
 
         child: DrawerTop(
           texto: "Opções",

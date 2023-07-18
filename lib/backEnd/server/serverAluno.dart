@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter_project_seth/backEnd/modelo/aluno.dart';
 import 'package:flutter_project_seth/backEnd/modelo/faixa.dart';
+import 'package:flutter_project_seth/backEnd/modelo/progresso.dart';
 import 'package:flutter_project_seth/backEnd/security/sessionService.dart';
 import 'package:http/http.dart' as http;
 import '../modelo/autoAvaliacao.dart';
@@ -150,13 +151,13 @@ class ServerAluno {
   }
 */
   //Busca a quantidade de aulas que o aluno já frequentou
-  static Future<int?> buscaAulas(Aluno aluno) async {
+  static Future<Progresso> buscaAulas(Aluno aluno) async {
     var request = http.Request(
         'POST', Uri.parse('https://apiseth.cyclic.app/buscaAulas'));
     request.body = json.encode({"aluno_id": aluno.id});
     request.headers.addAll(headers);
 
-    var aulas = Faixa();
+    var progAluno = Progresso();
 
     http.StreamedResponse response = await request.send();
 
@@ -164,13 +165,13 @@ class ServerAluno {
       print("Quantidade de aulas encontrada!");
       String jsonString = await response.stream.bytesToString();
       var result = await json.decode(jsonString);
-      aulas.quantAulas = result["quant_aula"];
+      progAluno.quant_aula = result["quant_aula"];
+      progAluno.data_faixa = result["data_faixa"];
     } else {
       print("Erro ao procurar a quantidade de aulas");
       print(response.reasonPhrase);
     }
-
-    return aulas.quantAulas;
+    return progAluno;
   }
 
   //Busca todos os alunos no banco de dados

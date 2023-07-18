@@ -1,3 +1,6 @@
+import 'package:flutter_project_seth/backEnd/modelo/progresso.dart';
+import 'package:intl/intl.dart';
+
 import '../modelo/aluno.dart';
 import 'package:flutter_project_seth/backEnd/modelo/faixa.dart';
 import 'package:flutter_project_seth/backEnd/security/dataCrypt.dart';
@@ -31,6 +34,7 @@ void validaPresAluno() async {
   var txtUsuario = await PrefsService.returnUser();
   var aluno = Aluno();
   var faixa = Faixa();
+  var progAluno = Progresso();
   String? usr = txtUsuario;
   aluno.setUsuario = usr!;
   String
@@ -38,7 +42,8 @@ void validaPresAluno() async {
   //!Teve de ser adicionado a uma variável, pois ao receber um novo valor, o usuário perdia o aluno.id
   aluno = await ServerAluno.buscaInfo(aluno);
   await ServerAluno.valPresenAluno(aluno);
-  int? aulasFeitas = await ServerAluno.buscaAulas(aluno);
+  progAluno = await ServerAluno.buscaAulas(aluno);
+  int? aulasFeitas = progAluno.quant_aula;
   //!await ServerAluno.atualizaProgresso(aluno); Apenas o mestre deve aprovar o progresso
   faixa = await ServerAluno.buscaFaixa(aluno);
   int? aulasPendentes = faixa.quantAulas;
@@ -129,14 +134,14 @@ Future<List<double>> buscaAvaliacao(Aluno aluno) async {
 }
 
 //Busca a quantidade de aulas frequentadas
-Future<int?> buscaAulas(Aluno aluno) async {
+Future<Progresso> buscaAulas(Aluno aluno) async {
   //var aluno = Aluno();
-  var aulas = Faixa();
+  var progAluno = Progresso();
   //aluno.usuario = await PrefsService.returnUser();
   aluno.id = await ServerAluno.buscaAlunoId(aluno);
-  aulas.quantAulas = await ServerAluno.buscaAulas(aluno);
+  progAluno = await ServerAluno.buscaAulas(aluno);
 
-  return aulas.quantAulas;
+  return progAluno;
 }
 
 Future<Aluno> buscaInfo(Aluno aluno) async {

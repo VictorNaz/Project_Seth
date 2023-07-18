@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project_seth/backEnd/modelo/progresso.dart';
 import 'package:intl/intl.dart';
 import 'package:kg_charts/kg_charts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -24,6 +25,7 @@ class DetalheAluno extends StatefulWidget {
 
 class _DetalheAlunoState extends State<DetalheAluno> {
   List<double> lista = [];
+  var progAluno = Progresso();
   int quantAulas = 0;
   double percAulas = 0;
   String? faixa = "...";
@@ -67,11 +69,10 @@ class _DetalheAlunoState extends State<DetalheAluno> {
     //alem de setar o valor após a coleta dos dados.
     //este método recebe o usuario como um parametro da classe DetalheAluno
     await buscaAulas(aluno).then((value) {
-      if (value != null) {
-        setState(() {
-          quantAulas = value;
-        });
-      }
+      setState(() {
+        progAluno = value;
+        quantAulas = progAluno.quant_aula;
+      });
     });
     aluno = await buscaInfo(aluno);
     await buscaFaixa(aluno).then((value) {
@@ -136,7 +137,7 @@ class _DetalheAlunoState extends State<DetalheAluno> {
       //drawer para navegação no appbar
       //A classe Drawer está sendo chamada de outro arquivo e está recebendo por parametro o texto desejado.
       endDrawer: Drawer(
-        backgroundColor: Color.fromARGB(207, 255, 255, 255),
+        backgroundColor: const Color.fromARGB(207, 255, 255, 255),
         child: DrawerTop(
           texto: "Opções",
           nome: nome,
