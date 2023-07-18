@@ -23,7 +23,7 @@ class _ForceProgressState extends State<ForceProgress> {
   String? grauSelecionado;
 
   final _formKey = GlobalKey<FormState>();
-    String nome = "";
+  String nome = "";
   String email = "";
   var aluno = Aluno();
 
@@ -43,8 +43,6 @@ class _ForceProgressState extends State<ForceProgress> {
     getInfoAluno();
     super.initState();
   }
-
-
 
   void dropDownFaixaSelected(String novoItem) {
     setState(() {
@@ -76,9 +74,9 @@ class _ForceProgressState extends State<ForceProgress> {
             //Barra superior já com o icone de voltar
             backgroundColor: const Color.fromARGB(255, 252, 72, 27),
 
-            title: const Column(
+            title: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: const [
                 Text("        Forçar Progresso"),
               ],
             ),
@@ -95,11 +93,11 @@ class _ForceProgressState extends State<ForceProgress> {
 
           //drawer para navegação no appbar
           //A classe Drawer está sendo chamada de outro arquivo e está recebendo por parametro o texto desejado.
-          endDrawer:  Drawer(
-                    backgroundColor: const Color.fromARGB(207, 255, 255, 255),
-
+          endDrawer: Drawer(
+            backgroundColor: const Color.fromARGB(207, 255, 255, 255),
             child: DrawerTop(
-              texto: "Opções", nome: nome,
+              texto: "Opções",
+              nome: nome,
               email: email,
             ),
           ),
