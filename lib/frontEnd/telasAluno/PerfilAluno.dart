@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import '../../backEnd/controladora/CtrlAluno.dart';
 import '../../backEnd/modelo/aluno.dart';
@@ -23,8 +25,24 @@ class _PerfilAlunoState extends State<PerfilAluno> {
   String nome = "";
   String email = "";
   String cpf = "";
-
+  final imagePicker = ImagePicker();
+  File? imageFile;
   var aluno = Aluno();
+
+  //Captura image da galeria ou da câmera
+  pick(ImageSource source) async {
+    final pickedFile = await imagePicker.pickImage(source: source);
+    print("$imageFile+ terra");
+
+    if (pickedFile != null) {
+      setState(() {
+        imageFile = File(pickedFile.path);
+      });
+      String retorno =
+          await ServerAluno.salvaFoto(imageFile.toString(), aluno.email);
+      await exibeAviso(retorno);
+    }
+  }
 
   getInfoAluno<Aluno>() async {
     aluno.usuario = await PrefsService.returnUser();
@@ -94,6 +112,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
 
             //Posicionamento do campo ao selecionar o campo
             SingleChildScrollView(
+              padding: const EdgeInsets.all(25),
               child: Column(
                 //Lugar onde deve adicionar a foto de perfil do usuario.
 
@@ -104,18 +123,17 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                     child: CircleAvatar(
                       radius: 80,
                       backgroundColor: Colors.grey[300],
-
-                      // backgroundImage:
-                      // imageFile != null ? FileImage(imageFile!) : null,
+                      backgroundImage:
+                          imageFile != null ? FileImage(imageFile!) : null,
                     ),
                   ),
                   Positioned(
-                    // bottom: 7,
-                    // right: 6.5,
+                    //bottom: 7,
+                    //right: 6.5,
                     child: CircleAvatar(
                       backgroundColor: Colors.grey[200],
                       child: IconButton(
-                        alignment: Alignment.topRight,
+                        //alignment: Alignment.topRight,
                         onPressed: _showOpcoesBottomSheet,
                         icon: Icon(
                           PhosphorIcons.regular.pencilSimple,
@@ -309,7 +327,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                 onTap: () {
                   Navigator.of(context).pop();
                   // Buscar imagem da galeria
-                  //pick(ImageSource.gallery);
+                  pick(ImageSource.gallery);
                 },
               ),
               ListTile(
@@ -329,7 +347,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                 onTap: () {
                   Navigator.of(context).pop();
                   // Fazer foto da câmera
-                  /*pick(ImageSource.camera);*/
+                  pick(ImageSource.camera);
                 },
               ),
               ListTile(
@@ -350,7 +368,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                   Navigator.of(context).pop();
                   // Tornar a foto null
                   setState(() {
-                    // imageFile = null;
+                    imageFile = null;
                   });
                 },
               ),
@@ -358,6 +376,23 @@ class _PerfilAlunoState extends State<PerfilAluno> {
           ),
         );
       },
+    );
+  }
+
+  exibeAviso(String conteudo) {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text("Atualização de Foto de Perfil"),
+        content: Text(conteudo),
+        actions: <Widget>[
+          TextButton(
+            //Se for selecionado Não
+            onPressed: () => Navigator.pop(context, 'Ok'),
+            child: const Text('Ok'),
+          ),
+        ],
+      ),
     );
   }
 }

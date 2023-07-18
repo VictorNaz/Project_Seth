@@ -612,4 +612,23 @@ class ServerAluno {
           'Conexão não estabelecida! Não foi possivel se conectar ao endereço $url_Api.\n Erro $e');
     }
   }
+
+  static Future<String> salvaFoto(String caminhoFoto, String? email) async {
+    var request =
+        http.Request('POST', Uri.parse('https://apiseth.cyclic.app/salvaFoto'));
+    request.body = json.encode({"foto": caminhoFoto, "email": email});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+    String retorno;
+    if (response.statusCode == 200) {
+      retorno = "Foto de perfil alterada com sucesso!";
+      print(await response.stream.bytesToString());
+      return retorno;
+    } else {
+      retorno =
+          "Não foi possivel alterar a sua foto de perfil/nDetalhes:${response.reasonPhrase}";
+      return retorno;
+    }
+  }
 }//Fim da classe
