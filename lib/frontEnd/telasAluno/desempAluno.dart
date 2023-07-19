@@ -60,6 +60,8 @@ class _DesempAlunoState extends State<DesempAluno> {
           progAluno = value;
           quantAulas = progAluno.quant_aula;
           data_faixa = progAluno.data_faixa;
+          DateTime data = DateTime.parse(progAluno.data_faixa);
+          progAluno.data_faixa = DateFormat("dd/MM/yyyy").format(data);
         });
       },
     );
@@ -221,12 +223,15 @@ class _DesempAlunoState extends State<DesempAluno> {
                                 Row(
                                   children: [
                                     const Padding(
-                                        padding: EdgeInsets.only(left: 10)),
+                                        padding: EdgeInsets.only(left: 12)),
                                     Text("$quantAulas/$quantAulasFaixa Aulas"),
                                     const Padding(
-                                        padding: EdgeInsets.only(right: 125)),
+                                        padding: EdgeInsets.only(right: 20)),
                                     Text(
                                         "${formatter.format(percAulas)}% Concluído"),
+                                    const Padding(
+                                        padding: EdgeInsets.only(right: 20)),
+                                    Text("Data: "+ progAluno.data_faixa),
                                   ],
                                 )
                               ],

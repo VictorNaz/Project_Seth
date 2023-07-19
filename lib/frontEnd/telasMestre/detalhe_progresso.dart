@@ -32,9 +32,10 @@ class DetalheProgresso extends StatefulWidget {
 
 class _DetalheProgressoState extends State<DetalheProgresso> {
   _DetalheProgressoState(this.id);
-    var progAluno = Progresso();
+  var progAluno = Progresso();
   final int id;
   List<double> lista = [];
+  late final data_faixa;
   int quantAulas = 0;
   double percAulas = 0;
   String? faixa = "...";
@@ -82,6 +83,9 @@ class _DetalheProgressoState extends State<DetalheProgresso> {
       setState(() {
         progAluno = value;
         quantAulas = progAluno.quant_aula;
+        data_faixa = progAluno.data_faixa;
+        DateTime data = DateTime.parse(progAluno.data_faixa);
+        progAluno.data_faixa = DateFormat("dd/MM/yyyy").format(data);
       });
     });
     aluno = await buscaInfo(aluno);
@@ -236,12 +240,15 @@ class _DetalheProgressoState extends State<DetalheProgresso> {
                                 Row(
                                   children: [
                                     const Padding(
-                                        padding: EdgeInsets.only(left: 10)),
+                                        padding: EdgeInsets.only(left: 12)),
                                     Text("$quantAulas/$quantAulasFaixa Aulas"),
                                     const Padding(
-                                        padding: EdgeInsets.only(right: 125)),
+                                        padding: EdgeInsets.only(right: 20)),
                                     Text(
                                         "${formatter.format(percAulas)}% Concluído"),
+                                    const Padding(
+                                        padding: EdgeInsets.only(right: 20)),
+                                    Text("Data: "+ progAluno.data_faixa),
                                   ],
                                 ),
                               ],
