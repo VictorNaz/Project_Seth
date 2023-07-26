@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable, file_names
 
+import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 import 'package:awesome_notifications/awesome_notifications.dart';
@@ -22,22 +23,26 @@ class DrawerTop extends StatefulWidget {
   final String texto;
   final String nome;
   final String email;
+  final String foto;
 
-  const DrawerTop(
-      {super.key,
-      required this.texto,
-      required this.nome,
-      required this.email});
+  const DrawerTop({
+    super.key,
+    required this.texto,
+    required this.nome,
+    required this.email,
+    required this.foto,
+  });
 
   @override
   // ignore: no_logic_in_create_state
-  State<DrawerTop> createState() => _DrawerTopState(texto, nome, email);
+  State<DrawerTop> createState() => _DrawerTopState(texto, nome, email, foto);
 }
 
 class _DrawerTopState extends State<DrawerTop> {
-  _DrawerTopState(this.texto, this.nome, this.email);
+  _DrawerTopState(this.texto, this.nome, this.email, this.foto);
   final String texto;
   final String nome;
+  final String foto;
   final String email;
   bool? acesso;
   String? faixa = "...";
@@ -46,6 +51,13 @@ class _DrawerTopState extends State<DrawerTop> {
   var aluno = Aluno();
   var faixaInfo = Faixa();
   var listaNotificacoes = [];
+
+  static Image imageFromBase64String(String base64String) {
+    return Image.memory(
+      base64Decode(base64String),
+      fit: BoxFit.fill,
+    );
+  }
 
   //Obtem a faixa e o grau do aluno, assim como suas informaces
   getInfo<Aluno>() async {
@@ -128,9 +140,11 @@ class _DrawerTopState extends State<DrawerTop> {
                 style: const TextStyle(
                   color: Colors.black,
                 )),
-            currentAccountPicture: const CircleAvatar(
-              backgroundImage: AssetImage('assets/image/marciano.jpg'),
+            currentAccountPicture: CircleAvatar(
+              //backgroundColor: Colors.grey[300],
+              backgroundImage: imageFromBase64String(foto).image,
             ), //
+            //
           ),
           ListTile(
               title: Container(
@@ -401,8 +415,9 @@ class _DrawerTopState extends State<DrawerTop> {
                 style: const TextStyle(
                   color: Colors.black,
                 )),
-            currentAccountPicture: const CircleAvatar(
-              backgroundImage: AssetImage('assets/image/marciano.jpg'),
+            currentAccountPicture: CircleAvatar(
+              //backgroundColor: Colors.grey[300],
+              backgroundImage: imageFromBase64String(foto).image,
             ), //
           ),
           ListTile(

@@ -23,6 +23,7 @@ class _MenuMestreState extends State<MenuMestre> {
   String email = "";
   var aluno = Aluno();
   var faixaInfo = Faixa();
+  String foto = "";
 
   getInfoAluno<Aluno>() async {
     aluno.usuario = await PrefsService.returnUser();
@@ -31,6 +32,7 @@ class _MenuMestreState extends State<MenuMestre> {
         aluno = value;
         nome = aluno.nome!;
         email = aluno.email!;
+        foto = aluno.foto!;
       });
     });
   }
@@ -71,7 +73,7 @@ class _MenuMestreState extends State<MenuMestre> {
         child: DrawerTop(
           texto: "Opções",
           nome: nome,
-          email: email,
+          email: email, foto: foto,
         ),
       ),
       //corpo

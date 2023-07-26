@@ -17,6 +17,7 @@ class _RelatorioState extends State<Relatorio> {
   String nome = "";
   String email = "";
   var aluno = Aluno();
+  String foto = "";
 
   getInfoAluno<Aluno>() async {
     aluno.usuario = await PrefsService.returnUser();
@@ -25,6 +26,7 @@ class _RelatorioState extends State<Relatorio> {
         aluno = value;
         nome = aluno.nome!;
         email = aluno.email!;
+        foto = aluno.foto!;
       });
     });
   }
@@ -61,7 +63,7 @@ class _RelatorioState extends State<Relatorio> {
         child: DrawerTop(
           texto: "Opções",
           nome: nome,
-          email: email,
+          email: email, foto: foto,
         ),
       ),
       //botão flutuante sobre a barra inferior

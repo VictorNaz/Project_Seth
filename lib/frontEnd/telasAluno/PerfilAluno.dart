@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import '../../backEnd/controladora/CtrlAluno.dart';
@@ -25,25 +27,54 @@ class _PerfilAlunoState extends State<PerfilAluno> {
   String nome = "";
   String email = "";
   String cpf = "";
+  String foto = "";
   final imagePicker = ImagePicker();
   File? imageFile;
   var aluno = Aluno();
+  String imgString = "";
+  var imageBase64 = '';
+
+  static Image imageFromBase64String(String base64String) {
+    return Image.memory(
+      base64Decode(base64String),
+      fit: BoxFit.fill,
+    );
+  }
+
+  static Uint8List dataFromBase64String(String base64String) {
+    return base64Decode(base64String);
+  }
 
   //Captura image da galeria ou da câmera
   pick(ImageSource source) async {
-    final pickedFile = await imagePicker.pickImage(source: source);
+    final pickedFile = await imagePicker.pickImage(
+      source: source,
+      imageQuality: 45,
+      maxHeight: 2048,
+      maxWidth: 1152,
+    );
     print("$imageFile+ terra");
 
     if (pickedFile != null) {
       setState(() {
         imageFile = File(pickedFile.path);
       });
-      String retorno =
-          await ServerAluno.salvaFoto(imageFile.toString(), aluno.email);
+      final bytes = imageFile!.readAsBytesSync();
+      imageBase64 = base64Encode(bytes);
+      print("BYTES $imageFile");
+      imgString = Utility.base64String(imageFile!.readAsBytesSync());
+      String retorno = await ServerAluno.salvaFoto(imageBase64, email);
+      print("BYTES $bytes");
+
       await exibeAviso(retorno);
+      //Image image = imageFromBase64String(imgString);
+      Uint8List image = dataFromBase64String(imgString);
+      print(image);
+      // String imgString = Utility.base64String(await imageFile!.readAsBytes());
     }
   }
 
+//4
   getInfoAluno<Aluno>() async {
     aluno.usuario = await PrefsService.returnUser();
     await ServerAluno.buscaInfo(aluno).then((value) {
@@ -52,6 +83,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
         nome = aluno.nome!;
         email = aluno.email!;
         cpf = aluno.cpf!;
+        foto = aluno.foto!;
       });
     });
   }
@@ -102,6 +134,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
             texto: "Opções",
             nome: nome,
             email: email,
+            foto: foto,
           ),
         ),
         body: Stack(
@@ -123,8 +156,9 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                     child: CircleAvatar(
                       radius: 80,
                       backgroundColor: Colors.grey[300],
-                      backgroundImage:
-                          imageFile != null ? FileImage(imageFile!) : null,
+                      backgroundImage: foto != null
+                          ? imageFromBase64String(foto).image
+                          : null,
                     ),
                   ),
                   Positioned(
@@ -394,5 +428,22 @@ class _PerfilAlunoState extends State<PerfilAluno> {
         ],
       ),
     );
+  }
+}
+
+class Utility {
+  static Image imageFromBase64String(String base64String) {
+    return Image.memory(
+      base64Decode(base64String),
+      fit: BoxFit.fill,
+    );
+  }
+
+  static Uint8List dataFromBase64String(String base64String) {
+    return base64Decode(base64String);
+  }
+
+  static String base64String(Uint8List data) {
+    return base64Encode(data);
   }
 }

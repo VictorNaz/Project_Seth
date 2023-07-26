@@ -43,13 +43,15 @@ class _DetalheAlunoState extends State<DetalheAluno> {
   var usuarioLogado = Aluno();
 
   //Esse método serve para carregar as informações do usuario logado para mostrar no drower
+  String foto = "";
   getInfoAluno<Aluno>() async {
-    usuarioLogado.usuario = await PrefsService.returnUser();
-    await ServerAluno.buscaInfo(usuarioLogado).then((value) {
+    aluno.usuario = await PrefsService.returnUser();
+    await ServerAluno.buscaInfo(aluno).then((value) {
       setState(() {
-        usuarioLogado = value;
-        nome = usuarioLogado.nome!;
-        email = usuarioLogado.email!;
+        aluno = value;
+        nome = aluno.nome!;
+        email = aluno.email!;
+        foto = aluno.foto!;
       });
     });
   }
@@ -142,6 +144,7 @@ class _DetalheAlunoState extends State<DetalheAluno> {
           texto: "Opções",
           nome: nome,
           email: email,
+          foto: foto,
         ),
       ),
       body: Stack(
@@ -235,8 +238,8 @@ class _DetalheAlunoState extends State<DetalheAluno> {
                                     Text("$quantAulas/$quantAulasFaixa Aulas"),
                                     const Padding(
                                         padding: EdgeInsets.only(right: 50)),
-                                        const Text("Data Faixa"),
-                                        const Padding(
+                                    const Text("Data Faixa"),
+                                    const Padding(
                                         padding: EdgeInsets.only(right: 50)),
                                     Text(
                                         "${formatter.format(percAulas)}% Concluído"),

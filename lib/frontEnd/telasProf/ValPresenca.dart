@@ -19,9 +19,10 @@ class _ValPresencaState extends State<ValPresenca> {
   TextEditingController txtUsuario = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-    String nome = "";
+  String nome = "";
   String email = "";
   var aluno = Aluno();
+  String foto = "";
 
   getInfoAluno<Aluno>() async {
     aluno.usuario = await PrefsService.returnUser();
@@ -30,6 +31,7 @@ class _ValPresencaState extends State<ValPresenca> {
         aluno = value;
         nome = aluno.nome!;
         email = aluno.email!;
+        foto = aluno.foto!;
       });
     });
   }
@@ -75,9 +77,10 @@ class _ValPresencaState extends State<ValPresenca> {
         endDrawer: Drawer(
           backgroundColor: Color.fromARGB(207, 255, 255, 255),
           child: DrawerTop(
-            texto: "Opções", 
+            texto: "Opções",
             nome: nome,
             email: email,
+            foto: foto,
           ),
         ),
 

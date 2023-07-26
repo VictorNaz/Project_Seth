@@ -14,8 +14,9 @@ class Info extends StatefulWidget {
 }
 
 class _InfoState extends State<Info> {
-   String nome = "";
+  String nome = "";
   String email = "";
+  String foto = "";
   var aluno = Aluno();
 
   getInfoAluno<Aluno>() async {
@@ -25,6 +26,7 @@ class _InfoState extends State<Info> {
         aluno = value;
         nome = aluno.nome!;
         email = aluno.email!;
+        foto = aluno.foto!;
       });
     });
   }
@@ -56,13 +58,13 @@ class _InfoState extends State<Info> {
 
       //drawer para navegação no appbar
       //A classe Drawer está sendo chamada de outro arquivo e está recebendo por parametro o texto desejado.
-      endDrawer:  Drawer(
-                backgroundColor: Color.fromARGB(207, 255, 255, 255),
-
+      endDrawer: Drawer(
+        backgroundColor: Color.fromARGB(207, 255, 255, 255),
         child: DrawerTop(
           texto: "Opções",
           nome: nome,
           email: email,
+          foto: foto,
         ),
       ),
       //botão flutuante sobre a barra inferior

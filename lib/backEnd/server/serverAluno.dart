@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:typed_data';
+import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/backEnd/modelo/aluno.dart';
 import 'package:flutter_project_seth/backEnd/modelo/faixa.dart';
 import 'package:flutter_project_seth/backEnd/modelo/progresso.dart';
@@ -373,12 +375,19 @@ class ServerAluno {
       info.usuario = result["usuario"];
       info.nome = result["nome"];
       info.email = result["email"];
+      //!--
       int nivel_acess = result["nivel_acess"];
       info.nivel_acess = nivel_acess.toString();
+      //!--
       info.cpf = result["cpf"];
       info.faixa_id = result["faixa_id"];
       int? idUser = result["id"];
       info.id = idUser.toString();
+      // String imgString = result["foto"];
+      //info.foto  = imageFromBase64String(imgString);
+      //String fotoBase64 = base64String(result["foto"]);
+      info.foto = result["foto"];
+
       print("Informações encontradas encontrados!");
       return info;
     } else {
@@ -386,6 +395,10 @@ class ServerAluno {
       print(response.reasonPhrase);
       return info;
     }
+  }
+
+  static String base64String(Uint8List data) {
+    return base64Encode(data);
   }
 
   //Busca o usuário pelo e-mail
@@ -627,7 +640,7 @@ class ServerAluno {
       return retorno;
     } else {
       retorno =
-          "Não foi possivel alterar a sua foto de perfil/nDetalhes:${response.reasonPhrase}";
+          "Não foi possivel alterar a sua foto de perfil\nDetalhes:${response.reasonPhrase}";
       return retorno;
     }
   }

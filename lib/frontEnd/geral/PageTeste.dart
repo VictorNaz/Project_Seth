@@ -23,10 +23,10 @@ class _PageTestState extends State<PageTest> {
   bool isChecked = false;
   bool showPassword = false;
   bool _showPassword = false;
-  var aluno = Aluno();
-
   String nome = "";
   String email = "";
+  String foto = "";
+  var aluno = Aluno();
 
   getInfoAluno<Aluno>() async {
     aluno.usuario = await PrefsService.returnUser();
@@ -35,6 +35,7 @@ class _PageTestState extends State<PageTest> {
         aluno = value;
         nome = aluno.nome!;
         email = aluno.email!;
+        foto = aluno.foto!;
       });
     });
   }
@@ -71,6 +72,7 @@ class _PageTestState extends State<PageTest> {
           texto: "Opções",
           nome: nome,
           email: email,
+          foto: foto,
         ),
       ),
       backgroundColor: Colors.black,

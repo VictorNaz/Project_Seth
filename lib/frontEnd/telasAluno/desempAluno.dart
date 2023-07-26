@@ -29,16 +29,18 @@ class _DesempAlunoState extends State<DesempAluno> {
 
   String nome = "";
   String email = "";
-  var aluno = Aluno();
   num quantAulasFaixa = 0;
+  String foto = "";
+  var aluno = Aluno();
 
-  getInfo<Aluno>() async {
+  getInfoAluno<Aluno>() async {
     aluno.usuario = await PrefsService.returnUser();
     await ServerAluno.buscaInfo(aluno).then((value) {
       setState(() {
         aluno = value;
         nome = aluno.nome!;
         email = aluno.email!;
+        foto = aluno.foto!;
       });
     });
   }
@@ -94,7 +96,7 @@ class _DesempAlunoState extends State<DesempAluno> {
   //O comando abaixo define a inicialização do getList antes do carregamento da pagina
   @override
   void initState() {
-    getInfo();
+    getInfoAluno();
     getAvalizacao();
     getAulas();
     getFaixa();
@@ -126,12 +128,12 @@ class _DesempAlunoState extends State<DesempAluno> {
       //drawer para navegação no appbar
       //A classe Drawer está sendo chamada de outro arquivo e está recebendo por parametro o texto desejado.
       endDrawer: Drawer(
-                backgroundColor: const Color.fromARGB(207, 255, 255, 255),
-
+        backgroundColor: const Color.fromARGB(207, 255, 255, 255),
         child: DrawerTop(
           texto: "Opções",
           nome: nome,
           email: email,
+          foto: foto,
         ),
       ),
       body: Stack(

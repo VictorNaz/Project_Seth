@@ -1,5 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:flutter/material.dart';
+
 class Aluno {
   String? id;
   String? nome;
@@ -9,8 +11,9 @@ class Aluno {
   String? cpf;
   int? faixa_id;
   String? nivel_acess;
+  String? foto;
 
-  Aluno([this.nome, this.usuario, this.email]);
+  Aluno([this.nome, this.usuario, this.email, this.foto]);
 
   String? get getId {
     return id;
@@ -66,6 +69,14 @@ class Aluno {
 
   set setNivel_acess(String nivel_acess) {
     this.nivel_acess = nivel_acess;
+  }
+
+  String? get getFoto {
+    return foto;
+  }
+
+  set setFoto(String foto) {
+    this.foto = foto;
   }
 }
 

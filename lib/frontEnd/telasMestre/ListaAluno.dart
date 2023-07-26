@@ -21,6 +21,7 @@ class _ListaAlunoState extends State<ListaAluno> {
   String nome = "";
   String email = "";
   var aluno = Aluno();
+  String foto = "";
 
   getInfoAluno<Aluno>() async {
     aluno.usuario = await PrefsService.returnUser();
@@ -29,6 +30,7 @@ class _ListaAlunoState extends State<ListaAluno> {
         aluno = value;
         nome = aluno.nome!;
         email = aluno.email!;
+        foto = aluno.foto!;
       });
     });
   }
@@ -70,12 +72,12 @@ class _ListaAlunoState extends State<ListaAluno> {
             onPressed: () => Navigator.pop(context, false)),
       ),
       endDrawer: Drawer(
-                backgroundColor: Color.fromARGB(207, 255, 255, 255),
-
+        backgroundColor: Color.fromARGB(207, 255, 255, 255),
         child: DrawerTop(
           texto: "Opções",
           nome: nome,
           email: email,
+          foto: foto,
         ),
       ),
       //body: _buildListView(context),

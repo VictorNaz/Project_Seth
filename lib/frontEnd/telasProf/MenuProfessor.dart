@@ -19,6 +19,7 @@ class _MenuProfessorState extends State<MenuProfessor> {
   String nome = "";
   String email = "";
   var aluno = Aluno();
+  String foto = "";
 
   getInfoAluno<Aluno>() async {
     aluno.usuario = await PrefsService.returnUser();
@@ -27,6 +28,7 @@ class _MenuProfessorState extends State<MenuProfessor> {
         aluno = value;
         nome = aluno.nome!;
         email = aluno.email!;
+        foto = aluno.foto!;
       });
     });
   }
@@ -65,7 +67,7 @@ class _MenuProfessorState extends State<MenuProfessor> {
         child: DrawerTop(
           texto: "Opções",
           nome: nome,
-          email: email,
+          email: email, foto: foto,
         ),
       ),
       //corpo

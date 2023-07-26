@@ -32,7 +32,7 @@ class DetalheProgresso extends StatefulWidget {
 
 class _DetalheProgressoState extends State<DetalheProgresso> {
   _DetalheProgressoState(this.id);
-    var progAluno = Progresso();
+  var progAluno = Progresso();
   final int id;
   List<double> lista = [];
   int quantAulas = 0;
@@ -52,13 +52,16 @@ class _DetalheProgressoState extends State<DetalheProgresso> {
   var mestre = Aluno();
 
   //Esse método serve para carregar as informações do usuario logado para mostrar no drower
+  String foto = "";
+
   getInfoAluno<Aluno>() async {
-    mestre.usuario = await PrefsService.returnUser();
-    await ServerAluno.buscaInfo(mestre).then((value) {
+    aluno.usuario = await PrefsService.returnUser();
+    await ServerAluno.buscaInfo(aluno).then((value) {
       setState(() {
-        mestre = value;
-        nome = mestre.nome!;
-        email = mestre.email!;
+        aluno = value;
+        nome = aluno.nome!;
+        email = aluno.email!;
+        foto = aluno.foto!;
       });
     });
   }
@@ -147,6 +150,7 @@ class _DetalheProgressoState extends State<DetalheProgresso> {
           texto: "Opções",
           nome: nome,
           email: email,
+          foto: foto,
         ),
       ),
       body: Stack(

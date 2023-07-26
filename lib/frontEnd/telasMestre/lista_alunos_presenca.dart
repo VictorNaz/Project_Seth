@@ -19,10 +19,11 @@ class _ListaAlunoPresencaState extends State<ListaAlunoPresenca> {
 
   String nome = "";
   String email = "";
-  var aluno = Aluno();
   bool showPassword = true;
   TextEditingController txtSenha = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  String foto = "";
+  var aluno = Aluno();
 
   getInfoAluno<Aluno>() async {
     aluno.usuario = await PrefsService.returnUser();
@@ -31,6 +32,7 @@ class _ListaAlunoPresencaState extends State<ListaAlunoPresenca> {
         aluno = value;
         nome = aluno.nome!;
         email = aluno.email!;
+        foto = aluno.foto!;
       });
     });
   }
@@ -80,7 +82,7 @@ class _ListaAlunoPresencaState extends State<ListaAlunoPresenca> {
         child: DrawerTop(
           texto: "Opções",
           nome: nome,
-          email: email,
+          email: email, foto: foto,
         ),
       ),
       //body: _buildListView(context),

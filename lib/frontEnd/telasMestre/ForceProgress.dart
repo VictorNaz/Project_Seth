@@ -25,6 +25,7 @@ class _ForceProgressState extends State<ForceProgress> {
   final _formKey = GlobalKey<FormState>();
   String nome = "";
   String email = "";
+  String foto = "";
   var aluno = Aluno();
 
   getInfoAluno<Aluno>() async {
@@ -34,6 +35,7 @@ class _ForceProgressState extends State<ForceProgress> {
         aluno = value;
         nome = aluno.nome!;
         email = aluno.email!;
+        foto = aluno.foto!;
       });
     });
   }
@@ -99,6 +101,7 @@ class _ForceProgressState extends State<ForceProgress> {
               texto: "Opções",
               nome: nome,
               email: email,
+              foto: foto,
             ),
           ),
           body: Stack(alignment: Alignment.center, children: <Widget>[

@@ -25,6 +25,7 @@ class Menu extends StatefulWidget {
 class _MenuState extends State<Menu> {
   String nome = "";
   String email = "";
+  String foto = "";
   var aluno = Aluno();
 
   getInfoAluno<Aluno>() async {
@@ -34,6 +35,7 @@ class _MenuState extends State<Menu> {
         aluno = value;
         nome = aluno.nome!;
         email = aluno.email!;
+        foto = aluno.foto!;
       });
     });
   }
@@ -67,6 +69,7 @@ class _MenuState extends State<Menu> {
           texto: "Opções",
           nome: nome,
           email: email,
+          foto: foto,
         ),
       ),
       //corpo

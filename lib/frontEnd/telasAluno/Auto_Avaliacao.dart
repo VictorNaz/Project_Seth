@@ -30,6 +30,7 @@ class _Auto_AvaliacaoState extends State<Auto_Avaliacao> {
 
   String nome = "";
   String email = "";
+  String foto = "";
   var aluno = Aluno();
 
   getInfoAluno<Aluno>() async {
@@ -39,6 +40,7 @@ class _Auto_AvaliacaoState extends State<Auto_Avaliacao> {
         aluno = value;
         nome = aluno.nome!;
         email = aluno.email!;
+        foto = aluno.foto!;
       });
     });
   }
@@ -90,12 +92,12 @@ class _Auto_AvaliacaoState extends State<Auto_Avaliacao> {
       //drawer para navegação no appbar
       //A classe Drawer está sendo chamada de outro arquivo e está recebendo por parametro o texto desejado.
       endDrawer: Drawer(
-                backgroundColor: Color.fromARGB(207, 255, 255, 255),
-
+        backgroundColor: Color.fromARGB(207, 255, 255, 255),
         child: DrawerTop(
           texto: "Opções",
           nome: nome,
           email: email,
+          foto: foto,
         ),
       ),
 
