@@ -26,6 +26,7 @@ class DetalheAluno extends StatefulWidget {
 class _DetalheAlunoState extends State<DetalheAluno> {
   List<double> lista = [];
   var progAluno = Progresso();
+  late final data_faixa;
   int quantAulas = 0;
   double percAulas = 0;
   String? faixa = "...";
@@ -74,6 +75,10 @@ class _DetalheAlunoState extends State<DetalheAluno> {
       setState(() {
         progAluno = value;
         quantAulas = progAluno.quant_aula;
+        data_faixa = progAluno.data_faixa;
+          DateTime data = DateTime.parse(progAluno.data_faixa);
+          progAluno.data_faixa = DateFormat("dd/MM/yyyy").format(data);
+
       });
     });
     aluno = await buscaInfo(aluno);
@@ -243,6 +248,9 @@ class _DetalheAlunoState extends State<DetalheAluno> {
                                         padding: EdgeInsets.only(right: 50)),
                                     Text(
                                         "${formatter.format(percAulas)}% Concluído"),
+                                    const Padding(
+                                        padding: EdgeInsets.only(right: 20)),
+                                    Text("Data: "+ progAluno.data_faixa),
                                   ],
                                 ),
                                 /*const Padding(

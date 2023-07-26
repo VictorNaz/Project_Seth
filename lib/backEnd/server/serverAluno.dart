@@ -169,6 +169,7 @@ class ServerAluno {
       var result = await json.decode(jsonString);
       progAluno.quant_aula = result["quant_aula"];
       progAluno.data_faixa = result["data_faixa"];
+
     } else {
       print("Erro ao procurar a quantidade de aulas");
       print(response.reasonPhrase);
@@ -214,31 +215,6 @@ class ServerAluno {
       print(response.reasonPhrase);
       return null; //ajusttar
     }
-
-/*
-    var lista = [];
-
-    if (response.statusCode == 200) {
-      //converte os dados do banco em String
-      String jsonString = await response.stream.bytesToString();
-      //converto os dados obtidos em um objeto JSON
-      var result = await json.decode(jsonString);
-      print(result);
-      //for in para adicionar os resultados em um array
-      for (var list in result) {
-        lista.add(list["nome"]);
-      }
-
-      print("Alunos encontrados!");
-      print(lista);
-      return lista;
-    } else {
-      print("Erro ao procurar os alunos");
-      print(response.reasonPhrase);
-      return lista;
-    }
-
-*/
   }
 
   //Busca a auto-avaliação do aluno
