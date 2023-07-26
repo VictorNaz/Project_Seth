@@ -141,7 +141,7 @@ class _DrawerTopState extends State<DrawerTop> {
                   color: Colors.black,
                 )),
             currentAccountPicture: CircleAvatar(
-              //backgroundColor: Colors.grey[300],
+              backgroundColor: Colors.grey[500],
               backgroundImage: imageFromBase64String(foto).image,
             ), //
             //
@@ -416,7 +416,7 @@ class _DrawerTopState extends State<DrawerTop> {
                   color: Colors.black,
                 )),
             currentAccountPicture: CircleAvatar(
-              //backgroundColor: Colors.grey[300],
+              backgroundColor: Colors.grey[500],
               backgroundImage: imageFromBase64String(foto).image,
             ), //
           ),

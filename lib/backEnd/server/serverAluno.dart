@@ -169,7 +169,6 @@ class ServerAluno {
       var result = await json.decode(jsonString);
       progAluno.quant_aula = result["quant_aula"];
       progAluno.data_faixa = result["data_faixa"];
-
     } else {
       print("Erro ao procurar a quantidade de aulas");
       print(response.reasonPhrase);
@@ -610,13 +609,37 @@ class ServerAluno {
 
     http.StreamedResponse response = await request.send();
     String retorno;
+    String? resposta = response.reasonPhrase;
+    if (response.statusCode == 413) {
+      resposta = "A foto selecionada é muito grande";
+    }
+    print(response.statusCode);
     if (response.statusCode == 200) {
       retorno = "Foto de perfil alterada com sucesso!";
       print(await response.stream.bytesToString());
       return retorno;
     } else {
       retorno =
-          "Não foi possivel alterar a sua foto de perfil\nDetalhes:${response.reasonPhrase}";
+          "Não foi possivel alterar a sua foto de perfil\nDetalhes: $resposta";
+      return retorno;
+    }
+  }
+
+  static Future<String> removeFoto(String? email) async {
+    var request = http.Request(
+        'POST', Uri.parse('https://apiseth.cyclic.app/removeFoto'));
+    request.body = json.encode({"email": email});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+    String retorno;
+    if (response.statusCode == 200) {
+      retorno = "Foto de perfil removida com sucesso!";
+      print(await response.stream.bytesToString());
+      return retorno;
+    } else {
+      retorno =
+          "Não foi possivel remover a sua foto de perfil\nDetalhes:${response.reasonPhrase}";
       return retorno;
     }
   }

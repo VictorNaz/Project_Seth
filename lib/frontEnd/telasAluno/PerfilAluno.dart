@@ -49,11 +49,10 @@ class _PerfilAlunoState extends State<PerfilAluno> {
   pick(ImageSource source) async {
     final pickedFile = await imagePicker.pickImage(
       source: source,
-      imageQuality: 45,
-      maxHeight: 2048,
-      maxWidth: 1152,
+      imageQuality: 40,
+      maxHeight: 2000,
+      maxWidth: 1150,
     );
-    print("$imageFile+ terra");
 
     if (pickedFile != null) {
       setState(() {
@@ -61,17 +60,18 @@ class _PerfilAlunoState extends State<PerfilAluno> {
       });
       final bytes = imageFile!.readAsBytesSync();
       imageBase64 = base64Encode(bytes);
-      print("BYTES $imageFile");
-      imgString = Utility.base64String(imageFile!.readAsBytesSync());
+      //print("BYTES $imageFile");
+      //imgString = Utility.base64String(imageFile!.readAsBytesSync());
       String retorno = await ServerAluno.salvaFoto(imageBase64, email);
-      print("BYTES $bytes");
+      //print("BYTES $bytes");
 
       await exibeAviso(retorno);
       //Image image = imageFromBase64String(imgString);
-      Uint8List image = dataFromBase64String(imgString);
-      print(image);
+      //Uint8List image = dataFromBase64String(imgString);
+      //print(image);
       // String imgString = Utility.base64String(await imageFile!.readAsBytes());
     }
+    await getInfoAluno();
   }
 
 //4
@@ -334,7 +334,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
     );
   }
 
-  //!!teste
+  //!Exibição das opções para alteração de foto
   void _showOpcoesBottomSheet() {
     showModalBottomSheet(
       context: context,
@@ -358,7 +358,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                   'Galeria',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
-                onTap: () {
+                onTap: () async {
                   Navigator.of(context).pop();
                   // Buscar imagem da galeria
                   pick(ImageSource.gallery);
@@ -378,8 +378,9 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                   'Câmera',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
-                onTap: () {
+                onTap: () async {
                   Navigator.of(context).pop();
+
                   // Fazer foto da câmera
                   pick(ImageSource.camera);
                 },
@@ -398,11 +399,13 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                   'Remover',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
-                onTap: () {
+                onTap: () async {
                   Navigator.of(context).pop();
+                  String retorno = await ServerAluno.removeFoto(email);
+                  await exibeAviso(retorno);
                   // Tornar a foto null
                   setState(() {
-                    imageFile = null;
+                    foto = "";
                   });
                 },
               ),
