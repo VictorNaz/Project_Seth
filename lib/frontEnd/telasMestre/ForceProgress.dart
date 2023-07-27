@@ -26,6 +26,8 @@ class _ForceProgressState extends State<ForceProgress> {
   String nome = "";
   String email = "";
   String foto = "";
+  DateTime? dtTrocaFaixa; //!Data selecionada armazenada aqui
+
   var aluno = Aluno();
 
   getInfoAluno<Aluno>() async {
@@ -142,14 +144,14 @@ class _ForceProgressState extends State<ForceProgress> {
                             },
                           ),
                         ),
-                        SizedBox(
+                        /*SizedBox(
                           width: 325,
                           child: TextFormField(
                             controller: txtUsuario,
-                            keyboardType: TextInputType.name,
+                            keyboardType: TextInputType.datetime,
                             decoration: const InputDecoration(
                               icon: Icon(
-                                Icons.person,
+                                Icons.calendar_month,
                                 color: Color.fromARGB(255, 252, 72, 27),
                               ),
                               labelText: "Data da Faixa",
@@ -162,7 +164,7 @@ class _ForceProgressState extends State<ForceProgress> {
                             },
                           ),
                         ),
-
+*/
                         //Espaçamento entre inputs
                         const Padding(padding: EdgeInsets.only(top: 15)),
 
@@ -251,6 +253,48 @@ class _ForceProgressState extends State<ForceProgress> {
                             ],
                           ),
                         ),
+                        //Espaçamento entre inputs
+                        const Padding(padding: EdgeInsets.only(top: 15)),
+
+                        SizedBox(
+                            width: 325,
+                            child: Row(
+                              children: <Widget>[
+                                const Icon(
+                                  Icons.calendar_month,
+                                  color: Color.fromARGB(255, 252, 72, 27),
+                                ),
+                                const Padding(
+                                    padding: EdgeInsets.only(left: 16)),
+                                TextButton(
+                                  onPressed: () {
+                                    showDatePicker(
+                                            context: context,
+                                            initialDate: DateTime.now(),
+                                            firstDate: DateTime(2000),
+                                            lastDate: DateTime(2222))
+                                        .then((value) {
+                                      dtTrocaFaixa = value;
+                                    });
+                                  },
+                                  style: TextButton.styleFrom(
+                                    backgroundColor:
+                                        Color.fromARGB(255, 206, 206, 206),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ), //,
+                                  child: Text(
+                                      style: const TextStyle(
+                                          fontSize: 16,
+                                          color: Color.fromARGB(
+                                              255, 107, 107, 107)),
+                                      dtTrocaFaixa == null
+                                          ? "Selecione a data da troca de faixa"
+                                          : dtTrocaFaixa.toString()),
+                                )
+                              ],
+                            )),
                       ],
                     ),
                   ),
