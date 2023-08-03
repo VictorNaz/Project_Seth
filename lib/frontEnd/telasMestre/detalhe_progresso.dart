@@ -1,4 +1,4 @@
-// ignore_for_file: no_logic_in_create_state, use_build_context_synchronously
+// ignore_for_file: no_logic_in_create_state, use_build_context_synchronously, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/frontEnd/geral/loginpage.dart';
@@ -35,7 +35,7 @@ class _DetalheProgressoState extends State<DetalheProgresso> {
   var progAluno = Progresso();
   final int id;
   List<double> lista = [];
-  late final data_faixa;
+  String data_faixa = "";
   int quantAulas = 0;
   double percAulas = 0;
   String? faixa = "...";
@@ -73,7 +73,6 @@ class _DetalheProgressoState extends State<DetalheProgresso> {
   getInfoUsuario<List>() async {
     aluno.nome = widget.nome;
     aluno.usuario = widget.usuario; //await buscaUsarioPorNome(aluno);
-    print(aluno.usuario);
     await buscaAvaliacao(aluno).then((value) {
       setState(() {
         lista = value;
@@ -252,7 +251,7 @@ class _DetalheProgressoState extends State<DetalheProgresso> {
                                         "${formatter.format(percAulas)}% Concluído"),
                                     const Padding(
                                         padding: EdgeInsets.only(right: 20)),
-                                    Text("Data: "+ progAluno.data_faixa),
+                                    Text("Data: ${progAluno.data_faixa}"),
                                   ],
                                 ),
                               ],

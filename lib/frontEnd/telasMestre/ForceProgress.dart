@@ -81,7 +81,7 @@ class _ForceProgressState extends State<ForceProgress> {
             title: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
-                Text("        Forçar Progresso"),
+                Text("            Forçar Progresso"),
               ],
             ),
 

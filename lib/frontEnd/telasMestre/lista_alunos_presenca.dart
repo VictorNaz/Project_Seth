@@ -19,7 +19,7 @@ class _ListaAlunoPresencaState extends State<ListaAlunoPresenca> {
 
   String nome = "";
   String email = "";
-  bool showPassword = true;
+  bool showPassword = false;
   TextEditingController txtSenha = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   String foto = "";
@@ -82,7 +82,8 @@ class _ListaAlunoPresencaState extends State<ListaAlunoPresenca> {
         child: DrawerTop(
           texto: "Opções",
           nome: nome,
-          email: email, foto: foto,
+          email: email,
+          foto: foto,
         ),
       ),
       //body: _buildListView(context),
@@ -146,6 +147,11 @@ class _ListaAlunoPresencaState extends State<ListaAlunoPresenca> {
                           keyboardType: TextInputType.visiblePassword,
                           textAlign: TextAlign.start,
                           decoration: const InputDecoration(
+                            icon: Icon(
+                              Icons.lock_outline,
+                              color: Color.fromARGB(255, 252, 72, 27),
+                              size: 25,
+                            ),
                             labelText: "Senha",
                             fillColor: Colors.black,
                             hintStyle: TextStyle(color: Colors.black),
@@ -153,12 +159,10 @@ class _ListaAlunoPresencaState extends State<ListaAlunoPresenca> {
                                 borderSide: BorderSide(
                                     color: Color.fromARGB(255, 252, 72, 27))),
                           ),
-
                           validator: (value) {
                             return validarSenha(txtSenha.text);
                           },
-                          obscureText: showPassword == false ? true : false,
-                          //== false ? true : false,
+                          obscureText: true,
                         ),
                       ),
                       const Padding(padding: EdgeInsets.only(top: 15)),
@@ -166,7 +170,8 @@ class _ListaAlunoPresencaState extends State<ListaAlunoPresenca> {
                         //Se for selecionado Não
                         onPressed: () => Navigator.pop(context, 'Não'),
 
-                        child: const Text('Não'),
+                        child: const Text('Não',
+                            style: TextStyle(color: Colors.black)),
                       ),
                       TextButton(
                         //Se for selecionado sim
@@ -176,7 +181,8 @@ class _ListaAlunoPresencaState extends State<ListaAlunoPresenca> {
                               await validaPresencaSenha(usuarioAluno, senha);
                           exibeAviso(retorno);
                         },
-                        child: const Text('Sim'),
+                        child: const Text('Sim',
+                            style: TextStyle(color: Colors.black)),
                       ),
                     ]),
                   ),

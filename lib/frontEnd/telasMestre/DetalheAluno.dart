@@ -1,3 +1,5 @@
+// ignore_for_file: unrelated_type_equality_checks
+
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/backEnd/modelo/progresso.dart';
 import 'package:intl/intl.dart';
@@ -20,22 +22,22 @@ class DetalheAluno extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<DetalheAluno> createState() => _DetalheAlunoState();
+  State<DetalheAluno> createState() => _DetalheAlunoState(nome, usuario);
 }
 
 class _DetalheAlunoState extends State<DetalheAluno> {
+  _DetalheAlunoState(this.nome, this.usuario);
   List<double> lista = [];
   var progAluno = Progresso();
-  late final data_faixa;
+  // ignore: non_constant_identifier_names
+  final String nome;
+  final String usuario;
+  String data_faixa = "";
   int quantAulas = 0;
   double percAulas = 0;
   String? faixa = "...";
   String? grau = "...";
-
   NumberFormat formatter = NumberFormat("00.0");
-
-  String nome = "";
-  String email = "";
   var aluno = Aluno();
   num quantAulasFaixa = 0;
   Color faixaCor = const Color.fromARGB(252, 207, 203, 203);
@@ -44,15 +46,17 @@ class _DetalheAlunoState extends State<DetalheAluno> {
   var usuarioLogado = Aluno();
 
   //Esse método serve para carregar as informações do usuario logado para mostrar no drower
-  String foto = "";
+  String fotoUser = "";
+  String nomeUser = "";
+  String emailUser = "";
   getInfoAluno<Aluno>() async {
-    aluno.usuario = await PrefsService.returnUser();
-    await ServerAluno.buscaInfo(aluno).then((value) {
+    usuarioLogado.usuario = await PrefsService.returnUser();
+    await ServerAluno.buscaInfo(usuarioLogado).then((value) {
       setState(() {
-        aluno = value;
-        nome = aluno.nome!;
-        email = aluno.email!;
-        foto = aluno.foto!;
+        usuarioLogado = value;
+        nomeUser = usuarioLogado.nome!;
+        emailUser = usuarioLogado.email!;
+        fotoUser = usuarioLogado.foto!;
       });
     });
   }
@@ -61,8 +65,8 @@ class _DetalheAlunoState extends State<DetalheAluno> {
   //de Future<list<double>> para list<double>, alem de setar o valor em uma variavel global
   //este método recebe o usuario como um parametro da classe DetalheAluno
   getInfoUsuario<List>() async {
-    aluno.nome = widget.nome;
-    aluno.usuario = widget.usuario; //await buscaUsarioPorNome(aluno);
+    aluno.nome = nome;
+    aluno.usuario = usuario; //await buscaUsarioPorNome(aluno);
     await buscaAvaliacao(aluno).then((value) {
       setState(() {
         lista = value;
@@ -76,9 +80,8 @@ class _DetalheAlunoState extends State<DetalheAluno> {
         progAluno = value;
         quantAulas = progAluno.quant_aula;
         data_faixa = progAluno.data_faixa;
-          DateTime data = DateTime.parse(progAluno.data_faixa);
-          progAluno.data_faixa = DateFormat("dd/MM/yyyy").format(data);
-
+        DateTime data = DateTime.parse(progAluno.data_faixa);
+        data_faixa = DateFormat("dd/MM/yyyy").format(data);
       });
     });
     aluno = await buscaInfo(aluno);
@@ -147,9 +150,9 @@ class _DetalheAlunoState extends State<DetalheAluno> {
         backgroundColor: const Color.fromARGB(207, 255, 255, 255),
         child: DrawerTop(
           texto: "Opções",
-          nome: nome,
-          email: email,
-          foto: foto,
+          nome: nomeUser,
+          email: emailUser,
+          foto: fotoUser,
         ),
       ),
       body: Stack(
@@ -239,18 +242,15 @@ class _DetalheAlunoState extends State<DetalheAluno> {
                                 Row(
                                   children: [
                                     const Padding(
-                                        padding: EdgeInsets.only(left: 10)),
+                                        padding: EdgeInsets.only(left: 15)),
                                     Text("$quantAulas/$quantAulasFaixa Aulas"),
                                     const Padding(
-                                        padding: EdgeInsets.only(right: 50)),
-                                    const Text("Data Faixa"),
-                                    const Padding(
-                                        padding: EdgeInsets.only(right: 50)),
+                                        padding: EdgeInsets.only(right: 20)),
                                     Text(
                                         "${formatter.format(percAulas)}% Concluído"),
                                     const Padding(
                                         padding: EdgeInsets.only(right: 20)),
-                                    Text("Data: "+ progAluno.data_faixa),
+                                    Text("Data:$data_faixa"),
                                   ],
                                 ),
                                 /*const Padding(

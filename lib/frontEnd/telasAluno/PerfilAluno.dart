@@ -28,6 +28,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
   String email = "";
   String cpf = "";
   String foto = "";
+  String senha = "";
   final imagePicker = ImagePicker();
   File? imageFile;
   var aluno = Aluno();
@@ -84,6 +85,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
         email = aluno.email!;
         cpf = aluno.cpf!;
         foto = aluno.foto!;
+        senha = "Nãotrazersenhaaobk";
       });
     });
   }
@@ -165,7 +167,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                     //bottom: 7,
                     //right: 6.5,
                     child: CircleAvatar(
-                      backgroundColor: Colors.grey[200],
+                      backgroundColor: const Color.fromARGB(0, 255, 255, 255),
                       child: IconButton(
                         //alignment: Alignment.topRight,
                         onPressed: _showOpcoesBottomSheet,
@@ -200,7 +202,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SizedBox(
-                            width: 325,
+                            width: 300,
                             child: TextFormField(
                               controller: TextEditingController(text: nome),
                               keyboardType: TextInputType.name,
@@ -215,15 +217,17 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                                         color:
                                             Color.fromARGB(255, 252, 72, 27))),
                               ),
+                              enabled: false,
                               validator: (value) {
                                 return validarNome(nome);
                               },
                             ),
                           ),
-                          Icon(
-                            PhosphorIcons.regular.pencilSimple,
+                          IconButton(
+                            icon: Icon(PhosphorIcons.regular.pencilSimple),
                             color: const Color.fromARGB(255, 252, 72, 27),
-                          )
+                            onPressed: () {},
+                          ),
                         ],
                       )
                     ],
@@ -233,7 +237,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                   const Padding(padding: EdgeInsets.only(top: 30)),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                     SizedBox(
-                      width: 325,
+                      width: 300,
                       child: TextFormField(
                         //initialValue: usuario.email,
                         controller: TextEditingController(text: email),
@@ -250,21 +254,23 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                               borderSide: BorderSide(
                                   color: Color.fromARGB(255, 252, 72, 27))),
                         ),
+                        enabled: false,
                         validator: (value) {
                           return validarEmail(email);
                         },
                       ),
                     ),
-                    Icon(
-                      PhosphorIcons.regular.pencilSimple,
+                    IconButton(
+                      icon: Icon(PhosphorIcons.regular.pencilSimple),
                       color: const Color.fromARGB(255, 252, 72, 27),
-                    )
+                      onPressed: () {},
+                    ),
                   ]),
                   //Espaçamento entre inputs
                   const Padding(padding: EdgeInsets.only(top: 30)),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                     SizedBox(
-                      width: 325,
+                      width: 300,
                       child: TextField(
                         controller: TextEditingController(
                             text: cpf), //Define o teclado para numérico
@@ -280,15 +286,49 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                               borderSide: BorderSide(
                                   color: Color.fromARGB(255, 252, 72, 27))),
                         ),
+                        enabled: false,
                       ),
                     ),
-                    Icon(
-                      PhosphorIcons.regular.pencilSimple,
+                    IconButton(
+                      icon: Icon(PhosphorIcons.regular.pencilSimple),
                       color: const Color.fromARGB(255, 252, 72, 27),
-                    )
+                      onPressed: () {},
+                    ),
                   ]),
 
-                  const Padding(padding: EdgeInsets.only(bottom: 250)),
+                  //Espaçamento entre inputs
+                  const Padding(padding: EdgeInsets.only(top: 30)),
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    SizedBox(
+                      width: 300,
+                      child: TextField(
+                        controller: TextEditingController(
+                            text:
+                                "senhanaoaobackend"), //Define o teclado para numérico
+                        keyboardType: TextInputType.visiblePassword,
+                        decoration: const InputDecoration(
+                          icon: Icon(
+                            Icons.lock_outline,
+                            color: Color.fromARGB(255, 252, 72, 27),
+                          ),
+                          labelText: "Senha",
+                          hintStyle: TextStyle(color: Colors.black),
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 252, 72, 27))),
+                        ),
+                        obscureText: true,
+                        enabled: false,
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(PhosphorIcons.regular.pencilSimple),
+                      color: const Color.fromARGB(255, 252, 72, 27),
+                      onPressed: () {},
+                    ),
+                  ]),
+
+                  const Padding(padding: EdgeInsets.only(bottom: 100)),
                 ],
               ),
             )

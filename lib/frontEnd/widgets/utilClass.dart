@@ -184,7 +184,8 @@ class _DrawerTopState extends State<DrawerTop> {
                           TextButton(
                             //Se for selecionado Não
                             onPressed: () => Navigator.pop(context, 'Ok'),
-                            child: const Text('Ok'),
+                            child: const Text('Ok',
+                                style: TextStyle(color: Colors.black)),
                           ),
                         ],
                       ),
@@ -221,7 +222,21 @@ class _DrawerTopState extends State<DrawerTop> {
                   ],
                 )),
             onTap: () {
-              Navigator.pop(context);
+              showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  title: const Text('Termos de Uso Indisponíveis'),
+                  content: const Text('Não há nenhum termo de uso no momento.'),
+                  actions: <Widget>[
+                    TextButton(
+                      //Se for selecionado Não
+                      onPressed: () => Navigator.pop(context, 'Ok'),
+                      child: const Text('Ok',
+                          style: TextStyle(color: Colors.black)),
+                    ),
+                  ],
+                ),
+              );
             },
           ),
           ListTile(
@@ -277,7 +292,22 @@ class _DrawerTopState extends State<DrawerTop> {
                   ],
                 )),
             onTap: () {
-              Navigator.pop(context);
+              showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  title: const Text('Dados do Aplicativo'),
+                  content: const Text(
+                      'Desenvolvido por: Senai de Joinville em conjunto com a Seth - JiuJitsu\nVersão: V1-100.0'),
+                  actions: <Widget>[
+                    TextButton(
+                      //Se for selecionado Não
+                      onPressed: () => Navigator.pop(context, 'Ok'),
+                      child: const Text('Ok',
+                          style: TextStyle(color: Colors.black)),
+                    ),
+                  ],
+                ),
+              );
             },
           ),
           ListTile(
@@ -313,7 +343,8 @@ class _DrawerTopState extends State<DrawerTop> {
                     TextButton(
                       //Se for selecionado Não
                       onPressed: () => Navigator.pop(context, 'Não'),
-                      child: const Text('Não'),
+                      child: const Text('Não',
+                          style: TextStyle(color: Colors.black)),
                     ),
                     TextButton(
                       //Se for selecionado sim
@@ -324,7 +355,8 @@ class _DrawerTopState extends State<DrawerTop> {
                                 builder: (context) => const HomePage()),
                             (Route<dynamic> route) => false);
                       },
-                      child: const Text('Sim'),
+                      child: const Text('Sim',
+                          style: TextStyle(color: Colors.black)),
                     ),
                   ],
                 ),
@@ -366,37 +398,6 @@ class _DrawerTopState extends State<DrawerTop> {
                 ),
               ],
             ),
-            /*child: DrawerHeader(
-              padding: const EdgeInsets.only(right: 30),
-              decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 252, 72, 27),
-              ),
-              child: Row(
-                //  mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    // alignment: Alignment.bottomRight,
-                    onPressed: () {
-                      Navigator.pop(context, false);
-                    },
-                    icon: const Icon(
-                      Icons.arrow_back,
-                      color: Color.fromARGB(255, 255, 255, 255),
-                      size: 30,
-                    ),
-                  ),
-                  const Padding(padding: EdgeInsets.only(right: 10)),
-                  Text(
-                    texto,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            */
           ),
 
           //Parte do Drawer que vai conter as informações do usuário
@@ -444,7 +445,21 @@ class _DrawerTopState extends State<DrawerTop> {
                   ],
                 )),
             onTap: () {
-              Navigator.pop(context);
+              showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  title: const Text('Termos de Uso Indisponíveis'),
+                  content: const Text('Não há nenhum termo de uso no momento.'),
+                  actions: <Widget>[
+                    TextButton(
+                      //Se for selecionado Não
+                      onPressed: () => Navigator.pop(context, 'Ok'),
+                      child: const Text('Ok',
+                          style: TextStyle(color: Colors.black)),
+                    ),
+                  ],
+                ),
+              );
             },
           ),
           ListTile(
@@ -500,7 +515,22 @@ class _DrawerTopState extends State<DrawerTop> {
                   ],
                 )),
             onTap: () {
-              Navigator.pop(context);
+              showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  title: const Text('Dados do Aplicativo'),
+                  content: const Text(
+                      'Desenvolvido por: Senai de Joinville em conjunto com a Seth - JiuJitsu\nVersão: V1-100.0'),
+                  actions: <Widget>[
+                    TextButton(
+                      //Se for selecionado Não
+                      onPressed: () => Navigator.pop(context, 'Ok'),
+                      child: const Text('Ok',
+                          style: TextStyle(color: Colors.black)),
+                    ),
+                  ],
+                ),
+              );
             },
           ),
           ListTile(
@@ -536,7 +566,8 @@ class _DrawerTopState extends State<DrawerTop> {
                     TextButton(
                       //Se for selecionado Não
                       onPressed: () => Navigator.pop(context, 'Não'),
-                      child: const Text('Não'),
+                      child: const Text('Não',
+                          style: TextStyle(color: Colors.black)),
                     ),
                     TextButton(
                       //Se for selecionado sim
@@ -547,7 +578,8 @@ class _DrawerTopState extends State<DrawerTop> {
                                 builder: (context) => const HomePage()),
                             (Route<dynamic> route) => false);
                       },
-                      child: const Text('Sim'),
+                      child: const Text('Sim',
+                          style: TextStyle(color: Colors.black)),
                     ),
                   ],
                 ),
@@ -657,7 +689,8 @@ class BotaoInferior extends StatelessWidget {
                     TextButton(
                       //Se for selecionado Não
                       onPressed: () => Navigator.pop(context, 'Não'),
-                      child: const Text('Não'),
+                      child: const Text('Não',
+                          style: TextStyle(color: Colors.black)),
                     ),
                     TextButton(
                       //Se for selecionado sim
@@ -667,7 +700,8 @@ class BotaoInferior extends StatelessWidget {
                             MaterialPageRoute(builder: (context) => exit(0)),
                             (Route<dynamic> route) => false);
                       },
-                      child: const Text('Sim'),
+                      child: const Text('Sim',
+                          style: TextStyle(color: Colors.black)),
                     ),
                   ],
                 ),
