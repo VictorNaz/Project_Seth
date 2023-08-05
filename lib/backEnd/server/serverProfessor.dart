@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_project_seth/backEnd/modelo/faixa.dart';
+import 'package:flutter_project_seth/backEnd/modelo/progresso.dart';
 import 'package:http/http.dart' as http;
 
 import '../modelo/aluno.dart';
@@ -57,13 +58,14 @@ class ServerProfessor {
     return id;
   }
 
-  static Future<void> forcaProgresso(Aluno aluno, Faixa progresso) async {
+  static Future<void> forcaProgresso(Aluno aluno, Faixa faixa, Progresso progresso) async {
     try {
       var request = http.Request(
           'POST', Uri.parse('https://apiseth.cyclic.app/forcaProgresso'));
       request.body = json.encode({
         "aluno_id": aluno.id,
-        "faixa_id": progresso.id,
+        "faixa_id": faixa.id,
+        "data_faixa": progresso.data_faixa,
       });
       request.headers.addAll(headers);
 

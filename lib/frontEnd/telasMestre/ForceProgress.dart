@@ -144,27 +144,7 @@ class _ForceProgressState extends State<ForceProgress> {
                             },
                           ),
                         ),
-                        /*SizedBox(
-                          width: 325,
-                          child: TextFormField(
-                            controller: txtUsuario,
-                            keyboardType: TextInputType.datetime,
-                            decoration: const InputDecoration(
-                              icon: Icon(
-                                Icons.calendar_month,
-                                color: Color.fromARGB(255, 252, 72, 27),
-                              ),
-                              labelText: "Data da Faixa",
-                              focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Color.fromARGB(255, 252, 72, 27))),
-                            ),
-                            validator: (value) {
-                              return validaUsuario(txtUsuario.text);
-                            },
-                          ),
-                        ),
-*/
+                       
                         //Espaçamento entre inputs
                         const Padding(padding: EdgeInsets.only(top: 15)),
 
@@ -307,7 +287,7 @@ class _ForceProgressState extends State<ForceProgress> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           forcaProgresso(txtUsuario.text, faixaSelecionada!,
-                              grauSelecionado!);
+                              grauSelecionado!, dtTrocaFaixa!);
                           loading();
                           //cadAluno(txtUsuario.text);
                           closeLoading();

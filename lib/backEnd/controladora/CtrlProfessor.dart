@@ -1,11 +1,9 @@
-import 'package:flutter/gestures.dart';
-import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
 import 'package:flutter_project_seth/backEnd/modelo/aluno.dart';
+import 'package:flutter_project_seth/backEnd/modelo/progresso.dart';
 import 'package:flutter_project_seth/backEnd/security/dataCrypt.dart';
 import 'package:flutter_project_seth/backEnd/server/serverProfessor.dart';
 
 import '../modelo/faixa.dart';
-import '../modelo/notificacoes.dart';
 import '../modelo/professor.dart';
 import '../server/serverAluno.dart';
 
@@ -26,16 +24,18 @@ String? cadProfessor(String txtNome, String txtUsuario, String txtSenha,
 }
 
 Future<String?> forcaProgresso(
-    String txtUsuario, String txtFaixa, String txtGrau) async {
-  var progresso = Faixa();
+    String txtUsuario, String txtFaixa, String txtGrau, DateTime? dtTrocaFaixa) async {
+  var faixa = Faixa();
+  var progresso = Progresso();
   var aluno = Aluno();
 
-  progresso.faixa = txtFaixa;
-  progresso.grau = int.tryParse(txtGrau);
+  faixa.faixa = txtFaixa;
+  progresso.data_faixa = dtTrocaFaixa.toString();
+  faixa.grau = int.tryParse(txtGrau);
   aluno.usuario = txtUsuario;
   aluno.id = await ServerAluno.buscaAlunoId(aluno);
-  progresso.id = await ServerProfessor.buscaFaixaId(progresso);
-  ServerProfessor.forcaProgresso(aluno, progresso);
+  faixa.id = await ServerProfessor.buscaFaixaId(faixa);
+  ServerProfessor.forcaProgresso(aluno, faixa, progresso);
   return null;
 }
 
