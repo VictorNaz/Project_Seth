@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:kg_charts/kg_charts.dart';
 import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
@@ -19,7 +21,7 @@ class DesempAluno extends StatefulWidget {
 class _DesempAlunoState extends State<DesempAluno> {
   List<double> lista = [];
   var progAluno = Progresso();
-  late final data_faixa;
+  String data_faixa = "Nenhuma";
   int quantAulas = 0;
   String? faixa = "...";
   String? grau = "...";
@@ -63,7 +65,7 @@ class _DesempAlunoState extends State<DesempAluno> {
           quantAulas = progAluno.quant_aula;
           data_faixa = progAluno.data_faixa;
           DateTime data = DateTime.parse(progAluno.data_faixa);
-          progAluno.data_faixa = DateFormat("dd/MM/yyyy").format(data);
+          data_faixa = DateFormat("dd/MM/yyyy").format(data);
         });
       },
     );
@@ -174,7 +176,7 @@ class _DesempAlunoState extends State<DesempAluno> {
                         //ExpansionTile é um botão que se expande mostrando informações adicionais
                         child: ExpansionTile(
                           //mantem a caixa de texto aberta quando carregada a página
-                          initiallyExpanded: true,
+                          //initiallyExpanded: true,
                           //determinamos as cores do botão quando aberto e fechado
                           textColor: const Color.fromARGB(255, 252, 72, 27),
                           collapsedBackgroundColor:
@@ -233,7 +235,7 @@ class _DesempAlunoState extends State<DesempAluno> {
                                         "${formatter.format(percAulas)}% Concluído"),
                                     const Padding(
                                         padding: EdgeInsets.only(right: 20)),
-                                    Text("Data: "+ progAluno.data_faixa),
+                                    Text("Data: $data_faixa"),
                                   ],
                                 )
                               ],

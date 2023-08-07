@@ -167,8 +167,8 @@ class ServerAluno {
       print("Quantidade de aulas encontrada!");
       String jsonString = await response.stream.bytesToString();
       var result = await json.decode(jsonString);
-      progAluno.quant_aula = result["quant_aula"];
       progAluno.data_faixa = result["data_faixa"];
+      progAluno.quant_aula = result["quant_aula"];
     } else {
       print("Erro ao procurar a quantidade de aulas");
       print(response.reasonPhrase);

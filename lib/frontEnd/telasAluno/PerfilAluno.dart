@@ -21,6 +21,11 @@ class _PerfilAlunoState extends State<PerfilAluno> {
   bool isChecked = false;
   bool showPassword = false;
 
+  TextEditingController edicaoSenha = TextEditingController();
+  TextEditingController edicaoNome = TextEditingController();
+  TextEditingController edicaoEmail = TextEditingController();
+  TextEditingController edicaoCPF = TextEditingController();
+
   TextEditingController _controler = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
@@ -29,9 +34,10 @@ class _PerfilAlunoState extends State<PerfilAluno> {
   String cpf = "";
   String foto = "";
   String senha = "";
+  var aluno = Aluno();
+  //!Variaveis das imagens
   final imagePicker = ImagePicker();
   File? imageFile;
-  var aluno = Aluno();
   String imgString = "";
   var imageBase64 = '';
 
@@ -178,24 +184,8 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                       ),
                     ),
                   ),
-
-                  /* const CircleAvatar(
-                    radius: 100,
-                    backgroundImage: AssetImage('assets/image/marciano.jpg'),
-                    child: IconButton(
-                        onPressed:
-                            null, // Adicionar aqui a chamada da seleção da foto do device
-                        icon: Icon(
-                          Icons.edit,
-                          color: Colors.white,
-                          size: 35.0,
-                        ),
-                        hoverColor: Color.fromARGB(106, 8, 8, 8)),
-                  ),*/
-
                   //Espaçamento entre foto de perfil e campos de input
                   const Padding(padding: EdgeInsets.only(top: 50)),
-
                   Column(
                     children: [
                       Row(
@@ -226,7 +216,83 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                           IconButton(
                             icon: Icon(PhosphorIcons.regular.pencilSimple),
                             color: const Color.fromARGB(255, 252, 72, 27),
-                            onPressed: () {},
+                            onPressed: () {
+                              showDialog<String>(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      AlertDialog(
+                                          title: Text('Aluno: $nome'),
+                                          content: const Text(
+                                              'Para alterar o seu nome, basta inserir adicionar a informação ao campo abaixo:'),
+                                          actions: <Widget>[
+                                            Form(
+                                              key: _formKey,
+                                              child: Column(children: [
+                                                Center(
+                                                  child: TextFormField(
+                                                    controller: edicaoNome,
+                                                    keyboardType:
+                                                        TextInputType.name,
+                                                    textAlign: TextAlign.start,
+                                                    decoration:
+                                                        const InputDecoration(
+                                                      icon: Icon(
+                                                        Icons
+                                                            .person_outline_rounded,
+                                                        color: Color.fromARGB(
+                                                            255, 252, 72, 27),
+                                                        size: 25,
+                                                      ),
+                                                      labelText:
+                                                          "Nome Completo",
+                                                      fillColor: Colors.black,
+                                                      hintStyle: TextStyle(
+                                                          color: Colors.black),
+                                                      focusedBorder:
+                                                          UnderlineInputBorder(
+                                                              borderSide: BorderSide(
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          252,
+                                                                          72,
+                                                                          27))),
+                                                    ),
+                                                    validator: (value) {
+                                                      return validarNome(
+                                                          edicaoNome.text);
+                                                    },
+                                                    obscureText: true,
+                                                  ),
+                                                ),
+                                                const Padding(
+                                                    padding: EdgeInsets.only(
+                                                        top: 15)),
+                                                TextButton(
+                                                  //Se for selecionado sim
+                                                  onPressed: () async {
+                                                    // String retorno =
+                                                    //   await editaSenha(aluno);
+                                                    // exibeAviso(retorno);
+                                                  },
+                                                  child: const Text('Confirmar',
+                                                      style: TextStyle(
+                                                          color: Colors.black)),
+                                                ),
+                                                TextButton(
+                                                  //Se for selecionado Não
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          context, 'Cancelar'),
+
+                                                  child: const Text('Cancelar',
+                                                      style: TextStyle(
+                                                          color: Colors.black)),
+                                                ),
+                                              ]),
+                                            ),
+                                          ]));
+                            },
                           ),
                         ],
                       )
@@ -263,7 +329,78 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                     IconButton(
                       icon: Icon(PhosphorIcons.regular.pencilSimple),
                       color: const Color.fromARGB(255, 252, 72, 27),
-                      onPressed: () {},
+                      onPressed: () {
+                        showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                                    title: Text('Aluno: $nome'),
+                                    content: const Text(
+                                        'Para alterar o seu E-mail, basta inserir o seu novo e-mail abaixo:'),
+                                    actions: <Widget>[
+                                      Form(
+                                        key: _formKey,
+                                        child: Column(children: [
+                                          Center(
+                                            child: TextFormField(
+                                              controller: edicaoEmail,
+                                              keyboardType:
+                                                  TextInputType.emailAddress,
+                                              textAlign: TextAlign.start,
+                                              decoration: const InputDecoration(
+                                                icon: Icon(
+                                                  Icons.email_outlined,
+                                                  color: Color.fromARGB(
+                                                      255, 252, 72, 27),
+                                                  size: 25,
+                                                ),
+                                                labelText: "E-mail",
+                                                fillColor: Colors.black,
+                                                hintStyle: TextStyle(
+                                                    color: Colors.black),
+                                                focusedBorder:
+                                                    UnderlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    252,
+                                                                    72,
+                                                                    27))),
+                                              ),
+                                              validator: (value) {
+                                                return validarEmail(
+                                                    edicaoEmail.text);
+                                              },
+                                              obscureText: true,
+                                            ),
+                                          ),
+                                          const Padding(
+                                              padding:
+                                                  EdgeInsets.only(top: 15)),
+                                          TextButton(
+                                            //Se for selecionado sim
+                                            onPressed: () async {
+                                              // String retorno =
+                                              //   await editaSenha(aluno);
+                                              // exibeAviso(retorno);
+                                            },
+                                            child: const Text('Confirmar',
+                                                style: TextStyle(
+                                                    color: Colors.black)),
+                                          ),
+                                          TextButton(
+                                            //Se for selecionado Não
+                                            onPressed: () => Navigator.pop(
+                                                context, 'Cancelar'),
+
+                                            child: const Text('Cancelar',
+                                                style: TextStyle(
+                                                    color: Colors.black)),
+                                          ),
+                                        ]),
+                                      ),
+                                    ]));
+                      },
                     ),
                   ]),
                   //Espaçamento entre inputs
@@ -292,7 +429,79 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                     IconButton(
                       icon: Icon(PhosphorIcons.regular.pencilSimple),
                       color: const Color.fromARGB(255, 252, 72, 27),
-                      onPressed: () {},
+                      onPressed: () {
+                        showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                                    title: Text('Aluno: $nome'),
+                                    content: const Text(
+                                        'Para alterar o seu CPF, basta inserir (Apenas os numeros) abaixo:'),
+                                    actions: <Widget>[
+                                      Form(
+                                        key: _formKey,
+                                        child: Column(children: [
+                                          Center(
+                                            child: TextFormField(
+                                              controller: edicaoCPF,
+                                              keyboardType:
+                                                  TextInputType.number,
+                                              textAlign: TextAlign.start,
+                                              decoration: const InputDecoration(
+                                                icon: Icon(
+                                                  Icons
+                                                      .document_scanner_outlined,
+                                                  color: Color.fromARGB(
+                                                      255, 252, 72, 27),
+                                                  size: 25,
+                                                ),
+                                                labelText: "CPF",
+                                                fillColor: Colors.black,
+                                                hintStyle: TextStyle(
+                                                    color: Colors.black),
+                                                focusedBorder:
+                                                    UnderlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    252,
+                                                                    72,
+                                                                    27))),
+                                              ),
+                                              validator: (value) {
+                                                return validaCpf(
+                                                    edicaoCPF.text);
+                                              },
+                                              obscureText: true,
+                                            ),
+                                          ),
+                                          const Padding(
+                                              padding:
+                                                  EdgeInsets.only(top: 15)),
+                                          TextButton(
+                                            //Se for selecionado sim
+                                            onPressed: () async {
+                                              // String retorno =
+                                              //   await editaSenha(aluno);
+                                              // exibeAviso(retorno);
+                                            },
+                                            child: const Text('Confirmar',
+                                                style: TextStyle(
+                                                    color: Colors.black)),
+                                          ),
+                                          TextButton(
+                                            //Se for selecionado Não
+                                            onPressed: () => Navigator.pop(
+                                                context, 'Cancelar'),
+
+                                            child: const Text('Cancelar',
+                                                style: TextStyle(
+                                                    color: Colors.black)),
+                                          ),
+                                        ]),
+                                      ),
+                                    ]));
+                      },
                     ),
                   ]),
 
@@ -324,7 +533,78 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                     IconButton(
                       icon: Icon(PhosphorIcons.regular.pencilSimple),
                       color: const Color.fromARGB(255, 252, 72, 27),
-                      onPressed: () {},
+                      onPressed: () {
+                        showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                                    title: Text('Aluno: $nome'),
+                                    content: const Text(
+                                        'Para alterar a sua senha, basta inserir uma nova senha abaixo:'),
+                                    actions: <Widget>[
+                                      Form(
+                                        key: _formKey,
+                                        child: Column(children: [
+                                          Center(
+                                            child: TextFormField(
+                                              controller: edicaoSenha,
+                                              keyboardType:
+                                                  TextInputType.visiblePassword,
+                                              textAlign: TextAlign.start,
+                                              decoration: const InputDecoration(
+                                                icon: Icon(
+                                                  Icons.lock_outline,
+                                                  color: Color.fromARGB(
+                                                      255, 252, 72, 27),
+                                                  size: 25,
+                                                ),
+                                                labelText: "Nova Senha",
+                                                fillColor: Colors.black,
+                                                hintStyle: TextStyle(
+                                                    color: Colors.black),
+                                                focusedBorder:
+                                                    UnderlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    252,
+                                                                    72,
+                                                                    27))),
+                                              ),
+                                              validator: (value) {
+                                                return validarSenha(
+                                                    edicaoSenha.text);
+                                              },
+                                              obscureText: true,
+                                            ),
+                                          ),
+                                          const Padding(
+                                              padding:
+                                                  EdgeInsets.only(top: 15)),
+                                          TextButton(
+                                            //Se for selecionado sim
+                                            onPressed: () async {
+                                              // String retorno =
+                                              //   await editaSenha(aluno);
+                                              // exibeAviso(retorno);
+                                            },
+                                            child: const Text('Confirmar',
+                                                style: TextStyle(
+                                                    color: Colors.black)),
+                                          ),
+                                          TextButton(
+                                            //Se for selecionado Não
+                                            onPressed: () => Navigator.pop(
+                                                context, 'Cancelar'),
+
+                                            child: const Text('Cancelar',
+                                                style: TextStyle(
+                                                    color: Colors.black)),
+                                          ),
+                                        ]),
+                                      ),
+                                    ]));
+                      },
                     ),
                   ]),
 
@@ -356,7 +636,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
     );
   }
 
-  //Alerta do usuário
+  //!Alerta do usuário
   alertUser() {
     showDialog<String>(
       builder: (BuildContext context) => AlertDialog(
@@ -456,6 +736,7 @@ class _PerfilAlunoState extends State<PerfilAluno> {
     );
   }
 
+  //!Exibe confirmação sobre a alteração da ft de perfil
   exibeAviso(String conteudo) {
     showDialog<String>(
       context: context,

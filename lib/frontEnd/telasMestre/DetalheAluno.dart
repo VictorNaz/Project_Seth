@@ -1,4 +1,4 @@
-// ignore_for_file: unrelated_type_equality_checks
+// ignore_for_file: unrelated_type_equality_checks, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/backEnd/modelo/progresso.dart';
@@ -22,17 +22,16 @@ class DetalheAluno extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<DetalheAluno> createState() => _DetalheAlunoState(nome, usuario);
+  State<DetalheAluno> createState() => _DetalheAlunoState(usuario, nome);
 }
 
 class _DetalheAlunoState extends State<DetalheAluno> {
   _DetalheAlunoState(this.nome, this.usuario);
   List<double> lista = [];
   var progAluno = Progresso();
-  // ignore: non_constant_identifier_names
   final String nome;
   final String usuario;
-  String data_faixa = "";
+  String data_faixa = "Nenhuma";
   int quantAulas = 0;
   double percAulas = 0;
   String? faixa = "...";
@@ -250,7 +249,7 @@ class _DetalheAlunoState extends State<DetalheAluno> {
                                         "${formatter.format(percAulas)}% Concluído"),
                                     const Padding(
                                         padding: EdgeInsets.only(right: 20)),
-                                    Text("Data:$data_faixa"),
+                                    Text("Data: $data_faixa"),
                                   ],
                                 ),
                                 /*const Padding(
