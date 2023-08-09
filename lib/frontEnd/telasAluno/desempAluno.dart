@@ -27,7 +27,7 @@ class _DesempAlunoState extends State<DesempAluno> {
   String? grau = "...";
   double percAulas = 0;
 
-  NumberFormat formatter = NumberFormat("00.0");
+  NumberFormat formatter = NumberFormat("0.0");
 
   String nome = "";
   String email = "";

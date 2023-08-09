@@ -172,13 +172,58 @@ Future<Faixa> buscaFaixa(Aluno aluno) async {
   return progresso;
 }
 
-Future<bool> recuperaSenha(String email,String senha) async {
+Future<bool> recuperaSenha(String email, String senha) async {
   bool progresso;
-  progresso = await ServerAluno.recuperaSenha(email,senha);
+  progresso = await ServerAluno.recuperaSenha(email, senha);
 
   return progresso;
 }
 
+Future<String> editaNome(Aluno aluno, String nome) async {
+  String retorno;
+  if (nome == "" || nome == null) {
+    retorno = "Nenhuma informação alterada!";
+    return retorno;
+  } else {
+    retorno = await ServerAluno.editaNome(aluno, nome);
+    return retorno;
+  }
+}
+
+Future<String> editaEmail(Aluno aluno, String email) async {
+  String retorno;
+  if (email == "" || email == null) {
+    retorno = "Nenhuma informação alterada!";
+    return retorno;
+  } else {
+    retorno = await ServerAluno.editaEmail(aluno, email);
+    return retorno;
+  }
+}
+
+Future<String> editaCPF(Aluno aluno, String cpf) async {
+  String retorno;
+  if (cpf == "" || cpf == null) {
+    retorno = "Nenhuma informação alterada!";
+    return retorno;
+  } else {
+    retorno = await ServerAluno.editaCPF(aluno, cpf);
+    return retorno;
+  }
+}
+
+Future<String> editaSenha(Aluno aluno, String senha) async {
+  String retorno;
+  String senhaCript;
+  if (senha == "" || senha == null) {
+    retorno = "Nenhuma informação alterada!";
+    return retorno;
+  } else {
+    senhaCript = dataCrypt(senha);
+    retorno = await ServerAluno.editaSenha(aluno, senhaCript);
+    return retorno;
+  }
+}
 /*Future<String?> buscaUsarioPorNome(Aluno aluno) async {
   aluno.usuario = await ServerAluno.buscaUsarioPorNome(aluno);
   return aluno.usuario;

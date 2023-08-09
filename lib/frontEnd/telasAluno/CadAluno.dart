@@ -353,7 +353,6 @@ class _CadAlunoState extends State<CadAluno> {
     );
   }
 
-
   loading() {
     showDialog(
         builder: (context) => Container(

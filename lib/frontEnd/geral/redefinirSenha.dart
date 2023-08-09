@@ -100,7 +100,7 @@ class _RedSenhaState extends State<RedSenha> {
                     decoration: const InputDecoration(
                       icon: Icon(Icons.lock_outline,
                           color: Color.fromARGB(255, 252, 72, 27), size: 35),
-                      labelText: "Corfirmar Senha",
+                      labelText: "Confirmar Senha",
                       hintStyle: TextStyle(color: Colors.black),
                       focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(

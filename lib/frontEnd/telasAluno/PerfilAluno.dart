@@ -96,6 +96,13 @@ class _PerfilAlunoState extends State<PerfilAluno> {
     });
   }
 
+  void clearText() {
+    edicaoSenha.clear();
+    edicaoNome.clear();
+    edicaoEmail.clear();
+    edicaoCPF.clear();
+  }
+
   @override
   void initState() {
     getInfoAluno();
@@ -262,7 +269,6 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                                                       return validarNome(
                                                           edicaoNome.text);
                                                     },
-                                                    obscureText: true,
                                                   ),
                                                 ),
                                                 const Padding(
@@ -271,9 +277,11 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                                                 TextButton(
                                                   //Se for selecionado sim
                                                   onPressed: () async {
-                                                    // String retorno =
-                                                    //   await editaSenha(aluno);
-                                                    // exibeAviso(retorno);
+                                                    Navigator.of(context).pop();
+                                                    String retorno =
+                                                        await editaNome(aluno,
+                                                            edicaoNome.text);
+                                                    exibeAviso(retorno);
                                                   },
                                                   child: const Text('Confirmar',
                                                       style: TextStyle(
@@ -371,7 +379,6 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                                                 return validarEmail(
                                                     edicaoEmail.text);
                                               },
-                                              obscureText: true,
                                             ),
                                           ),
                                           const Padding(
@@ -380,9 +387,10 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                                           TextButton(
                                             //Se for selecionado sim
                                             onPressed: () async {
-                                              // String retorno =
-                                              //   await editaSenha(aluno);
-                                              // exibeAviso(retorno);
+                                              Navigator.of(context).pop();
+                                              String retorno = await editaEmail(
+                                                  aluno, edicaoEmail.text);
+                                              exibeAviso(retorno);
                                             },
                                             child: const Text('Confirmar',
                                                 style: TextStyle(
@@ -472,7 +480,6 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                                                 return validaCpf(
                                                     edicaoCPF.text);
                                               },
-                                              obscureText: true,
                                             ),
                                           ),
                                           const Padding(
@@ -481,9 +488,10 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                                           TextButton(
                                             //Se for selecionado sim
                                             onPressed: () async {
-                                              // String retorno =
-                                              //   await editaSenha(aluno);
-                                              // exibeAviso(retorno);
+                                              Navigator.of(context).pop();
+                                              String retorno = await editaCPF(
+                                                  aluno, edicaoCPF.text);
+                                              exibeAviso(retorno);
                                             },
                                             child: const Text('Confirmar',
                                                 style: TextStyle(
@@ -584,9 +592,10 @@ class _PerfilAlunoState extends State<PerfilAluno> {
                                           TextButton(
                                             //Se for selecionado sim
                                             onPressed: () async {
-                                              // String retorno =
-                                              //   await editaSenha(aluno);
-                                              // exibeAviso(retorno);
+                                              Navigator.of(context).pop();
+                                              String retorno = await editaSenha(
+                                                  aluno, edicaoSenha.text);
+                                              exibeAviso(retorno);
                                             },
                                             child: const Text('Confirmar',
                                                 style: TextStyle(
@@ -738,10 +747,11 @@ class _PerfilAlunoState extends State<PerfilAluno> {
 
   //!Exibe confirmação sobre a alteração da ft de perfil
   exibeAviso(String conteudo) {
+    clearText();
     showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text("Atualização de Foto de Perfil"),
+        title: const Text("Alteração de dados do usuário"),
         content: Text(conteudo),
         actions: <Widget>[
           TextButton(

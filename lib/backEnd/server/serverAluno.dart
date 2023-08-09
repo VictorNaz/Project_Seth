@@ -643,4 +643,92 @@ class ServerAluno {
       return retorno;
     }
   }
+
+  //Atualiza dados do usuário
+  static Future<String> editaNome(Aluno aluno, String? nome) async {
+    var request =
+        http.Request('POST', Uri.parse('https://apiseth.cyclic.app/editaNome'));
+    request.body = json.encode({"nome": nome, "usuario": aluno.usuario});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+    String retorno;
+    String? resposta = response.reasonPhrase;
+
+    if (response.statusCode == 200) {
+      retorno = "Informação atualizada com sucesso!";
+      print(await response.stream.bytesToString());
+      return retorno;
+    } else {
+      retorno =
+          "Não foi possivel alterar os dados do perfil\nDetalhes: $resposta";
+      return retorno;
+    }
+  }
+
+  //Atualiza dados do usuário
+  static Future<String> editaEmail(Aluno aluno, String? email) async {
+    var request = http.Request(
+        'POST', Uri.parse('https://apiseth.cyclic.app/editaEmail'));
+    request.body = json.encode({"email": email, "usuario": aluno.usuario});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+    String retorno;
+    String? resposta = response.reasonPhrase;
+
+    if (response.statusCode == 200) {
+      retorno = "Informação atualizada com sucesso!";
+      print(await response.stream.bytesToString());
+      return retorno;
+    } else {
+      retorno =
+          "Não foi possivel alterar os dados do perfil\nDetalhes: $resposta";
+      return retorno;
+    }
+  }
+
+  //Atualiza dados do usuário
+  static Future<String> editaCPF(Aluno aluno, String? cpf) async {
+    var request =
+        http.Request('POST', Uri.parse('https://apiseth.cyclic.app/editaCPF'));
+    request.body = json.encode({"cpf": cpf, "usuario": aluno.usuario});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+    String retorno;
+    String? resposta = response.reasonPhrase;
+
+    if (response.statusCode == 200) {
+      retorno = "Informação atualizada com sucesso!";
+      print(await response.stream.bytesToString());
+      return retorno;
+    } else {
+      retorno =
+          "Não foi possivel alterar os dados do perfil\nDetalhes: $resposta";
+      return retorno;
+    }
+  }
+
+  //Atualiza dados do usuário
+  static Future<String> editaSenha(Aluno aluno, String? senha) async {
+    var request = http.Request(
+        'POST', Uri.parse('https://apiseth.cyclic.app/editaSenha'));
+    request.body = json.encode({"senha": senha, "usuario": aluno.usuario});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+    String retorno;
+    String? resposta = response.reasonPhrase;
+
+    if (response.statusCode == 200) {
+      retorno = "Informação atualizada com sucesso!";
+      print(await response.stream.bytesToString());
+      return retorno;
+    } else {
+      retorno =
+          "Não foi possivel alterar os dados do perfil\nDetalhes: $resposta";
+      return retorno;
+    }
+  }
 }//Fim da classe
