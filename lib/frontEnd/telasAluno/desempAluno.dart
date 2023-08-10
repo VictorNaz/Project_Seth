@@ -25,14 +25,16 @@ class _DesempAlunoState extends State<DesempAluno> {
   int quantAulas = 0;
   String? faixa = "...";
   String? grau = "...";
-  double percAulas = 0;
-
-  NumberFormat formatter = NumberFormat("0.0");
+  num divAula = 0;
+  String percText = "0.00";
+  double percAula = 0.0;
+  String exibePorc = "";
 
   String nome = "";
   String email = "";
   num quantAulasFaixa = 0;
   String foto = "";
+  Color faixaCor = const Color.fromARGB(252, 207, 203, 203);
   var aluno = Aluno();
 
   getInfoAluno<Aluno>() async {
@@ -85,14 +87,24 @@ class _DesempAlunoState extends State<DesempAluno> {
         }
         if (faixa == "Branca") {
           quantAulasFaixa = 150;
+          faixaCor = const Color.fromARGB(255, 248, 248, 248);
         } else if (faixa == "Azul") {
           quantAulasFaixa = 300;
+          faixaCor = Colors.blue;
         } else if (faixa == "Roxa") {
+          faixaCor = Colors.purple;
           quantAulasFaixa = 200;
         } else if (faixa == "Marrom") {
           quantAulasFaixa = 150;
+          faixaCor = Colors.brown;
         }
-        percAulas = (quantAulas / quantAulasFaixa) * 100;
+        exibePorc =
+            ((quantAulas / quantAulasFaixa) * 100).toStringAsPrecision(2);
+        int multAulas = quantAulas * 100;
+        divAula = multAulas / quantAulasFaixa;
+        double tempPerc = divAula / 100;
+        percText = tempPerc.toStringAsPrecision(2);
+        percAula = num.tryParse(percText)!.toDouble();
       });
     });
   }
@@ -211,13 +223,13 @@ class _DesempAlunoState extends State<DesempAluno> {
                                     animation: true,
                                     lineHeight: 25.0,
                                     animationDuration: 2000,
-                                    percent: quantAulas / quantAulasFaixa,
+                                    percent: percAula,
                                     center: Text(
                                       "$faixa $grau",
                                       style: const TextStyle(fontSize: 16),
                                     ),
                                     barRadius: const Radius.circular(16),
-                                    progressColor: Colors.blue,
+                                    progressColor: faixaCor,
                                     backgroundColor: const Color.fromARGB(
                                         252, 207, 203, 203),
                                   ),
@@ -231,8 +243,7 @@ class _DesempAlunoState extends State<DesempAluno> {
                                     Text("$quantAulas/$quantAulasFaixa Aulas"),
                                     const Padding(
                                         padding: EdgeInsets.only(right: 20)),
-                                    Text(
-                                        "${formatter.format(percAulas)}% Concluído"),
+                                    Text("$exibePorc% Concluído"),
                                     const Padding(
                                         padding: EdgeInsets.only(right: 20)),
                                     Text("Data: $data_faixa"),
@@ -376,7 +387,7 @@ class _DesempAlunoState extends State<DesempAluno> {
                             RadarWidget(
                               radarMap: RadarMapModel(
                                 legend: [
-                                  LegendModel('Desempenho 75%',
+                                  LegendModel('Desempenho',
                                       const Color.fromARGB(255, 252, 72, 27)),
                                 ],
                                 indicator: [

@@ -22,7 +22,7 @@ class DetalheAluno extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<DetalheAluno> createState() => _DetalheAlunoState(usuario, nome);
+  State<DetalheAluno> createState() => _DetalheAlunoState(nome, usuario);
 }
 
 class _DetalheAlunoState extends State<DetalheAluno> {
@@ -33,10 +33,14 @@ class _DetalheAlunoState extends State<DetalheAluno> {
   final String usuario;
   String data_faixa = "Nenhuma";
   int quantAulas = 0;
-  double percAulas = 0;
+  //*Variaveis do progresso em %
+  num divAula = 0;
+  String percText = "0.00";
+  double percAula = 0.0;
+  String exibePorc = "";
+  //*
   String? faixa = "...";
   String? grau = "...";
-  NumberFormat formatter = NumberFormat("00.0");
   var aluno = Aluno();
   num quantAulasFaixa = 0;
   Color faixaCor = const Color.fromARGB(252, 207, 203, 203);
@@ -107,7 +111,15 @@ class _DetalheAlunoState extends State<DetalheAluno> {
           quantAulasFaixa = 150;
           faixaCor = Colors.brown;
         }
-        percAulas = (quantAulas / quantAulasFaixa) * 100;
+        //percAulas = (quantAulas / quantAulasFaixa) * 100;
+
+        exibePorc =
+            ((quantAulas / quantAulasFaixa) * 100).toStringAsPrecision(2);
+        int multAulas = quantAulas * 100;
+        divAula = multAulas / quantAulasFaixa;
+        double tempPerc = divAula / 100;
+        percText = tempPerc.toStringAsPrecision(2);
+        percAula = num.tryParse(percText)!.toDouble();
       });
     });
   }
@@ -225,7 +237,7 @@ class _DetalheAlunoState extends State<DetalheAluno> {
                                     animation: true,
                                     lineHeight: 25.0,
                                     animationDuration: 2000,
-                                    percent: quantAulas / 100,
+                                    percent: percAula,
                                     center: Text(
                                       "$faixa $grau",
                                       style: const TextStyle(fontSize: 16),
@@ -245,47 +257,12 @@ class _DetalheAlunoState extends State<DetalheAluno> {
                                     Text("$quantAulas/$quantAulasFaixa Aulas"),
                                     const Padding(
                                         padding: EdgeInsets.only(right: 20)),
-                                    Text(
-                                        "${formatter.format(percAulas)}% Concluído"),
+                                    Text("$exibePorc% Concluído"),
                                     const Padding(
                                         padding: EdgeInsets.only(right: 20)),
                                     Text("Data: $data_faixa"),
                                   ],
                                 ),
-                                /*const Padding(
-                                    padding: EdgeInsets.only(bottom: 20)),
-                                const Text(
-                                  "Progresso Fundamental",
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                                const Padding(padding: EdgeInsets.only(top: 7)),
-                                Padding(
-                                  padding: const EdgeInsets.all(1),
-                                  child: LinearPercentIndicator(
-                                    width:
-                                        MediaQuery.of(context).size.width - 50,
-                                    animation: true,
-                                    lineHeight: 25.0,
-                                    animationDuration: 2000,
-                                    percent: 0.8,
-                                    barRadius: const Radius.circular(16),
-                                    progressColor:
-                                        const Color.fromARGB(255, 252, 72, 27),
-                                    backgroundColor: const Color.fromARGB(
-                                        252, 207, 203, 203),
-                                  ),
-                                ),
-                                const Padding(
-                                    padding: EdgeInsets.only(bottom: 10)),
-                                Row(
-                                  children: const [
-                                    Padding(padding: EdgeInsets.only(left: 10)),
-                                    Text("50/60 Aulas"),
-                                    Padding(
-                                        padding: EdgeInsets.only(right: 150)),
-                                    Text("80% Concluído")
-                                  ],
-                                ),*/
                               ],
                             ),
                           ],
@@ -336,7 +313,7 @@ class _DetalheAlunoState extends State<DetalheAluno> {
                             RadarWidget(
                               radarMap: RadarMapModel(
                                 legend: [
-                                  LegendModel('Desempenho 75%',
+                                  LegendModel('Desempenho',
                                       const Color.fromARGB(255, 252, 72, 27)),
                                 ],
                                 indicator: [
