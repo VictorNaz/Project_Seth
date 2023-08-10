@@ -151,8 +151,8 @@ class _DrawerTopState extends State<DrawerTop> {
                   padding: const EdgeInsets.only(top: 5),
                   color: const Color.fromARGB(36, 252, 72, 27),
                   height: 70,
-                  child: Row(
-                    children: const [
+                  child: const Row(
+                    children: [
                       Padding(padding: EdgeInsets.only(left: 20)),
                       Icon(
                         Icons.notifications_none_sharp,
@@ -203,8 +203,8 @@ class _DrawerTopState extends State<DrawerTop> {
                 padding: const EdgeInsets.only(top: 5),
                 color: const Color.fromARGB(36, 252, 72, 27),
                 height: 70,
-                child: Row(
-                  children: const [
+                child: const Row(
+                  children: [
                     Padding(padding: EdgeInsets.only(left: 20)),
                     Icon(
                       Icons.list,
@@ -244,8 +244,8 @@ class _DrawerTopState extends State<DrawerTop> {
                 padding: const EdgeInsets.only(top: 5),
                 color: const Color.fromARGB(36, 252, 72, 27),
                 height: 70,
-                child: Row(
-                  children: const [
+                child: const Row(
+                  children: [
                     Padding(padding: EdgeInsets.only(left: 20)),
                     Icon(
                       Icons.checklist_rtl,
@@ -273,8 +273,8 @@ class _DrawerTopState extends State<DrawerTop> {
                 padding: const EdgeInsets.only(top: 5),
                 color: const Color.fromARGB(36, 252, 72, 27),
                 height: 70,
-                child: Row(
-                  children: const [
+                child: const Row(
+                  children: [
                     Padding(padding: EdgeInsets.only(left: 20)),
                     Icon(
                       Icons.info_outline_rounded,
@@ -315,8 +315,8 @@ class _DrawerTopState extends State<DrawerTop> {
                 padding: const EdgeInsets.only(top: 5),
                 color: const Color.fromARGB(36, 252, 72, 27),
                 height: 70,
-                child: Row(
-                  children: const [
+                child: const Row(
+                  children: [
                     Padding(padding: EdgeInsets.only(left: 20)),
                     Icon(
                       Icons.close,
