@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:kg_charts/kg_charts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
-import '../../backEnd/controladora/CtrlAluno.dart';
+import '../../backEnd/controladora/controllerAluno.dart';
 import '../../backEnd/modelo/aluno.dart';
 import '../../backEnd/security/sessionService.dart';
 import '../../backEnd/server/serverAluno.dart';

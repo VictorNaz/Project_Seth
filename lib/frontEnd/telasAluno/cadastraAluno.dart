@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
-import 'package:flutter_project_seth/frontEnd/widgets/APIServiceProvider.dart';
+import 'package:flutter_project_seth/backEnd/controladora/controllerAluno.dart';
+import 'package:flutter_project_seth/frontEnd/widgets/serviceProvider.dart';
 import '../geral/loginPage.dart';
 import '../widgets/utilClass.dart';
 
@@ -264,7 +264,7 @@ class _CadAlunoState extends State<CadAluno> {
                         value: checkRegras,
                         onChanged: (bool? value) async {
                           final path = 'assets/image/Regras_Tatame.pdf';
-                          final files = await PDFApi.loadAsset(path);
+                          final files = await serviceProvider.loadAsset(path);
                           openPDF(context, files);
                           setState(() {
                             checkRegras = value!;

@@ -6,7 +6,7 @@ import 'package:flutter_project_seth/frontEnd/geral/loginpage.dart';
 import 'package:flutter_project_seth/frontEnd/widgets/sendEmail.dart';
 import 'package:random_password_generator/random_password_generator.dart';
 
-import '../../backEnd/controladora/CtrlAluno.dart';
+import '../../backEnd/controladora/controllerAluno.dart';
 import '../widgets/utilClass.dart';
 import 'redefinirSenha.dart';
 
@@ -15,6 +15,10 @@ class RecSenha extends StatefulWidget {
   @override
   State<RecSenha> createState() => _RecSenhaState();
 }
+
+//!Atenção se o app não enviar o e-mail e os dados estiverem corretos
+//!Acessar o link: https://myaccount.google.com/u/0/lesssecureapps?pli=1&rapt=AEjHL4O7xH38xwwdF2gCDCop8lCNAWg-5247UiYAWQ0H3LaZMFei-mS6vqB0A_ZjB42gX3IfVrF77Feyccnvjh7E0jwSmy1Qiw
+//!E permitir o uso de app terceiros
 
 class _RecSenhaState extends State<RecSenha> {
   TextEditingController txtEmail = TextEditingController();
@@ -131,7 +135,8 @@ class _RecSenhaState extends State<RecSenha> {
                         String isChange = '';
                         String statusEmail = await _sendEmail(txtEmail.text);
                         if (statusEmail == 'Enviado') {
-                          bool checkChange = await recuperaSenha(txtEmail.text,senhaCript);
+                          bool checkChange =
+                              await recuperaSenha(txtEmail.text, senhaCript);
                           print(checkChange);
                           if (checkChange) {
                             isChange = 'Executado';

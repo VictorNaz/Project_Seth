@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_seth/backEnd/controladora/CtrlProfessor.dart';
+import 'package:flutter_project_seth/backEnd/controladora/controllerMestre.dart';
 
 import '../geral/loginPage.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_seth/frontEnd/telasAluno/info.dart';
-import 'package:flutter_project_seth/frontEnd/telasMestre/ListaAluno.dart';
+import 'package:flutter_project_seth/frontEnd/telasMestre/listaAlunos.dart';
 import 'package:flutter_project_seth/frontEnd/widgets/QR_CodePage.dart';
 import '../../backEnd/modelo/aluno.dart';
 import '../../backEnd/security/sessionService.dart';

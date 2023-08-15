@@ -1,7 +1,7 @@
 // ignore_for_file: sort_child_properties_last
 
 import 'package:flutter/material.dart';
-import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
+import 'package:flutter_project_seth/backEnd/controladora/controllerAluno.dart';
 import 'package:kg_charts/kg_charts.dart';
 import 'package:flutter_project_seth/backEnd/security/sessionService.dart';
 

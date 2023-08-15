@@ -1,9 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_project_seth/frontEnd/telasMestre/DetalheAluno.dart';
-import 'package:flutter_project_seth/frontEnd/telasMestre/detalhe_progresso.dart';
-
-import '../../backEnd/controladora/CtrlProfessor.dart';
+import 'aprovarProgresso.dart';
+import '../../backEnd/controladora/controllerMestre.dart';
 import '../../backEnd/modelo/aluno.dart';
 import '../../backEnd/modelo/notificacoes.dart';
 import '../../backEnd/security/sessionService.dart';
@@ -99,11 +97,10 @@ class _ListaNotificacoesState extends State<ListaNotificacoes> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => DetalheProgresso(
+                        builder: (context) => AprovarProgresso(
                               nome: listaNotificacoes[index].nomeAluno,
                               id: listaNotificacoes[index].idNotificacoes,
                               usuario: listaNotificacoes[index].usuarioAluno,
-                              
                             )),
                   );
                 } else {

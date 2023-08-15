@@ -1,5 +1,6 @@
+// ignore_for_file: file_names, unnecessary_null_comparison, slash_for_doc_comments
+
 import 'package:flutter_project_seth/backEnd/modelo/progresso.dart';
-import 'package:intl/intl.dart';
 
 import '../modelo/aluno.dart';
 import 'package:flutter_project_seth/backEnd/modelo/faixa.dart';

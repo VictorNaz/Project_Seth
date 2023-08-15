@@ -1,59 +1,41 @@
-// ignore_for_file: no_logic_in_create_state, use_build_context_synchronously, non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/material.dart';
-import 'package:flutter_project_seth/frontEnd/geral/loginpage.dart';
-import 'package:intl/intl.dart';
 import 'package:kg_charts/kg_charts.dart';
+import 'package:flutter_project_seth/backEnd/controladora/controllerAluno.dart';
+import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-
-import '../../backEnd/controladora/CtrlAluno.dart';
 import '../../backEnd/modelo/aluno.dart';
 import '../../backEnd/modelo/progresso.dart';
 import '../../backEnd/security/sessionService.dart';
 import '../../backEnd/server/serverAluno.dart';
 import '../widgets/utilClass.dart';
-import 'MenuMestre.dart';
 
-class DetalheProgresso extends StatefulWidget {
-  final int id;
-  final String nome;
-  final String usuario;
-
-  const DetalheProgresso({
-    Key? key,
-    required this.nome,
-    required this.usuario,
-    required this.id,
-  }) : super(key: key);
+class DesempAluno extends StatefulWidget {
+  const DesempAluno({Key? key}) : super(key: key);
 
   @override
-  State<DetalheProgresso> createState() => _DetalheProgressoState(id);
+  State<DesempAluno> createState() => _DesempAlunoState();
 }
 
-class _DetalheProgressoState extends State<DetalheProgresso> {
-  _DetalheProgressoState(this.id);
-  var progAluno = Progresso();
-  final int id;
+class _DesempAlunoState extends State<DesempAluno> {
   List<double> lista = [];
-  String data_faixa = "";
+  var progAluno = Progresso();
+  String data_faixa = "Nenhuma";
   int quantAulas = 0;
-  double percAulas = 0;
   String? faixa = "...";
   String? grau = "...";
-
-  NumberFormat formatter = NumberFormat("00.0");
+  num divAula = 0;
+  String percText = "0.00";
+  double percAula = 0.0;
+  String exibePorc = "";
 
   String nome = "";
   String email = "";
-  var aluno = Aluno();
-  String? idAluno;
   num quantAulasFaixa = 0;
-
-  //A instancia mestre do tipo aluno carrega as informações do usuario da seção principal
-  var mestre = Aluno();
-
-  //Esse método serve para carregar as informações do usuario logado para mostrar no drower
   String foto = "";
+  Color faixaCor = const Color.fromARGB(252, 207, 203, 203);
+  var aluno = Aluno();
 
   getInfoAluno<Aluno>() async {
     aluno.usuario = await PrefsService.returnUser();
@@ -67,59 +49,73 @@ class _DetalheProgressoState extends State<DetalheProgresso> {
     });
   }
 
-  // serve para podermos mudar o tipo do retorno da buscaAvaliacao
-  //de Future<list<double>> para list<double>, alem de setar o valor em uma variavel global
-  //este método recebe o usuario como um parametro da classe DetalheProgresso
-  getInfoUsuario<List>() async {
-    aluno.nome = widget.nome;
-    aluno.usuario = widget.usuario; //await buscaUsarioPorNome(aluno);
+  getAvalizacao<Aluno>() async {
+    aluno.usuario = await PrefsService.returnUser();
     await buscaAvaliacao(aluno).then((value) {
       setState(() {
         lista = value;
       });
     });
-    //este serve para pegar o valor do backend da quantidade de aulas frequentadas quando a página é carregada
-    //alem de setar o valor após a coleta dos dados.
-    //este método recebe o usuario como um parametro da classe DetalheProgresso
-    await buscaAulas(aluno).then((value) {
-      setState(() {
-        progAluno = value;
-        quantAulas = progAluno.quant_aula;
-        data_faixa = progAluno.data_faixa;
-        DateTime data = DateTime.parse(progAluno.data_faixa);
-        progAluno.data_faixa = DateFormat("dd/MM/yyyy").format(data);
-      });
-    });
+  }
+
+  getAulas<Aluno>() async {
+    aluno.usuario = await PrefsService.returnUser();
+    await buscaAulas(aluno).then(
+      (value) {
+        setState(() {
+          progAluno = value;
+          quantAulas = progAluno.quant_aula;
+          data_faixa = progAluno.data_faixa;
+          DateTime data = DateTime.parse(progAluno.data_faixa);
+          data_faixa = DateFormat("dd/MM/yyyy").format(data);
+        });
+      },
+    );
+  }
+
+  getFaixa<Aluno>() async {
+    aluno.usuario = await PrefsService.returnUser();
     aluno = await buscaInfo(aluno);
     await buscaFaixa(aluno).then((value) {
       setState(() {
         faixa = value.faixa;
         grau = value.grau.toString();
-        if (grau == "0") {
-          grau = "Liso";
+        if (grau == "0" || grau == 0) {
+          grau = "Lisa";
         } else {
           grau = "$grauº";
         }
         if (faixa == "Branca") {
           quantAulasFaixa = 150;
+          faixaCor = const Color.fromARGB(255, 248, 248, 248);
         } else if (faixa == "Azul") {
           quantAulasFaixa = 300;
+          faixaCor = Colors.blue;
         } else if (faixa == "Roxa") {
+          faixaCor = Colors.purple;
           quantAulasFaixa = 200;
         } else if (faixa == "Marrom") {
           quantAulasFaixa = 150;
+          faixaCor = Colors.brown;
         }
-        percAulas = (quantAulas / quantAulasFaixa) * 100;
+        exibePorc =
+            ((quantAulas / quantAulasFaixa) * 100).toStringAsPrecision(2);
+        int multAulas = quantAulas * 100;
+        divAula = multAulas / quantAulasFaixa;
+        double tempPerc = divAula / 100;
+        percText = tempPerc.toStringAsPrecision(2);
+        percAula = num.tryParse(percText)!.toDouble();
       });
     });
   }
 
-  @override
-
   //O comando abaixo define a inicialização do getList antes do carregamento da pagina
+  @override
   void initState() {
-    getInfoUsuario();
     getInfoAluno();
+    getAvalizacao();
+    getAulas();
+    getFaixa();
     super.initState();
   }
 
@@ -131,8 +127,8 @@ class _DetalheProgressoState extends State<DetalheProgresso> {
       appBar: AppBar(
         //Barra superior já com o icone de voltar
         backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-        title: Center(
-          child: Text("Aluno: ${aluno.nome}"),
+        title: const Center(
+          child: Text("Meu Desempenho"),
         ),
 
         //Icone de voltar quando utilizado o drawer no appbar
@@ -148,7 +144,7 @@ class _DetalheProgressoState extends State<DetalheProgresso> {
       //drawer para navegação no appbar
       //A classe Drawer está sendo chamada de outro arquivo e está recebendo por parametro o texto desejado.
       endDrawer: Drawer(
-        backgroundColor: Color.fromARGB(207, 255, 255, 255),
+        backgroundColor: const Color.fromARGB(207, 255, 255, 255),
         child: DrawerTop(
           texto: "Opções",
           nome: nome,
@@ -192,7 +188,7 @@ class _DetalheProgressoState extends State<DetalheProgresso> {
                         //ExpansionTile é um botão que se expande mostrando informações adicionais
                         child: ExpansionTile(
                           //mantem a caixa de texto aberta quando carregada a página
-                          //*initiallyExpanded: true,
+                          //initiallyExpanded: true,
                           //determinamos as cores do botão quando aberto e fechado
                           textColor: const Color.fromARGB(255, 252, 72, 27),
                           collapsedBackgroundColor:
@@ -202,7 +198,7 @@ class _DetalheProgressoState extends State<DetalheProgresso> {
                           childrenPadding: const EdgeInsets.all(16),
                           //titulo do botão
                           title: const Text(
-                            "Desempenho",
+                            "Meu Desempenho",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 25,
@@ -227,13 +223,13 @@ class _DetalheProgressoState extends State<DetalheProgresso> {
                                     animation: true,
                                     lineHeight: 25.0,
                                     animationDuration: 2000,
-                                    percent: quantAulas / 250,
+                                    percent: percAula,
                                     center: Text(
                                       "$faixa $grau",
                                       style: const TextStyle(fontSize: 16),
                                     ),
                                     barRadius: const Radius.circular(16),
-                                    progressColor: Colors.blue,
+                                    progressColor: faixaCor,
                                     backgroundColor: const Color.fromARGB(
                                         252, 207, 203, 203),
                                   ),
@@ -247,13 +243,12 @@ class _DetalheProgressoState extends State<DetalheProgresso> {
                                     Text("$quantAulas/$quantAulasFaixa Aulas"),
                                     const Padding(
                                         padding: EdgeInsets.only(right: 20)),
-                                    Text(
-                                        "${formatter.format(percAulas)}% Concluído"),
+                                    Text("$exibePorc% Concluído"),
                                     const Padding(
                                         padding: EdgeInsets.only(right: 20)),
-                                    Text("Data: ${progAluno.data_faixa}"),
+                                    Text("Data: $data_faixa"),
                                   ],
-                                ),
+                                )
                               ],
                             ),
                           ],
@@ -261,7 +256,95 @@ class _DetalheProgressoState extends State<DetalheProgresso> {
                       ),
                     )),
                 //Espaçamento entre botões
-                const Padding(padding: EdgeInsets.only(bottom: 10)),
+                const Padding(padding: EdgeInsets.only(bottom: 40)),
+
+                /*Card(
+
+                    //Determinamos o raio das bordas do card
+                    shape: (RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    )),
+
+                    //determinamos a cor do card
+                    //color: const Color.fromARGB(255, 252, 72, 27),
+
+                    //ClopRRect serve para que o texto não ultrapasse os raios do card
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+
+                      //SingleChildScrollView serve para o texto quando expandido não ultrapasse o tamanho da tela
+                      child: SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+
+                        //ExpansionTile é um botão que se expande mostrando informações adicionais
+                        child: ExpansionTile(
+                          //mantem a caixa de texto aberta quando carregada a página
+                          initiallyExpanded: true,
+                          //determinamos as cores do botão quando aberto e fechado
+                          textColor: const Color.fromARGB(255, 252, 72, 27),
+                          collapsedBackgroundColor:
+                              const Color.fromARGB(255, 252, 72, 27),
+                          collapsedTextColor: Colors.white,
+                          backgroundColor: Colors.white,
+                          childrenPadding: const EdgeInsets.all(16),
+                          //titulo do botão
+                          title: const Text(
+                            "Aulas Fundamentais",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 25,
+                            ),
+                          ),
+
+                          //texto quando expandido
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  "Progresso Fundamental",
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                                const Padding(padding: EdgeInsets.only(top: 7)),
+                                Padding(
+                                  padding: const EdgeInsets.all(1),
+                                  child: LinearPercentIndicator(
+                                    width:
+                                        MediaQuery.of(context).size.width - 50,
+                                    animation: true,
+                                    lineHeight: 25.0,
+                                    animationDuration: 2000,
+                                    percent: 0.8,
+                                    barRadius: const Radius.circular(16),
+                                    progressColor:
+                                        const Color.fromARGB(255, 252, 72, 27),
+                                    backgroundColor: const Color.fromARGB(
+                                        252, 207, 203, 203),
+                                  ),
+                                ),
+                                const Padding(
+                                    padding: EdgeInsets.only(bottom: 10)),
+                                Row(
+                                  children: const [
+                                    Padding(padding: EdgeInsets.only(left: 10)),
+                                    Text("50/60 Aulas"),
+                                    Padding(
+                                        padding: EdgeInsets.only(right: 150)),
+                                    Text("80% Concluído")
+                                  ],
+                                ),
+                                const Padding(
+                                    padding: EdgeInsets.only(bottom: 10)),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    )),*/
+
+                //Espaçamento entre botões
+                const Padding(padding: EdgeInsets.only(bottom: 40)),
+
                 // Esta classe retorna um card com um expansionTile dentro, recebendo o titulo e a descrição do mesmo.
                 Card(
 
@@ -304,7 +387,7 @@ class _DetalheProgressoState extends State<DetalheProgresso> {
                             RadarWidget(
                               radarMap: RadarMapModel(
                                 legend: [
-                                  LegendModel('Desempenho 75%',
+                                  LegendModel('Desempenho',
                                       const Color.fromARGB(255, 252, 72, 27)),
                                 ],
                                 indicator: [
@@ -348,23 +431,8 @@ class _DetalheProgressoState extends State<DetalheProgresso> {
                         ),
                       ),
                     )),
-                const Padding(padding: EdgeInsets.only(bottom: 20)),
-                TextButton(
-                    onPressed: () {
-                      alertUser(); //!No Alert chama a função para aprovar progresso
-                    },
-                    style: TextButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 252, 72, 27),
-                      fixedSize: const Size(402, 56),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ), //texto do button e estilo da escrita
-                    child: const Text(
-                      "Aprovar Progresso",
-                      style: TextStyle(color: Colors.white, fontSize: 23),
-                    )),
-                const Padding(padding: EdgeInsets.only(bottom: 280)),
+                //Espaçamento entre botão e o final da tela
+                const Padding(padding: EdgeInsets.only(bottom: 170)),
               ],
             ),
           ),
@@ -389,60 +457,6 @@ class _DetalheProgressoState extends State<DetalheProgresso> {
 
       //barra infeirior
       bottomNavigationBar: const BotaoInferior(),
-    );
-  }
-
-  alertUser() {
-    showDialog<String>(
-      context: context,
-      builder: (BuildContext context) => AlertDialog(
-        title: const Text('Deseja realmente aprovar o progresso do aluno?'),
-        content: Text(
-            'Ao confirmar na opção abaixo, o aluno ${aluno.nome} terá um novo progresso!'),
-        actions: <Widget>[
-          TextButton(
-            //Se for selecionado Não
-            onPressed: () {
-              Navigator.pop(context, 'Não');
-            },
-            child: const Text(
-              'Não',
-            ),
-          ),
-          TextButton(
-            //Se for selecionado sim
-            onPressed: () async {
-              idAluno = aluno.id;
-              await ServerAluno.atualizaQuantAulas(idAluno);
-              await ServerAluno.atualizaProgresso(idAluno);
-              await ServerAluno.excluiNotificacao(id);
-              /* showDialog<String>(
-                  context: context,
-                  builder: (BuildContext context) => AlertDialog(
-                          title: const Text(
-                              'Não foi possivel aprovar o progresso!'),
-                          content: const Text('Erro interno'),
-                          actions: <Widget>[
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context, 'Ok');
-                                },
-                                child: const Text(
-                                  'Ok',
-                                ))
-                          ]));
-*/
-              Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => const MenuMestre()),
-                  (Route<dynamic> route) => false);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Aluno aprovado com sucesso!')),
-              );
-            },
-            child: const Text('Sim'),
-          ),
-        ],
-      ),
     );
   }
 }

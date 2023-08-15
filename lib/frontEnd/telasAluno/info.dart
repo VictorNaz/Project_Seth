@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_seth/frontEnd/telasAluno/menuPrincipal.dart';
+import 'package:flutter_project_seth/frontEnd/telasAluno/menuAluno.dart';
 
 import '../../backEnd/modelo/aluno.dart';
 import '../../backEnd/security/sessionService.dart';

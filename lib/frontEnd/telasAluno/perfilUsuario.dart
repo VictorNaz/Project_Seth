@@ -3,7 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import '../../backEnd/controladora/CtrlAluno.dart';
+import '../../backEnd/controladora/controllerAluno.dart';
 import '../../backEnd/modelo/aluno.dart';
 import '../../backEnd/security/sessionService.dart';
 import '../../backEnd/server/serverAluno.dart';
@@ -11,13 +11,13 @@ import '../widgets/utilClass.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
-class PerfilAluno extends StatefulWidget {
-  const PerfilAluno({Key? key}) : super(key: key);
+class PerfilUsuario extends StatefulWidget {
+  const PerfilUsuario({Key? key}) : super(key: key);
   @override
-  State<PerfilAluno> createState() => _PerfilAlunoState();
+  State<PerfilUsuario> createState() => _PerfilUsuarioState();
 }
 
-class _PerfilAlunoState extends State<PerfilAluno> {
+class _PerfilUsuarioState extends State<PerfilUsuario> {
   bool isChecked = false;
   bool showPassword = false;
 

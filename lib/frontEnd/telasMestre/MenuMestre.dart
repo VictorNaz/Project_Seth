@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_seth/frontEnd/telasMestre/ForceProgress.dart';
-import 'package:flutter_project_seth/frontEnd/telasMestre/ListaAluno.dart';
-import 'package:flutter_project_seth/frontEnd/telasMestre/Relatorio.dart';
-import 'package:flutter_project_seth/frontEnd/telasMestre/lista_alunos_presenca.dart';
+import 'package:flutter_project_seth/frontEnd/telasMestre/forcaProgresso.dart';
+import 'package:flutter_project_seth/frontEnd/telasMestre/listaAlunos.dart';
+import 'package:flutter_project_seth/frontEnd/telasMestre/listaAlunosPresenca.dart';
 import 'package:flutter_project_seth/frontEnd/widgets/QR_CodePage.dart';
 import '../../backEnd/modelo/aluno.dart';
 import '../../backEnd/modelo/faixa.dart';
 import '../../backEnd/security/sessionService.dart';
 import '../../backEnd/server/serverAluno.dart';
 import '../widgets/utilClass.dart';
-import 'CadProfessor.dart';
+import 'cadastrarProfessor.dart';
 
 class MenuMestre extends StatefulWidget {
   const MenuMestre({Key? key}) : super(key: key);
@@ -134,7 +133,7 @@ class _MenuMestreState extends State<MenuMestre> {
                           size: 80,
                           color: Color.fromARGB(255, 252, 72, 27),
                         ),
-                        tela: ListaAlunoPresenca()),
+                        tela: ListaAlunosPresenca()),
                   ],
                 ),
                 const Padding(padding: EdgeInsets.only(top: 30)),

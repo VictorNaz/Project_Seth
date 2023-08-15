@@ -1,21 +1,19 @@
-// ignore_for_file: must_be_immutable, file_names
+// ignore_for_file: must_be_immutable, file_names, use_build_context_synchronously, camel_case_types, library_private_types_in_public_api
 
 import 'dart:convert';
 import 'dart:io';
-import 'dart:ui';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
 import 'package:flutter_project_seth/backEnd/modelo/faixa.dart';
 import 'package:flutter_project_seth/backEnd/security/sessionService.dart';
 import 'package:flutter_project_seth/frontEnd/geral/Homepage.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
-import 'package:flutter_project_seth/frontEnd/widgets/APIServiceProvider.dart';
+import 'package:flutter_project_seth/frontEnd/widgets/serviceProvider.dart';
 import 'package:path/path.dart';
-import '../../backEnd/controladora/CtrlProfessor.dart';
+import '../../backEnd/controladora/controllerMestre.dart';
 import '../../backEnd/modelo/aluno.dart';
 import '../../backEnd/server/serverAluno.dart';
-import '../telasAluno/PerfilAluno.dart';
+import '../telasAluno/perfilUsuario.dart';
 import '../telasMestre/listaNotificacoes.dart';
 
 //classe que retorna o drawertop
@@ -70,7 +68,6 @@ class _DrawerTopState extends State<DrawerTop> {
     await buscaNotificacoes().then((value) {
       setState(() {
         listaNotificacoes = value;
-        print(listaNotificacoes.length);
       });
     });
   }
@@ -151,8 +148,8 @@ class _DrawerTopState extends State<DrawerTop> {
                   padding: const EdgeInsets.only(top: 5),
                   color: const Color.fromARGB(36, 252, 72, 27),
                   height: 70,
-                  child: const Row(
-                    children: [
+                  child:  Row(
+                    children: const [
                       Padding(padding: EdgeInsets.only(left: 20)),
                       Icon(
                         Icons.notifications_none_sharp,
@@ -203,8 +200,8 @@ class _DrawerTopState extends State<DrawerTop> {
                 padding: const EdgeInsets.only(top: 5),
                 color: const Color.fromARGB(36, 252, 72, 27),
                 height: 70,
-                child: const Row(
-                  children: [
+                child:  Row(
+                  children: const [
                     Padding(padding: EdgeInsets.only(left: 20)),
                     Icon(
                       Icons.list,
@@ -244,8 +241,8 @@ class _DrawerTopState extends State<DrawerTop> {
                 padding: const EdgeInsets.only(top: 5),
                 color: const Color.fromARGB(36, 252, 72, 27),
                 height: 70,
-                child: const Row(
-                  children: [
+                child:  Row(
+                  children: const [
                     Padding(padding: EdgeInsets.only(left: 20)),
                     Icon(
                       Icons.checklist_rtl,
@@ -264,7 +261,7 @@ class _DrawerTopState extends State<DrawerTop> {
                 )),
             onTap: () async {
               const path = 'assets/image/Regras_Tatame.pdf';
-              final files = await PDFApi.loadAsset(path);
+              final files = await serviceProvider.loadAsset(path);
               openPDF(context, files);
             },
           ),
@@ -273,8 +270,8 @@ class _DrawerTopState extends State<DrawerTop> {
                 padding: const EdgeInsets.only(top: 5),
                 color: const Color.fromARGB(36, 252, 72, 27),
                 height: 70,
-                child: const Row(
-                  children: [
+                child:  Row(
+                  children: const [
                     Padding(padding: EdgeInsets.only(left: 20)),
                     Icon(
                       Icons.info_outline_rounded,
@@ -315,8 +312,8 @@ class _DrawerTopState extends State<DrawerTop> {
                 padding: const EdgeInsets.only(top: 5),
                 color: const Color.fromARGB(36, 252, 72, 27),
                 height: 70,
-                child: const Row(
-                  children: [
+                child:  Row(
+                  children: const [
                     Padding(padding: EdgeInsets.only(left: 20)),
                     Icon(
                       Icons.close,
@@ -407,7 +404,7 @@ class _DrawerTopState extends State<DrawerTop> {
               border: Border(
                   bottom: BorderSide(
                 width: 2.0,
-                color: const Color.fromARGB(36, 252, 72, 27),
+                color:  Color.fromARGB(36, 252, 72, 27),
               )),
             ),
             accountName:
@@ -487,7 +484,7 @@ class _DrawerTopState extends State<DrawerTop> {
                 )),
             onTap: () async {
               const path = 'assets/image/Regras_Tatame.pdf';
-              final files = await PDFApi.loadAsset(path);
+              final files = await serviceProvider.loadAsset(path);
               openPDF(context, files);
             },
           ),
@@ -668,7 +665,7 @@ class BotaoInferior extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const PerfilAluno()),
+                MaterialPageRoute(builder: (context) => const PerfilUsuario()),
               );
             },
             icon: const Icon(
@@ -781,6 +778,7 @@ class _PDFViewerPageState extends State<PDFViewerPage> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     final name = basename(widget.file!.path);
     final text = '${indexPage + 1} de $pages';
     return Scaffold(
@@ -862,6 +860,7 @@ notificacaoAluno(Aluno aluno, Faixa faixa, [String? isFaixa]) {
     //!Passagem de Grau
 //Verifica se o Grau da faixa é liso para alterar o texto
     String corpoMsg;
+    // ignore: unrelated_type_equality_checks
     if (faixa.grau == '0') {
       corpoMsg =
           '${aluno.nome} agora está no Grau liso da faixa ${faixa.faixa}!';

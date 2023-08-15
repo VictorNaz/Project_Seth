@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 import 'dart:io';
 
-class PDFApi {
+class serviceProvider {
   static Future<File> loadAsset(String path) async {
     final data = await rootBundle.load(path);
     final bytes = data.buffer.asUint8List();

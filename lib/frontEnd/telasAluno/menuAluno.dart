@@ -2,18 +2,15 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_project_seth/frontEnd/telasAluno/Auto_Avaliacao.dart';
-import 'package:flutter_project_seth/frontEnd/telasAluno/info.dart';
+import 'package:flutter_project_seth/frontEnd/telasAluno/autoAvaliacao.dart';
 import 'package:flutter_project_seth/frontEnd/widgets/QR_CodePage.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 
 import '../../backEnd/modelo/aluno.dart';
 import '../../backEnd/security/sessionService.dart';
 import '../../backEnd/server/serverAluno.dart';
-import '../widgets/APIServiceProvider.dart';
+import '../widgets/serviceProvider.dart';
 import '../widgets/utilClass.dart';
-import 'desempAluno.dart';
+import 'desempenhoAluno.dart';
 
 class Menu extends StatefulWidget {
   const Menu({Key? key}) : super(key: key);
@@ -132,8 +129,9 @@ class _MenuState extends State<Menu> {
                     const Padding(padding: EdgeInsets.only(right: 30)),
                     ElevatedButton(
                       onPressed: () async {
+                        // ignore: prefer_const_declarations
                         final path = 'assets/image/info.pdf';
-                        final files = await PDFApi.loadAsset(path);
+                        final files = await serviceProvider.loadAsset(path);
                         // ignore: use_build_context_synchronously
                         openPDF(context, files);
                       },

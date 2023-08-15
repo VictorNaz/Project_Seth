@@ -2,10 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
+import 'package:flutter_project_seth/backEnd/controladora/controllerAluno.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-import '../telasAluno/menuPrincipal.dart';
+import '../telasAluno/menuAluno.dart';
 
 class QRCodeRead extends StatefulWidget {
   const QRCodeRead({super.key});

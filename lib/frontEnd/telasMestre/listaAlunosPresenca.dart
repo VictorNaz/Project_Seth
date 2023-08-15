@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-import '../../backEnd/controladora/CtrlProfessor.dart';
+import '../../backEnd/controladora/controllerMestre.dart';
 import '../../backEnd/modelo/aluno.dart';
 import '../../backEnd/security/sessionService.dart';
 import '../../backEnd/server/serverAluno.dart';
 import '../widgets/utilClass.dart';
 
-class ListaAlunoPresenca extends StatefulWidget {
-  const ListaAlunoPresenca({Key? key}) : super(key: key);
+class ListaAlunosPresenca extends StatefulWidget {
+  const ListaAlunosPresenca({Key? key}) : super(key: key);
 
   @override
-  State<ListaAlunoPresenca> createState() => _ListaAlunoPresencaState();
+  State<ListaAlunosPresenca> createState() => _ListaAlunosPresencaState();
 }
 
-class _ListaAlunoPresencaState extends State<ListaAlunoPresenca> {
+class _ListaAlunosPresencaState extends State<ListaAlunosPresenca> {
   List listaAlunos = [];
   String teste = "";
 

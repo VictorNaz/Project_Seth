@@ -1,11 +1,11 @@
+// ignore_for_file: use_build_context_synchronou'../../backEnd/controladora/controllerAluno.dart'utter_project_seth/backEnd/controladora/CtrlAluno.dart';, use_build_context_synchronously
 import 'package:flutter/material.dart';
-import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
-import 'package:flutter_project_seth/frontEnd/telasMestre/MenuMestre.dart';
-
-import '../../backEnd/controladora/CtrlProfessor.dart';
-import '../telasAluno/CadAluno.dart';
-import '../telasAluno/MenuPrincipal.dart';
-import '../telasProf/MenuProfessor.dart';
+import '../../backEnd/controladora/controllerMestre.dart';
+import '../../backEnd/controladora/controllerAluno.dart';
+import '../telasAluno/cadastraAluno.dart';
+import '../telasAluno/menuAluno.dart';
+import '../telasProf/menuProfessor.dart';
+import '../telasMestre/menuMestre.dart';
 import '../widgets/utilClass.dart';
 import 'enviarEmailSenha.dart';
 
@@ -22,7 +22,7 @@ var listaNotificacoes = [];
 class _LoginPageState extends State<LoginPage> {
   bool showPassword = false;
   bool isChecked = false;
-  String nivel_acess = "";
+  String nivelAcess = "";
 
   TextEditingController txtUsuario = TextEditingController();
   TextEditingController txtSenha = TextEditingController();
@@ -158,10 +158,10 @@ class _LoginPageState extends State<LoginPage> {
 
                       if (_formKey.currentState!.validate()) {
                         loading();
-                        nivel_acess = (await loginUsuario(
+                        nivelAcess = (await loginUsuario(
                             txtUsuario.text, txtSenha.text))!;
 
-                        if (nivel_acess == "1") {
+                        if (nivelAcess == "1") {
                           //Remove as abas acessadas anteriormente, limpa a memória
                           //Impedindo que o usuário volte para a tela de login
                           closeLoading();
@@ -169,13 +169,13 @@ class _LoginPageState extends State<LoginPage> {
                               MaterialPageRoute(
                                   builder: (context) => const Menu()),
                               (Route<dynamic> route) => false);
-                        } else if (nivel_acess == "2") {
+                        } else if (nivelAcess == "2") {
                           closeLoading();
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
                                   builder: (context) => const MenuProfessor()),
                               (Route<dynamic> route) => false);
-                        } else if (nivel_acess == "3") {
+                        } else if (nivelAcess == "3") {
                           quantFaixa = 0;
                           quantGrau = 0;
                           listaNotificacoes = await buscaNotificacoes();

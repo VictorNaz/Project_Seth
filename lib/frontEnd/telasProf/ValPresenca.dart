@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:flutter_project_seth/frontEnd/telasAluno/menuPrincipal.dart';
+import 'package:flutter_project_seth/frontEnd/telasAluno/menuAluno.dart';
 import '../../backEnd/modelo/aluno.dart';
 import '../../backEnd/security/sessionService.dart';
 import '../../backEnd/server/serverAluno.dart';
@@ -75,7 +75,7 @@ class _ValPresencaState extends State<ValPresenca> {
         //drawer para navegação no appbar
         //A classe Drawer está sendo chamada de outro arquivo e está recebendo por parametro o texto desejado.
         endDrawer: Drawer(
-          backgroundColor: Color.fromARGB(207, 255, 255, 255),
+          backgroundColor: const Color.fromARGB(207, 255, 255, 255),
           child: DrawerTop(
             texto: "Opções",
             nome: nome,

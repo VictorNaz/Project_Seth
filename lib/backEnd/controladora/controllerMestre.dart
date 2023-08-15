@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter_project_seth/backEnd/modelo/aluno.dart';
 import 'package:flutter_project_seth/backEnd/modelo/progresso.dart';
 import 'package:flutter_project_seth/backEnd/security/dataCrypt.dart';
@@ -23,8 +25,8 @@ String? cadProfessor(String txtNome, String txtUsuario, String txtSenha,
   return null;
 }
 
-Future<String?> forcaProgresso(
-    String txtUsuario, String txtFaixa, String txtGrau, DateTime? dtTrocaFaixa) async {
+Future<String?> forcaProgresso(String txtUsuario, String txtFaixa,
+    String txtGrau, DateTime? dtTrocaFaixa) async {
   var faixa = Faixa();
   var progresso = Progresso();
   var aluno = Aluno();
@@ -60,7 +62,6 @@ Future<String> validaPresencaSenha(String usuario, String senha) async {
   var novaSenha = dataCrypt(senha);
   bool retorno = await ServerAluno.validaCredenciais(usuario, novaSenha);
   if (retorno == true) {
-   
     await ServerAluno.valPresenAluno(aluno);
     resposta = "Presença validada com sucesso!";
   } else {

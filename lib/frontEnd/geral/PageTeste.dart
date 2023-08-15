@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_seth/frontEnd/telasAluno/menuPrincipal.dart';
+import 'package:flutter_project_seth/frontEnd/telasAluno/menuAluno.dart';
 import '../../backEnd/modelo/aluno.dart';
 import '../../backEnd/security/sessionService.dart';
 import '../../backEnd/server/serverAluno.dart';
-import '../telasMestre/CadProfessor.dart';
-import '../telasMestre/MenuMestre.dart';
-import '../telasMestre/ListaAluno.dart';
+import '../telasMestre/cadastrarProfessor.dart';
+import '../telasMestre/menuMestre.dart';
+import '../telasMestre/listaAlunos.dart';
 import '../telasProf/ValPresenca.dart';
-import '../telasProf/MenuProfessor.dart';
+import '../telasProf/menuProfessor.dart';
 import '../widgets/utilClass.dart';
 
 class PageTest extends StatefulWidget {

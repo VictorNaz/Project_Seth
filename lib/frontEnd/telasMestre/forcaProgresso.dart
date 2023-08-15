@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_seth/backEnd/controladora/CtrlAluno.dart';
+import 'package:flutter_project_seth/backEnd/controladora/controllerAluno.dart';
 
-import '../../backEnd/controladora/CtrlProfessor.dart';
+import '../../backEnd/controladora/controllerMestre.dart';
 import '../../backEnd/modelo/aluno.dart';
 import '../../backEnd/security/sessionService.dart';
 import '../../backEnd/server/serverAluno.dart';
