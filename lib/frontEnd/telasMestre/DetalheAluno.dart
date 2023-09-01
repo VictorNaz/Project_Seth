@@ -39,6 +39,7 @@ class _DetalheAlunoState extends State<DetalheAluno> {
   double percAula = 0.0;
   String exibePorc = "";
   //*
+    int? grauInt = 0;
   String? faixa = "...";
   String? grau = "...";
   var aluno = Aluno();
@@ -91,30 +92,55 @@ class _DetalheAlunoState extends State<DetalheAluno> {
     await buscaFaixa(aluno).then((value) {
       setState(() {
         faixa = value.faixa;
-        grau = value.grau.toString();
+             grauInt = value.grau;
+        grau = grauInt.toString();
 
         if (grau == "0" || grau == 0) {
           grau = "Lisa";
         } else {
           grau = "$grauº";
         }
-        if (faixa == "Branca") {
-          quantAulasFaixa = 150;
+         if (faixa == "Branca") {
+          if (grauInt == 0 || grauInt == 1 || grauInt == 2) {
+            quantAulasFaixa = 38;
+          
+          } else if (grauInt == 3 || grauInt == 4) {
+            quantAulasFaixa = 37;
+          }
           faixaCor = const Color.fromARGB(255, 248, 248, 248);
         } else if (faixa == "Azul") {
-          quantAulasFaixa = 300;
+          quantAulasFaixa = 75;
+         
           faixaCor = Colors.blue;
         } else if (faixa == "Roxa") {
           faixaCor = Colors.purple;
-          quantAulasFaixa = 200;
+         
+          quantAulasFaixa = 50;
         } else if (faixa == "Marrom") {
-          quantAulasFaixa = 150;
+          if (grauInt == 0 || grauInt == 1 || grauInt == 2) {
+            quantAulasFaixa = 38;
+         
+          } else if (grauInt == 3 || grauInt == 4) {
+            quantAulasFaixa = 37;
+          
+          }
           faixaCor = Colors.brown;
+        } else if (faixa == "Preta") {
+          if (grauInt == 0 || grauInt == 1 || grauInt == 2 || grauInt == 3) {
+            quantAulasFaixa = 400;
+           
+          } else {
+            quantAulasFaixa = 700;
+      
+          }
+          faixaCor = const Color.fromARGB(255, 0, 0, 0);
         }
-        //percAulas = (quantAulas / quantAulasFaixa) * 100;
-
-        exibePorc =
-            ((quantAulas / quantAulasFaixa) * 100).toStringAsPrecision(2);
+        if (quantAulas >= quantAulasFaixa) { //!feito isso para se as aulas passarem de 100% não bugar a $ de conclusão
+          exibePorc = '100';
+        } else {
+          exibePorc =
+              ((quantAulas / quantAulasFaixa) * 100).toStringAsPrecision(2);
+        }
         int multAulas = quantAulas * 100;
         divAula = multAulas / quantAulasFaixa;
         double tempPerc = divAula / 100;

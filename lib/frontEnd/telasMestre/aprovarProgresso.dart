@@ -35,16 +35,25 @@ class _AprovarProgressoState extends State<AprovarProgresso> {
   var progAluno = Progresso();
   final int id;
   List<double> lista = [];
-  String data_faixa = "";
+  String data_faixa = "Nenhuma";
   int quantAulas = 0;
+  //*Variaveis do progresso em %
+  num divAula = 0;
+  String percText = "0.00";
+  double percAula = 0.0;
+  String exibePorc = "";
+  //*
   double percAulas = 0;
   String? faixa = "...";
   String? grau = "...";
+  int? grauInt = 0;
 
   NumberFormat formatter = NumberFormat("00.0");
-
-  String nome = "";
-  String email = "";
+  Color faixaCor = const Color.fromARGB(252, 207, 203, 203);
+  var usuarioLogado = Aluno();
+  String fotoUser = "";
+  String nomeUser = "";
+  String emailUser = "";
   var aluno = Aluno();
   String? idAluno;
   num quantAulasFaixa = 0;
@@ -56,13 +65,13 @@ class _AprovarProgressoState extends State<AprovarProgresso> {
   String foto = "";
 
   getInfoAluno<Aluno>() async {
-    aluno.usuario = await PrefsService.returnUser();
+    usuarioLogado.usuario = await PrefsService.returnUser();
     await ServerAluno.buscaInfo(aluno).then((value) {
       setState(() {
-        aluno = value;
-        nome = aluno.nome!;
-        email = aluno.email!;
-        foto = aluno.foto!;
+        usuarioLogado = value;
+        nomeUser = usuarioLogado.nome!;
+        emailUser = usuarioLogado.email!;
+        fotoUser = usuarioLogado.foto!;
       });
     });
   }
@@ -87,29 +96,67 @@ class _AprovarProgressoState extends State<AprovarProgresso> {
         quantAulas = progAluno.quant_aula;
         data_faixa = progAluno.data_faixa;
         DateTime data = DateTime.parse(progAluno.data_faixa);
-        progAluno.data_faixa = DateFormat("dd/MM/yyyy").format(data);
+        data_faixa = DateFormat("dd/MM/yyyy").format(data);
       });
     });
     aluno = await buscaInfo(aluno);
     await buscaFaixa(aluno).then((value) {
       setState(() {
         faixa = value.faixa;
-        grau = value.grau.toString();
+        grauInt = value.grau;
+
+        grau = grauInt.toString();
         if (grau == "0") {
           grau = "Liso";
         } else {
           grau = "$grauº";
         }
         if (faixa == "Branca") {
-          quantAulasFaixa = 150;
+          if (grauInt == 0 || grauInt == 1 || grauInt == 2) {
+            quantAulasFaixa = 38;
+          
+          } else if (grauInt == 3 || grauInt == 4) {
+            quantAulasFaixa = 37;
+          }
+          faixaCor = const Color.fromARGB(255, 248, 248, 248);
         } else if (faixa == "Azul") {
-          quantAulasFaixa = 300;
+          quantAulasFaixa = 75;
+         
+          faixaCor = Colors.blue;
         } else if (faixa == "Roxa") {
-          quantAulasFaixa = 200;
+          faixaCor = Colors.purple;
+         
+          quantAulasFaixa = 50;
         } else if (faixa == "Marrom") {
-          quantAulasFaixa = 150;
+          if (grauInt == 0 || grauInt == 1 || grauInt == 2) {
+            quantAulasFaixa = 38;
+         
+          } else if (grauInt == 3 || grauInt == 4) {
+            quantAulasFaixa = 37;
+          
+          }
+          faixaCor = Colors.brown;
+        } else if (faixa == "Preta") {
+          if (grauInt == 0 || grauInt == 1 || grauInt == 2 || grauInt == 3) {
+            quantAulasFaixa = 400;
+           
+          } else {
+            quantAulasFaixa = 700;
+      
+          }
+          faixaCor = const Color.fromARGB(255, 0, 0, 0);
         }
-        percAulas = (quantAulas / quantAulasFaixa) * 100;
+        if (quantAulas >= quantAulasFaixa) { //!feito isso para se as aulas passarem de 100% não bugar a $ de conclusão
+          exibePorc = '100';
+        } else {
+          exibePorc =
+              ((quantAulas / quantAulasFaixa) * 100).toStringAsPrecision(2);
+        }
+        int multAulas = quantAulas * 100;
+        divAula = multAulas / quantAulasFaixa;
+        double tempPerc = divAula / 100;
+        percText = tempPerc.toStringAsPrecision(2);
+        percAula = num.tryParse(percText)!.toDouble();
       });
     });
   }
@@ -151,9 +198,9 @@ class _AprovarProgressoState extends State<AprovarProgresso> {
         backgroundColor: Color.fromARGB(207, 255, 255, 255),
         child: DrawerTop(
           texto: "Opções",
-          nome: nome,
-          email: email,
-          foto: foto,
+          nome: nomeUser,
+          email: emailUser,
+          foto: fotoUser,
         ),
       ),
       body: Stack(
@@ -227,13 +274,13 @@ class _AprovarProgressoState extends State<AprovarProgresso> {
                                     animation: true,
                                     lineHeight: 25.0,
                                     animationDuration: 2000,
-                                    percent: quantAulas / 250,
+                                    percent: percAula,
                                     center: Text(
                                       "$faixa $grau",
                                       style: const TextStyle(fontSize: 16),
                                     ),
                                     barRadius: const Radius.circular(16),
-                                    progressColor: Colors.blue,
+                                    progressColor: faixaCor,
                                     backgroundColor: const Color.fromARGB(
                                         252, 207, 203, 203),
                                   ),
@@ -247,11 +294,10 @@ class _AprovarProgressoState extends State<AprovarProgresso> {
                                     Text("$quantAulas/$quantAulasFaixa Aulas"),
                                     const Padding(
                                         padding: EdgeInsets.only(right: 20)),
-                                    Text(
-                                        "${formatter.format(percAulas)}% Concluído"),
+                                    Text("$exibePorc% Concluído"),
                                     const Padding(
                                         padding: EdgeInsets.only(right: 20)),
-                                    Text("Data: ${progAluno.data_faixa}"),
+                                    Text("Data: $data_faixa"),
                                   ],
                                 ),
                               ],

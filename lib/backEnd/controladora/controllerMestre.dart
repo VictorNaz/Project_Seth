@@ -4,10 +4,12 @@ import 'package:flutter_project_seth/backEnd/modelo/aluno.dart';
 import 'package:flutter_project_seth/backEnd/modelo/progresso.dart';
 import 'package:flutter_project_seth/backEnd/security/dataCrypt.dart';
 import 'package:flutter_project_seth/backEnd/server/serverProfessor.dart';
+import 'package:flutter_project_seth/frontEnd/widgets/utilClass.dart';
 
 import '../modelo/faixa.dart';
 import '../modelo/professor.dart';
 import '../server/serverAluno.dart';
+import 'controllerAluno.dart';
 
 //CADASTRA O PROFESSOR
 String? cadProfessor(String txtNome, String txtUsuario, String txtSenha,
@@ -62,13 +64,46 @@ Future<String> validaPresencaSenha(String usuario, String senha) async {
   var novaSenha = dataCrypt(senha);
   bool retorno = await ServerAluno.validaCredenciais(usuario, novaSenha);
   if (retorno == true) {
-    await ServerAluno.valPresenAluno(aluno);
+    await validaListaPresenca(aluno);
+
     resposta = "Presença validada com sucesso!";
   } else {
     resposta = "Não foi possivel validar a presença, senha incorreta!";
   }
   return resposta;
 }
+
+Future<void> validaListaPresenca(Aluno aluno) async {
+  var faixa = Faixa();
+  var progAluno = Progresso();
+  String
+      isFaixa; //!Verifica se o que houve progresso é faixa ou grau TRUE= Faixa ; FALSE=Grau
+  //!Teve de ser adicionado a uma variável, pois ao receber um novo valor, o usuário perdia o aluno.id
+  // aluno = await ServerAluno.buscaInfo(aluno);
+  await ServerAluno.valPresenAluno(aluno);
+  progAluno = await ServerAluno.buscaAulas(aluno);
+  int? aulasFeitas = progAluno.quant_aula;
+  //!await ServerAluno.atualizaProgresso(aluno); Apenas o mestre deve aprovar o progresso
+  faixa = await ServerAluno.buscaFaixa(aluno);
+  int? aulasPendentes = faixa.quantAulas;
+
+  //!Se cair no if abaixo, significa que o aluno passou de faixa
+  if ((aluno.faixa_id == 5 && aulasFeitas == aulasPendentes) ||
+      (aluno.faixa_id == 10 && aulasFeitas == aulasPendentes) ||
+      (aluno.faixa_id == 15 && aulasFeitas == aulasPendentes) ||
+      (aluno.faixa_id == 20 && aulasFeitas == aulasPendentes)) {
+    isFaixa = "true";
+    await ServerAluno.registraNotificacao(aluno, faixa, isFaixa);
+    notificacaoAluno(aluno, faixa, isFaixa);
+
+    //! Else, apenas foi mais um grau concluido, lembrando que grau 0 é igual a "liso"
+  } else if (aulasFeitas == aulasPendentes) {
+    isFaixa = "false";
+    await ServerAluno.registraNotificacao(aluno, faixa, isFaixa);
+    notificacaoAluno(aluno, faixa, isFaixa);
+  }
+}
+
 /*************************** VALIDAÇÕES DE CAMPO *******************************/
 
 String? validarNome(String value) {

@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, unrelated_type_equality_checks
 
 import 'package:flutter/material.dart';
 import 'package:kg_charts/kg_charts.dart';
@@ -29,7 +29,7 @@ class _DesempAlunoState extends State<DesempAluno> {
   String percText = "0.00";
   double percAula = 0.0;
   String exibePorc = "";
-
+  int? grauInt = 0;
   String nome = "";
   String email = "";
   num quantAulasFaixa = 0;
@@ -79,27 +79,50 @@ class _DesempAlunoState extends State<DesempAluno> {
     await buscaFaixa(aluno).then((value) {
       setState(() {
         faixa = value.faixa;
-        grau = value.grau.toString();
+        grauInt = value.grau;
+        grau = grauInt.toString();
         if (grau == "0" || grau == 0) {
           grau = "Lisa";
         } else {
           grau = "$grauº";
         }
         if (faixa == "Branca") {
-          quantAulasFaixa = 150;
+          if (grauInt == 0 || grauInt == 1 || grauInt == 2) {
+            quantAulasFaixa = 38;
+          } else if (grauInt == 3 || grauInt == 4) {
+            quantAulasFaixa = 37;
+          }
           faixaCor = const Color.fromARGB(255, 248, 248, 248);
         } else if (faixa == "Azul") {
-          quantAulasFaixa = 300;
+          quantAulasFaixa = 75;
+
           faixaCor = Colors.blue;
         } else if (faixa == "Roxa") {
           faixaCor = Colors.purple;
-          quantAulasFaixa = 200;
+
+          quantAulasFaixa = 50;
         } else if (faixa == "Marrom") {
-          quantAulasFaixa = 150;
+          if (grauInt == 0 || grauInt == 1 || grauInt == 2) {
+            quantAulasFaixa = 38;
+          } else if (grauInt == 3 || grauInt == 4) {
+            quantAulasFaixa = 37;
+          }
           faixaCor = Colors.brown;
+        } else if (faixa == "Preta") {
+          if (grauInt == 0 || grauInt == 1 || grauInt == 2 || grauInt == 3) {
+            quantAulasFaixa = 400;
+          } else {
+            quantAulasFaixa = 700;
+          }
+          faixaCor = const Color.fromARGB(255, 0, 0, 0);
         }
-        exibePorc =
-            ((quantAulas / quantAulasFaixa) * 100).toStringAsPrecision(2);
+        if (quantAulas >= quantAulasFaixa) {
+          //!feito isso para se as aulas passarem de 100% não bugar a $ de conclusão
+          exibePorc = '100';
+        } else {
+          exibePorc =
+              ((quantAulas / quantAulasFaixa) * 100).toStringAsPrecision(2);
+        }
         int multAulas = quantAulas * 100;
         divAula = multAulas / quantAulasFaixa;
         double tempPerc = divAula / 100;
